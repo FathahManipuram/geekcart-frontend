@@ -7,23 +7,15 @@ import { loginApi } from '../api/auth.api'
 import { Label } from '@/shared/components/ui/label'
 import { Input } from '@/shared/components/ui/input'
 
-const LoginForm = () => {
-	const {setUser}= useAuthStore()
+const LoginForm = ({onSubmit}) => {
+	// {setUser}= useAuthStore()
 
 	const {
 		register, handleSubmit, formState:{errors, isSubmitting,}
 	}= useForm({resolver: yupResolver(loginSchema)})
 
-	const onSubmit= async(data)=>{
-		try{
-			const res= await loginApi(data)
-			setUser(res.user)
-		}catch(err){
-			console.error(err)
-		}
-	}
   return (
-	<form className='space-y-5'> 
+	<form onSubmit={handleSubmit(onSubmit)} className='space-y-5'> 
 		<div className='space-y-1'>
 			<Label>Email</Label>
 			<Input type="email" placeholder="Enter your email" 
