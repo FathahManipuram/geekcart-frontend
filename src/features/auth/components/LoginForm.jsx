@@ -4,6 +4,9 @@ import { useForm } from 'react-hook-form'
 import { loginSchema } from '../validations/auth.validation'
 import yupResolver from '@hookform/resolvers/yup'
 import { loginApi } from '../api/auth.api'
+import { Label } from '@/shared/components/ui/label'
+import { Input } from '@/shared/components/ui/input'
+
 const LoginForm = () => {
 	const {setUser}= useAuthStore()
 
@@ -20,9 +23,24 @@ const LoginForm = () => {
 		}
 	}
   return (
-	<div>
-	  
-	</div>
+	<form className='space-y-5'> 
+		<div className='space-y-1'>
+			<Label>Email</Label>
+			<Input type="email" placeholder="Enter your email" 
+			{...register("email")}/>
+			{errors.email && (
+				<p className='text-redd-500 text-sm'>{errors.email.message}</p>
+			)}
+		</div>
+
+		<div className='space-y-1'>
+			<Label>Password</Label>
+			<Input type="password" placeholder="Enter your password"
+			{...register("password")}/>
+			<p className='text-red-500 text-sm'>{errors.password.message}</p>
+		</div>
+		<Button type="submit" className="w-full" disabled={isSubmitting}>{isSubmitting ? "Logging in...": "Login"}</Button>
+	</form>
   )
 }
 
