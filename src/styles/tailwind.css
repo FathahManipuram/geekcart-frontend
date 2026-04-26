@@ -48,7 +48,7 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-:root {
+/* :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
     --card: oklch(1 0 0);
@@ -81,6 +81,56 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+} */
+
+
+:root {
+    /* Backgrounds & Text */
+    --background: #ffffff; /* Light */
+    --foreground: #56514b; /* Darker */
+    
+    /* Cards & Popovers */
+    --card: #fefdfb; /* Light */
+    --card-foreground: #56514b; /* Darker */
+    --popover: #fefdfb; /* Light */
+    --popover-foreground: #56514b; /* Darker */
+    
+    /* Brand Colors */
+    --primary: #885D3B; /* Dark :active (Strongest button color) */
+    --primary-foreground: #fefdfb; /* Light (Text on primary button) */
+    --secondary: #f6e7d7; /* Normal */
+    --secondary-foreground: #56514b; /* Darker */
+    
+    /* Muted & Accents */
+    --muted: #fcf8f3; /* Light :active */
+    --muted-foreground: #948b81; /* Dark :hover (Secondary text) */
+    --accent: #ddd0c2; /* Normal :hover (Hover states for ghost buttons) */
+    --accent-foreground: #56514b; /* Darker */
+    
+    /* System Colors */
+    --destructive: oklch(0.577 0.245 27.325); /* Kept default red for errors */
+    --border: #ddd0c2; /* Normal :hover */
+    --input: #ddd0c2; /* Normal :hover */
+    --ring: #b9ada1; /* Dark (Focus outline) */
+    
+    /* Charts mapped to your palette gradient */
+    --chart-1: #6f6861; /* Dark :active */
+    --chart-2: #948b81; /* Dark :hover */
+    --chart-3: #b9ada1; /* Dark */
+    --chart-4: #c5b9ac; /* Normal :active */
+    --chart-5: #ddd0c2; /* Normal :hover */
+    
+    --radius: 0.625rem;
+    
+    /* Sidebar */
+    --sidebar: #fefbf9; /* Light :hover */
+    --sidebar-foreground: #56514b; /* Darker */
+    --sidebar-primary: #6f6861; /* Dark :active */
+    --sidebar-primary-foreground: #fefdfb; /* Light */
+    --sidebar-accent: #f6e7d7; /* Normal */
+    --sidebar-accent-foreground: #56514b; /* Darker */
+    --sidebar-border: #ddd0c2; /* Normal :hover */
+    --sidebar-ring: #b9ada1; /* Dark */
 }
 
 .dark {

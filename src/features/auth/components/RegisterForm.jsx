@@ -1,12 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { registerSchema } from '../validations/auth.validation'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
 import { Button } from '@/shared/components/ui/button'
+import { Eye, EyeClosed } from 'lucide-react'
 
 const RegisterForm = ({onSubmit}) => {
+	const [show, setShow]= useState(false)
 	const {register, handleSubmit, formState: {errors, isSubmitting}}= useForm({
 		resolver: yupResolver(registerSchema),
 	})
@@ -14,7 +16,7 @@ const RegisterForm = ({onSubmit}) => {
 	<form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
 		<div className="space-y-1">
 			<Label>FULL NAME</Label>
-			<Input placeholder="Abdul fathah" {...register("name")}/>
+			<Input placeholder="Abdul fathah" {...register("fullName")} />
 			{errors?.fullName && (
 				<p className='text-red-500 text-sm'>{errors.fullName.message}</p>
 			)}
@@ -30,7 +32,10 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>PASSWORD</Label>
-			<Input placeholder="........" {...register("password")}/>
+			<div className='relative'>
+				<Input type={show? "password":"text"} placeholder="........" {...register("password")}/>
+				<button onClick={()=> setShow(!show)} className='absolute translate-y-1/2 right-2 top-1 text-muted-foreground'>{show ? <EyeClosed size={20}/> :<Eye size={20}/>}</button>
+			</div>
 			{errors?.password && (
 				<p className='text-red-500 text-sm'>{errors.password.message}</p>
 			)}
@@ -38,7 +43,7 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>CONFIRM PASSWORD</Label>
-			<Input placeholder="........" {...register("confirmPassword")} />
+			<Input type={show? "password":"text"} placeholder="........" {...register("confirmPassword")} />
 			{errors?.confirmPassword && (
 				<p className='text-red-500 text-sm'>{errors.confirmPassword.message}</p>
 			)}
