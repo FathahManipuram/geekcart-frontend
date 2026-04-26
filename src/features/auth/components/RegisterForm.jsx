@@ -14,7 +14,7 @@ const RegisterForm = ({onSubmit}) => {
 	<form onSubmit={handleSubmit(onSubmit)} className='space-y-5'>
 		<div className="space-y-1">
 			<Label>FULL NAME</Label>
-			<Input placaholder="Abdul fathah" {...register("name")}/>
+			<Input placeholder="Abdul fathah" {...register("name")}/>
 			{errors?.fullName && (
 				<p className='text-red-500 text-sm'>{errors.fullName.message}</p>
 			)}
@@ -22,7 +22,7 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>EMAIL</Label>
-			<Input placaholder="abdulfathah@gmail.com" {...register("email")}/>
+			<Input placeholder="abdulfathah@gmail.com" {...register("email")}/>
 			{errors?.email && (
 				<p className='text-red-500 text-sm'>{errors.email.message}</p>
 			)}
@@ -30,7 +30,7 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>PASSWORD</Label>
-			<Input placaholder="........" {...register("password")}/>
+			<Input placeholder="........" {...register("password")}/>
 			{errors?.password && (
 				<p className='text-red-500 text-sm'>{errors.password.message}</p>
 			)}
@@ -38,7 +38,7 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>CONFIRM PASSWORD</Label>
-			<Input placaholder="........" {...register("confirmPassword")} />
+			<Input placeholder="........" {...register("confirmPassword")} />
 			{errors?.confirmPassword && (
 				<p className='text-red-500 text-sm'>{errors.confirmPassword.message}</p>
 			)}

@@ -1,4 +1,7 @@
 import { CardHeader } from '@/shared/components/ui/card'
+import { Card } from '@/shared/components/ui/card'
+import { CardTitle } from '@/shared/components/ui/card'
+import { CardContent } from '@/shared/components/ui/card'
 import React from 'react'
 import RegisterForm from '../components/RegisterForm'
 
@@ -8,7 +11,7 @@ const RegisterPage = () => {
 	}
   return (
 	  <div className='min-h-screen flex items-center justify-center bg-background'>
-		<Card className="w-[420] shadow-lg">
+		<Card className="w-105 shadow-lg">
 			<CardHeader>
 				<CardTitle className="text-center text-2xl">
 					Create Account
