@@ -36,7 +36,7 @@ const RegisterPage = () => {
 
 				<button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
 
-				<p className='text-center font-medium text-xs'>Already Have an account? {" "}
+				<p className='text-center font-medium text-xs'>Already have an account? {" "}
 					<Link to="/login" className='text-primary cursor-pointer font-bold'>Login</Link>
 				</p>
 			</CardContent>
