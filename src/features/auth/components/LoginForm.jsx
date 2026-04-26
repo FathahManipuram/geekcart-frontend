@@ -1,11 +1,12 @@
 import React from 'react'
-import { useAuthStore } from '../store/auth.store'
+// import { useAuthStore } from '../store/auth.store'
 import { useForm } from 'react-hook-form'
 import { loginSchema } from '../validations/auth.validation'
-import yupResolver from '@hookform/resolvers/yup'
-import { loginApi } from '../api/auth.api'
+import {yupResolver} from '@hookform/resolvers/yup'
+// import { loginApi } from '../api/auth.api'
 import { Label } from '@/shared/components/ui/label'
 import { Input } from '@/shared/components/ui/input'
+import { Button } from '@/shared/components/ui/button'
 
 const LoginForm = ({onSubmit}) => {
 	// {setUser}= useAuthStore()
@@ -29,7 +30,10 @@ const LoginForm = ({onSubmit}) => {
 			<Label>Password</Label>
 			<Input type="password" placeholder="Enter your password"
 			{...register("password")}/>
-			<p className='text-red-500 text-sm'>{errors.password.message}</p>
+			{errors.password && (
+				<p className='text-red-500 text-sm'>{errors.password.message}</p>
+			)}
+			
 		</div>
 		<Button type="submit" className="w-full" disabled={isSubmitting}>{isSubmitting ? "Logging in...": "Login"}</Button>
 	</form>
