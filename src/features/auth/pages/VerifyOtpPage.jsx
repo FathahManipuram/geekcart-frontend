@@ -26,7 +26,7 @@ const VerifyOtpPage = () => {
 
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>
-	  <Card className="w-105 shadow-lg p-8 rounded-none">
+	  <Card className="w-105 shadow-lg lg:p-8 rounded-none">
 		<CardHeader>
 			<CardTitle className="font-extrabold text-3xl">
 				Verify OTP

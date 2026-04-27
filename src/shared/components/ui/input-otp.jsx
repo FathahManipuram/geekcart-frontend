@@ -30,7 +30,7 @@ function InputOTPGroup({
     <div
       data-slot="input-otp-group"
       className={cn(
-        "flex items-center rounded-md has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 gap-3",
+        "flex items-center rounded-md has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40 gap-1 lg:gap-3",
         className
       )}
       {...props} />
