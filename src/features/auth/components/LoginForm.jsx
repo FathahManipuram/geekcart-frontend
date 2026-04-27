@@ -20,7 +20,7 @@ const [show, setShow]=useState(true)
   return (
 	<form onSubmit={handleSubmit(onSubmit)} className='space-y-5'> 
 		<div className='space-y-1'>
-			<Label>EMAIL</Label>
+			<Label>EMAIL ADDRESS</Label>
 			<Input type="email" placeholder="Enter your email"
 			{...register("email")}/>
 			{errors.email && (
@@ -31,7 +31,7 @@ const [show, setShow]=useState(true)
 		<div className='space-y-1'>
 			<div className='flex justify-between'>
 			<Label>PASSWORD</Label>
-			<Link className='text-[10px] font-bold text-primary'>FORGOT PASSWORD?</Link>
+			<Link to="/forgot-password" className='text-[10px] font-bold text-primary cursor-pointer'>FORGOT PASSWORD?</Link>
 			</div>
 			<div className='relative'>
 				<Input type= {show? "password": "text"} placeholder="Enter your password"

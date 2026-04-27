@@ -23,7 +23,7 @@ const RegisterForm = ({onSubmit}) => {
 		</div>
 
 		<div className='space-y-1'>
-			<Label>EMAIL</Label>
+			<Label>EMAIL ADDRESS</Label>
 			<Input placeholder="abdulfathah@gmail.com" {...register("email")}/>
 			{errors?.email && (
 				<p className='text-red-500 text-sm'>{errors.email.message}</p>

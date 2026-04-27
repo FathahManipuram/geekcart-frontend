@@ -16,6 +16,7 @@ const LoginPage = () => {
 			<CardTitle className="text-2xl font-extrabold">
 				Welcome Back
 			</CardTitle>
+			<p className='text-sm text-muted-foreground'>Please enter your details to access your account.</p>
 		</CardHeader>
 		<CardContent>
 			<LoginForm onSubmit={handleLogin}/>
