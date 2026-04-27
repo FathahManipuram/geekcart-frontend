@@ -13,7 +13,7 @@ const LoginPage = () => {
 	<div className='min-h-screen flex items-center justify-center bg-background'>
 	  <Card className="w-120 shadow-lg rounded-none p-8">
 		<CardHeader>
-			<CardTitle className="text-2xl font-extrabold">
+			<CardTitle className="text-3xl font-extrabold">
 				Welcome Back
 			</CardTitle>
 			<p className='text-sm text-muted-foreground'>Please enter your details to access your account.</p>

@@ -1,14 +1,13 @@
 import React from 'react'
 import ForgotPasswordForm from '../components/ForgotPasswordForm'
 import { Card, CardHeader, CardTitle, CardContent} from '@/shared/components/ui/card'
-import { Link } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
 
 const ForgotPasswordPage = () => {
-
+const navigate= useNavigate()
 	const handleSubmit= async(data)=>{
 		console.log("Email: ", data)
-
+		navigate("/verify-otp")
 	}
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>
@@ -21,7 +20,7 @@ const ForgotPasswordPage = () => {
                  account. Enter your Email to continue.</p>
 				 </CardHeader>
 				<CardContent className="space-y-6">
-					<ForgotPasswordForm onsubmit={handleSubmit}/>
+					<ForgotPasswordForm onSubmit={handleSubmit}/>
 				</CardContent>
 
 				<div className='flex item-center justify-around text-xs'>

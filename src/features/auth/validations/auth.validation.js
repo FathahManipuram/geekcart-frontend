@@ -50,3 +50,8 @@ export const registerSchema= yup.object({
 export const forgotPasswordSchema= yup.object({
 	email: emailValidation,
 })
+
+
+export const resetPasswordSchema= yup.object({
+	pass
+})
