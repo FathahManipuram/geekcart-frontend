@@ -9,26 +9,31 @@ const emailValidation = yup
 
 const passwordValidation= yup
 	.string()
-	.min(8, "Minimum 8 characters")
 	.matches(/[a-z]/, "Must contain at least one lowercase letter")
 	.matches(/[A-Z]/,  "Must contain at least one uppercase letter")
 	.matches(/[0-9]/,  "Must contain at least one number")
 	.matches(/[@$!%*?&]/, "Must contain at least one special character (@$!%*?&)")
+	.min(8, "Minimum 8 characters")
 	.max(16, "Maximum characters 16")
 	.required("Password is required")
 
+const confirmPasswordValidation= yup
+ 	.string()
+	.oneOf([yup.ref("password")], "Password must match")
+	.required("Confirm your password")
 
+
+
+//Login
 export const loginSchema= yup.object({
-email: yup
-	.string()
-	.email("Enter a valid email")
-	.required("Email is required"),
+email: emailValidation,
 password: yup
-.string().min(8, "Minimum 8 character").required("Password is required")
+.string()
+.required("Password is required")
 })
 
 
-
+//Register
 export const registerSchema= yup.object({
 	fullName:yup
 	.string()
@@ -40,18 +45,17 @@ export const registerSchema= yup.object({
 
 	password: passwordValidation,
 
-	confirmPassword: yup
-	.string()
-	.oneOf([yup.ref("password")], "Password must match")
-	.required("Confirm your password"),
-
+	confirmPassword: confirmPasswordValidation,
 })
 
+
+//Forgot password
 export const forgotPasswordSchema= yup.object({
 	email: emailValidation,
 })
 
-
+//Reset password
 export const resetPasswordSchema= yup.object({
-	pass
+	password: passwordValidation,
+	confirmPassword: confirmPasswordValidation
 })
