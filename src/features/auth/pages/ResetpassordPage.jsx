@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom'
 const ResetpassordPage = () => {
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>
-		<Card className="w-105 p-8 rounded-none">
-			<CardHeader>
-				<CardTitle className="text-3xl font-extrabold">
+		<Card className="w-105 p-8 rounded-none shadow-lg">
+			<CardHeader className="space-y-2">
+				<CardTitle className="text-2xl font-extrabold">
 					Create New Password
 				</CardTitle>
 				<p className='text-sm text-muted-foreground'>Choose a strong password for your account.</p>
