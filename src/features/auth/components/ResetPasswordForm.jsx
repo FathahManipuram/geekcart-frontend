@@ -29,7 +29,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           />
           <button
             onClick={() => setShow(!show)}
-            className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground"
+            className="absolute translate-y-1/2 right-2 top-2 text-muted-foreground"
           >
             {show ? <EyeClosed size={20} /> : <Eye size={20} />}
           </button>
