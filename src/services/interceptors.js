@@ -10,12 +10,15 @@ export const setupInterceptors=()=>{
 				config.headers.Authorization= `Bearer ${token}`
 			}
 		return config
-	}),
-	(error)=> Promise.reject(error);
+	},
+	(error)=> Promise.reject(error)
+	);
+	
 
 	api.interceptors.response.use(
 		(response)=> response.data,
-		(error)=>{
+		async (error)=>{
+			console.log("Errorconfig: ", error.config)
 			const message= error.response?.data?.message||error.message||"Something went wrong"
 
 				toast.error(message)

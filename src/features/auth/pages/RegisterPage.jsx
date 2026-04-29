@@ -5,11 +5,23 @@ import { CardContent } from '@/shared/components/ui/card'
 import React from 'react'
 import RegisterForm from '../components/RegisterForm'
 import { FcGoogle } from "react-icons/fc"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { registerApi } from '../api/auth.api'
+import { toast } from 'sonner'
 
 const RegisterPage = () => {
+	const navigate= useNavigate()
+	
 	const handleRegister= async(data)=>{
-		console.log("Register Data: ",data)
+		try{
+		console.log("registerData: ", data)
+		const res= await registerApi(data)
+		toast.success(res.message)
+		navigate("/verify-otp", {state: {email: data.email}})
+		
+		}catch(err){
+			console.error("Error",err)
+		}
 	}
   return (
 	  <div className='min-h-screen flex items-center justify-center bg-background'>

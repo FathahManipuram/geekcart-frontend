@@ -2,12 +2,27 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui
 import React from 'react'
 import LoginForm from '../components/LoginForm'
 import { FcGoogle } from 'react-icons/fc'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/auth.store'
+import { toast } from 'sonner'
 
 
 const LoginPage = () => {
+	const navigate= useNavigate()
+	const login= useAuthStore((state)=> state.login)
+
 	const handleLogin= async(data)=>{
 		console.log("Login data:", data)
+		try{
+			console.log("Trying to fetch....")
+			await login(data)
+			toast.success("Login successful")
+			navigate("/reset-password")
+		} catch(err){
+			console.log("error:", err)
+		
+		}
+		
 	}
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>

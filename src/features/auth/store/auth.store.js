@@ -5,22 +5,39 @@ import { storage } from "@/services/storage"
 export const useAuthStore= create((set)=>({
 	user: null,
 	loading: false,
+	error: null,
 
 	login: async(data)=>{
 		try{
-			set({loading: true})
+			set({loading: true, error: null})
 			const res= await loginApi(data)
+			const {user, accessToken, refreshToken}= res.data
 
 			set({
-				user: res.data.user,
+				user,
 				loading: false,
 			});
 
-			storage.set("accessToken", res.data.token)
+			storage.set("accessToken", accessToken)
+			storage.set("refreshToken", refreshToken)
 			return res
 		} catch(error){
-			set({loading: false})
+			const message= error.response?.data?.message || "Login failed"
+
+			set({loading: false,
+				error: message,
+			})
+			
 			throw error
 		}
+	},
+
+	logout: ()=>{
+		storage.remove("accessToken")
+
+		set({
+			user: null,
+			error: null,
+		})
 	}
 }))
