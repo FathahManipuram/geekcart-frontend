@@ -1,6 +1,6 @@
 import React from 'react'
 
-const categoriesSection = () => {
+const CategoriesSection = () => {
   return (
 	<section>
 		<h2 className='text-lg font-semibold mb-4'>
@@ -10,4 +10,4 @@ const categoriesSection = () => {
   )
 }
 
-export default categoriesSection
+export default CategoriesSection
