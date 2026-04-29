@@ -1,9 +1,13 @@
 import React from 'react'
 
-const CategoryCard = () => {
+const CategoryCard = ({title ,image}) => {
   return (
-	<div>
-	  
+	<div className='relative'>
+	 <img src={image} alt={title} 
+	 />
+	 <div className='absolute'>
+		<p>{title}</p>
+	 </div>
 	</div>
   )
 }
