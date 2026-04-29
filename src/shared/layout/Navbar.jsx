@@ -2,28 +2,36 @@ import { Search, ShoppingBag, User } from 'lucide-react'
 import React from 'react'
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent } from '../components/ui/navigation-menu' 
 import { NavLink } from 'react-router-dom'
+import Logo from '../components/ui/Logo'
+
+
+const navLinkClass= ({isActive})=>{
+	isActive 
+	? "text-primary border-b-2"
+	: "hover:text-primary"
+}
 
 const Navbar = () => {
   return (
-<header className='w-full bg-background '>
-	<div className='flex items-center justify-between bg-card px-6 py-3 rounded-full shadow-sm'>
+<header className='w-full px-15 py-8'>
+	<div className='flex items-center justify-between bg-secondary px-6 py-3 rounded-full shadow-sm'>
 {/* Logo */}
-		<h1 className='font-bold text-lg'>GeekCart</h1>
+		<Logo/>
 
 
 {/* Nav */}
 		<NavigationMenu>
 			<NavigationMenuList className="gap-2">
 				<NavigationMenuItem>
-					<NavLink to="/">Shop</NavLink>
+					<NavLink to="/" end className={navLinkClass}>Shop</NavLink>
 				</NavigationMenuItem>
 
 				<NavigationMenuItem>
-					<NavLink to="/collections">Collections</NavLink>
+					<NavLink to="/collections" className={navLinkClass}>Collections</NavLink>
 				</NavigationMenuItem>
 
 				<NavigationMenuItem>
-					<NavLink to="/offers">Offers</NavLink>
+					<NavLink to="/offers" className={navLinkClass}>Offers</NavLink>
 				</NavigationMenuItem>
 
 				<NavigationMenuItem>
@@ -32,9 +40,9 @@ const Navbar = () => {
 					</NavigationMenuTrigger>
 					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
 						<div className='flex flex-col gap-2 w-37.5'>
-							<NavLink to="/wallet" className="hover:text-primary">Wallet</NavLink>
-							<NavLink to="/coins" className="hover:text-primary">Coins</NavLink>
-							<NavLink to="/wishlist" className="hover:text-primary">My Wishlist</NavLink>
+							<NavLink to="/wallet" className={navLinkClass}>Wallet</NavLink>
+							<NavLink to="/coins" className={navLinkClass}>Coins</NavLink>
+							<NavLink to="/wishlist" className={navLinkClass}>My Wishlist</NavLink>
 						</div>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
