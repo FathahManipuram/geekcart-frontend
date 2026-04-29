@@ -1,23 +1,28 @@
+import { toast } from "sonner";
 import api from "./axios"
+import { storage } from "./storage";
 
 export const setupInterceptors=()=>{
 	api.interceptors.request.use(
 		(config)=>{
-			const token= localStorage.getItem("accessToken");
+			const token= storage.get("accessToken");
 			if(token){
 				config.headers.Authorization= `Bearer ${token}`
 			}
 		return config
-	}),
-	(error)=> Promise.reject(error);
+	},
+	(error)=> Promise.reject(error)
+	);
+	
 
 	api.interceptors.response.use(
-		(res)=> res,
-		(error)=>{
-			if(error.response?.status===401){
-				console.log("Unothorized- handle logout")
-			}
-			return Promise.error(error)
+		(response)=> response.data,
+		async (error)=>{
+			console.log("Errorconfig: ", error.config)
+			const message= error.response?.data?.message||error.message||"Something went wrong"
+
+				toast.error(message)
+			return Promise.reject(error)
 		}
 	)
 }
