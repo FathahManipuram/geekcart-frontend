@@ -4,6 +4,7 @@ import RegisterPage from "@/features/auth/pages/RegisterPage";
 import ResetpassordPage from "@/features/auth/pages/ResetpassordPage";
 import VerifyOtpPage from "@/features/auth/pages/VerifyOtpPage";
 import HomePage from "@/features/home/pages/HomePage";
+import ProfilePage from "@/features/user/pages/ProfilePage";
 import MainLayout from "@/shared/layout/MainLayout";
 import { createBrowserRouter } from "react-router-dom";
 
@@ -16,6 +17,10 @@ export const router= createBrowserRouter([
 			{
 				index: true,
 				element: <HomePage/>
+			},
+			{
+				path: "/profile",
+				element: <ProfilePage/>
 			}
 		]
 		
