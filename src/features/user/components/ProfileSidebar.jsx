@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 const ProfileSidebar = () => {
 	const {user, logout}= useAuthStore()
   return (
-	<div className='bg-card p-6 rounded-lg w-65 space-y-6'>
+	<div className='bg-card p-6 rounded-xl w-65 space-y-6'>
 	  {/* profile */}
 	  <div className='flex flex-col items-center text-center bg-amber-950'>
 		<img src="" alt="" className='w-20 h-20 rounded-full'/>
