@@ -5,11 +5,13 @@ import { NavLink } from 'react-router-dom'
 import Logo from '../components/ui/Logo'
 
 
-const navLinkClass= ({isActive})=>{
-	isActive 
-	? "text-primary border-b-2"
-	: "hover:text-primary"
-}
+const navLinkClass= ({isActive})=>
+`text-sm font-medium transition-colors ${
+isActive 
+	? "text-primary border-b-3 border-primary font-bold"
+	: "text-foreground/70 hover:text-primary"
+}`;
+
 
 const Navbar = () => {
   return (
@@ -34,16 +36,16 @@ const Navbar = () => {
 					<NavLink to="/offers" className={navLinkClass}>Offers</NavLink>
 				</NavigationMenuItem>
 
-				<NavigationMenuItem>
+				<NavigationMenuItem className="relative">
 					<NavigationMenuTrigger>
 						More
 					</NavigationMenuTrigger>
 					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-						<div className='flex flex-col gap-2 w-37.5'>
-							<NavLink to="/wallet" className={navLinkClass}>Wallet</NavLink>
-							<NavLink to="/coins" className={navLinkClass}>Coins</NavLink>
-							<NavLink to="/wishlist" className={navLinkClass}>My Wishlist</NavLink>
-						</div>
+						<ul className='flex flex-col gap-2 w-37.5'>
+							<li><NavLink to="/wallet" className={navLinkClass}>Wallet</NavLink></li>
+							<li><NavLink to="/coins" className={navLinkClass}>Coins</NavLink></li>
+							<li><NavLink to="/wishlist" className={navLinkClass}>My Wishlist</NavLink></li>
+						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 
@@ -52,13 +54,13 @@ const Navbar = () => {
 						Account
 					</NavigationMenuTrigger>
 					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-						<div className='flex flex-col gap-2 w-37.5'>
-							<NavLink to="/profile" className="hover:text-primary">Profile</NavLink>
-							<NavLink to="/saved-address" className="hover:text-primary">Saved Address</NavLink>
-							<NavLink to="/order-history" className="hover:text-primary">Order History</NavLink>
-							<NavLink to="/payments" className="hover:text-primary">Payments</NavLink>
-							<NavLink to="/logout" className="hover:text-primary">Sign Out</NavLink>
-						</div>
+						<ul className='flex flex-col gap-2 w-37.5'>
+							<li><NavLink to="/profile" className="hover:text-primary">Profile</NavLink></li>
+							<li><NavLink to="/saved-address" className="hover:text-primary">Saved Address</NavLink></li>
+							<li><NavLink to="/order-history" className="hover:text-primary">Order History</NavLink></li>
+							<li><NavLink to="/payments" className="hover:text-primary">Payments</NavLink></li>
+							<li><NavLink to="/logout" className="hover:text-primary">Sign Out</NavLink></li>
+						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 			</NavigationMenuList>
