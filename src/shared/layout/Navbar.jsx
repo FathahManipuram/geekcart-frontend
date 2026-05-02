@@ -3,6 +3,7 @@ import React from 'react'
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent } from '../components/ui/navigation-menu' 
 import { NavLink } from 'react-router-dom'
 import Logo from '../components/ui/Logo'
+import { useAuthStore } from '@/features/auth/store/auth.store'
 
 
 const navLinkClass= ({isActive})=>
@@ -14,6 +15,8 @@ isActive
 
 
 const Navbar = () => {
+	const user = useAuthStore((state)=> state.user)
+	console.log("User: ",user)
   return (
 <header className='w-full px-15 py-8'>
 	<div className='flex items-center justify-between bg-secondary px-6 py-3 rounded-full shadow-sm'>
@@ -51,15 +54,21 @@ const Navbar = () => {
 
 				<NavigationMenuItem>
 					<NavigationMenuTrigger>
-						Account
+						{user? "Account": "Login"}
 					</NavigationMenuTrigger>
 					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
 						<ul className='flex flex-col gap-2 w-37.5'>
+							{!user && (
+								<li><NavLink to="/login" className="hover:text-primary">Login</NavLink></li>
+							) }
 							<li><NavLink to="/profile" className="hover:text-primary">Profile</NavLink></li>
 							<li><NavLink to="/saved-address" className="hover:text-primary">Saved Address</NavLink></li>
 							<li><NavLink to="/order-history" className="hover:text-primary">Order History</NavLink></li>
 							<li><NavLink to="/payments" className="hover:text-primary">Payments</NavLink></li>
-							<li><NavLink to="/logout" className="hover:text-primary">Sign Out</NavLink></li>
+							{user && (
+								<li><NavLink to="/logout" className="hover:text-primary">Sign Out</NavLink></li>
+							)}
+							
 						</ul>
 					</NavigationMenuContent>
 				</NavigationMenuItem>

@@ -17,7 +17,7 @@ const LoginPage = () => {
 			console.log("Trying to fetch....")
 			await login(data)
 			toast.success("Login successful")
-			navigate("/reset-password")
+			navigate("/")
 		} catch(err){
 			console.log("error:", err)
 		

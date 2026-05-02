@@ -59,3 +59,8 @@ export const resetPasswordSchema= yup.object({
 	password: passwordValidation,
 	confirmPassword: confirmPasswordValidation
 })
+
+
+export const emailChangeValidation= yup.object({
+	email: emailValidation,
+})

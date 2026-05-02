@@ -36,7 +36,7 @@ const [show, setShow]=useState(true)
 			<div className='relative'>
 				<Input type= {show? "password": "text"} placeholder="Enter your password"
 			{...register("password")}/>
-				<button onClick={()=> setShow(!show)} className='absolute translate-y-1/2 right-2 top-1 text-muted-foreground'>{show ? <EyeClosed size={20}/> :<Eye size={20}/>}</button>
+				<button type='button' onClick={()=> setShow(!show)} className='absolute translate-y-1/2 right-2 top-1 text-muted-foreground'>{show ? <EyeClosed size={20}/> :<Eye size={20}/>}</button>
 			</div>
 			{errors.password && (
 				<p className='text-red-500 text-sm'>{errors.password.message}</p>

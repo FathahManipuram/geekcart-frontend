@@ -8,15 +8,15 @@ const ProfileSidebar = () => {
   return (
 	<div className='bg-card p-6 rounded-xl w-65 space-y-6'>
 	  {/* profile */}
-	  <div className='flex flex-col items-center text-center bg-amber-950'>
-		<img src="" alt="" className='w-20 h-20 rounded-full'/>
+	  <div className='flex flex-col items-center text-center'>
+		<img src={user?.avatar} alt={user?.fullName} className='w-20 h-20 rounded-full'/>
 		<h2 className='font-semibold mt-2'>{user?.name}</h2>
 		<p className='text-sm text-muted-forgrounf'>{user?.email}</p>
 	  </div>
 
 	  {/* menu */}
-	  <ul className='space-y-2 text-sm'>
-		<li>
+	  <ul className='space-y-5 text-sm'>
+		<li className='bg-amber-200 py-2.5 px-3 rounded-lg'>
 			<NavLink onClick={logout} className="flex items-center gap-2">
 			<User size={16}/> Account Details
 			</NavLink>
