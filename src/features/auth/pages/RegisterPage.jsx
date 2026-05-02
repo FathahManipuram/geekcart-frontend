@@ -1,0 +1,60 @@
+import { CardHeader } from '@/shared/components/ui/card'
+import { Card } from '@/shared/components/ui/card'
+import { CardTitle } from '@/shared/components/ui/card'
+import { CardContent } from '@/shared/components/ui/card'
+import React from 'react'
+import RegisterForm from '../components/RegisterForm'
+import { FcGoogle } from "react-icons/fc"
+import { Link, useNavigate } from 'react-router-dom'
+import { registerApi } from '../api/auth.api'
+import { toast } from 'sonner'
+
+const RegisterPage = () => {
+	const navigate= useNavigate()
+	
+	const handleRegister= async(data)=>{
+		try{
+		console.log("registerData: ", data)
+		const res= await registerApi(data)
+		toast.success(res.message)
+		navigate("/verify-otp", {state: {email: data.email}})
+		
+		}catch(err){
+			console.error("Error",err)
+		}
+	}
+  return (
+	  <div className='min-h-screen flex items-center justify-center bg-background'>
+		<Card className="w-120 shadow-lg rounded-none p-8">
+			<CardHeader>
+				<CardTitle className="text-3xl font-extrabold">
+					Create Account
+				</CardTitle>
+				<p className='text-sm text-muted-foreground'>Enter your details to begin your bespoke journey.</p>
+			</CardHeader>
+
+			<CardContent>
+				<RegisterForm onSubmit={handleRegister}/>
+
+<div className="flex items-center gap-4 my-6">
+  <div className="flex-1 h-px bg-border/60" />
+  
+  <span className="text-xs tracking-widest text-muted-foreground uppercase">
+    Or continue with
+  </span>
+  
+  <div className="flex-1 h-px bg-border/60" />
+</div>
+
+				<button type='button' className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
+
+				<p className='text-center font-medium text-xs'>Already have an account? {" "}
+					<Link to="/login" className='text-primary cursor-pointer font-bold'>Login</Link>
+				</p>
+			</CardContent>
+		</Card>
+	  </div>
+  )
+}
+
+export default RegisterPage
