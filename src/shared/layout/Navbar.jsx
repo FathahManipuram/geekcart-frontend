@@ -1,9 +1,10 @@
 import { Search, ShoppingBag, User } from 'lucide-react'
 import React from 'react'
 import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent } from '../components/ui/navigation-menu' 
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import Logo from '../components/ui/Logo'
 import { useAuthStore } from '@/features/auth/store/auth.store'
+import { toast } from 'sonner'
 
 
 const navLinkClass= ({isActive})=>
@@ -16,6 +17,18 @@ isActive
 
 const Navbar = () => {
 	const user = useAuthStore((state)=> state.user)
+	const logout= useAuthStore((state)=> state.logout)
+	const navigate= useNavigate()
+
+	const handleLogout= ()=>{
+		try{
+			logout()
+			toast.success("Logout successfully")
+			navigate("/")
+		}catch(err){
+			console.log(err)
+		}
+	}
 	console.log("User: ",user)
   return (
 <header className='w-full px-15 py-8'>
@@ -66,7 +79,7 @@ const Navbar = () => {
 							<li><NavLink to="/order-history" className="hover:text-primary">Order History</NavLink></li>
 							<li><NavLink to="/payments" className="hover:text-primary">Payments</NavLink></li>
 							{user && (
-								<li><NavLink to="/logout" className="hover:text-primary">Sign Out</NavLink></li>
+								<li><NavLink onClick={()=> handleLogout()} className="hover:text-primary">Sign Out</NavLink></li>
 							)}
 							
 						</ul>

@@ -14,3 +14,5 @@ export const forgotPassword = (data)=> api.post("/auth/forgot-password", data)
 export const verifyOtp= (data)=> api.post("/auth/verify-otp", data)
 
 export const resetPassword= (data)=> api.post("/auth/reset-password", data)
+
+export const logout= ()=> api.post("/auth/logout")

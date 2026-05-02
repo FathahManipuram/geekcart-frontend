@@ -2,6 +2,7 @@ import { create } from "zustand"
 import { loginApi } from "../api/auth.api"
 import { storage } from "@/services/storage"
 import { getProfileApi, updateProfileApi } from "@/features/user/api/user.api"
+import { toast } from "sonner"
 
 const storedUser= storage.get("user")
 
