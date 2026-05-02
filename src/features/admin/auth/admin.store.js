@@ -6,13 +6,13 @@ export const useAdminStore= create((set, get)=>({
 	page:1,
 	limit:10,
 	search:"",
-	loading: false
+	loading: false,
 
 
 	setSearch: (search)=> set({search}),
 
 	fetchUser: async()=> {
-		const {page:, limit, search}=get()
+		const {page, limit, search}=get()
 		set({loading: true})
 		try{
 			const res= await getUserApi({page, limit, search})

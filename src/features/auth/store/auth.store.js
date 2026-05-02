@@ -19,8 +19,7 @@ export const useAuthStore= create((set)=>({
 			storage.set("user", user)
 			storage.set("accessToken", accessToken)
 			storage.set("refreshToken", refreshToken)
-console.log("LOGIN: ",res)
-console.log("Refreshtoken: ",refreshToken)
+
 			set({
 				user,
 				loading: false,

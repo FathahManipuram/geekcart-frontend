@@ -1,13 +1,15 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card'
 import React from 'react'
-import LoginForm from '../components/LoginForm'
+
 import { FcGoogle } from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/auth.store'
+
 import { toast } from 'sonner'
+import { useAuthStore } from '@/features/auth/store/auth.store'
+import LoginForm from '../components/LoginForm'
 
 
-const LoginPage = () => {
+const AdminLogin = () => {
 	const navigate= useNavigate()
 	const login= useAuthStore((state)=> state.login)
 
@@ -15,15 +17,15 @@ const LoginPage = () => {
 		console.log("Login data:", data)
 		try{
 			const res= await login(data)
-			const {user}= res.data
+			const {user}=
+			res.data
 			console.log("REs", user)
 			toast.success("Login successful")
 			if(user.role=== "admin"){
-				navigate("/admin/login")
-			}else{
 				navigate("/")
 			}
-			
+
+			navigate("/")
 		} catch(err){
 			console.log("error:", err)
 		
@@ -37,11 +39,10 @@ const LoginPage = () => {
 			<CardTitle className="text-3xl font-extrabold">
 				Welcome Back
 			</CardTitle>
-			<p className='text-sm text-muted-foreground'>Please enter your details to access your account.</p>
+			<p className='text-sm text-muted-foreground'>Please authenticate to access the dashboard.</p>
 		</CardHeader>
 		<CardContent>
 			<LoginForm onSubmit={handleLogin}/>
-
 			<div className="flex items-center gap-4 my-6">
   <div className="flex-1 h-px bg-border/60" />
   
@@ -53,14 +54,10 @@ const LoginPage = () => {
 </div>
 
 				<button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
-
-				<p className='text-center font-light text-xs'>New to GeekCart? {" "}
-					<Link to="/register" className='text-primary cursor-pointer font-bold'>Create an account</Link>
-				</p>
 		</CardContent>
 	  </Card>
 	</div>
   )
 }
 
-export default LoginPage
+export default AdminLogin
