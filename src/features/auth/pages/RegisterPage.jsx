@@ -8,19 +8,25 @@ import { FcGoogle } from "react-icons/fc"
 import { Link, useNavigate } from 'react-router-dom'
 import { registerApi } from '../api/auth.api'
 import { toast } from 'sonner'
+import { OTP_TYPES } from '@/shared/constants/otpTypes'
+import { useAuthStore } from '../store/auth.store'
+import { GoogleLogin } from '@react-oauth/google'
 
 const RegisterPage = () => {
 	const navigate= useNavigate()
+	const loginWithGoogle= useAuthStore((state)=> state.loginWithGoogle)
 	
 	const handleRegister= async(data)=>{
 		try{
-		console.log("registerData: ", data)
 		const res= await registerApi(data)
 		toast.success(res.message)
-		navigate("/verify-otp", {state: {email: data.email}})
+		navigate("/verify-otp", {state: {
+			email: data.email, 
+			type: OTP_TYPES.EMAIL_VERIFY,
+			}})
 		
 		}catch(err){
-			console.error("Error",err)
+			toast.error(err.response?.data?.message || "Registration failed")
 		}
 	}
   return (
@@ -46,9 +52,23 @@ const RegisterPage = () => {
   <div className="flex-1 h-px bg-border/60" />
 </div>
 
-				<button type='button' className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
+				{/* <button type='button' className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button> */}
+				<GoogleLogin shape='circle' onSuccess={async(credentialResponse)=>{
+					try{
+						const token= credentialResponse.credential;
+						await loginWithGoogle(token)
+						toast.success("Google login successful")
+						navigate("/")
+					} catch(err){
+						toast.error("Google login failed")
+					}
+				}}
+				onError={()=>{
+					toast.error("Google login failed")
+				}} className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'
+				/>
 
-				<p className='text-center font-medium text-xs'>Already have an account? {" "}
+				<p className='text-center font-medium text-xs mt-6'>Already have an account? {" "}
 					<Link to="/login" className='text-primary cursor-pointer font-bold'>Login</Link>
 				</p>
 			</CardContent>

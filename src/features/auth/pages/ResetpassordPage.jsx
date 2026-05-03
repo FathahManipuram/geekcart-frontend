@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ResetPasswordForm from '../components/ResetPasswordForm'
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/ui/card'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
@@ -8,15 +8,20 @@ import { toast } from 'sonner'
 const ResetpassordPage = () => {
 	const location = useLocation()
 	const navigate= useNavigate()
+const email= location.state.email;
+	useEffect(()=>{
+		if(!email){
+			toast.error("Session expired. Please try again")
+			navigate("/forgot-password")
+		}
+	}, [email, navigate])
 
-	const email= location.state.email;
-	const otp= location.state.otp;
+	
 
 	const handleSubmit= async(data)=>{
 		try{
 			await resetPasswordApi({
 				email,
-				otp,
 				newPassword: data.password,
 			})
 

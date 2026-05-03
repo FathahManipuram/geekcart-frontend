@@ -20,8 +20,8 @@ export const setupInterceptors=()=>{
 		async (error)=>{
 			console.log("Errorconfig: ", error.config)
 			const message= error.response?.data?.message||error.message||"Something went wrong"
-
-				toast.error(message)
+			console.log(message)
+				// toast.error(message)
 			return Promise.reject(error)
 		}
 	)

@@ -18,7 +18,7 @@ const VerifyOtpPage = () => {
 	useEffect(()=>{
 		if(!email || !type){
 		toast.error("Session expired. Please try again")
-		navigate("/forget-password")
+		navigate("/forgot-password")
 	}
 	}, [email, type, navigate])
 
@@ -35,11 +35,12 @@ const VerifyOtpPage = () => {
 	const handleVerify= async()=>{
 		try{
 			await verifyOtpApi({email, otp, type})
-			toast.success("Email verified successfully")
-			if(type===OTP_TYPES.EMAIL_VERIFY){
+			toast.success("OTP verified successfully")
+
+			if(type === OTP_TYPES.EMAIL_VERIFY){
 				navigate("/login")
 			}else if(type===OTP_TYPES.PASSWORD_RESET){
-				navigate("/reset-password", {state: {email, otp},})
+				navigate("/reset-password", {state: {email},})
 			}
 			
 		}catch(error){

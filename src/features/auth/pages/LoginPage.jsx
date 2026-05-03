@@ -17,7 +17,6 @@ const LoginPage = () => {
 		try{
 			const res= await login(data)
 			const {user}= res.data
-			console.log("REs", user)
 			toast.success("Login successful")
 			if(user.role=== "admin"){
 				navigate("/admin/login")
@@ -26,7 +25,7 @@ const LoginPage = () => {
 			}
 			
 		} catch(err){
-			console.log("error:", err)
+			toast.error(err.response?.data?.message || "Login failed")
 		
 		}
 		
