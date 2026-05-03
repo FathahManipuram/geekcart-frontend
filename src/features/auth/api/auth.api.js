@@ -16,3 +16,5 @@ export const verifyOtp= (data)=> api.post("/auth/verify-otp", data)
 export const resetPassword= (data)=> api.post("/auth/reset-password", data)
 
 export const logout= ()=> api.post("/auth/logout")
+
+export const googleLoginApi= (token)=> api.post("/auth/google-login", {token})

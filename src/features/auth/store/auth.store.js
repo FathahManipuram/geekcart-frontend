@@ -1,5 +1,5 @@
 import { create } from "zustand"
-import { loginApi } from "../api/auth.api"
+import { googleLoginApi, loginApi } from "../api/auth.api"
 import { storage } from "@/services/storage"
 import { getProfileApi, updateProfileApi } from "@/features/user/api/user.api"
 import { toast } from "sonner"
@@ -33,6 +33,28 @@ export const useAuthStore= create((set)=>({
 				error: message,
 			})
 			
+			throw error
+		}
+	},
+
+	loginWithGoogle: async (token)=>{
+		try{
+			set({loading: true})
+
+			const  res= await googleLoginApi(token)
+			const {user, accessToken}=res.data
+
+			storage.set("user", user)
+			storage.set("accessToken", accessToken)
+
+			set({
+				user,
+				loading: false,
+			})
+
+			return res
+		}catch(error){
+			set({loading: false})
 			throw error
 		}
 	},

@@ -5,11 +5,12 @@ import { FcGoogle } from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/auth.store'
 import { toast } from 'sonner'
-
+import { GoogleLogin } from '@react-oauth/google'
 
 const LoginPage = () => {
 	const navigate= useNavigate()
 	const login= useAuthStore((state)=> state.login)
+	const loginWithGoogle= useAuthStore((state)=> state.loginWithGoogle)
 
 	const handleLogin= async(data)=>{
 		console.log("Login data:", data)
@@ -53,6 +54,21 @@ const LoginPage = () => {
 </div>
 
 				<button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
+
+				<GoogleLogin onSuccess={async(credentialResponse)=>{
+					try{
+						const token= credentialResponse.credential;
+						await loginWithGoogle(token)
+						toast.success("Google login successful")
+					} catch(err){
+						toast.error("Google login failed")
+					}
+				}}
+				onError={()=>{
+					console.log("Google login failed")
+				}} className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'
+				/>
+
 
 				<p className='text-center font-light text-xs'>New to GeekCart? {" "}
 					<Link to="/register" className='text-primary cursor-pointer font-bold'>Create an account</Link>
