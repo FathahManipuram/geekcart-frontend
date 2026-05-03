@@ -1,12 +1,12 @@
 import { create } from "zustand"
 import { googleLoginApi, loginApi } from "../api/auth.api"
 import { storage } from "@/services/storage"
-import { getProfileApi, updateProfileApi } from "@/features/user/api/user.api"
+import { getProfileApi, updateProfileApi, uploadProfieImageApi } from "@/features/user/api/user.api"
 import { toast } from "sonner"
 
 const storedUser= storage.get("user")
 
-export const useAuthStore= create((set)=>({
+export const useAuthStore= create((set,get)=>({
 	user: storedUser || null,
 	loading: false,
 	error: null,
@@ -90,6 +90,7 @@ export const useAuthStore= create((set)=>({
 
 	//Update profile
 	updateProfile: async(data)=>{
+		
 		try{
 			set({loading: true})
 			const res= await updateProfileApi(data)
@@ -102,5 +103,30 @@ export const useAuthStore= create((set)=>({
 			set({loading: false})
 			throw err
 		}
+	},
+
+
+	//Upload profile Image
+	uploadProfileImage: async (file)=>{
+		try{
+
+			const formData= new FormData();
+			formData.append("image", file)
+			set({loading: true})
+			const res= await uploadProfieImageApi(formData)
+			const updatedAvatar= res.data.avatar;
+
+			const updatedUser= {...get().user, avatar: updatedAvatar}
+			storage.set("user", updatedUser)
+
+			set({
+				user: updatedUser,
+				loading: false,
+			})
+		}catch(err){
+			set({loading: false})
+			throw err
+		}
 	}
+
 }))

@@ -9,7 +9,7 @@ const ProfileSidebar = () => {
 	<div className='bg-card p-6 rounded-xl w-65 space-y-6'>
 	  {/* profile */}
 	  <div className='flex flex-col items-center text-center'>
-		<img src={user?.avatar} alt={user?.fullName} className='w-20 h-20 rounded-full'/>
+		<img src={user?.avatar} alt={user?.fullName} className='w-20 h-20 rounded-full object-cover border'/>
 		<h2 className='font-semibold mt-2'>{user?.name}</h2>
 		<p className='text-sm text-muted-forgrounf'>{user?.email}</p>
 	  </div>
