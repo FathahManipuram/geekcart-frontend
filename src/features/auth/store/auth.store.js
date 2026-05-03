@@ -37,15 +37,17 @@ export const useAuthStore= create((set)=>({
 		}
 	},
 
+//Login with google
 	loginWithGoogle: async (token)=>{
 		try{
 			set({loading: true})
 
 			const  res= await googleLoginApi(token)
-			const {user, accessToken}=res.data
-
+			const {user, accessToken, refreshToken}=res.data
+			console.log("LoginwitGoogle:", user, accessToken, refreshToken)
 			storage.set("user", user)
 			storage.set("accessToken", accessToken)
+			storage.set("refreshToken", refreshToken)
 
 			set({
 				user,

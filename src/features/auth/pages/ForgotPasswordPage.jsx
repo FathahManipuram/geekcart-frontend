@@ -2,12 +2,21 @@ import React from 'react'
 import ForgotPasswordForm from '../components/ForgotPasswordForm'
 import { Card, CardHeader, CardTitle, CardContent} from '@/shared/components/ui/card'
 import { Link, useNavigate } from 'react-router-dom'
+import { forgotPasswordApi } from '../api/auth.api'
+import { toast } from 'sonner'
+import { OTP_TYPES } from '@/shared/constants/otpTypes'
+
 
 const ForgotPasswordPage = () => {
 const navigate= useNavigate()
 	const handleSubmit= async(data)=>{
-		console.log("Email: ", data)
-		navigate("/verify-otp")
+		try{
+			const res= await forgotPasswordApi(data)
+			toast.success(res.message || "OTP send successfully")
+			navigate("/verify-otp", {state:{email:data.email, type: OTP_TYPES.PASSWORD_RESET,}})
+		}catch(err){
+			toast.error(err.response?.data?.message || "Something wentt wrong")
+		}
 	}
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>

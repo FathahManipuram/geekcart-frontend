@@ -1,9 +1,31 @@
 import React from 'react'
 import ResetPasswordForm from '../components/ResetPasswordForm'
 import { Card, CardHeader, CardTitle, CardContent } from '@/shared/components/ui/card'
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { resetPasswordApi } from '../api/auth.api'
+import { toast } from 'sonner'
 
 const ResetpassordPage = () => {
+	const location = useLocation()
+	const navigate= useNavigate()
+
+	const email= location.state.email;
+	const otp= location.state.otp;
+
+	const handleSubmit= async(data)=>{
+		try{
+			await resetPasswordApi({
+				email,
+				otp,
+				newPassword: data.password,
+			})
+
+			toast.success("Password reset successfully");
+			navigate("/login")
+		} catch(err){
+			toast.error(err.response?.data?.message || "Reset failed")
+		}
+	}
   return (
 	<div className='min-h-screen flex items-center justify-center bg-background'>
 		<Card className="w-110 md:p-8 rounded-none shadow-lg ">
@@ -14,7 +36,7 @@ const ResetpassordPage = () => {
 				<p className='text-sm text-muted-foreground'>Choose a strong password for your account.</p>
 			</CardHeader>
 			<CardContent>
-				<ResetPasswordForm/>
+				<ResetPasswordForm onSubmit={handleSubmit}/>
 			</CardContent>
 				<div className='flex item-center justify-around text-xs'>
 					<Link to="/login" className='font-bold hover:underline'>Login</Link>

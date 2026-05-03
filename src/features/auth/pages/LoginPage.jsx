@@ -53,13 +53,14 @@ const LoginPage = () => {
   <div className="flex-1 h-px bg-border/60" />
 </div>
 
-				<button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
+				{/* <button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button> */}
 
-				<GoogleLogin onSuccess={async(credentialResponse)=>{
+				<GoogleLogin shape='circle' onSuccess={async(credentialResponse)=>{
 					try{
 						const token= credentialResponse.credential;
 						await loginWithGoogle(token)
 						toast.success("Google login successful")
+						navigate("/")
 					} catch(err){
 						toast.error("Google login failed")
 					}
@@ -70,7 +71,7 @@ const LoginPage = () => {
 				/>
 
 
-				<p className='text-center font-light text-xs'>New to GeekCart? {" "}
+				<p className='text-center font-light text-xs mt-8'>New to GeekCart? {" "}
 					<Link to="/register" className='text-primary cursor-pointer font-bold'>Create an account</Link>
 				</p>
 		</CardContent>
