@@ -17,6 +17,7 @@ const LoginPage = () => {
 		try{
 			const res= await login(data)
 			const {user}= res.data
+			console.log("loginUser: ",user)
 			toast.success("Login successful")
 			if(user.role=== "admin"){
 				navigate("/admin/login")
@@ -56,7 +57,9 @@ const LoginPage = () => {
 
 				<GoogleLogin shape='circle' onSuccess={async(credentialResponse)=>{
 					try{
+						console.log("googllogCredential",credentialResponse)
 						const token= credentialResponse.credential;
+						console.log("TOKen", token)
 						await loginWithGoogle(token)
 						toast.success("Google login successful")
 						navigate("/")

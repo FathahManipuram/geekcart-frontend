@@ -20,11 +20,12 @@ const email= location.state.email;
 
 	const handleSubmit= async(data)=>{
 		try{
-			await resetPasswordApi({
+			console.log("Resetdata:", data)
+			const res=await resetPasswordApi({
 				email,
 				newPassword: data.password,
 			})
-
+console.log("resetPassRESPO: ", res)
 			toast.success("Password reset successfully");
 			navigate("/login")
 		} catch(err){

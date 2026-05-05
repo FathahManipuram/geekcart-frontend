@@ -1,9 +1,9 @@
 import api from "@/services/axios"
 
 export const getProfileApi= ()=> api.get("/user/profile")
-export const updateProfileApi= (data)=> api.put("/user/profile", data)
+export const updateProfileApi= (data)=> api.patch("/user/profile", data)
 
-export const changeEmailApi= (data)=> api.post("/user/change-email", data)
+export const changeEmailApi= (data)=> api.patch("/user/change-email", data)
 export const verifyEmailChangeApi= (data)=> api.post("/user/verify-email-change", data)
 
 export const uploadProfieImageApi= (file)=> api.post ("/user/profile-image", file, {
@@ -12,3 +12,5 @@ export const uploadProfieImageApi= (file)=> api.post ("/user/profile-image", fil
 	}
 	
 })
+
+export const changePasswordApi= (data)=> api.put("/user/change-password", data)

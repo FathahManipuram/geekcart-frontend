@@ -1,4 +1,3 @@
-import { emailChangeValidation } from '@/features/auth/validations/auth.validation'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
@@ -8,11 +7,14 @@ import { useForm } from 'react-hook-form'
 import { changeEmailApi } from '../api/user.api'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
+import { emailChangeValidation } from '../validations/user.validation'
+import { useAuthStore } from '@/features/auth/store/auth.store'
+import { OTP_TYPES } from '@/shared/constants/otpTypes'
 
 const EmailEditForm = ({user}) => {
-
+const changeEmail= useAuthStore((state)=> state.changeEmail)
 const navigate= useNavigate()
-	const {register, handleSubmit, reset, formState:{errors,}}=useForm({
+	const {register, setFocus, handleSubmit, reset, formState:{errors,isSubmitting}}=useForm({
 		resolver: yupResolver(emailChangeValidation)
 	})
 
@@ -21,17 +23,25 @@ const navigate= useNavigate()
 				reset({
 				email: user?.email || ""
 			})
+			setFocus("email")
 			}
-		},[user, reset])
+		},[user, reset, setFocus])
 
 		const onSubmit= async (data)=>{
+			console.log("emialchange: ", data)
+			const email= data.email.trim().toLowerCase();
+				if(email===user?.email){
+					toast.info("Please enter a different email")
+					return
+				}
 			try{
-				console.log("data", data)
-				const res= await changeEmailApi(data)
+				console.log("emailCHngFORM: ", email)
+				const res= await changeEmail(email)
+				console.log("formEdITFInalResult:", res)
 				toast.success(res.message)
-				navigate("/verify-otp", {state: {email: data.email}})
+				navigate("/verify-otp", {state: {email, type: OTP_TYPES.EMAIL_CHANGE}})
 			}catch(err){
-				console.log(err)
+				toast.error(err.response?.data?.message || "Change Email failed")
 			}
 		}
 
@@ -39,10 +49,10 @@ const navigate= useNavigate()
 	<form onSubmit={handleSubmit(onSubmit)} className='grid grid-cols-1 gap-4 text-sm'>
 		<div>
 			<Label >EMAIL ADDRESS</Label>
-			<Input {...register("email")} type="text" className="h-8"/>
+			<Input {...register("email")} type="email" className="h-8"/>
 			<p className='text-xs text-red-500'>{errors?.email?.message}</p>
 		</div>
-		 <Button type="submit" className="w-full mt-6">Change Email</Button>
+		 <Button type="submit" disabled={isSubmitting} className="w-full mt-6">{isSubmitting ? "Sendinding..." : "Change Email"}</Button>
 	</form>
   )
 }

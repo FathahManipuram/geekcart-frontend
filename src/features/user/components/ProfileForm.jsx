@@ -7,13 +7,21 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { profileSchema } from '../validations/user.validation'
 import { useEffect } from 'react'
+import { formatDateForInput } from '@/shared/utils/date'
 
 
 
 const ProfileForm = ({user, onClose}) => {
 	const {updateProfile, loading}= useAuthStore()
-	const {register, handleSubmit, reset, formState:{errors}}= useForm({
-		resolver:yupResolver(profileSchema),})
+	const {register, handleSubmit, reset, formState:{errors, dirtyFields}}= useForm({
+		resolver:yupResolver(profileSchema),
+		defaultValues: {
+			fullName: "",
+			phoneNumber: "",
+			gender: "",
+			dateOfBirth: "",
+		}
+		})
 
 	useEffect(()=>{
 		if(user){
@@ -21,24 +29,39 @@ const ProfileForm = ({user, onClose}) => {
 			fullName: user?.fullName || "",
 			phoneNumber: user?.phoneNumber || "",
 			gender: user?.gender || "",
-			dateOfBirth: user?.dateOfBirth || "",
+			dateOfBirth: formatDateForInput(user?.dateOfBirth) || "",
 		})
 		}
 	},[user, reset])
 
 	const onSubmit= async(data)=>{
-		const cleanData={
-			fullName: data.fullName?.trim(),
-			gender: data.gender || null,
-			phoneNumber: data.phoneNumber || null,
-			dateOfBirth: data.dateOfBirth || null
+		console.log("DataTO: ", data)
+		console.log("Dirtyfields: ", dirtyFields)
+		const updatedData= {}
+
+		Object.keys(dirtyFields).forEach((key)=>{
+			let value= data[key]	
+
+			if(value==="") value= null;
+			if(typeof value ==="string") value= value.trim()
+
+			if(key=== "dateOfBirth" && value){
+				value= new Date(value)
+			}
+			updatedData[key]= value;
+		})
+
+		if(Object.keys(updatedData).length===0){
+			toast.info("No changes made")
+			return;
 		}
+console.log("UpdatedData: ", updatedData)
 		try{
-			await updateProfile(cleanData)
+			await updateProfile(updatedData)
 			toast.success("Profile updated successfully")
 			onClose()
 		}catch(err){
-			toast.error(err.response?.data?.message || "Update failed")
+			toast.error(err.response?.data?.message || "Updation failed")
 		}
 	}
   return (
@@ -73,7 +96,7 @@ const ProfileForm = ({user, onClose}) => {
 			<p className='text-xs text-red-500'>{errors?.dateOfBirth?.message}</p>
 		</div>	
 	</div>
-	 <Button type="submit" disabled={loading} className="w-full mt-6">{loading? "Saving..." : "Save Changes"}</Button>
+	 <Button type="submit" disabled={loading || !Object.keys(dirtyFields).length} className="w-full mt-6">{loading? "Saving..." : "Save Changes"}</Button>
 	</form>
 	</>
   )

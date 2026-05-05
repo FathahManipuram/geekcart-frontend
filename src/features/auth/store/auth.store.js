@@ -1,7 +1,7 @@
 import { create } from "zustand"
 import { googleLoginApi, loginApi } from "../api/auth.api"
 import { storage } from "@/services/storage"
-import { getProfileApi, updateProfileApi, uploadProfieImageApi } from "@/features/user/api/user.api"
+import { changeEmailApi, getProfileApi, updateProfileApi, uploadProfieImageApi, verifyEmailChangeApi } from "@/features/user/api/user.api"
 import { toast } from "sonner"
 
 const storedUser= storage.get("user")
@@ -11,10 +11,12 @@ export const useAuthStore= create((set,get)=>({
 	loading: false,
 	error: null,
 
+//Login
 	login: async(data)=>{
 		try{
 			set({loading: true, error: null})
 			const res= await loginApi(data)
+			console.log("Store: ", res)
 			const {user, accessToken, refreshToken}= res.data
 			storage.set("user", user)
 			storage.set("accessToken", accessToken)
@@ -61,6 +63,8 @@ export const useAuthStore= create((set,get)=>({
 		}
 	},
 
+
+// Logout
 	logout: ()=>{
 		storage.remove("accessToken")
 		storage.remove("refreshToken")
@@ -72,7 +76,7 @@ export const useAuthStore= create((set,get)=>({
 		})
 	},
 
-	//Fetch profile
+//Fetch profile
 	fetchProfile: async()=>{
 		try{
 			set({loading: true})
@@ -88,14 +92,17 @@ export const useAuthStore= create((set,get)=>({
 		}
 	},
 
-	//Update profile
+//Update profile
 	updateProfile: async(data)=>{
 		
 		try{
 			set({loading: true})
 			const res= await updateProfileApi(data)
-			const {user}= res.data
+			const user= res.data
+			console.log("StoreRes: ", res)
+			console.log("storeUser", user)
 			const updatedUser= user
+			console.log("UpdatedUser:", updatedUser)
 			storage.set("user", updatedUser)
 			set({user: updatedUser, loading: false})
 			return res
@@ -106,7 +113,7 @@ export const useAuthStore= create((set,get)=>({
 	},
 
 
-	//Upload profile Image
+//Upload profile Image
 	uploadProfileImage: async (file)=>{
 		try{
 
@@ -127,6 +134,38 @@ export const useAuthStore= create((set,get)=>({
 			set({loading: false})
 			throw err
 		}
-	}
+	},
+
+//Change email
+	changeEmail: async(email)=>{
+		try{
+			set({loading: true})
+			console.log("StorechangeEmail:",email)
+		const res= await changeEmailApi({email})
+		set({loading: false})
+		console.log("store res:", res)
+		return res
+		} catch(err){
+			set({loading: false})
+			throw err
+		}
+		
+	},
+
+// Verify email change
+verifyEmailChange: async(data)=>{
+	console.log("Verify emailChange: ", data)
+	const res = await verifyEmailChangeApi(data)
+	console.log("verifyEmailChange: ", res)
+console.log(res.email) 
+	const {user}= res.data
+	storage.set("user", user)
+
+	set({user})
+
+	return res;
+}
+
+
 
 }))

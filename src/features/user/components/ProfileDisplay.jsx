@@ -2,8 +2,8 @@ import Modal from '@/shared/components/Modal'
 import { Button } from '@/shared/components/ui/button'
 import { Input } from '@/shared/components/ui/input'
 import { Label } from '@/shared/components/ui/label'
-import { formatDate } from '@/shared/utils/date'
-import { Edit, Edit3, Eye, EyeOff } from 'lucide-react'
+import { formatDateForDisplay } from '@/shared/utils/date'
+import { Edit } from 'lucide-react'
 import ProfileForm from './ProfileForm'
 
 
@@ -33,7 +33,7 @@ const ProfileDisplay = ({user, editProfileOpen, setEditProfileOpen}) => {
 
 		<div>
 			<Label >DATE OF BIRTH</Label>
-			<Input value={formatDate(user?.dateOfBirth)} readOnly type="text"  className="h-8"/>
+			<Input value={formatDateForDisplay(user?.dateOfBirth)} readOnly type="text"  className="h-8"/>
 		</div>
 	</div>
 
