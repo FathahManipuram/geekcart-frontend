@@ -1,171 +1,166 @@
-import { create } from "zustand"
-import { googleLoginApi, loginApi } from "../api/auth.api"
-import { storage } from "@/services/storage"
-import { changeEmailApi, getProfileApi, updateProfileApi, uploadProfieImageApi, verifyEmailChangeApi } from "@/features/user/api/user.api"
-import { toast } from "sonner"
+import { create } from "zustand";
+import { googleLoginApi, loginApi } from "../api/auth.api";
+import { storage } from "@/services/storage";
+import {
+  changeEmailApi,
+  getProfileApi,
+  updateProfileApi,
+  uploadProfieImageApi,
+  verifyEmailChangeApi,
+} from "@/features/user-side/account/profile/api/user.api";
 
-const storedUser= storage.get("user")
+const storedUser = storage.get("user");
 
-export const useAuthStore= create((set,get)=>({
-	user: storedUser || null,
-	loading: false,
-	error: null,
+export const useAuthStore = create((set, get) => ({
+  user: storedUser || null,
+  loading: false,
+  error: null,
 
-//Login
-	login: async(data)=>{
-		try{
-			set({loading: true, error: null})
-			const res= await loginApi(data)
-			console.log("Store: ", res)
-			const {user, accessToken, refreshToken}= res.data
-			storage.set("user", user)
-			storage.set("accessToken", accessToken)
-			storage.set("refreshToken", refreshToken)
+  //Login
+  login: async (data) => {
+    try {
+      set({ loading: true, error: null });
+      const res = await loginApi(data);
 
-			set({
-				user,
-				loading: false,
-			});
+      const { user, accessToken, refreshToken } = res.data;
+      storage.set("user", user);
+      storage.set("accessToken", accessToken);
+      storage.set("refreshToken", refreshToken);
 
-			return res
-		} catch(error){
-			const message= error.response?.data?.message || "Login failed"
+      set({
+        user,
+        loading: false,
+      });
 
-			set({loading: false,
-				error: message,
-			})
-			
-			throw error
-		}
-	},
+      return res;
+    } catch (error) {
+      const message = error.response?.data?.message || "Login failed";
 
-//Login with google
-	loginWithGoogle: async (token)=>{
-		try{
-			set({loading: true})
+      set({ loading: false, error: message });
 
-			const  res= await googleLoginApi(token)
-			const {user, accessToken, refreshToken}=res.data
-			console.log("LoginwitGoogle:", user, accessToken, refreshToken)
-			storage.set("user", user)
-			storage.set("accessToken", accessToken)
-			storage.set("refreshToken", refreshToken)
+      throw error;
+    }
+  },
 
-			set({
-				user,
-				loading: false,
-			})
+  //Login with google
+  loginWithGoogle: async (token) => {
+    try {
+      set({ loading: true });
 
-			return res
-		}catch(error){
-			set({loading: false})
-			throw error
-		}
-	},
+      const res = await googleLoginApi(token);
+      const { user, accessToken, refreshToken } = res.data;
+      console.log("LoginwitGoogle:", user, accessToken, refreshToken);
+      storage.set("user", user);
+      storage.set("accessToken", accessToken);
+      storage.set("refreshToken", refreshToken);
 
+      set({
+        user,
+        loading: false,
+      });
 
-// Logout
-	logout: ()=>{
-		storage.remove("accessToken")
-		storage.remove("refreshToken")
-		storage.remove("user")
+      return res;
+    } catch (error) {
+      set({ loading: false });
+      throw error;
+    }
+  },
 
-		set({
-			user: null,
-			error: null,
-		})
-	},
+  // Logout
+  logout: () => {
+    storage.remove("accessToken");
+    storage.remove("refreshToken");
+    storage.remove("user");
 
-//Fetch profile
-	fetchProfile: async()=>{
-		try{
-			set({loading: true})
+    set({
+      user: null,
+      error: null,
+    });
+  },
 
-			const res= await getProfileApi()
-			console.log("fetchDAtaprofile", res)
-			const user= res.data
-			storage.set("user", user)
-			set({user, loading: false})
-		}catch(err){
-			set({loading: false})
-			throw err
-		}
-	},
+  //Fetch profile
+  fetchProfile: async () => {
+    try {
+      set({ loading: true });
 
-//Update profile
-	updateProfile: async(data)=>{
-		
-		try{
-			set({loading: true})
-			const res= await updateProfileApi(data)
-			const user= res.data
-			console.log("StoreRes: ", res)
-			console.log("storeUser", user)
-			const updatedUser= user
-			console.log("UpdatedUser:", updatedUser)
-			storage.set("user", updatedUser)
-			set({user: updatedUser, loading: false})
-			return res
-		}catch(err){
-			set({loading: false})
-			throw err
-		}
-	},
+      const res = await getProfileApi();
+      console.log("fetchDAtaprofile", res);
+      const user = res.data;
+      storage.set("user", user);
+      set({ user, loading: false });
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
+  },
 
+  //Update profile
+  updateProfile: async (data) => {
+    try {
+      set({ loading: true });
+      const res = await updateProfileApi(data);
+      const user = res.data;
+      console.log("StoreRes: ", res);
+      console.log("storeUser", user);
+      const updatedUser = user;
+      console.log("UpdatedUser:", updatedUser);
+      storage.set("user", updatedUser);
+      set({ user: updatedUser, loading: false });
+      return res;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
+  },
 
-//Upload profile Image
-	uploadProfileImage: async (file)=>{
-		try{
+  //Upload profile Image
+  uploadProfileImage: async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      set({ loading: true });
+      const res = await uploadProfieImageApi(formData);
+      const updatedAvatar = res.data.avatar;
 
-			const formData= new FormData();
-			formData.append("image", file)
-			set({loading: true})
-			const res= await uploadProfieImageApi(formData)
-			const updatedAvatar= res.data.avatar;
+      const updatedUser = { ...get().user, avatar: updatedAvatar };
+      storage.set("user", updatedUser);
 
-			const updatedUser= {...get().user, avatar: updatedAvatar}
-			storage.set("user", updatedUser)
+      set({
+        user: updatedUser,
+        loading: false,
+      });
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
+  },
 
-			set({
-				user: updatedUser,
-				loading: false,
-			})
-		}catch(err){
-			set({loading: false})
-			throw err
-		}
-	},
+  //Change email
+  changeEmail: async (email) => {
+    try {
+      set({ loading: true });
+      console.log("StorechangeEmail:", email);
+      const res = await changeEmailApi({ email });
+      set({ loading: false });
+      console.log("store res:", res);
+      return res;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
+  },
 
-//Change email
-	changeEmail: async(email)=>{
-		try{
-			set({loading: true})
-			console.log("StorechangeEmail:",email)
-		const res= await changeEmailApi({email})
-		set({loading: false})
-		console.log("store res:", res)
-		return res
-		} catch(err){
-			set({loading: false})
-			throw err
-		}
-		
-	},
+  // Verify email change
+  verifyEmailChange: async (data) => {
+    console.log("Verify emailChange: ", data);
+    const res = await verifyEmailChangeApi(data);
+    console.log("verifyEmailChange: ", res);
+    console.log(res.email);
+    const { user } = res.data;
+    storage.set("user", user);
 
-// Verify email change
-verifyEmailChange: async(data)=>{
-	console.log("Verify emailChange: ", data)
-	const res = await verifyEmailChangeApi(data)
-	console.log("verifyEmailChange: ", res)
-console.log(res.email) 
-	const {user}= res.data
-	storage.set("user", user)
+    set({ user });
 
-	set({user})
-
-	return res;
-}
-
-
-
-}))
+    return res;
+  },
+}));

@@ -12,6 +12,7 @@ import { OTP_TYPES } from '@/shared/constants/otpTypes'
 import { useAuthStore } from '../store/auth.store'
 import { GoogleLogin } from '@react-oauth/google'
 
+
 const RegisterPage = () => {
 	const navigate= useNavigate()
 	const loginWithGoogle= useAuthStore((state)=> state.loginWithGoogle)

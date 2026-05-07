@@ -4,7 +4,7 @@ export default {
 	content: ["./index.html", "./src/**/*.{js.jsx}"],
 	theme:{
 		extend:{
-			color:{
+			colors:{
 				 primary: {
           50: "#f8f2ed",
           100: "#f4ebe4",
@@ -45,5 +45,7 @@ export default {
 			}
 		}
 	},
-	plugin: [],
+	plugins: [
+    require("tailwind-scrollbar"),
+  ],
 }

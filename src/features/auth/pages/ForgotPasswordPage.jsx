@@ -1,10 +1,11 @@
 import React from 'react'
-import ForgotPasswordForm from '../components/ForgotPasswordForm'
 import { Card, CardHeader, CardTitle, CardContent} from '@/shared/components/ui/card'
 import { Link, useNavigate } from 'react-router-dom'
 import { forgotPasswordApi } from '../api/auth.api'
 import { toast } from 'sonner'
 import { OTP_TYPES } from '@/shared/constants/otpTypes'
+import ForgotPasswordForm from '../components/ForgotPasswordForm'
+
 
 
 const ForgotPasswordPage = () => {

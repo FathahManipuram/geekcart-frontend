@@ -3,9 +3,9 @@ import React from 'react'
 import LoginForm from '../components/LoginForm'
 import { FcGoogle } from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/auth.store'
 import { toast } from 'sonner'
 import { GoogleLogin } from '@react-oauth/google'
+import { useAuthStore } from '../store/auth.store'
 
 const LoginPage = () => {
 	const navigate= useNavigate()
