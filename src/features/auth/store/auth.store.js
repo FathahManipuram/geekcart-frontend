@@ -21,7 +21,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const res = await loginApi(data);
-
+console.log(res)
       const { user, accessToken, refreshToken } = res.data;
       storage.set("user", user);
       storage.set("accessToken", accessToken);

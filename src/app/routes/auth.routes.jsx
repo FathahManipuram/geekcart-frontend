@@ -1,3 +1,4 @@
+import AdminLogin from "@/features/admin-side/auth/pages/AdminLogin";
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
@@ -30,6 +31,10 @@ const authRoutes = [
     path: "/reset-password",
     element: <ResetpassordPage />,
   },
+  {
+    path: "admin/login",
+    element: <AdminLogin/>
+  }
 ];
 
 

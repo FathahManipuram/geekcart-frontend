@@ -1,13 +1,31 @@
-import React from 'react'
+import React from "react";
 
-const Pagination = ({page, totalPages, setPage}) => {
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   return (
-<div className="flex gap-2">
-      <button onClick={() => setPage(page - 1)}>Prev</button>
-      <span>{page}</span>
-      <button onClick={() => setPage(page + 1)}>Next</button>
-    </div>
-  )
-}
+    <div className="flex justify-end gap-3">
+      <button
+        disabled={currentPage === 1}
+        onClick={() => onPageChange(currentPage - 1)}
+        className="
+          px-4 py-2 rounded-lg border
+          disabled:opacity-50
+        "
+      >
+        Previous
+      </button>
 
-export default Pagination
+      <button
+        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(currentPage + 1)}
+        className="
+          px-4 py-2 rounded-lg border
+          disabled:opacity-50
+        "
+      >
+        Next
+      </button>
+    </div>
+  );
+};
+
+export default Pagination;

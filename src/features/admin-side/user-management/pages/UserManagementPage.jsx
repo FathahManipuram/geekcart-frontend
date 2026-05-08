@@ -1,24 +1,53 @@
-import React, { useEffect } from 'react'
-import { useDashboardStore } from '../../dashboard/store/dashboard.store';
-import SearchBar from '../components/SearchBar';
-import UserTable from '../components/UserTable';
+import React, { useEffect } from "react";
 
+import UserStats from "../components/UserStats";
+import UserTable from "../components/UserTable";
+
+
+import SearchBar from "../components/SearchBar";
+import Pagination from "../components/Pagination";
+import { useUserManagementStore } from "../stores/userManagement.store";
+import UserManagementHeader from "../components/UserManagementHeader";
 
 const UserManagementPage = () => {
-	const {fetchUsers}= useDashboardStore()
+  const { fetchUsers, users, loading, currentPage, totalPages, totalUsers } =
+    useUserManagementStore()
 
-	useEffect(()=>{
-		fetchUsers();
-	},[])
+  useEffect(() => {
+    fetchUsers({
+      page: 1,
+      limit: 5,
+    });
+  }, [fetchUsers]);
+
   return (
-	<div className='p-6 space-y-6'>
-		<h1 className='text-2xl font-bold'>User Management</h1>
-	  
-	  <SearchBar/>
+    <div className="space-y-8">
+      {/* Header */}
+      {/* <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-4xl font-bold">User Management</h1>
 
-	  <UserTable/>
-	</div>
-  )
-}
+          <p className="text-muted-foreground tracking-widest text-sm mt-2 uppercase">
+            Oversee and curate the community
+          </p>
+        </div>
+      </div> */}
 
-export default UserManagementPage
+      <UserManagementHeader/>
+
+      {/* Search */}
+      <SearchBar/>
+
+      {/* Stats */}
+      <UserStats totalUsers={totalUsers} />
+
+      {/* Table */}
+      <UserTable users={users} loading={loading} />
+
+      {/* Pagination */}
+      <Pagination currentPage={currentPage} totalPages={totalPages} />
+    </div>
+  );
+};
+
+export default UserManagementPage;

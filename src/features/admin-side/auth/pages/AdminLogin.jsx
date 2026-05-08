@@ -18,12 +18,12 @@ const AdminLogin = () => {
 		console.log("Login data:", data)
 		try{
 			const res= await login(data)
-			const {user}=
-			res.data
+			const user= res.data
 			console.log("REs", user)
 			toast.success("Login successful")
 			if(user.role=== "admin"){
-				navigate("/")
+				console.login ("admin")
+				return navigate("/admin/dashboard")
 			}
 
 			navigate("/")
