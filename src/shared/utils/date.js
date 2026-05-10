@@ -21,3 +21,16 @@ export const formatDateForInput= (date)=>{
 
 	return `${year}-${month}-${day}`
 }
+
+
+export const monthYearFormat= (date)=>{
+	if(!date) return "N/A";
+	const d= new Date(date)
+
+	if(isNaN(d)) return "N/A"
+
+	return new Intl.DateTimeFormat("en-US",{
+		month: "long",
+		year: "numeric",
+	}).format(d)
+}
