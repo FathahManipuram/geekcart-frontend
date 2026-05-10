@@ -25,10 +25,10 @@ const EditProfileImageForm = () => {
       return;
     }
     try {
-      await uploadImage(file);
-      toast.success("Profile image updated");
-    } catch {
-      toast.error("Upload failed");
+      const res= await uploadImage(file);
+      toast.success(res.message || "Profile image updated");
+    } catch(err) {
+      toast.error(err.response?.data?.message || "Upload failed");
     }
   };
 

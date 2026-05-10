@@ -6,12 +6,14 @@ import UserPersonalCard from '../components/user-details/UserPersonalCard'
 import UserFinancialCard from '../components/user-details/UserFinancialCard'
 import UserAddressCard from '../components/user-details/UserAddressCard'
 import { useUserManagementStore } from '../stores/userManagement.store'
+import SearchInput from '@/shared/components/SearchInput'
 
 const UserDetailsPage = () => {
-	const {userId}= useParams()
+const {userId}= useParams()
 const fetchUserById= useUserManagementStore((state)=> state.fetchUserById)
 const loading= useUserManagementStore((state)=> state.loading)
 const selectedUser= useUserManagementStore((state)=> state.selectedUser)
+
 
 	useEffect(()=>{
 		fetchUserById(userId)
@@ -29,7 +31,7 @@ const selectedUser= useUserManagementStore((state)=> state.selectedUser)
       <div>
         <UserHeader user={selectedUser} />
       </div>
-	  <div>
+	  <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8'>
 		<UserPersonalCard user={selectedUser}/>
 		<UserFinancialCard user={selectedUser} />
 		<UserAddressCard user={selectedUser}/>

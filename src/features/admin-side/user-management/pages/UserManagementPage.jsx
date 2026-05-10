@@ -1,51 +1,42 @@
-import React, { useEffect } from "react";
-
+import React from "react";
 import UserStats from "../components/UserStats";
 import UserTable from "../components/UserTable";
-
-
 import SearchBar from "../components/SearchBar";
-import Pagination from "../components/Pagination";
 import { useUserManagementStore } from "../stores/userManagement.store";
 import UserManagementHeader from "../components/UserManagementHeader";
+import Pagination from "@/shared/components/Pagination";
+import CreateUserForm from "../components/create-user/UserForm";
+import UserStatsCard from "../components/UserStatsCard";
 
 const UserManagementPage = () => {
-  const { fetchUsers, users, loading, currentPage, totalPages, totalUsers } =
+  const { fetchUsers, users, loading, currentPage, totalPages, totalUsers, search, status, activeUsers, blockedUsers, totalAdmins } =
     useUserManagementStore()
 
-  useEffect(() => {
-    fetchUsers({
-      page: 1,
+
+  const handlePageChange=(page)=>{
+fetchUsers({
+      page,
       limit: 5,
+      search,
+      status,
     });
-  }, [fetchUsers]);
+  }
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      {/* <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-4xl font-bold">User Management</h1>
+      <UserManagementHeader />
 
-          <p className="text-muted-foreground tracking-widest text-sm mt-2 uppercase">
-            Oversee and curate the community
-          </p>
-        </div>
-      </div> */}
+      <SearchBar />
 
-      <UserManagementHeader/>
+      <UserStatsCard totalUsers={totalUsers} activeUsers={activeUsers} blockedUsers={blockedUsers} totalAdmins={totalAdmins}/>
 
-      {/* Search */}
-      <SearchBar/>
-
-      {/* Stats */}
-      <UserStats totalUsers={totalUsers} />
-
-      {/* Table */}
       <UserTable users={users} loading={loading} />
 
-      {/* Pagination */}
-      <Pagination currentPage={currentPage} totalPages={totalPages} />
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };

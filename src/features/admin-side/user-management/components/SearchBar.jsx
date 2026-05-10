@@ -1,41 +1,39 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Input } from '@/shared/components/ui/input'
 import { Search, X } from 'lucide-react';
+import SearchInput from '@/shared/components/SearchInput';
+import { useUserManagementStore } from '../stores/userManagement.store';
+import useDebounce from '@/shared/hooks/useDebounce';
 
 const SearchBar = () => {
-	
-  const [search, setSearch] = useState("");
+
+const {search, fetchUsers}= useUserManagementStore();
+const [searchTerm, setSearchTerm]= useState(search)
+const debouncedSearch= useDebounce(searchTerm, 500)
+
+
+useEffect(()=>{
+  fetchUsers({
+    page: 1,
+    limit: 5,
+    search: debouncedSearch,
+  });
+}, [debouncedSearch, fetchUsers])
+
+const handleClear= ()=>{
+  setSearchTerm("")
+}
+
 
   return (
-    <div className="relative max-w-md">
-      <Search
-        size={16}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-      />
 
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search by name or email..."
-        className="
-          h-11 w-full rounded-lg
-          bg-white border
-          pl-10 pr-10
-          text-sm outline-none
-        "
-      />
-
-      {search && (
-        <button
-          onClick={() => setSearch("")}
-          className="absolute right-3 top-1/2 -translate-y-1/2"
-        >
-          <X size={16} />
-        </button>
-      )}
-    </div>
+    <SearchInput
+    value={searchTerm}
+    onChange={setSearchTerm}
+    onClear={handleClear}
+    placeholder='Search by name or email'
+    /> 
   );
 }
 

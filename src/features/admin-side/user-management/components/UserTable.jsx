@@ -16,10 +16,6 @@ const navigate= useNavigate()
 
 const deleteUser= useUserManagementStore((state)=> state.deleteUser)
 
-  const handleEdit=(user)=>{
-    console.log("Edit user", user)
-  }
-
   const handleDelete= async(user)=>{
     console.log("Delete User", user);
     try{
@@ -76,16 +72,6 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
       header: "ACTIONS",
       cell: (user) => (
         <div className="flex items-center gap-4">
-          <button
-            onClick={() => handleEdit(user)}
-            className="
-              text-muted-foreground
-              hover:text-black
-              transition
-            "
-          >
-            <Pencil size={16} />
-          </button>
 
           {/* DELETE */}
           <button
