@@ -4,7 +4,7 @@ import { Search } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { formatTitleCase } from "@/shared/utils/formatTitleCase";
-import { NavLink, useLocation} from "react-router-dom";
+import { NavLink, useLocation, useNavigate} from "react-router-dom";
 import { getPageTitleFromPath } from "@/shared/utils/getPageTitleFromPath";
 
 const AdminNavbar = ({
@@ -13,6 +13,7 @@ const AdminNavbar = ({
   showSearch = true,
 }) => {
   const location= useLocation()
+  const navigate= useNavigate()
   const currentUser = useAuthStore((state) => state.user);
 
 
@@ -28,7 +29,7 @@ const AdminNavbar = ({
       <div className="flex items-center gap-8">
         <div className="text-xs uppercase tracking-wide text-muted-foreground">
           <NavLink
-            to="/admin/dashboard"
+            onClick={()=> navigate(-1)}
             className="cursor-pointer"
           >
             {breadcrumb}

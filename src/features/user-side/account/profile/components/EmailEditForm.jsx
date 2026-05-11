@@ -4,7 +4,6 @@ import { Label } from "@/shared/components/ui/label";
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { changeEmailApi } from "../api/user.api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { emailChangeValidation } from "../validations/user.validation";
@@ -44,7 +43,7 @@ const EmailEditForm = ({ user }) => {
       console.log("emailCHngFORM: ", email);
       const res = await changeEmail(email);
       console.log("formEdITFInalResult:", res);
-      toast.success(res.message);
+      toast.success("Email Updated succesfully");
       navigate("/verify-otp", {
         state: { email, type: OTP_TYPES.EMAIL_CHANGE },
       });

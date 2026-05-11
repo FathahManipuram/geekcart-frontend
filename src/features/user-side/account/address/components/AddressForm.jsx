@@ -69,6 +69,8 @@ useEffect(()=>{
 
 const selectedLabel= watch("addressLabel")
 
+
+
   const onSubmit = async (data) => {
     console.log("data: ", data)
 
@@ -92,6 +94,7 @@ console.log("edit form: ",initialData._id, finalData)
         await updateAddress(initialData._id, finalData)
 
         toast.success("Address updated successfully")
+        onClose()
       }else {
         finalData = {
           ...data,
@@ -108,7 +111,6 @@ console.log("edit form: ",initialData._id, finalData)
 const res = await addAddress(finalData);
 console.log("result: ", res);
 toast.success(res.message);
-
 onClose()
       }
     }catch(err){

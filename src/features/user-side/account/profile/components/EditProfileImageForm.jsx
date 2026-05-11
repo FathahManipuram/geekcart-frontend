@@ -1,5 +1,4 @@
 import { useAuthStore } from "@/features/auth/store/auth.store";
-import { Button } from "@/shared/components/ui/button";
 import { ImageUp } from "lucide-react";
 import React, { useRef } from "react";
 import { toast } from "sonner";

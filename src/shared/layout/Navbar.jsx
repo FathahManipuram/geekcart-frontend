@@ -20,9 +20,9 @@ const Navbar = () => {
 	const logout= useAuthStore((state)=> state.logout)
 	const navigate= useNavigate()
 
-	const handleLogout= ()=>{
+	const handleLogout= async ()=>{
 		try{
-			logout()
+			await logout()
 			toast.success("Logout successfully")
 			navigate("/")
 		}catch(err){

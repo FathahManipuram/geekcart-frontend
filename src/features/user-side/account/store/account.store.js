@@ -5,6 +5,8 @@ export const useAccountStore = create((set) => ({
   addresses: [],
   loading: false,
 
+
+//Fetch address
   fetchAddresses: async () => {
     try {
       set({ loading: true });
@@ -21,6 +23,8 @@ export const useAccountStore = create((set) => ({
     }
   },
 
+
+// Add address
   addAddress: async (data) => {
     try {
       set({ loading: true });
@@ -40,6 +44,8 @@ export const useAccountStore = create((set) => ({
     }
   },
 
+
+//Update Address
   updateAddress: async(id, data)=>{
     try{
       set({loading: true})
@@ -57,6 +63,8 @@ export const useAccountStore = create((set) => ({
     }
   },
 
+
+//Remove Address
   removeAddress: async(addressId)=>{
     try{
       set({loading: true})

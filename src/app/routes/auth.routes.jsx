@@ -1,40 +1,58 @@
-import AdminLogin from "@/features/admin-side/auth/pages/AdminLogin";
+
+import AdminLoginPage from "@/features/auth/pages/AdminLoginPage";
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage";
 import LoginPage from "@/features/auth/pages/LoginPage";
 import RegisterPage from "@/features/auth/pages/RegisterPage";
 import ResetpassordPage from "@/features/auth/pages/ResetpassordPage";
 import VerifyOtpPage from "@/features/auth/pages/VerifyOtpPage";
+import GuestRoute from "./GuestRoute";
 
 
 const authRoutes = [
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <GuestRoute>
+        <LoginPage />
+      </GuestRoute>
+    ),
   },
 
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: (
+      <GuestRoute>
+        <RegisterPage />
+      </GuestRoute>
+    ),
   },
 
   {
     path: "/forgot-password",
-    element: <ForgotPasswordPage/>,
+    element: (
+      <GuestRoute>
+        <ForgotPasswordPage />
+      </GuestRoute>
+    ),
   },
 
   {
     path: "/verify-otp",
-    element: <VerifyOtpPage/>,
+    element: <VerifyOtpPage />
   },
-  
+
   {
     path: "/reset-password",
-    element: <ResetpassordPage />,
+    element: (
+      <GuestRoute>
+        <ResetpassordPage />
+      </GuestRoute>
+    ),
   },
   {
     path: "admin/login",
-    element: <AdminLogin/>
-  }
+    element: <AdminLoginPage />
+  },
 ];
 
 

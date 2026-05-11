@@ -1,3 +1,4 @@
+import { formatTitleCase } from '@/shared/utils/formatTitleCase';
 import React from 'react'
 
 const UserIdentityCell = ({user}) => {
@@ -15,7 +16,7 @@ const UserIdentityCell = ({user}) => {
       />
 
       <div>
-        <p className="font-semibold text-sm">{user.fullName}</p>
+        <p className="font-semibold text-sm">{formatTitleCase(user.fullName)}</p>
 
         <p className="text-xs text-muted-foreground">{user.email}</p>
       </div>

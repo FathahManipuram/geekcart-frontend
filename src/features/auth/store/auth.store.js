@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { googleLoginApi, loginApi } from "../api/auth.api";
+import { adminLoginApi, googleLoginApi, loginApi } from "../api/auth.api";
 import { storage } from "@/services/storage";
 import {
   changeEmailApi,
@@ -21,7 +21,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const res = await loginApi(data);
-console.log(res)
+      console.log(res);
       const { user, accessToken, refreshToken } = res.data;
       storage.set("user", user);
       storage.set("accessToken", accessToken);
@@ -33,12 +33,12 @@ console.log(res)
       });
 
       return res;
-    } catch (error) {
-      const message = error.response?.data?.message || "Login failed";
+    } catch (err) {
+      const message = err.response?.data?.message || "Login failed";
 
       set({ loading: false, error: message });
 
-      throw error;
+      throw err;
     }
   },
 
@@ -60,9 +60,9 @@ console.log(res)
       });
 
       return res;
-    } catch (error) {
+    } catch (err) {
       set({ loading: false });
-      throw error;
+      throw err;
     }
   },
 
@@ -78,6 +78,27 @@ console.log(res)
     });
   },
 
+// Admin login
+adminLogin: async(data)=>{
+  try{
+    set({ loading: true, error: null });
+    const res= await adminLoginApi(data)
+    const {user, accessToken, refreshToken}= res.data
+    storage.set("user", user)
+    storage.set("accessToken", accessToken)
+    storage.set("refreshToken", refreshToken)
+    set({
+      user,
+      loading: false,
+    })
+    return res
+  } catch(err){
+    const message= err.response?.data?.message
+    set({ loading: false, error: message });
+    throw err
+  }
+},
+
   //Fetch profile
   fetchProfile: async () => {
     try {
@@ -88,6 +109,7 @@ console.log(res)
       const user = res.data;
       storage.set("user", user);
       set({ user, loading: false });
+      return res
     } catch (err) {
       set({ loading: false });
       throw err;
@@ -129,6 +151,7 @@ console.log(res)
         user: updatedUser,
         loading: false,
       });
+      return res
     } catch (err) {
       set({ loading: false });
       throw err;
@@ -154,7 +177,6 @@ console.log(res)
   verifyEmailChange: async (data) => {
     console.log("Verify emailChange: ", data);
     const res = await verifyEmailChangeApi(data);
-    console.log("verifyEmailChange: ", res);
     console.log(res.email);
     const { user } = res.data;
     storage.set("user", user);

@@ -32,7 +32,7 @@ const OTP_CONFIG = {
   [OTP_TYPES.EMAIL_CHANGE]: {
     title: "Verify New Email",
     description: "Enter the OTP sent to your new email.",
-    onSuccess: (navigate) => navigate("/profile"),
+    onSuccess: (navigate) => navigate("/account/profile"),
   },
 };
 

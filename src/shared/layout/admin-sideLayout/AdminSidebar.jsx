@@ -13,7 +13,9 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
+import { useAuthStore } from "@/features/auth/store/auth.store";
+import { toast } from "sonner";
 
 const links = [
   {
@@ -66,6 +68,15 @@ const links = [
 ];
 
 const AdminSidebar = ({collapsed, setCollapsed}) => {
+const navigate= useNavigate()
+const logout= useAuthStore((state)=> state.logout)
+const handleSignOut = async() => {
+  await logout()
+  toast.success("Sign Out successfully")
+  navigate("/admin/login")
+};
+
+
   return (
     <aside className={`bg-white border-r flex flex-col h-screen transition-all duration-300 ${collapsed ? "w-20": "w-72"}`}>
  
@@ -121,6 +132,7 @@ const AdminSidebar = ({collapsed, setCollapsed}) => {
       {/* Logout */}
       <div className="border-t p-4">
         <button
+        onClick={handleSignOut}
           className="
             flex items-center gap-3
             px-4 py-3 rounded-lg

@@ -28,7 +28,7 @@ const ProfileDisplayThree = ({
           user?.provider === "local" ? "Change Password" : "Create new password"
         }
       >
-        <ChangePasswordForm user={user} />
+        <ChangePasswordForm user={user}  />
       </Modal>
     </>
   );

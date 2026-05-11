@@ -27,9 +27,8 @@ const ChangePasswordForm = ({ user }) => {
       console.log("changepass:", data);
       await changePasswordApi(data);
       toast.success("Password updated");
-      onclose();
     } catch (err) {
-      toast.error(err.response?.data?.message);
+      toast.error(err.response?.data?.message||"Password updation failed");
     }
   };
   return (

@@ -64,6 +64,7 @@ const LoginPage = () => {
 						toast.success("Google login successful")
 						navigate("/")
 					} catch(err){
+						console.log(err)
 						toast.error("Google login failed")
 					}
 				}}
