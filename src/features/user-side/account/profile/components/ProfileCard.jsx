@@ -13,7 +13,7 @@ const ProfileCard = () => {
   const [emailEditOpen, setEmailEditOpen] = useState(false);
   const [editProfileOpen, setEditProfileOpen] = useState(false);
   const [passwordEditOpen, setPasswordEditOpen] = useState(false);
-  console.log(emailEditOpen);
+ 
   return (
     <div className="flex flex-col gap-2 bg-card p-8 rounded-xl w-full">
       <EditProfileImageForm user={user} />

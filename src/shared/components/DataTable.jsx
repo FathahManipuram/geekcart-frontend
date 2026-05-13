@@ -4,7 +4,8 @@ const DataTable= ({
 	columns=[],
 	data=[],
 	loading= false,
-	emptyMessage= "No data found"
+	emptyMessage= "No data found",
+	rowKey="_id",
 })=>{
 
 if(loading){
@@ -32,7 +33,7 @@ return (
 			<TableBody>
 				{data.length > 0 ? (
 					data.map((row)=>(
-						<TableRow key={row._id}>
+						<TableRow key={[row[rowKey]]}>
 							{columns.map((column, index)=>(
 								<TableCell key={column.accessor || `cell-${index}`}>
 									{column.cell ? column.cell(row)
@@ -43,7 +44,7 @@ return (
 					))
 				): (
 					<TableRow>
-						<TableCell col-span={columns.length} className=" text center p-10 text-muted-foreground">
+						<TableCell colSpan={columns.length} className=" text-center p-10 text-muted-foreground">
 							{emptyMessage}
 						</TableCell>
 					</TableRow>

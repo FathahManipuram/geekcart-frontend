@@ -1,16 +1,25 @@
 import React, { useEffect } from "react";
 import ProfileCard from "../components/ProfileCard";
 import { useAuthStore } from "@/features/auth/store/auth.store";
-import AccountSidebar from "../../components/AccountSidebar";
+import { toast } from "sonner";
+
 
 const ProfilePage = () => {
-  const fetchProfile = useAuthStore((state) => state.fetchProfile);
 
   useEffect(() => {
-    fetchProfile();
-  }, [fetchProfile]);
+    const {fetchProfile}= useAuthStore.getState()
+      fetchProfile()
+
+      fetchProfile().catch((err)=>{
+        console.error("Failed to fetch profile:", err);
+        const errorMessage= err?.response?.data?.message
+        toast.error(errorMessage)
+      })
+    
+  }, []);
+
   return (
-    <div className="flex flex-row bg-muted-foreground p-4 gap-2">
+    <div className="flex p-4 gap-2 bg-muted min-h-screen">
       <ProfileCard />
     </div>
   );

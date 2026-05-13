@@ -15,6 +15,7 @@ const pages= Array.from({length: totalPages}, (_, i)=> i+1)
     <div className="flex items-center justify-center gap-2 pt-6">
       {/* Previous */}
       <Button
+        aria-label="Previous page"
         variant="outline"
         size="icon"
         disabled={currentPage === 1}
@@ -26,10 +27,11 @@ const pages= Array.from({length: totalPages}, (_, i)=> i+1)
       {/* Page Numbers */}
       {pages.map((page) => (
         <Button
+          aria-label={`Go to page ${page}`}
           key={page}
           variant={currentPage === page ? "default" : "outline"}
           size="icon"
-          onClick={() => onPageChange(page)}
+          onClick={() => onPageChange?.(page)}
         >
           {page}
         </Button>
@@ -37,6 +39,7 @@ const pages= Array.from({length: totalPages}, (_, i)=> i+1)
 
       {/* Next */}
       <Button
+        aria-label="Next page"
         variant="outline"
         size="icon"
         disabled={currentPage === totalPages}

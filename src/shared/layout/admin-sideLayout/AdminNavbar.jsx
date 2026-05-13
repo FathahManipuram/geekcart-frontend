@@ -1,11 +1,10 @@
-// AdminNavbar.jsx
 import React from "react";
 import { Search } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
-import { useAuthStore } from "@/features/auth/store/auth.store";
 import { formatTitleCase } from "@/shared/utils/formatTitleCase";
-import { NavLink, useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate} from "react-router-dom";
 import { getPageTitleFromPath } from "@/shared/utils/getPageTitleFromPath";
+import { useAdminAuthStore } from "@/features/auth/store/auth.admin.store";
 
 const AdminNavbar = ({
   breadcrumb = "Admin",
@@ -14,7 +13,7 @@ const AdminNavbar = ({
 }) => {
   const location= useLocation()
   const navigate= useNavigate()
-  const currentUser = useAuthStore((state) => state.user);
+  const currentUser = useAdminAuthStore((state) => state.adminUser);
 
 
   const fullName = formatTitleCase(currentUser?.fullName) || "Admin User";
@@ -22,18 +21,26 @@ const AdminNavbar = ({
   const role = currentUser?.role || "admin";
 
   const avatar =
-    currentUser?.avatar || "https://ui-avatars.com/api/?name=Admin+User";
+    currentUser?.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}`;
+
+const handleBack=()=>{
+  if(window.history.length > 1){
+    navigate(-1)
+  }else{
+    navigate("/admin/dashboard")
+  }
+}
 
   return (
     <header className="h-20 border-b bg-white px-8 flex items-center justify-between">
       <div className="flex items-center gap-8">
         <div className="text-xs uppercase tracking-wide text-muted-foreground">
-          <NavLink
-            onClick={()=> navigate(-1)}
+          <button
+            onClick={handleBack}
             className="cursor-pointer"
           >
             {breadcrumb}
-          </NavLink>
+          </button>
 
           <span className="mx-2">›</span>
 

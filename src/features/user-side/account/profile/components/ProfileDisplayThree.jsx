@@ -1,7 +1,7 @@
 import Modal from "@/shared/components/Modal";
 import React from "react";
 import ChangePasswordForm from "./ChangePasswordForm";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+
 
 const ProfileDisplayThree = ({
   user,
@@ -28,7 +28,7 @@ const ProfileDisplayThree = ({
           user?.provider === "local" ? "Change Password" : "Create new password"
         }
       >
-        <ChangePasswordForm user={user}  />
+        <ChangePasswordForm user={user} onClose={() => setPasswordEditOpen(false)} />
       </Modal>
     </>
   );

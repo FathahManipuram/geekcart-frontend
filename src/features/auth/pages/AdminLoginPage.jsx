@@ -1,14 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/shared/components/ui/card';
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
-import { adminLoginApi } from '../api/auth.api';
-import { useAuthStore } from '../store/auth.store';
 import { toast } from 'sonner';
+import { useAdminAuthStore } from '../store/auth.admin.store';
 
 const AdminLoginPage = () => {
 	const navigate= useNavigate()
-	const adminLogin= useAuthStore((state)=> state.adminLogin)
+	const adminLogin= useAdminAuthStore((state)=> state.adminLogin)
 	const isAdmin= true
 
 	const handleSubmit= async(data)=>{
@@ -21,6 +20,7 @@ const AdminLoginPage = () => {
 
 			if(user.role !== "admin"){
 				navigate("/")
+        return
 			}
 			navigate("/admin/dashboard")
 		} catch(err){

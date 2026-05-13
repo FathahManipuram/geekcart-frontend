@@ -16,13 +16,14 @@ const navigate= useNavigate()
 
 const deleteUser= useUserManagementStore((state)=> state.deleteUser)
 
-  const handleDelete= async(user)=>{
-    console.log("Delete User", user);
+  const handleDelete= async()=>{
+  if(!selectedUser) return
     try{
       console.log("selectedUser: ", selectedUser)
       await deleteUser(selectedUser._id)
     toast.success("User deleted successfully")
     setDeleteModalOpen(false)
+    setSelectedUser(null)
 
     }catch(err){
       toast.error(err.response?.data?.message)
@@ -117,10 +118,10 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
         onOpenChange={setDeleteModalOpen}
         title="Delete User"
         description={`Are you sure you want
-    to delete this user?`}
-    confirmText='Delete User'
-    onConfirm={handleDelete}
-    loading={loading}
+    to delete ${selectedUser?.fullName || "this user"}?`}
+        confirmText="Delete User"
+        onConfirm={handleDelete}
+        loading={loading}
       />
     </>
   );

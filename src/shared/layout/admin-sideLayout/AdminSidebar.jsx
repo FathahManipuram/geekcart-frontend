@@ -13,9 +13,9 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 
-import { Navigate, NavLink, useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { useAdminAuthStore } from "@/features/auth/store/auth.admin.store";
 
 const links = [
   {
@@ -69,31 +69,38 @@ const links = [
 
 const AdminSidebar = ({collapsed, setCollapsed}) => {
 const navigate= useNavigate()
-const logout= useAuthStore((state)=> state.logout)
+const logout= useAdminAuthStore((state)=> state.logout)
+
 const handleSignOut = async() => {
-  await logout()
-  toast.success("Sign Out successfully")
+  try{
+await logout()
+  toast.success("Signed Out successfully")
   navigate("/admin/login")
+  }catch(err){
+    toast.error(err.response?.data?.message || "Logout failed")
+  }
 };
 
 
   return (
-    <aside className={`bg-white border-r flex flex-col h-screen transition-all duration-300 ${collapsed ? "w-20": "w-72"}`}>
- 
+    <aside
+      className={`bg-white border-r flex flex-col h-screen transition-all duration-300 ${collapsed ? "w-20" : "w-72"}`}
+    >
       <div className="h-20 flex items-center px-6">
-       
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-lg bg-[#8B5E3C] text-white flex items-center justify-center font-bold">
             G
           </div>
 
-          <div>
-            <h2 className="font-bold text-xl">GeekCart</h2>
+          {!collapsed && (
+            <div>
+              <h2 className="font-bold text-xl">GeekCart</h2>
 
-            <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
-              Admin Dashboard
-            </p>
-          </div>
+              <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+                Admin Dashboard
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -123,7 +130,7 @@ const handleSignOut = async() => {
             >
               <Icon size={18} />
 
-              <span>{link.label}</span>
+              {!collapsed && <span className={collapsed ? "hidden" : "block"}>{link.label}</span>}
             </NavLink>
           );
         })}
@@ -132,7 +139,7 @@ const handleSignOut = async() => {
       {/* Logout */}
       <div className="border-t p-4">
         <button
-        onClick={handleSignOut}
+          onClick={handleSignOut}
           className="
             flex items-center gap-3
             px-4 py-3 rounded-lg

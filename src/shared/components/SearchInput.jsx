@@ -1,4 +1,3 @@
-import React from "react";
 import { Search, X } from "lucide-react";
 
 const SearchInput = ({
@@ -18,6 +17,7 @@ const SearchInput = ({
       />
 
       <input
+        aria-label={placeholder}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -32,6 +32,8 @@ const SearchInput = ({
 
       {value && (
         <button
+          aria-label="Clear search"
+          type="button"
           onClick={onClear}
           className="absolute right-3 top-1/2 -translate-y-1/2"
         >

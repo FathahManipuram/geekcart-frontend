@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
-import { changePasswordApi } from "../api/user.api";
 import { useForm } from "react-hook-form";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
@@ -8,11 +7,13 @@ import { Label } from "@/shared/components/ui/label";
 import { EyeClosed, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { changePasswordSchema } from "../validations/user.validation";
+import { useAuthStore } from "@/features/auth/store/auth.store";
 
-const ChangePasswordForm = ({ user }) => {
+const ChangePasswordForm = ({ user, onClose }) => {
   const [showOld, setShowOld] = useState(false);
   const [showNew, setShowNew] = useState(false);
   const isGoogleUser = user?.provider === "google";
+  const changePassword= useAuthStore((state)=> state.changePassword)
 
   const {
     register,
@@ -25,8 +26,10 @@ const ChangePasswordForm = ({ user }) => {
   const onSubmit = async (data) => {
     try {
       console.log("changepass:", data);
-      await changePasswordApi(data);
-      toast.success("Password updated");
+      const res= await changePassword(data);
+      console.log("res: ", res)
+      toast.success(res.message || "Password updated");
+      onClose()
     } catch (err) {
       toast.error(err.response?.data?.message||"Password updation failed");
     }

@@ -1,4 +1,3 @@
-import { useAccountStore } from '@/features/user-side/account/store/account.store'
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import UserHeader from '../components/user-details/UserHeader'

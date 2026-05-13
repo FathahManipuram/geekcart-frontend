@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react'
-
-import { Input } from '@/shared/components/ui/input'
-import { Search, X } from 'lucide-react';
 import SearchInput from '@/shared/components/SearchInput';
 import { useUserManagementStore } from '../stores/userManagement.store';
 import useDebounce from '@/shared/hooks/useDebounce';
 
 const SearchBar = () => {
 
-const {search, fetchUsers}= useUserManagementStore();
+const {search, fetchUsers, status,}= useUserManagementStore();
 const [searchTerm, setSearchTerm]= useState(search)
 const debouncedSearch= useDebounce(searchTerm, 500)
 
@@ -18,8 +15,9 @@ useEffect(()=>{
     page: 1,
     limit: 5,
     search: debouncedSearch,
+    status,
   });
-}, [debouncedSearch, fetchUsers])
+}, [debouncedSearch, fetchUsers, status])
 
 const handleClear= ()=>{
   setSearchTerm("")

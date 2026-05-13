@@ -43,7 +43,7 @@ const EmailEditForm = ({ user }) => {
       console.log("emailCHngFORM: ", email);
       const res = await changeEmail(email);
       console.log("formEdITFInalResult:", res);
-      toast.success("Email Updated succesfully");
+      toast.success(res.message || "OTP sent to new email");
       navigate("/verify-otp", {
         state: { email, type: OTP_TYPES.EMAIL_CHANGE },
       });

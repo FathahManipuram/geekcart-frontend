@@ -7,9 +7,10 @@ import authRoutes from "./routes/auth.routes";
 export const router = createBrowserRouter([
   
   publicRoutes,
+  ...authRoutes,
   accountRoutes,
   adminRoutes,
-  ...authRoutes,
+  
   
   
   

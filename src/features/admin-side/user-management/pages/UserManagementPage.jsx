@@ -1,17 +1,22 @@
-import React from "react";
-import UserStats from "../components/UserStats";
+import React, { useEffect } from "react";
 import UserTable from "../components/UserTable";
 import SearchBar from "../components/SearchBar";
 import { useUserManagementStore } from "../stores/userManagement.store";
 import UserManagementHeader from "../components/UserManagementHeader";
 import Pagination from "@/shared/components/Pagination";
-import CreateUserForm from "../components/create-user/UserForm";
 import UserStatsCard from "../components/UserStatsCard";
 
 const UserManagementPage = () => {
   const { fetchUsers, users, loading, currentPage, totalPages, totalUsers, search, status, activeUsers, blockedUsers, totalAdmins } =
     useUserManagementStore()
-
+ useEffect(()=>{
+  fetchUsers({
+    page: 1,
+    limit: 5,
+    search,
+    status,
+  });
+ },[])
 
   const handlePageChange=(page)=>{
 fetchUsers({
@@ -28,15 +33,22 @@ fetchUsers({
 
       <SearchBar />
 
-      <UserStatsCard totalUsers={totalUsers} activeUsers={activeUsers} blockedUsers={blockedUsers} totalAdmins={totalAdmins}/>
+      <UserStatsCard
+        totalUsers={totalUsers}
+        activeUsers={activeUsers}
+        blockedUsers={blockedUsers}
+        totalAdmins={totalAdmins}
+      />
 
       <UserTable users={users} loading={loading} />
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
-      />
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };

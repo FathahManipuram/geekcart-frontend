@@ -81,55 +81,60 @@ const Navbar = () => {
 
             <NavigationMenuItem>
               {user ? (
-                <NavigationMenuTrigger>Account</NavigationMenuTrigger>
+                <>
+                  <NavigationMenuTrigger>Account</NavigationMenuTrigger>
+
+                  <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
+                    <ul className="flex flex-col gap-2 w-37.5">
+                      <li>
+                        <NavLink
+                          to="/account/profile"
+                          className="hover:text-primary"
+                        >
+                          Profile
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/saved-address"
+                          className="hover:text-primary"
+                        >
+                          Saved Address
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/order-history"
+                          className="hover:text-primary"
+                        >
+                          Order History
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/payments"
+                          className="hover:text-primary"
+                        >
+                          Payments
+                        </NavLink>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="hover:text-primary"
+                        >
+                          Sign Out
+                        </button>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </>
               ) : (
-                <NavigationMenuItem>
-                  <NavLink to="/login" className={navLinkClass}>
-                    Login
-                  </NavLink>
-                </NavigationMenuItem>
+                <NavLink to="/login" className={navLinkClass}>
+                  Login
+                </NavLink>
               )}
-              <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-                <ul className="flex flex-col gap-2 w-37.5">
-                  {!user && (
-                    <li>
-                      <NavLink to="/login" className="hover:text-primary">
-                        Login
-                      </NavLink>
-                    </li>
-                  )}
-                  <li>
-                    <NavLink to="/account/profile" className="hover:text-primary">
-                      Profile
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/account/saved-address" className="hover:text-primary">
-                      Saved Address
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/account/order-history" className="hover:text-primary">
-                      Order History
-                    </NavLink>
-                  </li>
-                  <li>
-                    <NavLink to="/account/payments" className="hover:text-primary">
-                      Payments
-                    </NavLink>
-                  </li>
-                  {user && (
-                    <li>
-                      <NavLink
-                        onClick={() => handleLogout()}
-                        className="hover:text-primary"
-                      >
-                        Sign Out
-                      </NavLink>
-                    </li>
-                  )}
-                </ul>
-              </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>

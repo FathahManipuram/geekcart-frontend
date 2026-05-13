@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { resetPasswordApi } from '../api/auth.api'
 import { toast } from 'sonner'
 
-const ResetpassordPage = () => {
+const ResetpasswordPage = () => {
 	const location = useLocation()
 	const navigate= useNavigate()
 const email= location.state.email;
@@ -54,4 +54,4 @@ console.log("resetPassRESPO: ", res)
   )
 }
 
-export default ResetpassordPage
+export default ResetpasswordPage
