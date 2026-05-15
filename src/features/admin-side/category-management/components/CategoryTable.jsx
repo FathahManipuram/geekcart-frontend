@@ -9,17 +9,15 @@ import Modal from '@/shared/components/Modal';
 import { useCategoryStore } from '../store/category.store';
 import { toast } from 'sonner';
 
-const CategoryTable = ({categories, loading}) => {
+const CategoryTable = ({categories, loading, currentPage, perPage}) => {
 const [deleteModalOpen, setDeleteModalOpen]= useState(false)
 const [selectedCategory, setSelectedCategory] = useState(null);
 const [editModalOpen, setEditModalOpen]= useState(false)
-const {updateCategory}= useCategoryStore()
-  const handleDelete = async () => {
-    console.log(selectedCategory);
-  };
+const {updateCategory, deleteCategory}= useCategoryStore()
 
   const updateHandler= async(data)=>{
     console.log(data)
+    if (!selectedCategory) return;
     try{
       const res= await updateCategory(selectedCategory._id, data)
       toast.success(res.message || "Updated successfully")
@@ -28,6 +26,20 @@ const {updateCategory}= useCategoryStore()
     }catch(err){
       toast.error(err.message || "Updation failed")
     }
+  }
+
+  const handleDelete= async()=>{
+    if(!selectedCategory) return
+    try{
+      const res= await deleteCategory(selectedCategory._id)
+      toast.success(res.message || "Category deleted successfully")
+      setDeleteModalOpen(false)
+      setSelectedCategory(null)
+    }catch(err){
+      toast.error(err.response?.data?.message || "Delete failed")
+    }
+
+
   }
 
   const openDeleteModal = (category) => {
@@ -41,7 +53,7 @@ const {updateCategory}= useCategoryStore()
     {
       header: "SL. NO",
       cell: (_, index) => 
-	<span className='font-semibold'>{index+1}</span>
+	<span className='font-semibold'>{(currentPage-1)* perPage + index+1}</span>
 	
       
     },
