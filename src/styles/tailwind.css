@@ -98,13 +98,13 @@
     --popover-foreground: #56514b; /* Darker */
     
     /* Brand Colors */
-    --primary: #885D3B; /* Dark :active (Strongest button color) */
+    --primary: #825026; /* Dark :active (Strongest button color) */
     --primary-foreground: #fefdfb; /* Light (Text on primary button) */
     --secondary: #F4EBE4; /* Normal */
     --secondary-foreground: #56514b; /* Darker */
     
     /* Muted & Accents */
-    --muted: #fcf8f3; /* Light :active */
+    --muted: #f4f3f1; /* Light :active */
     --muted-foreground: #948b81; /* Dark :hover (Secondary text) */
     --accent: #ddd0c2; /* Normal :hover (Hover states for ghost buttons) */
     --accent-foreground: #56514b; /* Darker */

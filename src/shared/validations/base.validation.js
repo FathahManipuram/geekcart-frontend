@@ -56,3 +56,10 @@ export const dateOfBirthField = () =>
     .transform((value, originalValue) =>
       originalValue === "" ? null : value
     );
+
+
+	//Category validation
+	export const categoryName= ()=>
+	yup.string().trim().min(2, "Category name must be at least 2 characters")
+	.max(100, "Category name cannot exceed 100 characters");
+	

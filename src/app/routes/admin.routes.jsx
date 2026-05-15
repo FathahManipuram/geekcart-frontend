@@ -4,7 +4,7 @@ import UserManagementPage from "@/features/admin-side/user-management/pages/User
 import UserDetailsPage from "@/features/admin-side/user-management/pages/UserDetailsPage";
 import { Navigate } from "react-router-dom";
 import AdminProtectedRoute from "./AdminProtectedRoute";
-
+import CategoyManagementPage from "@/features/admin-side/category-management/pages/CategoyManagementPage";
 
 
 const adminRoutes = {
@@ -31,6 +31,10 @@ const adminRoutes = {
       path: "user-management/users/:userId",
       element: <UserDetailsPage />,
     },
+    {
+      path: "categories",
+      element: <CategoyManagementPage/>
+    }
   ],
 };
 

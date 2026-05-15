@@ -9,6 +9,7 @@ import UserForm from './create-user/UserForm'
 import { toast } from 'sonner'
 import { createUserApi } from '../api/api.userManagement'
 import { createUserSchema } from '../validations/createUser.validation'
+import Header from '@/shared/components/Header'
 
 const UserManagementHeader = () => {
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
@@ -39,7 +40,7 @@ const UserManagementHeader = () => {
     <>
       <div className="space-y-6">
         <div className="flex justify-between sm:flex-col gap-3 lg:flex-row">
-          <h1 className="text-4xl font-bold">User Management</h1>
+          <Header title="User Management" />
 
           <div className="flex items-center gap-4">
             <Select value={status} onValueChange={handleStatusChange}>
@@ -52,9 +53,7 @@ const UserManagementHeader = () => {
                 <SelectItem value="blocked">Blocked</SelectItem>
               </SelectContent>
             </Select>
-            <Button
-              onClick={()=> setOpenCreateUserModal(true)}
-            >
+            <Button onClick={() => setOpenCreateUserModal(true)}>
               <UserPlus size={16} />
               Add New User
             </Button>
@@ -62,13 +61,16 @@ const UserManagementHeader = () => {
         </div>
       </div>
 
-
       <Modal
-      open={openCreateUserModal}
-      onOpenChange={setOpenCreateUserModal}
-      title="Add New User"
+        open={openCreateUserModal}
+        onOpenChange={setOpenCreateUserModal}
+        title="Add New User"
       >
-<UserForm onClose={()=> setOpenCreateUserModal(false)} onSubmit={handleSubmit} schema={createUserSchema}/> 
+        <UserForm
+          onClose={() => setOpenCreateUserModal(false)}
+          onSubmit={handleSubmit}
+          schema={createUserSchema}
+        />
       </Modal>
     </>
   );
