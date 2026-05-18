@@ -5,14 +5,15 @@ import UserDetailsPage from "@/features/admin-side/user-management/pages/UserDet
 import { Navigate } from "react-router-dom";
 import AdminProtectedRoute from "./AdminProtectedRoute";
 import CategoyManagementPage from "@/features/admin-side/category-management/pages/CategoyManagementPage";
+import SubcategoryManagemetPage from "@/features/admin-side/subcategory-management/pages/SubcategoryManagemetPage";
 
 
 const adminRoutes = {
   path: "/admin",
   element: (
-   <AdminProtectedRoute>
+    <AdminProtectedRoute>
       <AdminLayout />
-   </AdminProtectedRoute>
+    </AdminProtectedRoute>
   ),
   children: [
     {
@@ -33,8 +34,12 @@ const adminRoutes = {
     },
     {
       path: "categories",
-      element: <CategoyManagementPage/>
-    }
+      element: <CategoyManagementPage />,
+    },
+    {
+      path: "subcategories",
+      element: <SubcategoryManagemetPage/>,
+    },
   ],
 };
 

@@ -1,7 +1,7 @@
 import ConfirmModal from '@/shared/components/ConfirmModal';
 import DataTable from '@/shared/components/DataTable'
 import { formatTitleCase } from '@/shared/utils/formatTitleCase';
-import { Pencil, Trash2 } from 'lucide-react';
+import {SquarePen, Trash2 } from 'lucide-react';
 import React, { useState } from 'react'
 import CategoryForm from './CategoryForm';
 import { updateCategorySchema } from '../validations/category.validation';
@@ -91,7 +91,7 @@ const {updateCategory, deleteCategory}= useCategoryStore()
     {
       header: "ACTIONS",
       cell: (category) => (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           {/* EDIT */}
           <button
             onClick={()=> {
@@ -105,7 +105,7 @@ const {updateCategory, deleteCategory}= useCategoryStore()
               transition
             "
           >
-            <Pencil size={16} />
+            <SquarePen size={16} />
           </button>
 
           {/* DELETE */}

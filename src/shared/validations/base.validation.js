@@ -63,3 +63,20 @@ export const dateOfBirthField = () =>
 	yup.string().trim().min(2, "Category name must be at least 2 characters")
 	.max(100, "Category name cannot exceed 100 characters");
 	
+	//SubCategory
+
+const SUPPORTED_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+	export const imageField = () =>
+    yup.mixed()
+	.test("fileType", "Only JPG, PNG, and WEBP images are allowed", 
+	(value)=> value && SUPPORTED_TYPES.includes(value.type))
+	.test("fileSize",  "Image must be less than 5 MB",
+		(value)=> value && value.size <=MAX_FILE_SIZE
+	)
