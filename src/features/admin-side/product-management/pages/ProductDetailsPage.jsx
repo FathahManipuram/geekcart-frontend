@@ -6,6 +6,7 @@ import DetailsHero from '../components/product-details/DetailsHero'
 import ProductSpecification from '../components/product-details/ProductSpecification'
 import ProductDescription from '../components/product-details/ProductDescription'
 import VariantDetailsTable from '../components/variant-details/VariantDetailsTable'
+import GalleryImages from '../components/product-details/GalleryImages'
 
 const ProductDetailsPage = () => {
 	const {fetchProductDetails, loading, productDetails}= useProductStore()
@@ -36,7 +37,7 @@ const ProductDetailsPage = () => {
         </div>
         <ProductDescription product={productDetails} />
       </div>
-
+<GalleryImages product={productDetails}/>
       <div>
         <VariantDetailsTable variants={productDetails.variants}/>
       </div>

@@ -25,4 +25,5 @@ export const COLOR_OPTIONS = [
   "Maroon",
   "Sky Blue",
   "Brown",
+  "Orange",
 ];
