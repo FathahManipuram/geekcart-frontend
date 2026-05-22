@@ -20,83 +20,134 @@ const Navbar = () => {
 	const logout= useAuthStore((state)=> state.logout)
 	const navigate= useNavigate()
 
-	const handleLogout= ()=>{
+	const handleLogout= async ()=>{
 		try{
-			logout()
+			await logout()
 			toast.success("Logout successfully")
 			navigate("/")
 		}catch(err){
 			console.log(err)
 		}
 	}
-	console.log("User: ",user)
   return (
-<header className='w-full px-15 py-8'>
-	<div className='flex items-center justify-between bg-secondary px-6 py-3 rounded-full shadow-sm'>
-{/* Logo */}
-		<Logo/>
+    <header className="w-full px-15 py-8">
+      <div className="flex items-center justify-between bg-secondary px-6 py-3 rounded-full shadow-sm">
+        {/* Logo */}
+        <Logo />
 
+        {/* Nav */}
+        <NavigationMenu>
+          <NavigationMenuList className="gap-2">
+            <NavigationMenuItem>
+              <NavLink to="/" end className={navLinkClass}>
+                Shop
+              </NavLink>
+            </NavigationMenuItem>
 
-{/* Nav */}
-		<NavigationMenu>
-			<NavigationMenuList className="gap-2">
-				<NavigationMenuItem>
-					<NavLink to="/" end className={navLinkClass}>Shop</NavLink>
-				</NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavLink to="/collections" className={navLinkClass}>
+                Collections
+              </NavLink>
+            </NavigationMenuItem>
 
-				<NavigationMenuItem>
-					<NavLink to="/collections" className={navLinkClass}>Collections</NavLink>
-				</NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavLink to="/offers" className={navLinkClass}>
+                Offers
+              </NavLink>
+            </NavigationMenuItem>
 
-				<NavigationMenuItem>
-					<NavLink to="/offers" className={navLinkClass}>Offers</NavLink>
-				</NavigationMenuItem>
+            <NavigationMenuItem className="relative">
+              <NavigationMenuTrigger>More</NavigationMenuTrigger>
+              <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
+                <ul className="flex flex-col gap-2 w-37.5">
+                  <li>
+                    <NavLink to="/wallet" className={navLinkClass}>
+                      Wallet
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/coins" className={navLinkClass}>
+                      Coins
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/wishlist" className={navLinkClass}>
+                      My Wishlist
+                    </NavLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
 
-				<NavigationMenuItem className="relative">
-					<NavigationMenuTrigger>
-						More
-					</NavigationMenuTrigger>
-					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-						<ul className='flex flex-col gap-2 w-37.5'>
-							<li><NavLink to="/wallet" className={navLinkClass}>Wallet</NavLink></li>
-							<li><NavLink to="/coins" className={navLinkClass}>Coins</NavLink></li>
-							<li><NavLink to="/wishlist" className={navLinkClass}>My Wishlist</NavLink></li>
-						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
+            <NavigationMenuItem>
+              {user ? (
+                <>
+                  <NavigationMenuTrigger>Account</NavigationMenuTrigger>
 
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>
-						{user? "Account": "Login"}
-					</NavigationMenuTrigger>
-					<NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-						<ul className='flex flex-col gap-2 w-37.5'>
-							{!user && (
-								<li><NavLink to="/login" className="hover:text-primary">Login</NavLink></li>
-							) }
-							<li><NavLink to="/profile" className="hover:text-primary">Profile</NavLink></li>
-							<li><NavLink to="/saved-address" className="hover:text-primary">Saved Address</NavLink></li>
-							<li><NavLink to="/order-history" className="hover:text-primary">Order History</NavLink></li>
-							<li><NavLink to="/payments" className="hover:text-primary">Payments</NavLink></li>
-							{user && (
-								<li><NavLink onClick={()=> handleLogout()} className="hover:text-primary">Sign Out</NavLink></li>
-							)}
-							
-						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-			</NavigationMenuList>
-		</NavigationMenu>
+                  <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
+                    <ul className="flex flex-col gap-2 w-37.5">
+                      <li>
+                        <NavLink
+                          to="/account/profile"
+                          className="hover:text-primary"
+                        >
+                          Profile
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/saved-address"
+                          className="hover:text-primary"
+                        >
+                          Saved Address
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/order-history"
+                          className="hover:text-primary"
+                        >
+                          Order History
+                        </NavLink>
+                      </li>
+                      <li>
+                        <NavLink
+                          to="/account/payments"
+                          className="hover:text-primary"
+                        >
+                          Payments
+                        </NavLink>
+                      </li>
+                      <li>
+                        <button
+                          type="button"
+                          onClick={handleLogout}
+                          className="hover:text-primary"
+                        >
+                          Sign Out
+                        </button>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </>
+              ) : (
+                <NavLink to="/login" className={navLinkClass}>
+                  Login
+                </NavLink>
+              )}
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
 
-{/* Icons */}
-		<div className='flex items-center gap-4'>
-			<Search className='w-5 h-5 cursor-pointer'/>
-			<ShoppingBag className='w-5 h-5 cursor-pointer'/>
-			<User className='w-5 h-5 cursor-pointer'/>
-		</div>
-	</div>
-</header>
-  )
+        {/* Icons */}
+        <div className="flex items-center gap-4">
+          <Search className="w-5 h-5 cursor-pointer" />
+          <ShoppingBag className="w-5 h-5 cursor-pointer" />
+          <User className="w-5 h-5 cursor-pointer" />
+        </div>
+      </div>
+    </header>
+  );
 }
 
 export default Navbar

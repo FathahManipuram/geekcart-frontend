@@ -3,20 +3,21 @@ import React from 'react'
 import LoginForm from '../components/LoginForm'
 import { FcGoogle } from 'react-icons/fc'
 import { Link, useNavigate } from 'react-router-dom'
-import { useAuthStore } from '../store/auth.store'
 import { toast } from 'sonner'
-
+import { GoogleLogin } from '@react-oauth/google'
+import { useAuthStore } from '../store/auth.store'
 
 const LoginPage = () => {
 	const navigate= useNavigate()
 	const login= useAuthStore((state)=> state.login)
+	const loginWithGoogle= useAuthStore((state)=> state.loginWithGoogle)
 
 	const handleLogin= async(data)=>{
 		console.log("Login data:", data)
 		try{
 			const res= await login(data)
 			const {user}= res.data
-			console.log("REs", user)
+			console.log("loginUser: ",user)
 			toast.success("Login successful")
 			if(user.role=== "admin"){
 				navigate("/admin/login")
@@ -25,7 +26,7 @@ const LoginPage = () => {
 			}
 			
 		} catch(err){
-			console.log("error:", err)
+			toast.error(err.response?.data?.message || "Login failed")
 		
 		}
 		
@@ -52,9 +53,28 @@ const LoginPage = () => {
   <div className="flex-1 h-px bg-border/60" />
 </div>
 
-				<button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button>
+				{/* <button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button> */}
 
-				<p className='text-center font-light text-xs'>New to GeekCart? {" "}
+				<GoogleLogin shape='circle' onSuccess={async(credentialResponse)=>{
+					try{
+						console.log("googllogCredential",credentialResponse)
+						const token= credentialResponse.credential;
+						console.log("TOKen", token)
+						await loginWithGoogle(token)
+						toast.success("Google login successful")
+						navigate("/")
+					} catch(err){
+						console.log(err)
+						toast.error("Google login failed")
+					}
+				}}
+				onError={()=>{
+					console.log("Google login failed")
+				}} className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'
+				/>
+
+
+				<p className='text-center font-light text-xs mt-8'>New to GeekCart? {" "}
 					<Link to="/register" className='text-primary cursor-pointer font-bold'>Create an account</Link>
 				</p>
 		</CardContent>
