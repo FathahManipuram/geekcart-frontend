@@ -16,7 +16,7 @@ const getPreview= (value, fallback)=>{
 
  const handleImageChange = (event, field, maxSizeMB) => {
    const file = event.target.files?.[0];
-
+console.log("sibngle:", event.target.files?.[0]);
    if (!file) return;
 
    if (!file.type.startsWith("image/")) {
@@ -52,6 +52,7 @@ const SingleImageUploader = ({
   const fileInputRef= useRef(null)
 
     const openFilePicker= ()=>{
+
       fileInputRef.current?.click()
     }
 

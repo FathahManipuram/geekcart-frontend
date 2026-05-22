@@ -1,0 +1,66 @@
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useProductStore } from '../store/product.store'
+import AddProductPage from './AddProductPage'
+import ProductForm from '../components/ProductForm'
+import { buildProductFormData } from '../utils/buildProductFormData'
+
+const EditProductPage = () => {
+
+  const productDetails = useProductStore((state) => state.productDetails);
+  const { productId } = useParams();
+
+    const loading =
+      useProductStore(
+        (state) =>
+          state.loading
+      );
+
+    const updateProduct =
+      useProductStore(
+        (state) =>
+          state.updateProduct
+      );
+
+    const handleUpdateProduct = async (data) => {
+          const formData = buildProductFormData(data);
+
+        return await updateProduct(
+            productId,
+            formData
+          );
+        
+      };
+
+    if (loading || !productDetails) {
+      return (
+        <div
+          className="
+            rounded-lg
+            border
+            bg-white
+            p-10
+            text-center
+          "
+        >
+          Loading product...
+        </div>
+      );
+    }
+
+    return (
+      <ProductForm
+        initialData={
+          productDetails
+        }
+        onSubmitHandler={
+          handleUpdateProduct
+        }
+        submitLabel="Update Product"
+        title="Edit Product"
+        description="Update and refine your product information."
+      />
+    );
+  };
+
+export default EditProductPage

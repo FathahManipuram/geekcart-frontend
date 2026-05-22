@@ -6,7 +6,10 @@ import { Navigate } from "react-router-dom";
 import AdminProtectedRoute from "./AdminProtectedRoute";
 import CategoyManagementPage from "@/features/admin-side/category-management/pages/CategoyManagementPage";
 import SubcategoryManagemetPage from "@/features/admin-side/subcategory-management/pages/SubcategoryManagemetPage";
-
+import ProductMangementPage from "@/features/admin-side/product-management/pages/ProductMangementPage";
+import AddProductPage from "@/features/admin-side/product-management/pages/AddProductPage";
+import ProductDetailsPage from "@/features/admin-side/product-management/pages/ProductDetailsPage";
+import EditProductPage from "@/features/admin-side/product-management/pages/EditProductPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -38,7 +41,23 @@ const adminRoutes = {
     },
     {
       path: "subcategories",
-      element: <SubcategoryManagemetPage/>,
+      element: <SubcategoryManagemetPage />,
+    },
+    {
+      path: "products",
+      element: <ProductMangementPage />,
+    },
+    {
+      path: "products/create",
+      element: <AddProductPage />,
+    },
+    {
+      path: "products/:slug",
+      element: <ProductDetailsPage />,
+    },
+    {
+      path: "products/:productId/edit",
+      element: <EditProductPage/>,
     },
   ],
 };

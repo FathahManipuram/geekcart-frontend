@@ -33,7 +33,7 @@ return (
 			<TableBody>
 				{data.length > 0 ? (
 					data.map((row, rowIndex)=>(
-						<TableRow key={[row[rowKey]]}>
+						<TableRow key={row[rowKey]}>
 							{columns.map((column, index)=>(
 								<TableCell key={column.accessor || `cell-${index}`}>
 									{column.cell ? column.cell(row, rowIndex)
