@@ -38,7 +38,7 @@ const VariantRow = ({
           type="number"
           min="0"
           {...register(`variants.${index}.stock`, {
-           setValueAs: numberTransformer,
+            setValueAs: numberTransformer,
           })}
           className="mt-2"
         />
@@ -50,17 +50,55 @@ const VariantRow = ({
       </div>
 
       <div>
-        <Label>Price</Label>
+        <Label>COST PRICE</Label>
         <AppInput
           type="number"
           min="0"
           step="0.01"
-          {...register(`variants.${index}.price`, { setValueAs: numberTransformer })}
+          {...register(`variants.${index}.costPrice`, {
+            setValueAs: numberTransformer,
+          })}
+          className="mt-2"
+        />
+        {errors?.variants?.[index]?.costPrice && (
+          <p className="mt-1 text-xs text-red-500">
+            {errors.variants[index].costPrice.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <Label>PRICE</Label>
+        <AppInput
+          type="number"
+          min="0"
+          step="0.01"
+          {...register(`variants.${index}.price`, {
+            setValueAs: numberTransformer,
+          })}
           className="mt-2"
         />
         {errors?.variants?.[index]?.price && (
           <p className="mt-1 text-xs text-red-500">
             {errors.variants[index].price.message}
+          </p>
+        )}
+      </div>
+
+      <div>
+        <Label>SALE PRICE</Label>
+        <AppInput
+          type="number"
+          min="0"
+          step="0.01"
+          {...register(`variants.${index}.salePrice`, {
+            setValueAs: numberTransformer,
+          })}
+          className="mt-2"
+        />
+        {errors?.variants?.[index]?.salePrice && (
+          <p className="mt-1 text-xs text-red-500">
+            {errors.variants[index].salePrice.message}
           </p>
         )}
       </div>

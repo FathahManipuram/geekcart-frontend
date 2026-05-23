@@ -46,7 +46,7 @@ const variantSchema = yup.object({
   stock: stock().required("Stock is required"),
   price: price().required("Price is required"),
   salePrice: salePrice(),
-  costPrice: costPrice(),
+  costPrice: costPrice().required("Cost price is required"),
   lowStockThreshold: lowStockThreshold(),
   isDefault: yup.boolean().default(false),
   isActive: yup.boolean().default(true),
