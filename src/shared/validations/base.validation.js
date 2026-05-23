@@ -133,30 +133,27 @@ export const productName = () =>
 	export const salePrice = () =>
     yup
       .number()
+      .typeError("Sale price must be a number")
       .nullable()
       .transform((value, originalValue) =>
         originalValue === "" || originalValue === null ? null : value,
       )
       .min(0, "Sale price cannot be negative")
-       .test(
+      .test(
         "sale-price-less-than-price",
         "Sale price must be less than or equal to price",
         function (value) {
-          if (
-            value === null ||
-            value === undefined
-          ) {
+          if (value === null || value === undefined) {
             return true;
           }
 
-          return (
-            value <= this.parent.price
-          );
-        }
-      )
+          return value <= this.parent.price;
+        },
+      );
 export const costPrice = () =>
   yup
     .number()
+    .typeError("Cost price must be a number")
     .nullable()
     .transform((value, originalValue) =>
       originalValue === "" || originalValue === null ? null : value,
