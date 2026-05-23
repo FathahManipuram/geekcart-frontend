@@ -1,7 +1,8 @@
 import { STORAGE_KEYS } from "@/shared/constants/storageKeys";
 import { storage } from "./storage";
-import { useAuthStore } from "@/features/auth/store/auth.store";
+//import { useAuthStore } from "@/features/auth/store/auth.store";
 import { toast } from "sonner";
+import { logoutUser } from "@/shared/utils/logoutUser";
 
 export const setupInterceptors=(
 	axiosInstance, 
@@ -40,8 +41,7 @@ export const setupInterceptors=(
             : "Token expired, please login again",
         );
         setTimeout(() => {
-          useAuthStore.getState().logout();
-          window.location.href = "/login";
+          logoutUser()
         }, 5000);
       }
 
