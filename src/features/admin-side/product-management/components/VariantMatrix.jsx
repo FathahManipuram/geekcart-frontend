@@ -27,13 +27,6 @@ const handleGenerateVariants =()=>{
 	})
 
 	replace(variants)
-
-	setValue("variants",
-		variants,{
-			shouldDirty: true,
-			shouldValidate: true
-		}
-	)
 }
 
   return (

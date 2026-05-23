@@ -14,7 +14,7 @@ const GalleryImages = ({product}) => {
 
       "
     >
-      {product.galleryImages.map((image) => (
+      {(product?.galleryImages || []).map((image) => (
         <img
           src={image}
           alt="galleryImage"

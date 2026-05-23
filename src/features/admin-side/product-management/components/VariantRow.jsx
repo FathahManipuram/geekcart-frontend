@@ -3,6 +3,7 @@ import { Button } from '@/shared/components/ui/button';
 import { Label } from '@/shared/components/ui/label';
 import { Switch } from '@/shared/components/ui/switch';
 import MultipleImageUploader from '@/shared/helpers/MultipleImageUploader';
+import { numberTransformer } from '@/shared/utils/formTransformers';
 import { Trash2 } from 'lucide-react';
 import React from 'react'
 import { Controller } from 'react-hook-form';
@@ -37,7 +38,7 @@ const VariantRow = ({
           type="number"
           min="0"
           {...register(`variants.${index}.stock`, {
-            valueAsNumber: true,
+           setValueAs: numberTransformer,
           })}
           className="mt-2"
         />
@@ -54,7 +55,7 @@ const VariantRow = ({
           type="number"
           min="0"
           step="0.01"
-          {...register(`variants.${index}.price`, { valueAsNumber: true })}
+          {...register(`variants.${index}.price`, { setValueAs: numberTransformer })}
           className="mt-2"
         />
         {errors?.variants?.[index]?.price && (
