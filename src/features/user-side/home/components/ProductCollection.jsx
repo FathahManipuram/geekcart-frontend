@@ -2,65 +2,6 @@
 
 import ProductCard from "./ProductCard";
 
-const products = [
-  {
-    id: 1,
-    name: "Midnight Linen Shirt",
-    price: "$129.00",
-    image:
-      "https://images.unsplash.com/photo-1603252109303-2751441dd157?q=80&w=800",
-  },
-  {
-    id: 2,
-    name: "Oxford Classic White",
-    price: "$95.00",
-    image:
-      "https://images.unsplash.com/photo-1602810316498-ab67cf68c8e1?q=80&w=800",
-  },
-  {
-    id: 3,
-    name: "Terracotta Weaver",
-    price: "$110.00",
-    image:
-      "https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=800",
-  },
-  {
-    id: 4,
-    name: "Sage Oversize Cotton",
-    price: "$89.00",
-    image:
-      "https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=800",
-  },
-  {
-    id: 5,
-    name: "Urban Denim Jacket",
-    price: "$149.00",
-    image:
-      "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?q=80&w=800",
-  },
-  {
-    id: 6,
-    name: "Minimal Beige Tee",
-    price: "$59.00",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
-  },
-  {
-    id: 7,
-    name: "Classic Brown Coat",
-    price: "$199.00",
-    image:
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800",
-  },
-  {
-    id: 8,
-    name: "Relaxed Fit Hoodie",
-    price: "$99.00",
-    image:
-      "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=800",
-  },
-];
-
 const ProductCollection = ({
   title = "Featured Products",
   showViewAll = true,
@@ -75,7 +16,7 @@ const ProductCollection = ({
             {title}
           </h2>
 
-          <div className="w-16 h-[3px] bg-neutral-300 mt-3" />
+          <div className="w-16 h-0.75 bg-neutral-300 mt-3" />
         </div>
 
         {showViewAll && (
@@ -93,6 +34,7 @@ const ProductCollection = ({
             image={product.coverImage}
             name={product.name}
             price={product.price}
+            slug={product.slug}
           />
         ))}
       </div>

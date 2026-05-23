@@ -1,22 +1,30 @@
 // src/features/home/components/ProductCard.jsx
 
 import { Heart } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({
   image,
   name,
   price,
+  slug,
   isWishlisted = false,
   onWishlist,
 }) => {
+
+const navigate= useNavigate()
+
   return (
-    <div className="group cursor-pointer">
+    <div
+      onClick={() => navigate(`/products/${slug}`)}
+      className="group cursor-pointer"
+    >
       {/* Product Image */}
       <div className="relative overflow-hidden rounded-2xl bg-[#ece7df]">
         <img
           src={image}
           alt={name}
-          className="h-[220px] sm:h-[260px] md:h-[320px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-55 sm:h-65 md:h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Wishlist */}
@@ -38,7 +46,7 @@ const ProductCard = ({
         </h3>
 
         <p className="text-sm md:text-base font-semibold text-amber-700 mt-1">
-          {price}
+          ₹{price}
         </p>
       </div>
     </div>
