@@ -7,7 +7,7 @@ export const useProductStore = create((set, get) => ({
   categories: [],
   subcategories: [],
   productDetails:[],
-
+  
   loading: false,
   error: null,
 
