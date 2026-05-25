@@ -1,13 +1,14 @@
 import React from 'react'
 import { useProductStore } from '../store/product.store';
-import { buildProductFormData } from '../utils/buildProductFormData';
 import ProductForm from '../components/ProductForm';
+import { buildCreateProductFormData } from '../utils/buildCreateProductFormData';
 
 const AddProductPage = () => {
   const createProduct = useProductStore((state) => state.createProduct);
 
   const handleCreateProduct = async (data) => {
-    const formData = buildProductFormData(data);
+    
+    const formData = buildCreateProductFormData(data);
     return await createProduct(formData);
   };
 

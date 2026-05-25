@@ -6,12 +6,14 @@ import DetailsHero from '../components/product-details/DetailsHero'
 import ProductSpecification from '../components/product-details/ProductSpecification'
 import ProductDescription from '../components/product-details/ProductDescription'
 import VariantDetailsTable from '../components/variant-details/VariantDetailsTable'
-import GalleryImages from '../components/product-details/GalleryImages'
+import { groupVariantsByColor } from '../utils/groupVariantsByColor'
+import VariantImageGallery from '../components/variant-details/VariantImageGallery'
 
 const ProductDetailsPage = () => {
-	const {fetchProductDetails, loading, productDetails}= useProductStore()
-	const {slug}= useParams()
-	console.log("slug: ", slug)
+	const {fetchProductDetails, productDetails}= useProductStore()
+  const groupedVariants = groupVariantsByColor(productDetails?.variants);
+  const { slug } = useParams();
+  console.log("slug: ", slug);
 
 	useEffect(()=>{
 		fetchProductDetails(slug)
@@ -36,10 +38,12 @@ const ProductDetailsPage = () => {
           <ProductSpecification product={productDetails} />
         </div>
         <ProductDescription product={productDetails} />
+
+        <VariantImageGallery variants={groupedVariants} />
       </div>
-<GalleryImages product={productDetails}/>
+
       <div>
-        <VariantDetailsTable variants={productDetails.variants}/>
+        <VariantDetailsTable variants={productDetails.variants} />
       </div>
     </>
   );

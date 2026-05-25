@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useProductStore } from '../store/product.store'
 import AddProductPage from './AddProductPage'
 import ProductForm from '../components/ProductForm'
-import { buildProductFormData } from '../utils/buildProductFormData'
+import { buildUpdateProductFormData } from '../utils/buildUpdateProductFormData'
 
 const EditProductPage = () => {
 
@@ -23,7 +23,9 @@ const EditProductPage = () => {
       );
 
     const handleUpdateProduct = async (data) => {
-          const formData = buildProductFormData(data);
+
+
+          const formData = buildUpdateProductFormData(data);
 
         return await updateProduct(
             productId,
