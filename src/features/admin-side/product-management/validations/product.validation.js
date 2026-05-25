@@ -1,12 +1,11 @@
 import { phoneNumber } from "@/shared/validations/address.base";
-import { color, costPrice, description, fabric, imageField, images, lowStockThreshold, price, productName, salePrice, size, sku, sleeve, stock } from "@/shared/validations/base.validation"
+import { color, costPrice, description, fabric, imageField, lowStockThreshold, price, productName, salePrice, size, sizes, sku, sleeve, stock } from "@/shared/validations/base.validation"
 import * as yup from "yup"
 
 const basicInformationSchema = yup.object({
   name: productName().required("Product name is required"),
   description: description().required("Description is required"),
   coverImage: imageField().required("Cover image is required"),
-  galleryImages: images().min(3, "At least 3 images are required"),
   manufacturer: yup.object({
     name: yup.string().trim().required("Manufacturer name is required"),
     address: yup.string().trim().required("Manufacturer address is required"),
@@ -39,6 +38,16 @@ const productStatusSchema = yup.object({
   isLimited: yup.boolean().default(false),
 });
 
+const variantGroupSchema = yup.object({
+  color: color().required("Color is required"),
+  sizes: sizes().min(1, "Select at least one size").required(),
+  images: yup
+    .array()
+    .of(yup.mixed())
+    .min(3, "Add at least 3 images")
+    .required(),
+});
+
 const variantSchema = yup.object({
   size: size().required("Size is required"),
   color: color().required("Color is required"),
@@ -54,12 +63,11 @@ const variantSchema = yup.object({
 
 
 const variantMatrixSchema = yup.object({
-  selectedSizes: yup
+  variantGroups: yup
     .array()
-    .of(yup.string())
-    .min(1, "Select at least one size"),
-
-  selectedColor: yup.string().trim().required("Please select a color"),
+    .of(variantGroupSchema)
+    .min(1, "Add at least one variant group")
+    .required(),
 
   variants: yup
     .array()
@@ -67,7 +75,6 @@ const variantMatrixSchema = yup.object({
     .min(1, "Generate at least one variant")
     .required("At least one variant is required"),
 });
-
 
 export const addProductSchema= 
 basicInformationSchema
