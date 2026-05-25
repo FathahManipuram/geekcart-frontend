@@ -74,12 +74,25 @@ const SUPPORTED_TYPES = [
 const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 	export const imageField = () =>
-    yup.mixed()
-	.test("fileType", "Only JPG, PNG, and WEBP images are allowed", 
-	(value)=> value && SUPPORTED_TYPES.includes(value.type))
-	.test("fileSize",  "Image must be less than 5 MB",
-		(value)=> value && value.size <=MAX_FILE_SIZE
-	)
+    //   yup.mixed()
+    // .test("fileType", "Only JPG, PNG, and WEBP images are allowed",
+    // (value)=> value && SUPPORTED_TYPES.includes(value.type))
+    // .test("fileSize",  "Image must be less than 5 MB",
+    // 	(value)=> value && value.size <=MAX_FILE_SIZE
+    // )
+    yup.mixed().test("required", "Image is required", (value) => {
+   
+      if (typeof value === "string" && value.trim() !== "") {
+        return true;
+      }
+
+  
+      if (value instanceof File) {
+        return true;
+      }
+
+      return false;
+    });
 
 
 //Product
@@ -95,7 +108,7 @@ export const productName = () =>
       .string()
       .trim()
       .min(10, "Description must be at least 10 characters")
-      .max(1000, "Description must not exceed 500 characters")
+      .max(1000, "Description must not exceed 1000 characters")
 
 	  export const fabric= ()=> yup
 	  .string()
@@ -105,9 +118,11 @@ export const productName = () =>
         yup.array().of(yup.mixed().required()).default([]);
 
 //Variant
-	  export const size=()=> yup
-	  .string()
-	  .trim()
+	  export const sizes=()=> yup
+  .array()
+  .of(yup.string())
+
+  export const size=()=> yup.string().trim()
 
 	  export const color= ()=>yup.string()
 	  .trim()
@@ -118,14 +133,20 @@ export const productName = () =>
 	  export const stock = () =>
       yup
         .number()
+        .transform((value, originalValue) =>
+          originalValue === "" ? undefined : value,
+        )
         .typeError("Stock must be a number")
         .integer("Stock must be a whole number")
-        .min(1, "Stock must be at least 1")
+        .min(1, "Stock must be at least 1");
 
 
 	  export const price = () =>
       yup
         .number()
+        .transform((value, originalValue) =>
+          originalValue === "" ? undefined : value,
+        )
         .typeError("Price must be a number")
         .moreThan(0, "Price must be greater than 0");
 		

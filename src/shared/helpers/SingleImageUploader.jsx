@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { Controller } from 'react-hook-form';
 import { toast } from 'sonner'
 import { Button } from '../components/ui/button';
 import { Camera } from 'lucide-react';
+import ImageCropModal from '../components/image-cropper/ImageCropModal';
 
 const DEFAULT_PLACEHOLDER=  "https://placehold.co/200x200?text=Upload";
 
@@ -14,26 +15,42 @@ const getPreview= (value, fallback)=>{
 }
 
 
- const handleImageChange = (event, field, maxSizeMB) => {
-   const file = event.target.files?.[0];
-console.log("sibngle:", event.target.files?.[0]);
-   if (!file) return;
 
-   if (!file.type.startsWith("image/")) {
-     toast.error("Only image files are allowed");
-     return;
-   }
 
-   if (file.size > maxSizeMB * 1024 * 1024) {
-     toast.error(`Image must be less than ${maxSizeMB} MB`);
-     return;
-   }
+const handleImageChange = (event, maxSizeMB, setSelectedImage, setCropOpen) => {
+  const file = event.target.files?.[0];
 
-  field.onChange(file)
+  if (!file) return;
 
-   event.target.value = "";
- };
+  /**
+   * Validate Type
+   */
+  if (!file.type.startsWith("image/")) {
+    toast.error("Only image files are allowed");
 
+    return;
+  }
+
+  /**
+   * Validate Size
+   */
+  if (file.size > maxSizeMB * 1024 * 1024) {
+    toast.error(`Image must be less than ${maxSizeMB} MB`);
+
+    return;
+  }
+
+  /**
+   * Open Cropper
+   */
+  const previewUrl = URL.createObjectURL(file);
+
+  setSelectedImage(previewUrl);
+
+  setCropOpen(true);
+
+  event.target.value = "";
+};
 
 
 const SingleImageUploader = ({
@@ -49,6 +66,10 @@ const SingleImageUploader = ({
   fallback= DEFAULT_PLACEHOLDER,
 
 }) => {
+  const [cropOpen, setCropOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+
   const fileInputRef= useRef(null)
 
     const openFilePicker= ()=>{
@@ -65,30 +86,49 @@ const SingleImageUploader = ({
     render={({field})=>{
       const preview= getPreview(field.value, fallback)
       return (
-        <div className='space-y-2'>
-          <img
-            src={preview}
-            alt={alt}
-            className={`${size} ${shape} object-cover border bg-muted`}
-          />
+        <>
+          <div className="space-y-2">
+            <img
+              src={preview}
+              alt={alt}
+              className={`${size} ${shape} object-cover border bg-muted`}
+            />
 
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept={accept}
-            onChange={(event)=> handleImageChange(event, field, maxSizeMB)}
-            hidden
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept={accept}
+              onChange={(event) =>
+                handleImageChange(
+                  event,
+                  maxSizeMB,
+                  setSelectedImage,
+                  setCropOpen,
+                )
+              }
+              hidden
+            />
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={openFilePicker}
+              disabled={loading}
+            >
+              <Camera size={16} />
+              {loading ? "Uploading..." : title}
+            </Button>
+          </div>
+
+          <ImageCropModal
+            open={cropOpen}
+            image={selectedImage}
+            aspect={1}
+            onClose={() => setCropOpen(false)}
+            onCropDone={(croppedFile) => {
+              field.onChange(croppedFile);
+            }}
           />
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={openFilePicker}
-            disabled={loading}
-          >
-            <Camera size={16} />
-            {loading ? "Uploading..." : title}
-          </Button>
-        </div>
+        </>
       );
     }}
     />
