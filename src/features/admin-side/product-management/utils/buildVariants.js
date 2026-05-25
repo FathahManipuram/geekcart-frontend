@@ -1,29 +1,58 @@
 import { generateSku } from "./generateSku";
 
 export const buildVariants = ({
-  sizes = [],
-  color = "",
   productName = "",
-  // sleeve = "",
-  // fabric = "",
+  color = "",
+  sizes = [],
+  images = [],
+  existingVariants = [],
 }) => {
-  return sizes.map((size, index) => ({
-    size,
-    color,
-    sku: generateSku({
-      productName,
-      index,
+  return sizes.map((size, index) => {
+    
+    const existingVariant = existingVariants.find(
+      (variant) => variant.color === color && variant.size === size,
+    );
+
+  
+    if (existingVariant) {
+      return {
+        ...existingVariant,
+
+        images: existingVariant.images || images,
+      };
+    }
+
+   
+    return {
       size,
+
       color,
-    }),
-    stock: 0,
-    price: 0,
-    salePrice: 0,
-    costPrice: 0,
-    lowStockThreshold: 5,
-    // sleeve,
-    // fabric,
-    isDefault: index === 0,
-    isActive: true,
-  }));
+
+      sku: generateSku({
+        productName,
+
+        index,
+
+        size,
+
+        color,
+      }),
+
+      stock: 0,
+
+      price: 0,
+
+      salePrice: "",
+
+      costPrice: "",
+
+      lowStockThreshold: 5,
+
+      images,
+
+      isDefault: index === 0,
+
+      isActive: true,
+    };
+  });
 };
