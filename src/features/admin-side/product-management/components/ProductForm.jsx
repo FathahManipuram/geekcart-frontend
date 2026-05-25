@@ -10,6 +10,7 @@ import OrganizationAttributes from './OrganizationAttributes'
 import ProductStatusPanel from './ProductStatusPanel'
 import VariantMatrix from './VariantMatrix'
 import { useNavigate } from 'react-router-dom'
+import { getDirtyValues } from '../utils/getDirtyValues'
 
 const ProductForm = ({initialData= null, onSubmitHandler, submitLabel="Save product", title= "Product Form", description="",}) => {
 const navigate= useNavigate()
@@ -19,7 +20,7 @@ const navigate= useNavigate()
 		const fetchSubcategories= useSubcategoryStore((state)=> state.fetchSubcategories)
 		const subcategories= useSubcategoryStore((state)=> state.subcategories)
 
-		const {control, register, handleSubmit, watch, reset, setValue, formState:{errors, isSubmitting, isDirty,}}= useProductForm(initialData)
+		const {control, register, handleSubmit, watch, reset, setValue, formState:{errors, isSubmitting, isDirty, dirtyFields}}= useProductForm(initialData)
 	
 	
 	useEffect(() => {
@@ -30,7 +31,12 @@ const navigate= useNavigate()
 
 	 const onSubmit = async (data) => {
      try {
-       await onSubmitHandler(data);
+ 
+     const finalData = initialData ? getDirtyValues(dirtyFields, data) : data;
+
+console.log("FINAL FORM DATA:", finalData);
+
+       await onSubmitHandler(finalData);
 
        toast.success(
          initialData
@@ -50,9 +56,9 @@ const navigate= useNavigate()
 
 
 
-   const handleDiscard = () => {
-     reset();
-   };
+  //  const handleDiscard = () => {
+  //    reset();
+  //  };
 
 
   return (
@@ -100,7 +106,7 @@ const navigate= useNavigate()
           <Button
             type="button"
             variant="outline"
-            onClick={handleDiscard}
+            onClick={()=> navigate(-1)}
             disabled={isSubmitting}
           >
             Discard
@@ -113,7 +119,7 @@ const navigate= useNavigate()
       </div>
 
       {/* Basic Information */}
-      <BasicInformation control={control} errors={errors} register={register} />
+      <BasicInformation control={control} errors={errors} register={register} watch={watch}/>
 
       {/* Organization */}
       <OrganizationAttributes
