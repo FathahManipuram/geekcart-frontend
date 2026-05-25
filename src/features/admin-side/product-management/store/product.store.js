@@ -6,8 +6,9 @@ export const useProductStore = create((set, get) => ({
   pagination: {},
   categories: [],
   subcategories: [],
-  productDetails:[],
-  
+  productDetails: [],
+  productStats: {},
+
   loading: false,
   error: null,
 
@@ -20,28 +21,54 @@ export const useProductStore = create((set, get) => ({
     subcategory: "",
   },
 
-  // fatch products
+
   fetchProducts: async (params = {}) => {
     try {
+   
       const currentParams = {
         ...get().queryParams,
+
         ...params,
       };
 
-      set({ loading: true, error: null, queryParams: currentParams });
+      
+      const sanitizedParams = Object.fromEntries(
+        Object.entries(currentParams).filter(
+          ([_, value]) => value !== undefined && value !== null && value !== "",
+        ),
+      );
 
-      const res = await fetchProductsApi();
-      console.log("fetchedProductData: ", res.data)
       set({
-        products: res.data,
+        loading: true,
+
+        error: null,
+
+        queryParams: currentParams,
+      });
+
+      const res = await fetchProductsApi(sanitizedParams);
+
+      console.log("fetchedProductData:", res.data);
+
+      set({
+        products: res.data.products,
+
+        productStats: res.data.stats,
+
         pagination: res.data.pagination,
+
         loading: false,
       });
-      console.log("final: ", get().products)
+
       return res;
     } catch (err) {
       const message = err.response?.data?.message || "Failed to fetch products";
-      set({ loading: false, error: message });
+
+      set({
+        loading: false,
+
+        error: message,
+      });
 
       throw err;
     }
@@ -96,41 +123,58 @@ export const useProductStore = create((set, get) => ({
   //Soft delete
   deleteProduct: async (productId) => {
     try {
-      set({ loading: true, error: null });
+      set({
+        loading: true,
+        error: null,
+      });
+
+  
       const res = await deleteproductApi(productId);
 
+  
       const { pagination, queryParams, products } = get();
 
+     
       const currentPage = pagination?.currentPage || 1;
+
+      
       const newPage =
         currentPage > 1 && products.length === 1
           ? currentPage - 1
           : currentPage;
 
-      await get().fetchProducts({ ...queryParams, page: newPage });
-
-      set({ loading: false });
+     
+      await get().fetchProducts({
+        ...queryParams,
+        page: newPage,
+      });
 
       return res;
     } catch (err) {
       const message = err.response?.data?.message || "Failed to delete product";
 
-      set({ loading: false, error: message });
+      set({
+        error: message,
+      });
+
       throw err;
+    } finally {
+      set({
+        loading: false,
+      });
     }
   },
 
-
   // fetch product details
-  fetchProductDetails: async(slug)=>{
-    try{
-      set({loading: true, error: null})
-      const res= await fetchProductDetailsApi(slug)
-      console.log("Product details: ", res.data)
+  fetchProductDetails: async (slug) => {
+    try {
+      set({ loading: true, error: null });
+      const res = await fetchProductDetailsApi(slug);
+      console.log("Product details: ", res.data);
 
-      set({productDetails: res.data, loading: false})
-      return res
-    }catch(err){
+      set({ productDetails: res.data, loading: false });
+      return res;
+    } catch (err) {
       const message = err.response?.data?.message || "Failed to delete product";
 
       set({ loading: false, error: message });
@@ -142,10 +186,6 @@ export const useProductStore = create((set, get) => ({
   clearError: () => {
     set({ error: null });
   },
-
-
-
-  
 }));
 
 

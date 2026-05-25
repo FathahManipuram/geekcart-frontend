@@ -1,5 +1,4 @@
 import { StrictMode } from 'react'
-import "react-inner-image-zoom/lib/styles.min.css";
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import './styles/tailwind.css'

@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { addProductSchema } from "../validations/product.validation";
 import { useForm } from "react-hook-form";
+import { groupVariants } from "../utils/groupVariants";
 
-export const useProductForm=(initialData= null)=>{
+const useProductForm=(initialData= null)=>{
 	const defaultValues = {
     name: "",
     description: "",
     coverImage: "",
-    galleryImages: [],
 
     manufacturer: {
       name: "",
@@ -19,10 +19,6 @@ export const useProductForm=(initialData= null)=>{
     category: "",
     subcategory: "",
 
-    // defaultAttributes: {
-    //   sleeve: "",
-    //   fabric: "",
-    // },
     sleeve: "",
     fabric: "",
 
@@ -33,8 +29,17 @@ export const useProductForm=(initialData= null)=>{
     isFeatured: false,
     isLimited: false,
 
-    selectedSizes: [],
-    selectedColor: "",
+    variantGroups: [
+      {
+        color: "",
+
+        sizes: [],
+
+        images: [],
+
+      },
+    ],
+
     variants: [],
   };
 
@@ -47,20 +52,26 @@ export const useProductForm=(initialData= null)=>{
         subcategory:
           initialData.subcategory?._id || initialData.subcategory || "",
 
-        galleryImages: initialData.galleryImages || [],
-
         manufacturer: {
           ...defaultValues.manufacturer,
           ...(initialData.manufacturer || {}),
         },
 
-        selectedSizes:
-          initialData.selectedSizes ||
-          initialData.variants?.map((variant) => variant.size) ||
-          [],
 
-        selectedColor:
-          initialData.selectedColor || initialData.variants?.[0]?.color || "",
+        coverImage:
+  initialData.coverImage || "",
+
+        variantGroups: initialData?.variants
+          ? groupVariants(initialData.variants)
+          : [
+              {
+                color: "",
+
+                sizes: [],
+
+                images: [],
+              },
+            ],
 
         variants: initialData.variants || [],
       }
