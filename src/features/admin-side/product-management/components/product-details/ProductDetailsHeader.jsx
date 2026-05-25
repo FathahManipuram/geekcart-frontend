@@ -22,23 +22,26 @@ const ProductDetailsHeader = ({product}) => {
         <Header title={product.name} />
 
         <div className="flex gap-2">
-          {!!product.isActive && (
-            <div
-              className={` mt-4
-              inline-flex
-              rounded-full
-              px-4
-              py-1
-              text-xs
-              font-semibold
-              uppercase
-              tracking-wide
-              ${product.isActive ? "text-green-700 bg-green-100" : "text-red-700 bg-red-100"}
-              `}
-            >
-              {product.isActive ? "ACTIVe" : "INACTIVE"}
-            </div>
-          )}
+          <div
+            className={`
+    mt-4
+    inline-flex
+    rounded-full
+    px-4
+    py-1
+    text-xs
+    font-semibold
+    uppercase
+    tracking-wide
+    ${
+      product.isActive
+        ? "bg-green-100 text-green-700"
+        : "bg-red-100 text-red-700"
+    }
+  `}
+          >
+            {product.isActive ? "ACTIVE" : "INACTIVE"}
+          </div>
 
           {product.isFeatured && (
             <div
@@ -82,7 +85,7 @@ const ProductDetailsHeader = ({product}) => {
 
       {/* RIGHT */}
       <div className="flex flex-col gap-4 w-full lg:w-55">
-        <Button variant="outline" className="h-12">
+        <Button variant="outline" className="h-12" onClick={() => navigate(-1)}>
           Back
         </Button>
 

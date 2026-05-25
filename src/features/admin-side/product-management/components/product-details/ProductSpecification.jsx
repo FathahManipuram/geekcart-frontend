@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ProductSpecification = ({product}) => {
-	 const variant = product?.variants?.[0];
 
    const specifications = [
      {
