@@ -1,28 +1,28 @@
 import StatsCard from '@/shared/components/StatsCard';
 import React from 'react'
 
-const ProductStatsCards = () => {
+const ProductStatsCards = ({productStats}) => {
 
 	const stats = [
     {
       title: "Total SKU Units",
-      value: "2,840",
+      value: productStats?.totalSkuUnits,
     },
 
     {
       title: "Low Stock Alerts",
-      value: "12",
+      value: productStats?.lowStockAlerts,
       valueClassName: "text-red-600",
     },
 
     {
       title: "Active Subcategories",
-      value: "4",
+      value: productStats?.activeSubcategories,
     },
 
     {
       title: "Inventory Value",
-      value: "₹4,28,000",
+      value: productStats?.inventoryValue,
     },
   ];
 

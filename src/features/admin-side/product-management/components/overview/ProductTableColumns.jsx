@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductStatusBadge from './ProductStatusBadge';
 import ProductActionButton from './ProductActionButton';
+import StatusBadge from '@/shared/components/StatusBadge';
 
 
 	export const ProductTableColumns = [
@@ -87,20 +88,22 @@ import ProductActionButton from './ProductActionButton';
 
           {/* Sizes */}
           <div className="flex flex-wrap gap-2">
-            {product?.variants?.map((variant, index) => (
-              <div
-                key={index}
-                className="
+            {[...new Set((product?.variants || []).map((v) => v.size))].map(
+              (size, index) => (
+                <div
+                  key={index}
+                  className="
                 text-xs
                 bg-muted
                 px-2
                 py-1
                 rounded
               "
-              >
-                {variant.size}
-              </div>
-            ))}
+                >
+                  {size}
+                </div>
+              ),
+            )}
           </div>
         </div>
       ),
@@ -129,7 +132,9 @@ import ProductActionButton from './ProductActionButton';
     {
       header: "STATUS",
 
-      cell: (product) => <ProductStatusBadge status={product.status} />,
+      cell: (product) => (
+        <StatusBadge status={product.isActive ? "active" : "inactive"} />
+      ),
     },
 
     {
