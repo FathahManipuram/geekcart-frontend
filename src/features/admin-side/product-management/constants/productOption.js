@@ -27,13 +27,16 @@ export const COLOR_OPTIONS = [
   "Light Blue",
   "Teal Blue",
   "Olive",
+  "OliveGreen",
   "Beige",
   "Tan Beige",
   "Light Beige",
   "Grey",
+  "Dark Grey",
   "Maroon",
   "Coffee Brown",
   "Dusty Rose",
   "Brown",
   "Orange",
+  "Coral Orange"
 ];
