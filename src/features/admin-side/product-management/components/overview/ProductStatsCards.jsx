@@ -22,7 +22,7 @@ const ProductStatsCards = ({productStats}) => {
 
     {
       title: "Inventory Value",
-      value: productStats?.inventoryValue,
+      value: `₹${productStats?.inventoryValue}`,
     },
   ];
 

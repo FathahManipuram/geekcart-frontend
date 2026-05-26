@@ -164,7 +164,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-4">
           <Search className="w-5 h-5 cursor-pointer" />
 
-          <ShoppingBag className="w-5 h-5 cursor-pointer" />
+          <ShoppingBag onClick={()=> navigate("/cart")} className="w-5 h-5 cursor-pointer" />
         </div>
 
         {/* Mobile Menu Button */}
