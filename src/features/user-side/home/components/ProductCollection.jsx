@@ -30,7 +30,7 @@ const ProductCollection = ({
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
         {products.map((product) => (
           <ProductCard
-            key={product.id}
+            key={product._id}
             image={product.coverImage}
             name={product.name}
             price={product.price}

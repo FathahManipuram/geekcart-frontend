@@ -21,7 +21,7 @@ const CategoryCollection = ({subcategories}) => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {subcategories.map((category) => (
           <CategoryCard
-            key={category.id}
+            key={category._id}
             image={category.image}
             name={category.name}
             items={category.items}

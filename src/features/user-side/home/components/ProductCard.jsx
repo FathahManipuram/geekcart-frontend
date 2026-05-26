@@ -15,7 +15,7 @@ const ProductCard = ({
 const navigate= useNavigate()
 
   return (
-    <div
+    <div key={slug}
       onClick={() => navigate(`/products/${slug}`)}
       className="group cursor-pointer"
     >
