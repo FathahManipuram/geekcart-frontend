@@ -8,6 +8,7 @@ const ProductCard = ({
   name,
   price,
   slug,
+  isActive,
   isWishlisted = false,
   onWishlist,
 }) => {
@@ -15,16 +16,22 @@ const ProductCard = ({
 const navigate= useNavigate()
 
   return (
-    <div key={slug}
+    <div
+      key={slug}
       onClick={() => navigate(`/products/${slug}`)}
-      className="group cursor-pointer"
+      className="relative group cursor-pointer"
     >
+      {!isActive && (
+        <span className="absolute left-3 top-3 z-10 rounded-full bg-black px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white">
+          Unavailable
+        </span>
+      )}
       {/* Product Image */}
       <div className="relative overflow-hidden rounded-2xl bg-[#ece7df]">
         <img
           src={image}
           alt={name}
-          className="h-55 sm:h-65 md:h-80 w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="h-75 sm:h-90 md:h-90 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* Wishlist */}

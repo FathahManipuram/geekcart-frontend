@@ -1,5 +1,6 @@
 // src/features/home/components/ProductCollection.jsx
 
+import { useNavigate } from "react-router-dom";
 import ProductCard from "./ProductCard";
 
 const ProductCollection = ({
@@ -7,6 +8,8 @@ const ProductCollection = ({
   showViewAll = true,
   products
 }) => {
+
+  const navigate= useNavigate()
   return (
     <section className="px-4 md:px-8 lg:px-12 py-10 bg-[#f6f3ee]">
       {/* Header */}
@@ -20,7 +23,10 @@ const ProductCollection = ({
         </div>
 
         {showViewAll && (
-          <button className="hidden md:flex items-center gap-2 text-sm font-semibold text-amber-700 hover:text-amber-800 transition-colors">
+          <button
+            onClick={() => navigate("/collections")}
+            className="hidden md:flex items-center gap-2 text-sm font-semibold text-amber-700 hover:text-amber-800 transition-colors"
+          >
             View All Products →
           </button>
         )}
@@ -35,6 +41,7 @@ const ProductCollection = ({
             name={product.name}
             price={product.price}
             slug={product.slug}
+            isActive={product.isActive}
           />
         ))}
       </div>
@@ -42,7 +49,10 @@ const ProductCollection = ({
       {/* Mobile Button */}
       {showViewAll && (
         <div className="flex justify-center mt-8 md:hidden">
-          <button className="text-sm font-semibold text-amber-700">
+          <button
+            onClick={() => navigate("/collections")}
+            className="text-sm font-semibold text-amber-700"
+          >
             View All Products →
           </button>
         </div>
