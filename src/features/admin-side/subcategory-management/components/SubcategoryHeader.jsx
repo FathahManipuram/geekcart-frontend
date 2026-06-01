@@ -43,7 +43,7 @@ setOpenCreateSubcategoryModal(false)
   }
   return (
     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-      <Header title="Sub Category Management" />
+      <Header title="Subcategory Management" />
 
       <div className="flex items-center gap-4">
         <Select value={queryParams.status || "all"} onValueChange={handleStatusChange}>

@@ -35,7 +35,7 @@ const columns = [
   },
   {
     header: "PRODUCTS",
-    cell: (subcategory) => <span>0</span>,
+    cell: (subcategory) => <span>{subcategory.productCount}</span>
   },
   {
     header: "STATUS",
