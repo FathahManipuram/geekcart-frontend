@@ -1,13 +1,18 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import ProductDetails from "../components/ProductDetails";
+import SimilarProduct from "../components/SimilarProduct";
+import { useUserProductStore } from "../store/product.store";
 
 const ProductShowPage = () => {
-	const {slug}= useParams()
-  return (
-	<div>
-	  Product show
-	</div>
-  )
-}
 
-export default ProductShowPage
+  const productDetails = useUserProductStore((state) => state.productDetails);
+
+
+  return (
+	<>
+	<ProductDetails/>
+	<SimilarProduct product={productDetails}/>
+	</>
+  )
+};
+
+export default ProductShowPage;

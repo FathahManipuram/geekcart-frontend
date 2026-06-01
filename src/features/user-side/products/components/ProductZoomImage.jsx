@@ -42,7 +42,7 @@ const ProductZoomImage = ({ image }) => {
       onMouseLeave={() => setIsZoomed(false)}
     >
       <img
-        src={image}
+        src={image || null}
         alt="product"
         className={`
           w-full
