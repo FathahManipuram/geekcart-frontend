@@ -2,14 +2,17 @@ import React from 'react'
 import { useProductStore } from '../store/product.store';
 import ProductForm from '../components/ProductForm';
 import { buildCreateProductFormData } from '../utils/buildCreateProductFormData';
+import { useNavigate } from 'react-router-dom';
 
 const AddProductPage = () => {
+  const navigate = useNavigate()
   const createProduct = useProductStore((state) => state.createProduct);
 
   const handleCreateProduct = async (data) => {
     
     const formData = buildCreateProductFormData(data);
-    return await createProduct(formData);
+    await createProduct(formData);
+    return navigate("/admin/products");
   };
 
   return (

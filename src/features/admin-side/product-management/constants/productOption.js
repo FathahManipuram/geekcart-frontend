@@ -27,7 +27,8 @@ export const COLOR_OPTIONS = [
   "Light Blue",
   "Teal Blue",
   "Olive",
-  "OliveGreen",
+  "Olive Green",
+  "Mind Green",
   "Beige",
   "Tan Beige",
   "Light Beige",
@@ -38,5 +39,9 @@ export const COLOR_OPTIONS = [
   "Dusty Rose",
   "Brown",
   "Orange",
-  "Coral Orange"
+  "Orchid",
+  "Coral Orange",
+  "Khaki",
+  "Pink",
+  "Light Pink",
 ];

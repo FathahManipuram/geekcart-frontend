@@ -1,6 +1,7 @@
 import React from "react";
 
 import ProductStatusBadge from "../overview/ProductStatusBadge";
+import StatusBadge from "@/shared/components/StatusBadge";
 
 const getStatus = (stock) => {
   if (stock === 0) {
@@ -114,9 +115,16 @@ export const variantDetailsColumns = [
    * Status
    */
   {
-    header: "STATUS",
+    header: "STOCK STATUS",
 
     cell: (variant) => <ProductStatusBadge status={getStatus(variant.stock)} />,
+  },
+  {
+    header: "STATUS",
+
+    cell: (variant) => (
+      <StatusBadge status={variant.isActive ? "active" : "inactive"} />
+    ),
   },
 
   /**

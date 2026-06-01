@@ -34,7 +34,7 @@ export const useProductStore = create((set, get) => ({
       
       const sanitizedParams = Object.fromEntries(
         Object.entries(currentParams).filter(
-          ([_, value]) => value !== undefined && value !== null && value !== "",
+          ([_ , value]) => value !== undefined && value !== null && value !== "",
         ),
       );
 
