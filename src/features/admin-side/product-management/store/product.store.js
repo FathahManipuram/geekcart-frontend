@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { createProductApi, deleteproductApi, fetchProductDetailsApi, fetchProductsApi, updateProductApi } from "../api/product.api";
+import { createProductApi, deleteproductApi, fetchProductDetailsApi, fetchProductsApi, toggleProductStatusApi, updateProductApi } from "../api/product.api";
 
 export const useProductStore = create((set, get) => ({
   products: [],
@@ -21,20 +21,17 @@ export const useProductStore = create((set, get) => ({
     subcategory: "",
   },
 
-
   fetchProducts: async (params = {}) => {
     try {
-   
       const currentParams = {
         ...get().queryParams,
 
         ...params,
       };
 
-      
       const sanitizedParams = Object.fromEntries(
         Object.entries(currentParams).filter(
-          ([_ , value]) => value !== undefined && value !== null && value !== "",
+          ([_, value]) => value !== undefined && value !== null && value !== "",
         ),
       );
 
@@ -128,22 +125,17 @@ export const useProductStore = create((set, get) => ({
         error: null,
       });
 
-  
       const res = await deleteproductApi(productId);
 
-  
       const { pagination, queryParams, products } = get();
 
-     
       const currentPage = pagination?.currentPage || 1;
 
-      
       const newPage =
         currentPage > 1 && products.length === 1
           ? currentPage - 1
           : currentPage;
 
-     
       await get().fetchProducts({
         ...queryParams,
         page: newPage,
@@ -185,6 +177,24 @@ export const useProductStore = create((set, get) => ({
   //clear Error
   clearError: () => {
     set({ error: null });
+  },
+
+toggleProductStatus: async (productId) => {
+    try {
+      set({ loading: true, error: null });
+
+const res = await toggleProductStatusApi(productId);
+
+set((state)=> ({
+  products: state.products.map((product)=> product._id === productId ? {...product, isActive: !product.isActive}: product),
+  loading: false,
+}))
+return res.data
+    }catch(err){
+const message = err.response?.data?.message || "Failed to delete product";
+set({ loading: false, error: message });
+throw err;
+    }
   },
 }));
 
