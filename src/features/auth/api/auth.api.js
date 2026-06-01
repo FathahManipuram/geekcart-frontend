@@ -18,6 +18,8 @@ export const logoutApi = () => userApi.post("/auth/logout");
 
 export const googleLoginApi = (token) => userApi.post("/auth/google-login", { token });
 
+export const userRefreshTokenApi= ()=> userApi.post("/auth/refresh-token")
+
 
 //AdminApi
 export const adminLoginApi= (data)=> adminApi.post("/auth/admin/login", data)
