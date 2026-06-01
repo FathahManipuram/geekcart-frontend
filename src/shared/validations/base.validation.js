@@ -138,7 +138,7 @@ export const productName = () =>
         )
         .typeError("Stock must be a number")
         .integer("Stock must be a whole number")
-        .min(1, "Stock must be at least 1");
+        //.min(1, "Stock must be at least 1");
 
 
 	  export const price = () =>
