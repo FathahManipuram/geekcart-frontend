@@ -9,6 +9,7 @@ export const useCategoryStore= create((set, get)=> ({
 	error: null,
 	activeCategories:0,
 	totalCategories:0,
+	totalSubcategories:0,
 	queryParams: {
 		page: 1,
 		limit: 5,
@@ -37,6 +38,7 @@ fetchCategories: async(params={})=>{
 			pagination: res.data.pagination,
 			activeCategories: res.data.activeCategories,
 			totalCategories: res.data.pagination.totalItems,
+			totalSubcategories: res.data.totalSubcategories,
 			loading: false,
 		})
 		return res

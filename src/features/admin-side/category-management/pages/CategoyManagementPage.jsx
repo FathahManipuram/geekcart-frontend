@@ -9,7 +9,7 @@ import Pagination from '@/shared/components/Pagination'
 
 const CategoyManagementPage = () => {
 
-	const {fetchCategories, categories, loading, pagination, changePage, activeCategories, totalCategories}= useCategoryStore()
+	const {fetchCategories, categories, loading, pagination, changePage, activeCategories, totalCategories, totalSubcategories}= useCategoryStore()
 	useEffect(()=>{
 		fetchCategories()
 	}, [fetchCategories])
@@ -17,7 +17,7 @@ const CategoyManagementPage = () => {
   return (
 	<div className='space-y-8'>
 		<PageHeader/>
-		<CategoryStats totalCategories={totalCategories} activeCategories={activeCategories}/>
+		<CategoryStats totalCategories={totalCategories} activeCategories={activeCategories} totalSubcategories={totalSubcategories}/>
 		<CategoryTable categories={categories} loading={loading} currentPage={pagination?.currentPage || 1} perPage={pagination?.perPage || 5}/>
 		<Pagination currentPage={pagination?.currentPage || 1} totalPages={pagination?.totalPages || 1} onPageChange={changePage}/>
 	</div>

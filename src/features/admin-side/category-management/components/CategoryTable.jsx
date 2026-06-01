@@ -52,10 +52,11 @@ const {updateCategory, deleteCategory}= useCategoryStore()
 	const columns = [
     {
       header: "SL. NO",
-      cell: (_, index) => 
-	<span className='font-semibold'>{(currentPage-1)* perPage + index+1}</span>
-	
-      
+      cell: (_, index) => (
+        <span className="font-semibold">
+          {(currentPage - 1) * perPage + index + 1}
+        </span>
+      ),
     },
 
     {
@@ -67,24 +68,24 @@ const {updateCategory, deleteCategory}= useCategoryStore()
 
     {
       header: "SUBCATEGORIES",
-      cell: (category) => category.subcategoryCount ?? 0,
+      cell: (category) => category?.subcategoryCount,
     },
 
     {
       header: "PRODUCTS",
-      cell: (category) => category.productCount ?? 0,
+      cell: (category) => category?.productCount,
     },
 
     {
       header: "STATUS",
       cell: (category) => (
-          <span
-            className={`text-xs font-semibold tracking-wide ${
-              category.isActive ? "text-green-700" : "text-red-600"
-            }`}
-          >
-            {category.isActive ? "ACTIVE" : "INACTIVE"}
-          </span>
+        <span
+          className={`text-xs font-semibold tracking-wide ${
+            category.isActive ? "text-green-700" : "text-red-600"
+          }`}
+        >
+          {category.isActive ? "ACTIVE" : "INACTIVE"}
+        </span>
       ),
     },
 
@@ -94,11 +95,10 @@ const {updateCategory, deleteCategory}= useCategoryStore()
         <div className="flex items-center gap-3">
           {/* EDIT */}
           <button
-            onClick={()=> {
+            onClick={() => {
               setSelectedCategory(category);
               setEditModalOpen(true);
-            }
-            }
+            }}
             className="
               text-muted-foreground
               hover:text-black
