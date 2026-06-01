@@ -178,7 +178,7 @@ if (!items.length) {
 
                 <span
                   className="
-                text-4xl
+                text-2xl
                 font-bold
                 text-[#9B6C43]
               "
@@ -200,7 +200,7 @@ if (!items.length) {
               bg-[#9B6C43]
               px-6
               py-4
-              text-sm
+              text-xs
               font-semibold
               uppercase
               tracking-[0.2em]

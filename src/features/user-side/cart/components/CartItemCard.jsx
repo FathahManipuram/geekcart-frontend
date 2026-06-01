@@ -129,16 +129,18 @@ const CartItemCard = ({ items }) => {
                         <Plus size={16} />
                       </button>
                     </div>
-                    {/* REMOVE */}
-                    <button
-                      onClick={() => removeFromCart(item.variantId._id)}
-                      className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 transition hover:text-red-500"
-                    >
-                      <X size={15} />
-                      Remove
-                    </button>
                   </div>
                 ) : null}
+                <div className="flex justify-end">
+                  {/* REMOVE */}
+                  <button
+                    onClick={() => removeFromCart(item.variantId._id)}
+                    className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 transition hover:text-red-500"
+                  >
+                    <X size={15} />
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
           </div>

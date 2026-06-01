@@ -61,7 +61,7 @@ const links = [
     path: "/admin/categories",
   },
   {
-    label: "Sub Category Management",
+    label: "Subcategory Management",
     icon: Blocks,
     path: "/admin/subcategories",
   },
