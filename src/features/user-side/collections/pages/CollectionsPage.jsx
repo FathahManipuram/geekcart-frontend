@@ -21,16 +21,13 @@ import CollectionsPagination from "../components/CollectionsPagination";
 import { useCollectionsStore } from "../store/collections.store";
 
 import { useSubcategoryStore } from "@/features/admin-side/subcategory-management/store/subcategory.store";
+import Pagination from "@/shared/components/Pagination";
 
 const CollectionsPage = () => {
-  /**
-   * URL Params
-   */
+
   const [searchParams, setSearchParams] = useSearchParams();
 
-  /**
-   * Search
-   */
+
   const [search, setSearch] = useState(searchParams.get("search") || "");
 
   /**
@@ -51,11 +48,10 @@ const CollectionsPage = () => {
     queryParams,
 
     fetchCollections,
+    changePage,
   } = useCollectionsStore();
 
-  /**
-   * Subcategories
-   */
+console.log("page: ", pagination)
   const subcategories = useSubcategoryStore((state) => state.subcategories);
 
   const fetchSubcategories = useSubcategoryStore(
@@ -306,15 +302,12 @@ const CollectionsPage = () => {
             <>
               {/* GRID */}
               <ProductGrid products={products} />
+            
+              <Pagination
+              currentPage={pagination.currentPage}
+              totalPages={pagination.totalPages}
+              onPageChange={(page)=>changePage(page)}
 
-              {/* PAGINATION */}
-              <CollectionsPagination
-                pagination={pagination}
-                onPageChange={(page) =>
-                  updateFilters({
-                    page,
-                  })
-                }
               />
             </>
           )}

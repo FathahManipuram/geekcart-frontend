@@ -18,7 +18,7 @@ export const useCollectionsStore = create((set, get) => ({
   queryParams: {
     page: 1,
 
-    limit: 12,
+    limit: 8,
 
     search: "",
 
@@ -70,13 +70,9 @@ export const useCollectionsStore = create((set, get) => ({
       const query = new URLSearchParams();
 
       Object.entries(currentParams).forEach(([key, value]) => {
-        /**
-         * Arrays
-         */
+        
         if (Array.isArray(value)) {
-          /**
-           * Skip Empty Arrays
-           */
+         
           if (value.length === 0) {
             return;
           }
@@ -86,25 +82,18 @@ export const useCollectionsStore = create((set, get) => ({
           });
         } else if (value !== "" && value !== undefined && value !== null) {
 
-        /**
-         * Single Values
-         */
           query.append(key, value);
         }
       });
 
-      /**
-       * API
-       */
+  
       const res = await fetchCollectionsApi(query.toString());
+console.log("Collection store: ",res.data)
 
-      /**
-       * Success
-       */
       set({
-        products: res.data.data.products,
+        products: res.data.products,
 
-        pagination: res.data.data.pagination,
+        pagination: res.data.pagination,
       });
 
       return res;
