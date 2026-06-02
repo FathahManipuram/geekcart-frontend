@@ -2,12 +2,19 @@ import { Minus, Plus, X } from "lucide-react";
 
 import { useCartStore } from "../store/cart.store";
 import EmptyCart from "./EmptyCart";
+import { useNavigate } from "react-router-dom";
 
 const CartItemCard = ({ items }) => {
 
   const updateQuantity = useCartStore((state) => state.updateQuantity);
 
   const removeFromCart = useCartStore((state) => state.removeFromCart);
+
+const navigate= useNavigate()
+
+  const handleToProductDetails=(slug, variantId)=>{
+    navigate(`/products/${slug}?variant=${variantId}`);
+  }
 
   return (
     <div className="space-y-8">
@@ -48,7 +55,7 @@ const CartItemCard = ({ items }) => {
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   {/* INFO */}
                   <div>
-                    <h2 className="text-base font-semibold text-black">
+                    <h2 onClick={()=> handleToProductDetails(item.productId?.slug, item.variantId?._id)} className="text-base font-semibold text-black cursor-pointer">
                       {item.name}
                     </h2>
 

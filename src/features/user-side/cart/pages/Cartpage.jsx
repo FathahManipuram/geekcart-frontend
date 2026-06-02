@@ -3,6 +3,7 @@ import { useCartStore } from "../store/cart.store";
 import { useEffect } from "react";
 import CartItemCard from "../components/CartItemCard";
 import EmptyCart from "../components/EmptyCart";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 
 const CartPage = () => {
@@ -32,6 +33,19 @@ if (!items.length) {
         lg:px-14
       "
     >
+      <div className="mb-3">
+        <Breadcrumbs
+          items={[
+            {
+              label: "Home",
+              link: "/",
+            },
+            {
+              label: "Cart",
+            },
+          ]}
+        />
+      </div>
       {/* TOP */}
       <div
         className="
@@ -60,7 +74,6 @@ if (!items.length) {
 
           <h1
             className="
-              mt-2
               text-4xl
               font-bold
               tracking-tight
@@ -73,7 +86,7 @@ if (!items.length) {
         </div>
 
         {/* RIGHT */}
-        {items.length !==0 && (
+        {items.length !== 0 && (
           <button
             className="
             text-xs
@@ -84,7 +97,7 @@ if (!items.length) {
 
             hover:text-black
           "
-            onClick={()=> clearCart()}
+            onClick={() => clearCart()}
           >
             Clear Cart
           </button>
@@ -102,7 +115,7 @@ if (!items.length) {
         {/* CART ITEMS */}
         <CartItemCard key={items.id} items={items} />
 
-        {items.length !==0 && (
+        {items.length !== 0 && (
           <>
             {/* SUMMARY */}
             <aside
