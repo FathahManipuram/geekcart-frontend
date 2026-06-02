@@ -1,11 +1,17 @@
 // src/features/home/components/CategoryCard.jsx
 
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({ image, name, items, onClick }) => {
+const CategoryCard = ({ image, subcategoryId, name, items }) => {
+  const navigate= useNavigate()
+
+  const handleClick= ()=>{
+    navigate(`/collections?subcategory=${subcategoryId}`)
+  }
   return (
     <div
-      onClick={onClick}
+      onClick={handleClick}
       className="relative overflow-hidden rounded-xl group cursor-pointer"
     >
       {/* Image */}

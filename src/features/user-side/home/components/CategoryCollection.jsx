@@ -19,12 +19,13 @@ const CategoryCollection = ({subcategories}) => {
 
       {/* Categories Grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-        {(subcategories || []).map((category) => (
+        {(subcategories || []).map((subcategory) => (
           <CategoryCard
-            key={category._id}
-            image={category.image}
-            name={category.name}
-            items={category.items}
+            key={subcategory._id}
+            subcategoryId={subcategory._id}
+            image={subcategory.image}
+            name={subcategory.name}
+            items={subcategory.items}
           />
         ))}
       </div>
