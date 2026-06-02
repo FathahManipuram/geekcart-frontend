@@ -3,9 +3,7 @@ import { create } from "zustand";
 import { fetchCollectionsApi } from "../api/collections.api";
 
 export const useCollectionsStore = create((set, get) => ({
-  /**
-   * Data
-   */
+  
   products: [],
 
   pagination: {},

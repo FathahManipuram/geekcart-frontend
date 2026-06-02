@@ -22,22 +22,15 @@ import { useCollectionsStore } from "../store/collections.store";
 
 import { useSubcategoryStore } from "@/features/admin-side/subcategory-management/store/subcategory.store";
 import Pagination from "@/shared/components/Pagination";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 const CollectionsPage = () => {
 
   const [searchParams, setSearchParams] = useSearchParams();
-
-
   const [search, setSearch] = useState(searchParams.get("search") || "");
 
-  /**
-   * Debounce
-   */
   const debouncedSearch = useDebounce(search, 500);
 
-  /**
-   * Collections Store
-   */
   const {
     products,
 
@@ -58,37 +51,26 @@ console.log("page: ", pagination)
     (state) => state.fetchSubcategories,
   );
 
-  /**
-   * Mobile Drawer
-   */
   const [openFilters, setOpenFilters] = useState(false);
 
-  /**
-   * Initial Fetch
-   */
+  
   useEffect(() => {
     fetchSubcategories();
   }, []);
 
-  /**
-   * Update URL Filters
-   */
+ 
   const updateFilters = (updates = {}) => {
     const params = new URLSearchParams(searchParams);
 
     Object.entries(updates).forEach(([key, value]) => {
-      /**
-       * Remove Empty
-       */
+     
       if (value === "" || value === null || value === undefined) {
         params.delete(key);
 
         return;
       }
 
-      /**
-       * Arrays
-       */
+      
       if (Array.isArray(value)) {
         params.delete(key);
 
@@ -99,15 +81,11 @@ console.log("page: ", pagination)
         return;
       }
 
-      /**
-       * Normal
-       */
+
       params.set(key, value);
     });
 
-    /**
-     * Reset Page
-     */
+
     if (Object.keys(updates).some((key) => key !== "page")) {
       params.set("page", 1);
     }
@@ -115,32 +93,25 @@ console.log("page: ", pagination)
     setSearchParams(params);
   };
 
-  /**
-   * Search URL Sync
-   */
+ 
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
 
-    /**
-     * Search
-     */
+    
     if (debouncedSearch) {
       params.set("search", debouncedSearch);
     } else {
       params.delete("search");
     }
 
-    /**
-     * Reset Page
-     */
+  
     params.set("page", 1);
 
     setSearchParams(params);
   }, [debouncedSearch]);
 
-  /**
-   * Fetch From URL
-   */
+ 
+
   useEffect(() => {
     const params = {
       search: searchParams.get("search") || "",
@@ -163,9 +134,7 @@ console.log("page: ", pagination)
     fetchCollections(params);
   }, [searchParams]);
 
-  /**
-   * Sort
-   */
+  
   const handleSortChange = (value) => {
     updateFilters({
       sortBy: value,
@@ -208,9 +177,22 @@ console.log("page: ", pagination)
         {/* CONTENT */}
         <div className="flex-1">
           {/* HEADER */}
+          <Breadcrumbs
+            items={[
+              {
+                label: "Home",
+                link: "/",
+              },
+              {
+                label: "Collections",
+              },
+            ]}
+          />
+
           <div
             className="
               mb-8
+              mt-4
               flex
               flex-col
               gap-4
@@ -302,12 +284,11 @@ console.log("page: ", pagination)
             <>
               {/* GRID */}
               <ProductGrid products={products} />
-            
-              <Pagination
-              currentPage={pagination.currentPage}
-              totalPages={pagination.totalPages}
-              onPageChange={(page)=>changePage(page)}
 
+              <Pagination
+                currentPage={pagination.currentPage}
+                totalPages={pagination.totalPages}
+                onPageChange={(page) => changePage(page)}
               />
             </>
           )}

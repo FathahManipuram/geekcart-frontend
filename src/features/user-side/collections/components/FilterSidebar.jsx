@@ -7,16 +7,12 @@ const sizes = ["S", "M", "L", "XL", "XXL"];
 const colors = ["Black", "White", "Blue", "Brown", "Green"];
 
 const FilterSidebar = ({ subcategories = [] }) => {
-  /**
-   * Store
-   */
+  
   const fetchCollections = useCollectionsStore(
     (state) => state.fetchCollections,
   );
 
-  /**
-   * States
-   */
+ 
   const [selectedSubcategories, setSelectedSubcategories] = useState([]);
 
   const [selectedSizes, setSelectedSizes] = useState([]);
@@ -27,9 +23,8 @@ const FilterSidebar = ({ subcategories = [] }) => {
 
   const [maxPrice, setMaxPrice] = useState("");
 
-  /**
-   * Toggle Array
-   */
+  //Toggle Array
+  
   const toggleValue = (value, state, setState) => {
     if (state.includes(value)) {
       setState(state.filter((item) => item !== value));
@@ -38,9 +33,9 @@ const FilterSidebar = ({ subcategories = [] }) => {
     }
   };
 
-  /**
-   * Apply Filters
-   */
+  
+   // Apply Filters
+  
   const handleApplyFilters = () => {
     fetchCollections({
       subcategory: selectedSubcategories,
