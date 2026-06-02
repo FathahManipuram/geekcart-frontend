@@ -4,6 +4,7 @@ import { fetchDashboardApi } from "../api/dashboard.api";
 export const useDashboardStore = create((set) => ({
   userDetails: {},
   subcategoryBreakdown: [],
+  userGrowth: [],
 
   loading: false,
   error: null,
@@ -18,8 +19,9 @@ export const useDashboardStore = create((set) => ({
       const res = await fetchDashboardApi();
 console.log("dashboard data", res.data)
       set({
-        userDetails: res.data.userDetails,
+    userDetails: res.data.userDetails,
 		subcategoryBreakdown: res.data.subcategoryBreakdown,
+    userGrowth: res.data.userGrowth,
 		loading: false
       });
 
