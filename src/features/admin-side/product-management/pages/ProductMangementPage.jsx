@@ -11,6 +11,7 @@ import { useProductStore } from "../store/product.store";
 import ProductTable from "../components/overview/ProductTable";
 
 import { useSubcategoryStore } from "../../subcategory-management/store/subcategory.store";
+import Loader from "@/shared/components/Loader";
 
 const ProductMangementPage = () => {
   const {
@@ -59,6 +60,10 @@ useEffect(() => {
       page: 1,
     });
   };
+
+  if(loading){
+    return <Loader/>
+  }
 
   return (
     <div className="space-y-6">

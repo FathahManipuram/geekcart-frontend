@@ -21,6 +21,8 @@ export const useProductStore = create((set, get) => ({
     subcategory: "",
   },
 
+
+// fetch All products
   fetchProducts: async (params = {}) => {
     try {
       const currentParams = {

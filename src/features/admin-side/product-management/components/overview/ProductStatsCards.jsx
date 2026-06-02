@@ -6,23 +6,23 @@ const ProductStatsCards = ({productStats}) => {
 	const stats = [
     {
       title: "Total SKU Units",
-      value: productStats?.totalSkuUnits,
+      value: productStats?.totalSkuUnits || 0,
     },
 
     {
       title: "Low Stock Alerts",
-      value: productStats?.lowStockAlerts,
+      value: productStats?.lowStockAlerts || 0,
       valueClassName: "text-red-600",
     },
 
     {
       title: "Active Subcategories",
-      value: productStats?.activeSubcategories,
+      value: productStats?.activeSubcategories || 0,
     },
 
     {
       title: "Inventory Value",
-      value: `₹${productStats?.inventoryValue}`,
+      value: `₹${productStats?.inventoryValue || 0}`,
     },
   ];
 
