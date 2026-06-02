@@ -1,5 +1,4 @@
 import AdminLayout from "@/shared/layout/admin-sideLayout/AdminLayout";
-import AdminDashboard from "@/features/admin-side/dashboard/pages/AdminDashboard";
 import UserManagementPage from "@/features/admin-side/user-management/pages/UserManagementPage";
 import UserDetailsPage from "@/features/admin-side/user-management/pages/UserDetailsPage";
 import { Navigate } from "react-router-dom";
@@ -10,6 +9,7 @@ import ProductMangementPage from "@/features/admin-side/product-management/pages
 import AddProductPage from "@/features/admin-side/product-management/pages/AddProductPage";
 import ProductDetailsPage from "@/features/admin-side/product-management/pages/ProductDetailsPage";
 import EditProductPage from "@/features/admin-side/product-management/pages/EditProductPage";
+import AdminDashboardPage from "@/features/admin-side/dashboard/pages/AdminDashboardPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -25,7 +25,7 @@ const adminRoutes = {
     },
     {
       path: "dashboard",
-      element: <AdminDashboard />,
+      element: <AdminDashboardPage/>,
     },
     {
       path: "user-management",
