@@ -8,21 +8,27 @@ import ProductActions from "./ProductActions";
 
 import ProductAccordion from "./ProductAccordion";
 
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 //import { useProductStore } from "@/features/admin-side/product-management/store/product.store";
 import VariantImageSelector from "./VariantImageSelector";
 import { useCartStore } from "../../cart/store/cart.store";
 import { toast } from "sonner";
 import Loader from "@/shared/components/Loader";
 import { useUserProductStore } from "../store/product.store";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 const ProductDetails = () => {
   const { slug } = useParams();
+  const [searchParams] = useSearchParams();
+
+  const variantId = searchParams.get("variant");
 
 const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchProductDetails = useUserProductStore(
     (state) => state.fetchProductDetails,
   );
+
+
 
   const fetchSimilarProducts= useUserProductStore((state)=> state.fetchSimilarProducts)
   const productLoading = useUserProductStore((state) => state.loading);
@@ -45,25 +51,28 @@ const fetchCart = useCartStore((state) => state.fetchCart);
   }, [slug]);
 
 
-  // const colors = useMemo(() => {
-  //   return [
-  //     ...new Set(
-  //       (productDetails?.variants || []).map((variant) => variant.color),
-  //     ),
-  //   ];
-  // }, [productDetails]);
-
-  // console.log("Colors: ", colors);
 
   useEffect(() => {
-    if (productDetails?.variants?.length > 0) {
-      const firstVariant = productDetails.variants[0];
+ if (!productDetails?.variants?.length) return;
 
-      setSelectedColor(firstVariant.color);
+ if (variantId) {
+   const selectedVariant = productDetails.variants.find(
+     (variant) => variant._id === variantId,
+   );
 
-      setSelectedSize(firstVariant.size);
-    }
-  }, [productDetails]);
+   if (selectedVariant) {
+     setSelectedColor(selectedVariant.color);
+     setSelectedSize(selectedVariant.size);
+     return;
+   }
+ }
+
+
+ const firstVariant = productDetails.variants[0];
+
+ setSelectedColor(firstVariant.color);
+ setSelectedSize(firstVariant.size);
+  }, [productDetails, variantId]);
 
   const selectedColorVariants = useMemo(() => {
     return (
@@ -147,16 +156,25 @@ const existsInCart= currentVariant ? isInCart(currentVariant._id) : false
           "
             >
               {/* Breadcrumb */}
-              <p
-                className="
-              text-xs
-              uppercase
-              tracking-widest
-              text-neutral-400
-            "
-              >
-                {`GEEKCART / ${productDetails?.category?.name} / ${productDetails?.name}-${currentVariant?.color}`}
-              </p>
+              <Breadcrumbs
+                items={[
+                  {
+                    label: "GEEKCART",
+                    link: "/",
+                  },
+                  {
+                    label: "Collections",
+                    link: "/collections",
+                  },
+                  {
+                    label: productDetails.category?.name,
+                    link: `/collections?category=${productDetails.category?._id}`,
+                  },
+                  {
+                    label: productDetails.name,
+                  },
+                ]}
+              />
 
               {/* Title */}
               <h1
