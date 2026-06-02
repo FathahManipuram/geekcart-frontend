@@ -11,6 +11,7 @@ import {
   Boxes,
   PanelLeftClose,
   PanelLeftOpen,
+  Blocks,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -58,6 +59,11 @@ const links = [
     label: "Category Management",
     icon: Boxes,
     path: "/admin/categories",
+  },
+  {
+    label: "Subcategory Management",
+    icon: Blocks,
+    path: "/admin/subcategories",
   },
 
   {

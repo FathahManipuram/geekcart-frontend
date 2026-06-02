@@ -1,16 +1,38 @@
 import { create } from "zustand"
+import { fetchDashboardApi } from "../api/dashboard.api";
 
-export const useDashboardStore = create((set)=>({
-	stats: {},
-	loading: false,
+export const useDashboardStore = create((set) => ({
+  userDetails: {},
+  subcategoryBreakdown: [],
+  userGrowth: [],
 
-	fetchDashboard: async()=>{
-		set({loading: true})
+  loading: false,
+  error: null,
 
-		try{
-			const res= "a"
-		}catch(err){
-			console.log(err)
-		}
-	}
-}))
+  fetchDashboard: async () => {
+    try {
+      set({
+        loading: true,
+		error: null,
+      });
+
+      const res = await fetchDashboardApi();
+console.log("dashboard data", res.data)
+      set({
+    userDetails: res.data.userDetails,
+		subcategoryBreakdown: res.data.subcategoryBreakdown,
+    userGrowth: res.data.userGrowth,
+		loading: false
+      });
+
+	  return res
+    } catch(err){
+		const message= err.response?.data?.message || "Data fetching failed"
+      set({
+        loading: false,
+		error: message,
+      });
+	  throw err
+    }
+  },
+}));

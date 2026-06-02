@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/features/auth/store/auth.store'
 import Loader from '@/shared/components/Loader'
+import Navbar from '@/shared/layout/Navbar'
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
@@ -9,7 +10,12 @@ const ProtectedRoute = ({children}) => {
 
 	if(!user) return <Navigate to="/login" replace/>
   
-  return children
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 }
 
 export default ProtectedRoute

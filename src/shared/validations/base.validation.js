@@ -56,3 +56,142 @@ export const dateOfBirthField = () =>
     .transform((value, originalValue) =>
       originalValue === "" ? null : value
     );
+
+
+	//Category validation
+	export const categoryName= ()=>
+	yup.string().trim().min(3, "Category name must be at least 3 characters")
+	.max(100, "Category name cannot exceed 100 characters");
+	
+	//SubCategory
+
+const SUPPORTED_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+];
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+	export const imageField = () =>
+    //   yup.mixed()
+    // .test("fileType", "Only JPG, PNG, and WEBP images are allowed",
+    // (value)=> value && SUPPORTED_TYPES.includes(value.type))
+    // .test("fileSize",  "Image must be less than 5 MB",
+    // 	(value)=> value && value.size <=MAX_FILE_SIZE
+    // )
+    yup.mixed().test("required", "Image is required", (value) => {
+   
+      if (typeof value === "string" && value.trim() !== "") {
+        return true;
+      }
+
+  
+      if (value instanceof File) {
+        return true;
+      }
+
+      return false;
+    });
+
+
+//Product
+export const productName = () =>
+  yup
+    .string()
+	.trim()
+    .min(3, "Product name must be at least 3 characters")
+    .max(150, "Product name must not exceed 150 characters");
+
+	export const description = () =>
+    yup
+      .string()
+      .trim()
+      .min(10, "Description must be at least 10 characters")
+      .max(1000, "Description must not exceed 1000 characters")
+
+	  export const fabric= ()=> yup
+	  .string()
+	  .trim()
+
+    	export const images = () =>
+        yup.array().of(yup.mixed().required()).default([]);
+
+//Variant
+	  export const sizes=()=> yup
+  .array()
+  .of(yup.string())
+
+  export const size=()=> yup.string().trim()
+
+	  export const color= ()=>yup.string()
+	  .trim()
+
+	  export const sku= ()=> yup.string()
+	  .trim()
+
+	  export const stock = () =>
+      yup
+        .number()
+        .transform((value, originalValue) =>
+          originalValue === "" ? undefined : value,
+        )
+        .typeError("Stock must be a number")
+        .integer("Stock must be a whole number")
+        //.min(1, "Stock must be at least 1");
+
+
+	  export const price = () =>
+      yup
+        .number()
+        .transform((value, originalValue) =>
+          originalValue === "" ? undefined : value,
+        )
+        .typeError("Price must be a number")
+        .moreThan(0, "Price must be greater than 0");
+		
+
+	export const salePrice = () =>
+    yup
+      .number()
+      .typeError("Sale price must be a number")
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue === "" || originalValue === null ? null : value,
+      )
+      .min(0, "Sale price cannot be negative")
+      .test(
+        "sale-price-less-than-price",
+        "Sale price must be less than or equal to price",
+        function (value) {
+          if (value === null || value === undefined) {
+            return true;
+          }
+
+          return value <= this.parent.price;
+        },
+      );
+export const costPrice = () =>
+  yup
+    .number()
+    .typeError("Cost price must be a number")
+    .nullable()
+    .transform((value, originalValue) =>
+      originalValue === "" || originalValue === null ? null : value,
+    )
+    .min(0, "Cost price cannot be negative");
+
+	export const lowStockThreshold = () =>
+    yup
+      .number()
+      .typeError("Low stock threshold must be a number")
+      .integer("Low stock threshold must be a whole number")
+      .min(0, "Low stock threshold cannot be negative");
+
+
+	  export const sleeve= ()=> yup.string()
+	  .trim()
+
+
+
+

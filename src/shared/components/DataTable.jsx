@@ -32,11 +32,11 @@ return (
 
 			<TableBody>
 				{data.length > 0 ? (
-					data.map((row)=>(
-						<TableRow key={[row[rowKey]]}>
+					data.map((row, rowIndex)=>(
+						<TableRow key={row[rowKey]}>
 							{columns.map((column, index)=>(
 								<TableCell key={column.accessor || `cell-${index}`}>
-									{column.cell ? column.cell(row)
+									{column.cell ? column.cell(row, rowIndex)
 									: row [column.accessor]}
 								</TableCell>
 							))}

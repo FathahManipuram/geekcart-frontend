@@ -1,13 +1,36 @@
-import React from 'react'
-import HeroSection from '../components/HeroSection'
-import CategoriesSection from '../components/categoriesSection'
+import React, { useEffect } from 'react'
+import HomeBanner from '../components/HomeBanner'
+import CategoryCollection from '../components/CategoryCollection'
+import ProductCollection from '../components/ProductCollection'
+import { useHomeStore } from '../store/home.store'
+
 
 
 const HomePage = () => {
+	
+	const {
+    categories,
+
+    newDrops,
+
+    fetchHomeData,
+  } = useHomeStore();
+
+  useEffect(() => {
+    fetchHomeData();
+  }, []);
+	
+
+
+	console.log("homepage", categories)
+	console.log("homepagePro", newDrops);
+
   return (
 	<div>
-	  <HeroSection/>
-	  <CategoriesSection/>
+	  <HomeBanner/>
+	  <CategoryCollection subcategories={categories}/>
+
+	 <ProductCollection products={newDrops}/>
 	</div>
   )
 }

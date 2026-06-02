@@ -72,7 +72,7 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
     {
       header: "ACTIONS",
       cell: (user) => (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
 
           {/* DELETE */}
           <button
