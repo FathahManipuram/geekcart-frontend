@@ -16,10 +16,12 @@ import { toast } from "sonner";
 import Loader from "@/shared/components/Loader";
 import { useUserProductStore } from "../store/product.store";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
+import { useWishlist } from "../../wishlist/hooks/useWishlist";
 
 const ProductDetails = () => {
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
+  const {isWishlisted, handleWishlist}= useWishlist()
 
   const variantId = searchParams.get("variant");
 
@@ -42,7 +44,7 @@ const fetchCart = useCartStore((state) => state.fetchCart);
 
   const [selectedSize, setSelectedSize] = useState("");
 
-  const [isWishlisted, setIsWishlisted] = useState(false);
+
 
   useEffect(() => {
     fetchProductDetails(slug);
@@ -66,6 +68,7 @@ const fetchCart = useCartStore((state) => state.fetchCart);
      return;
    }
  }
+
 
 
  const firstVariant = productDetails.variants[0];
@@ -99,6 +102,14 @@ const existsInCart= currentVariant ? isInCart(currentVariant._id) : false
 
     stock: variant.stock,
   }));
+
+const isUnavailable =
+  !productDetails?.isActive ||
+  currentVariant?.isActive === false ||
+  currentVariant?.isDeleted === true;
+
+const isOutOfStock = currentVariant?.stock === 0;
+
 
   const handleAddToCart = async () => {
     try {
@@ -187,7 +198,7 @@ const existsInCart= currentVariant ? isInCart(currentVariant._id) : false
               md:text-3xl
             "
               >
-                {`${productDetails?.name} - ${currentVariant?.color}`}
+                {`${productDetails?.name || ""} - ${currentVariant?.color || ""}`}
               </h1>
 
               {/* Price */}
@@ -259,13 +270,15 @@ const existsInCart= currentVariant ? isInCart(currentVariant._id) : false
 
               {/* ACTIONS */}
               <ProductActions
-                isWishlisted={isWishlisted}
+                isWishlisted={isWishlisted(currentVariant?._id)}
                 loading={loading}
                 onAddToCart={handleAddToCart}
-                onWishlist={() => setIsWishlisted(!isWishlisted)}
+                onWishlist={() =>
+                  handleWishlist(productDetails._id, currentVariant?._id)
+                }
                 existsInCart={existsInCart}
-                isActive={productDetails.isActive}
-                currentVariant={currentVariant}
+                isUnavailable={isUnavailable}
+                isOutOfStock={isOutOfStock}
               />
 
               {/* ACCORDION */}
