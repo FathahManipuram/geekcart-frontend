@@ -1,9 +1,10 @@
+import { useWishlist } from "../../wishlist/hooks/useWishlist";
 import ProductCard from "./ProductCard";
 
 const ProductGrid = ({ products = [] }) => {
-  /**
-   * Empty
-   */
+console.log("productgrid", products)
+
+const { isWishlisted, handleWishlist } = useWishlist();
   if (!products.length) {
     return (
       <div
@@ -41,9 +42,21 @@ const ProductGrid = ({ products = [] }) => {
         xl:grid-cols-4
       "
     >
-      {products.map((product) => (
-        <ProductCard key={product._id} product={product} />
-      ))}
+      {products.map((product) => {
+ const firstVariant = product.variants?.[0];
+ return (
+<ProductCard
+   key={product._id}
+   product={product}
+   isWishlisted={isWishlisted(firstVariant?._id)}
+   onWishlist={handleWishlist}
+   productId={product._id}
+   variantId={firstVariant?._id}
+ />
+ )
+      }
+         
+      )}
     </div>
   );
 };
