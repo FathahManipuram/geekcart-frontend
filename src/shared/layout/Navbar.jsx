@@ -13,6 +13,7 @@ import { useAuthStore } from "@/features/auth/store/auth.store";
 import { toast } from "sonner";
 import { Button } from "../components/ui/button";
 import { useCartStore } from "@/features/user-side/cart/store/cart.store";
+import { useWishlistStore } from "@/features/user-side/wishlist/store/store.wishlist";
 
 
 const navLinkClass = ({ isActive }) =>
@@ -26,12 +27,14 @@ const Navbar = () => {
   const user = useAuthStore((state) => state.user);
   const logout = useAuthStore((state) => state.logout);
   const fetchCart = useCartStore((state) => state.fetchCart);
+  const fetchWishlist = useWishlistStore((state) => state.fetchWishlist);
   const items= useCartStore((state)=> state.items)
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
 useEffect(() => {
   fetchCart();
+  fetchWishlist();
 }, []);
 
   const handleLogout = async () => {
