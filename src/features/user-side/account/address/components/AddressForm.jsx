@@ -180,7 +180,7 @@ onClose()
         <Input
           {...register("phoneNumber")}
           type="tel"
-          placeholder="+91 9876543210"
+          placeholder="9876543210"
         />
 
         {errors.phoneNumber && (
