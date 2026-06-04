@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { createAddressApi, getAddressesApi, removeAddressApi, updateAddressApi } from "../address/api/address.api"
 
-export const useAccountStore = create((set) => ({
+export const useAccountStore = create((set, get) => ({
   addresses: [],
   loading: false,
 
@@ -35,6 +35,7 @@ export const useAccountStore = create((set) => ({
         addresses: [res.data, ...state.addresses],
         loading: false,
       }));
+      get().fetchAddresses()
 
       return res;
     } catch (err) {

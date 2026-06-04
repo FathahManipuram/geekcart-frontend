@@ -5,6 +5,7 @@ import adminRoutes from "./routes/admin.routes";
 import authRoutes from "./routes/auth.routes";
 import cartRoutes from "./routes/cart.routes";
 import wishlistRoute from "./routes/wishlist.routes";
+import { checkoutRoutes } from "./routes/checkout.routes";
 
 export const router = createBrowserRouter([
   
@@ -14,6 +15,7 @@ export const router = createBrowserRouter([
   adminRoutes,
   cartRoutes,
   wishlistRoute,
+  checkoutRoutes,
   
   
   

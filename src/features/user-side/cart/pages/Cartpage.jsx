@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import CartItemCard from "../components/CartItemCard";
 import EmptyCart from "../components/EmptyCart";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
+import { useNavigate } from "react-router-dom";
 
 
 const CartPage = () => {
@@ -11,7 +12,7 @@ const CartPage = () => {
   const clearCart= useCartStore((state)=> state.clearCart)
   const items = useCartStore((state) => state.items);
   const summary = useCartStore((state) => state.summary);
-
+const navigate= useNavigate()
   useEffect(() => {
     fetchCart();
   }, [fetchCart]);
@@ -202,6 +203,7 @@ if (!items.length) {
 
               {/* BUTTON */}
               <button
+              onClick={()=> navigate("/checkout/shipping")}
                 className="
               mt-10
               flex
