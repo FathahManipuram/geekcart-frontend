@@ -1,22 +1,63 @@
 import { ArrowRight, Minus, Plus, X } from "lucide-react";
 import { useCartStore } from "../store/cart.store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CartItemCard from "../components/CartItemCard";
 import EmptyCart from "../components/EmptyCart";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import { useNavigate } from "react-router-dom";
+import { useCheckoutStore } from "../../checkout/store/checkout.store";
+import { toast } from "sonner";
+import Modal from "@/shared/components/Modal";
+import CheckoutValidationModal from "../../checkout/components/CheckoutValidationModal";
 
 
 const CartPage = () => {
+  const [showValidationModal, setShowValidationModal]= useState(false)
+  const[issues, setIssues]= useState(null)
+
   const fetchCart = useCartStore((state) => state.fetchCart);
   const clearCart= useCartStore((state)=> state.clearCart)
   const items = useCartStore((state) => state.items);
   const summary = useCartStore((state) => state.summary);
+    const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const validateCheckout = useCheckoutStore((state) => state.validateCheckout);
 const navigate= useNavigate()
   useEffect(() => {
     fetchCart();
   }, [fetchCart]);
   
+
+const handleCheckout = async () => {
+  try {
+    const result = await validateCheckout();
+
+    if (!result.valid) {
+      setIssues(result.issues);
+      setShowValidationModal(true);
+      return;
+    }
+
+    navigate("/checkout/shipping");
+  } catch (err) {
+    console.log(err)
+    toast.error("Unable to validate checkout");
+  }
+};
+
+const handleRemoveItem = async (variantId) => {
+  await removeFromCart(variantId);
+
+  const updatedValidation = await validateCheckout();
+
+  if (updatedValidation.valid) {
+    setShowValidationModal(false);
+    navigate("/checkout/shipping");
+    return;
+  }
+
+  setIssues(updatedValidation.issues);
+};
+
 if (!items.length) {
   return <EmptyCart/>;
 }
@@ -203,7 +244,7 @@ if (!items.length) {
 
               {/* BUTTON */}
               <button
-              onClick={()=> navigate("/checkout/shipping")}
+                onClick={handleCheckout}
                 className="
               mt-10
               flex
@@ -232,6 +273,18 @@ if (!items.length) {
           </>
         )}
       </div>
+
+      <Modal
+        open={showValidationModal}
+        onOpenChange={setShowValidationModal}
+        title="Checkout Validation"
+      >
+        <CheckoutValidationModal
+          issues={issues}
+          onRemoveItem={handleRemoveItem}
+          onClose={() => setShowValidationModal(false)}
+        />
+      </Modal>
     </section>
   );
 };
