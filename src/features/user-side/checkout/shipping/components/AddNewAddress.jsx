@@ -7,11 +7,11 @@ const AddNewAddress = () => {
 	const [addressModalOpen, setAddressModalOpen]= useState(false)
   return (
     <>
-      <button
-        onClick={()=> setAddressModalOpen(true)}
-        className="flex items-center gap-4 w-full text-left group"
-      >
-        <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors cursor-pointer">
+      <button className="flex items-center gap-4 w-full text-left group">
+        <div
+          onClick={() => setAddressModalOpen(true)}
+          className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors cursor-pointer"
+        >
           <Plus className="w-5 h-5 text-primary" />
         </div>
 

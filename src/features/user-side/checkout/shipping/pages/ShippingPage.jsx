@@ -1,19 +1,27 @@
-import CheckoutStepper from "../components/CheckoutStepper";
-import OrderSummary from "../components/OrderSummary";
+import CheckoutStepper from "../../components/CheckoutStepper";
+import OrderSummary from "../../components/OrderSummary";
 import { useEffect} from "react";
 import SelectedAddressCard from "../components/SelectedAddressCard";
 import { useAccountStore } from "../../../account/store/account.store";
 import { useCheckoutStore } from "../../store/checkout.store";
 import AddNewAddress from "../components/AddNewAddress";
 import DeliveryMethod from "../components/DeliveryMethod";
+import { CHECKOUT_STEPS } from "../../constants/checkoutSteps";
+import { useNavigate } from "react-router-dom";
+import { toast } from "sonner";
+import CheckoutItemsPreview from "../../components/CheckoutItemsPreview";
 
 const ShippingPage = () => {
+  const navigate= useNavigate()
   const fetchAddresses = useAccountStore((state) => state.fetchAddresses);
   const addresses = useAccountStore((state) => state.addresses);
   const selectedAddress = useCheckoutStore((state) => state.selectedAddress);
+  const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
   const setSelectedAddress = useCheckoutStore(
     (state) => state.setSelectedAddress,
   );
+  const validateShipping = useCheckoutStore((state) => state.validateShipping);
+
 
   useEffect(() => {
     fetchAddresses();
@@ -28,12 +36,39 @@ const ShippingPage = () => {
     }
   }, [addresses]);
 
-  console.log("default: ", selectedAddress);
-  console.log(addresses);
+
+
+
+  const handleContinue = async () => {
+    if (!selectedAddress) {
+      toast.error("Please select a delivery address");
+      return;
+    }
+
+    if(!selectedDeliveryMethod){
+      toast.error("Please select a delivery method");
+      return;
+    }
+    try {
+      const result = await validateShipping({
+        addressId: selectedAddress._id,
+        deliveryMethod: selectedDeliveryMethod,
+      });
+
+      if (!result.valid) {
+        toast.error(result.issues[0]?.message);
+        return;
+      }
+
+      navigate("/checkout/payment");
+    } catch (error) {
+      toast.error("Unable to validate shipping");
+    }
+  };
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
-      <CheckoutStepper />
+      <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={1}/>
 
       <div className="grid lg:grid-cols-3 gap-8 mt-10">
         <div className="lg:col-span-2 space-y-8">
@@ -45,7 +80,15 @@ const ShippingPage = () => {
           <DeliveryMethod />
         </div>
 
-        <OrderSummary />
+        <OrderSummary
+  subtotal={1999}
+  shippingCharge={0}
+  discount={200}
+  total={1799}
+  buttonText="Proceed To Payment"
+  onButtonClick={handleContinue}
+  children={<CheckoutItemsPreview/>}
+/>
       </div>
     </section>
   );

@@ -1,19 +1,6 @@
+import { DELIVERY_OPTIONS } from "../../constants/deliveryOptions";
 import { useCheckoutStore } from "../../store/checkout.store";
 
-const DELIVERY_OPTIONS = [
-  {
-    id: "STANDARD",
-    title: "Standard",
-    description: "3-5 Business Days",
-    price: 0,
-  },
-  {
-    id: "EXPRESS",
-    title: "Express",
-    description: "Next Day Delivery",
-    price: 25,
-  },
-];
 
 const DeliveryMethod = () => {
 	const selectedDeliveryMethod = useCheckoutStore((state)=> state.selectedDeliveryMethod)
