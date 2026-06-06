@@ -43,7 +43,7 @@ const RegisterForm = ({onSubmit}) => {
 
 		<div className='space-y-1'>
 			<Label>CONFIRM PASSWORD</Label>
-			<Input type={show? "password":"text"} placeholder="........" {...register("confirmPassword")} />
+			<Input type={show? "text":"password"} placeholder="........" {...register("confirmPassword")} />
 			{errors?.confirmPassword && (
 				<p className='text-red-500 text-sm'>{errors.confirmPassword.message}</p>
 			)}

@@ -3,7 +3,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { resetPasswordSchema } from "../validations/auth.validation";
-import { Link } from "react-router-dom";
 import { Eye, EyeClosed } from "lucide-react";
 import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";

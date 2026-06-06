@@ -2,7 +2,6 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/inter";
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -48,6 +47,8 @@
     --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+
+
 /* :root {
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -81,6 +82,7 @@
     --sidebar-accent-foreground: oklch(0.205 0 0);
     --sidebar-border: oklch(0.922 0 0);
     --sidebar-ring: oklch(0.708 0 0);
+
 } */
 
 
@@ -98,7 +100,7 @@
     /* Brand Colors */
     --primary: #885D3B; /* Dark :active (Strongest button color) */
     --primary-foreground: #fefdfb; /* Light (Text on primary button) */
-    --secondary: #f6e7d7; /* Normal */
+    --secondary: #F4EBE4; /* Normal */
     --secondary-foreground: #56514b; /* Darker */
     
     /* Muted & Accents */

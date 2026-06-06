@@ -3,8 +3,9 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { forgotPasswordSchema } from '../validations/auth.validation'
 import { Input } from '@/shared/components/ui/input'
-import { Label } from '@/shared/components/ui/label'
 import { Button } from '@/shared/components/ui/button'
+import { Label } from '@/shared/components/ui/label'
+
 
 const ForgotPasswordForm = ({onSubmit}) => {
 	const {register, handleSubmit, formState:{errors, isSubmitting}}= useForm({

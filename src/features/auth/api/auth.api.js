@@ -1,16 +1,27 @@
-import api from "@/services/axios"
+import adminApi from "@/services/adminApi";
+import userApi from "@/services/userApi"
 
 
-export const registerApi= (data)=> api.post("/auth/register", data)
+export const registerApi= (data)=> userApi.post("/auth/register", data)
 
-export const verifyEmailApi= (data)=> api.post("/auth/verify-email", data)
+export const resendOtpApi = (data) => userApi.post("/auth/resend-otp", data);
 
-export const resendOtpApi= (data)=> api.post("/auth/resend-otp", data)
+export const loginApi = (data) => userApi.post("/auth/login", data);
 
-export const loginApi= (data)=> api.post ("/auth/login", data)
+export const forgotPasswordApi = (data) => userApi.post("/auth/forgot-password", data);
 
-export const forgotPassword = (data)=> api.post("/auth/forgot-password", data)
+export const verifyOtpApi = (data) => userApi.post("/auth/verify-otp", data);
 
-export const verifyOtp= (data)=> api.post("/auth/verify-otp", data)
+export const resetPasswordApi = (data) => userApi.post("/auth/reset-password", data);
 
-export const resetPassword= (data)=> api.post("/auth/reset-password", data)
+export const logoutApi = () => userApi.post("/auth/logout");
+
+export const googleLoginApi = (token) => userApi.post("/auth/google-login", { token });
+
+
+//AdminApi
+export const adminLoginApi= (data)=> adminApi.post("/auth/admin/login", data)
+
+export const adminLogoutApi= ()=> adminApi.post("/auth/admin/logout")
+
+export const adminRefreshTokenApi= ()=> adminApi.post("/auth/admin/refresh-token")
