@@ -6,6 +6,7 @@ import authRoutes from "./routes/auth.routes";
 import cartRoutes from "./routes/cart.routes";
 import wishlistRoute from "./routes/wishlist.routes";
 import { checkoutRoutes } from "./routes/checkout.routes";
+import { orderRoutes } from "./routes/order.routes";
 
 export const router = createBrowserRouter([
   
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
   cartRoutes,
   wishlistRoute,
   ...checkoutRoutes,
+  ...orderRoutes,
   
   
   

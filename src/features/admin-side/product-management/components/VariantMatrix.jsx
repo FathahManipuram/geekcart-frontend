@@ -166,27 +166,21 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
           };
         }
 
-        /**
-         * New Variant
-         */
+      
         return generatedVariant;
       });
 
       finalVariants = [...finalVariants, ...mergedVariants];
     });
 
-    /**
-     * Save
-     */
+  
     setValue("variants", finalVariants, {
       shouldDirty: true,
       shouldValidate: true,
     });
   };
 
-  /**
-   * Final Variants
-   */
+  
   const variants = watch("variants") || [];
 const variantGroups = watch("variantGroups") || [];
 const canGenerate =
