@@ -18,7 +18,7 @@ const CheckoutItemsPreview = () => {
             <div>
               <p className="text-sm font-medium">{item.name}</p>
 
-              <p className="text-xs text-gray-500">
+              <div className="text-xs text-gray-500">
                 <div className="flex items-center gap-2">
                   <span>
                     {item.color} / {item.size}
@@ -35,7 +35,7 @@ const CheckoutItemsPreview = () => {
                     )}
                   </div>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         ))}

@@ -12,7 +12,7 @@ const ReviewOrderItems = () => {
       <div>
         {cart?.items?.map((item) => (
           <ReviewOrderItem
-            key={`${item?.productId}-${item?.variantId}`}
+            key={`${item?.productId._id}-${item?.variantId._id}`}
             item={item}
           />
         ))}

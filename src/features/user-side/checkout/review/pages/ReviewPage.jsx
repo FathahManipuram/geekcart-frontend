@@ -8,12 +8,18 @@ import OrderSummary from '../../components/OrderSummary';
 import { useCartStore } from '@/features/user-side/cart/store/cart.store';
 import { useCheckoutStore } from '../../store/checkout.store';
 import { useNavigate } from 'react-router-dom';
+import { useOrderStore } from '@/features/user-side/order/store/order.store';
+import ReviewDeliveryCard from '../components/ReviewDeliveryCard';
+import { toast } from 'sonner';
 
 const ReviewPage = () => {
   const navigate=useNavigate()
 	const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
 	const selectedPaymentMethod=useCheckoutStore((state)=> state.selectedPaymentMethod)
+  const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
   const cart = useCartStore((state) => state.cart);
+  const createOrder = useOrderStore((state) => state.createOrder);
+  const resetCheckout= useCheckoutStore((state)=> state.resetCheckout)
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -29,6 +35,21 @@ const ReviewPage = () => {
   }, [selectedAddress, selectedPaymentMethod, navigate]);
 
 
+const handlePlaceOrder = async () => {
+  try {
+    const res = await createOrder({
+      addressId: selectedAddress._id,
+      deliveryMethod: selectedDeliveryMethod,
+      paymentMethod: selectedPaymentMethod,
+    });
+    toast.success(res.message);
+    //resetCheckout()
+    navigate(`/orders/success/${res.data.orderNumber}`,{state: {orderId: res.data.orderId}});
+  } catch (error) {
+    console.error(error);
+  }
+};
+
   return (
     <section className="max-w-7xl mx-auto px-4 py-8">
       <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={3} />
@@ -39,6 +60,8 @@ const ReviewPage = () => {
             address={selectedAddress}
             onEdit={() => navigate("/checkout/shipping")}
           />
+
+          <ReviewDeliveryCard selectedDeliveryMethod={selectedDeliveryMethod} onEdit={() => navigate("/checkout/shipping")}/>
 
           <ReviewPaymentCard
             selectedPaymentMethod={selectedPaymentMethod}
@@ -55,6 +78,7 @@ const ReviewPage = () => {
           discount={cart?.summary?.discount || 0}
           total={cart?.summary?.total || 0}
           buttonText={"Place Order"}
+          onButtonClick={handlePlaceOrder}
         />
       </div>
     </section>
