@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { cancelOrderApi, createOrderApi, fetchOrderByIdApi } from "../api/order.api";
+import { cancelOrderApi, createOrderApi, fetchOrderByIdApi, fetchOrderHistoryApi } from "../api/order.api";
 
 
 export const useOrderStore = create((set) => ({
 
 order: null,
+orderHistory: [],
 loading: false,
 error: null,
 
@@ -28,6 +29,23 @@ error: null,
 		const message= err.response?.data?.message
 		set({ loading: false, error: message });
 		throw err
+	}
+  },
+
+  fetchOrderHistory: async()=>{
+	try{
+		set({loading: true, error: null})
+
+		const res= await fetchOrderHistoryApi()
+
+		set({orderHistory: res.data, loading: false})
+		console.log("orderHistory store: ", res.data)
+
+		return res.data
+	}catch(err){
+	const message = err.response?.data?.message|| "Failed";
+    set({ loading: false, error: message });
+    throw err;
 	}
   },
 

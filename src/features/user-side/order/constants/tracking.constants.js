@@ -4,8 +4,12 @@ export const TRACKING_STEPS = [
     label: "Order Placed",
   },
   {
+    key: "PROCESSING",
+    label: "Processing",
+  },
+  {
     key: "SHIPPED",
-    label: "Shipped From Warehouse",
+    label: "Shipped",
   },
   {
     key: "OUT_FOR_DELIVERY",

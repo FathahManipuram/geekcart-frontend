@@ -6,3 +6,4 @@ export const createOrderApi = async (payload) =>
 export const fetchOrderByIdApi = (orderId) => userApi.get(`/orders/success/${orderId}`);
 
 export const cancelOrderApi= async(orderId, payload)=> userApi.patch(`/orders/${orderId}/cancel`, payload)
+export const fetchOrderHistoryApi = async()=> userApi.get("/orders/order-history")

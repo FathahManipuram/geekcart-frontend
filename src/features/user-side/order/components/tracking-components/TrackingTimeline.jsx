@@ -1,11 +1,18 @@
 import { Check } from "lucide-react";
 import { TRACKING_STEPS } from "../../constants/tracking.constants";
+import { ORDER_TRACKING_STEPS } from "@/shared/constants/order/orderTrackingSteps";
 
 const TrackingTimeline = ({ order }) => {
-  const currentIndex = TRACKING_STEPS.findIndex(
-    (step) => step.key === order?.orderStatus,
-  );
+  
+const currentIndex = ORDER_TRACKING_STEPS.indexOf(order?.orderStatus);
 
+if (order.orderStatus === "PENDING") {
+  return (
+    <div className="text-center py-6">
+      <p className="font-medium">Waiting for payment confirmation</p>
+    </div>
+  );
+}
   return (
     <div className="bg-white border rounded-2xl p-8">
       <h2 className="uppercase text-xs tracking-widest mb-10">

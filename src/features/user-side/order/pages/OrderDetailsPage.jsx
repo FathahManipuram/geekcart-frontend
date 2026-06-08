@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useOrderStore } from "../store/order.store";
-import OrderTimeline from "../components/OrderTimeline";
-import OrderItemCard from "../components/OrderItemCard";
-import OrderSummaryCard from "../components/OrderSummaryCard";
-import ShippingAddressCard from "../components/ShippingAddressCard";
-import PaymentInfoCard from "../components/PaymentInfoCard";
+import OrderTimeline from "../components/order-main/OrderTimeline";
+import OrderItemCard from "../components/order-main/OrderItemCard";
+import OrderSummaryCard from "../components/order-main/OrderSummaryCard";
+import ShippingAddressCard from "../components/order-main/ShippingAddressCard";
+import PaymentInfoCard from "../components/order-main/PaymentInfoCard";
 import Loader from "@/shared/components/Loader";
 import { Button } from "@/shared/components/ui/button";
 import CancelOrderModal from "../components/cancel-components/CancelOrderModal";
