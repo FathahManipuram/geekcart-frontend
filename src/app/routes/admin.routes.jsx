@@ -10,6 +10,9 @@ import AddProductPage from "@/features/admin-side/product-management/pages/AddPr
 import ProductDetailsPage from "@/features/admin-side/product-management/pages/ProductDetailsPage";
 import EditProductPage from "@/features/admin-side/product-management/pages/EditProductPage";
 import AdminDashboardPage from "@/features/admin-side/dashboard/pages/AdminDashboardPage";
+import OrderManagementPage from "@/features/admin-side/order-management/pages/OrderManagementPage";
+import OrderDetailsPage from "@/features/user-side/order/pages/OrderDetailsPage";
+import AdminOrderDetailsPage from "@/features/admin-side/order-management/pages/AdminOrderDetailsPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -25,7 +28,7 @@ const adminRoutes = {
     },
     {
       path: "dashboard",
-      element: <AdminDashboardPage/>,
+      element: <AdminDashboardPage />,
     },
     {
       path: "user-management",
@@ -57,7 +60,16 @@ const adminRoutes = {
     },
     {
       path: "products/:productId/edit",
-      element: <EditProductPage/>,
+      element: <EditProductPage />,
+    },
+
+    {
+      path: "orders",
+      element: <OrderManagementPage />,
+    },
+    {
+      path: "orders/:orderId",
+      element: <AdminOrderDetailsPage/>,
     },
   ],
 };
