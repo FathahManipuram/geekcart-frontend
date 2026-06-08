@@ -36,6 +36,11 @@ const links = [
     icon: Package,
     path: "/admin/products",
   },
+  {
+    label: "Order Management",
+    icon: ClipboardList,
+    path: "/admin/orders",
+  },
 
   {
     label: "Review Management",
@@ -64,12 +69,6 @@ const links = [
     label: "Subcategory Management",
     icon: Blocks,
     path: "/admin/subcategories",
-  },
-
-  {
-    label: "Order Management",
-    icon: ClipboardList,
-    path: "/admin/orders",
   },
 ];
 

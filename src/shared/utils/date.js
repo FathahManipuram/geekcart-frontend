@@ -34,3 +34,19 @@ export const monthYearFormat= (date)=>{
 		year: "numeric",
 	}).format(d)
 }
+
+export const formatDateTime= (date)=>{
+if (!date) return "";
+  const d = new Date(date);
+  if (isNaN(d)) return "";
+
+  return new Intl.DateTimeFormat("en-US", {
+	year: "numeric",
+    month: "long",   
+    day: "numeric",  
+    hour: "2-digit",  
+    minute: "2-digit",
+    //second: "2-digit",
+    hour12: true,     
+  }).format(d)
+}
