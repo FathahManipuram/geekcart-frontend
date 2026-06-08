@@ -10,11 +10,13 @@ import { CHECKOUT_STEPS } from "../../constants/checkoutSteps";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import CheckoutItemsPreview from "../../components/CheckoutItemsPreview";
+import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 
 const ShippingPage = () => {
   const navigate= useNavigate()
   const fetchAddresses = useAccountStore((state) => state.fetchAddresses);
   const addresses = useAccountStore((state) => state.addresses);
+  const summary= useCartStore((state)=> state.summary)
   const selectedAddress = useCheckoutStore((state) => state.selectedAddress);
   const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
   const setSelectedAddress = useCheckoutStore(
@@ -36,7 +38,7 @@ const ShippingPage = () => {
     }
   }, [addresses]);
 
-
+const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
 
 
   const handleContinue = async () => {
@@ -81,10 +83,12 @@ const ShippingPage = () => {
         </div>
 
         <OrderSummary
-  subtotal={1999}
-  shippingCharge={0}
-  discount={200}
-  total={1799}
+  subtotal={summary.subtotal}
+  deliveryCharge={summary?.deliveryCharge + speedCharge|| 0}
+  shippingCharge={summary?.deliveryCharge || 0}
+  speedCharge={speedCharge}
+  discount={summary.discount}
+  total={summary.total}
   buttonText="Proceed To Payment"
   onButtonClick={handleContinue}
   children={<CheckoutItemsPreview/>}

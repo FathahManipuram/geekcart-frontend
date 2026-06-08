@@ -1,7 +1,9 @@
 
 const OrderSummary = ({
   subtotal,
+  deliveryCharge,
   shippingCharge,
+  speedCharge,
   discount,
   total,
   buttonText,
@@ -20,10 +22,36 @@ const OrderSummary = ({
           <span>₹{subtotal}</span>
         </div>
 
-        <div className="flex justify-between">
-          <span>Shipping</span>
-          <span>{shippingCharge === 0 ? "Free" : `₹${shippingCharge}`}</span>
+        {/* <div className="flex justify-between">
+          <span>Delivery Charge</span>
+          <span>{deliveryCharge === 0 ? "Free" : `₹${deliveryCharge}`}</span>
+        </div> */}
+
+        <div>
+          <div className="flex justify-between">
+            <span>Delivery Charge</span>
+            <span
+              className={
+                deliveryCharge === 0 ? "text-green-600 font-medium" : ""
+              }
+            >
+              {deliveryCharge === 0 ? "Free" : `₹${deliveryCharge}`}
+            </span>
+          </div>
+
+          {deliveryCharge > 0 && (speedCharge > 0 || shippingCharge > 0) && (
+            <p className="text-xs text-gray-400 mt-0.5 fallback-font">
+              (Includes{" "}
+              {shippingCharge > 0
+                ? `₹${shippingCharge} standard shipping`
+                : "free shipping"}
+              {speedCharge > 0 && ` + ₹${speedCharge} express speed`}
+              )
+            </p>
+          )}
         </div>
+
+        {/* ---------- */}
 
         <div className="flex justify-between">
           <span>Discount</span>

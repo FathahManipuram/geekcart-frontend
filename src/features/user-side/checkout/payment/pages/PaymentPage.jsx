@@ -19,6 +19,7 @@ const PaymentPage = () => {
   const setPaymentMethod = useCheckoutStore((state) => state.setPaymentMethod);
   const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
   const validatePayment= useCheckoutStore((state)=> state.validatePayment)
+  const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
 
   const cart = useCartStore((state) => state.cart);
 
@@ -28,6 +29,7 @@ useEffect(()=>{
   }
 }, [selectedAddress, navigate])
 
+const speedCharge = selectedDeliveryMethod === "EXPRESS" ? 25 : 0;
 
 const handleContinue= async()=>{
 
@@ -78,6 +80,8 @@ const handleContinue= async()=>{
         <OrderSummary
           items={cart?.items || []}
           subtotal={cart?.summary?.subtotal || 0}
+          deliveryCharge={speedCharge}
+          speedCharge={speedCharge}
           shippingCharge={cart?.summary?.shippingCharge || 0}
           discount={cart?.summary?.discount || 0}
           total={cart?.summary?.total || 0}
