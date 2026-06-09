@@ -3,7 +3,7 @@ import OrderHistoryActions from "./OrderHistoryActions";
 const OrderHistoryCard = ({ order }) => {
   const firstItem = order?.items?.[0];
   console.log("firstItem: ", firstItem)
-
+console.log("test: ", order)
   return (
     <div className="bg-white border rounded-2xl p-6">
       <div className="flex justify-between gap-6">
