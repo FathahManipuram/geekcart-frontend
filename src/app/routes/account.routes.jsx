@@ -26,6 +26,7 @@ const accountRoutes = {
       path: "order-history",
       element: <OrderHistoryPage/>,
     },
+    
   ],
 };
 

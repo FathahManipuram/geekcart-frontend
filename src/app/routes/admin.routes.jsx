@@ -13,6 +13,8 @@ import AdminDashboardPage from "@/features/admin-side/dashboard/pages/AdminDashb
 import OrderManagementPage from "@/features/admin-side/order-management/pages/OrderManagementPage";
 import OrderDetailsPage from "@/features/user-side/order/pages/OrderDetailsPage";
 import AdminOrderDetailsPage from "@/features/admin-side/order-management/pages/AdminOrderDetailsPage";
+import ReturnManagementPage from "@/features/admin-side/return-management/pages/ReturnManagementPage";
+import ReturnDetailsPage from "@/features/admin-side/return-management/pages/ReturnDetailsPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -69,7 +71,15 @@ const adminRoutes = {
     },
     {
       path: "orders/:orderId",
-      element: <AdminOrderDetailsPage/>,
+      element: <AdminOrderDetailsPage />,
+    },
+    {
+      path: "returns",
+      element: <ReturnManagementPage />,
+    },
+    {
+      path: "returns/:returnId",
+      element: <ReturnDetailsPage/>,
     },
   ],
 };
