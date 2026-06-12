@@ -29,8 +29,6 @@ const OrderHistoryActions = ({ order }) => {
           >
             Return Item
           </Button>
-
-          <Button variant="outline">Buy Again</Button>
         </>
       )}
     </div>

@@ -1,21 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import OrderHistoryCard from "../components/order-history/OrderHistoryCard";
 import OrderHistorySkeleton from "../components/order-history/OrderHistorySkeleton";
 import { useOrderStore } from "../store/order.store";
+import EmptyPage from "@/shared/components/EmptyPage";
+import { PackageX } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
+import SearchInput from "@/shared/components/SearchInput";
+import useDebounce from "@/shared/hooks/useDebounce";
 
 const OrderHistoryPage = () => {
+  const navigate= useNavigate()
+  const [search, setSearch]= useState("")
+
+  const debouncedValue= useDebounce(search, 500)
+ 
   const orderHistory = useOrderStore((state) => state.orderHistory);
   const loading = useOrderStore((state) => state.loading);
   const fetchOrderHistory= useOrderStore((state)=> state.fetchOrderHistory)
+
 console.log("LoadinG: ", loading)
   useEffect(() => {
-    fetchOrderHistory()
-  }, []);
+    fetchOrderHistory({
+      search: debouncedValue,
+    })
+  }, [debouncedValue]);
 
 console.log("orderhistorypage: ", orderHistory)
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
+    <section className="max-w-7xl mx-auto px-4">
       <div className="mb-8">
+        <Breadcrumbs
+          items={[
+            {
+              label: "Home",
+              link: "/",
+            },
+            {
+              label: "Order History",
+            },
+          ]}
+        />
         <h1 className="text-4xl font-bold">Order History</h1>
 
         <p className="text-muted-foreground mt-2">
@@ -23,17 +48,32 @@ console.log("orderhistorypage: ", orderHistory)
         </p>
       </div>
 
-      <div className="space-y-6">
+      <SearchInput
+        value={search}
+        onChange={setSearch}
+        onClear={() => setSearch("")}
+        placeholder="Search by order number or product name..."
+      />
+
+      <div className="space-y-6 mt-6">
         {loading ? (
           <>
             <OrderHistorySkeleton />
             <OrderHistorySkeleton />
             <OrderHistorySkeleton />
           </>
-        ) : (
-          orderHistory?.map((order) => (
+        ) : orderHistory?.length > 0 ? (
+          orderHistory.map((order) => (
             <OrderHistoryCard key={order._id} order={order} />
           ))
+        ) : (
+          <EmptyPage
+            icon={PackageX}
+            title="No Orders Yet"
+            description="You haven't placed any orders yet. Start shopping and your orders will appear here."
+            buttonText="Start Shopping"
+            onButtonClick={() => navigate("/collections")}
+          />
         )}
       </div>
     </section>

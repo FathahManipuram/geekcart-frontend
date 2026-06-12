@@ -1,21 +1,17 @@
-import { Check } from "lucide-react";
+import { Check, X } from "lucide-react";
 import { ORDER_STATUS_LABELS } from "@/shared/constants/order/orderStatusLabel";
 import { ORDER_TRACKING_STEPS } from "@/shared/constants/order/orderTrackingSteps";
 
 const OrderTimeline = ({ order }) => {
-  const currentStepIndex = ORDER_TRACKING_STEPS.indexOf(
-    order?.orderStatus
-  );
+  const currentStepIndex = ORDER_TRACKING_STEPS.indexOf(order?.orderStatus);
 
-  const isCancelled =
-    order?.orderStatus === "CANCELLED";
+  const isPending = order?.orderStatus === "PENDING";
 
-  const isReturned =
-    order?.orderStatus === "RETURNED";
+  const cancelledAt = order?.statusHistory?.find(
+    (item) => item.status === "CANCELLED",
+  )?.updatedAt;
 
-  const isPending =
-    order?.orderStatus === "PENDING";
-
+  // Pending Order
   if (isPending) {
     return (
       <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
@@ -30,107 +26,103 @@ const OrderTimeline = ({ order }) => {
     );
   }
 
+  // Cancelled Order
+  if (order?.orderStatus === "CANCELLED") {
+    return (
+      <div className="bg-white border rounded-xl p-6">
+        <h2 className="font-semibold text-lg mb-8">Order Status</h2>
+
+        <div className="flex items-center">
+          <div className="flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+              <Check size={18} />
+            </div>
+
+            <p className="mt-2 text-sm font-medium">Placed</p>
+          </div>
+
+          <div className="flex-1 h-[2px] bg-red-300 mx-4" />
+
+          <div className="flex flex-col items-center">
+            <div className="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center">
+              <X size={18} />
+            </div>
+
+            <p className="mt-2 text-sm font-medium text-red-600">Cancelled</p>
+
+            {cancelledAt && (
+              <p className="text-xs text-muted-foreground mt-1">
+                {new Date(cancelledAt).toLocaleDateString()}
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Normal Order Timeline
   return (
     <div className="bg-white border rounded-xl p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="font-semibold text-lg">
-          Order Status
-        </h2>
+        <h2 className="font-semibold text-lg">Order Status</h2>
 
-        <span
-          className={`
-            px-3 py-1 rounded-full text-xs font-medium
-            ${
-              isCancelled
-                ? "bg-red-100 text-red-600"
-                : isReturned
-                  ? "bg-orange-100 text-orange-600"
-                  : "bg-green-100 text-green-600"
-            }
-          `}
-        >
+        <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600">
           {ORDER_STATUS_LABELS[order.orderStatus]}
         </span>
       </div>
 
-      {isCancelled || isReturned ? (
-        <div className="text-center py-8">
-          <p className="font-semibold text-lg">
-            Order{" "}
-            {ORDER_STATUS_LABELS[
-              order.orderStatus
-            ]}
-          </p>
-        </div>
-      ) : (
-        <div className="overflow-x-auto">
-          <div className="flex items-center min-w-[700px]">
-            {ORDER_TRACKING_STEPS.map(
-              (status, index) => {
-               const isDelivered = order?.orderStatus === "DELIVERED";
+      <div className="overflow-x-auto">
+        <div className="flex items-center min-w-[700px]">
+          {ORDER_TRACKING_STEPS.map((status, index) => {
+            const isDelivered = order?.orderStatus === "DELIVERED";
 
-               const completed = isDelivered
-                 ? index <= currentStepIndex
-                 : index < currentStepIndex;
+            const completed = isDelivered
+              ? index <= currentStepIndex
+              : index < currentStepIndex;
 
-               const active = !isDelivered && index === currentStepIndex;
+            const active = !isDelivered && index === currentStepIndex;
 
-                return (
+            return (
+              <div key={status} className="flex-1 flex items-center">
+                <div className="flex flex-col items-center">
                   <div
-                    key={status}
-                    className="flex-1 flex items-center"
-                  >
-                    <div className="flex flex-col items-center">
-                      <div
-                        className={`
-                          w-10 h-10 rounded-full border flex items-center justify-center
-                          ${
-                            completed
-                              ? "bg-primary text-white border-primary"
-                              : active
-                                ? "border-primary text-primary bg-primary/10"
-                                : "border-gray-300 text-gray-400"
-                          }
-                        `}
-                      >
-                        {completed ? (
-                          <Check size={18} />
-                        ) : (
-                          index + 1
-                        )}
-                      </div>
-
-                      <p className="mt-2 text-xs font-medium text-center whitespace-nowrap">
-                        {
-                          ORDER_STATUS_LABELS[
-                            status
-                          ]
+                    className={`
+                        w-10 h-10 rounded-full border flex items-center justify-center
+                        ${
+                          completed
+                            ? "bg-primary text-white border-primary"
+                            : active
+                              ? "border-primary text-primary bg-primary/10"
+                              : "border-gray-300 text-gray-400"
                         }
-                      </p>
-                    </div>
-
-                    {index <
-                      ORDER_TRACKING_STEPS.length -
-                        1 && (
-                      <div
-                        className={`
-                          flex-1 h-[2px] mx-2
-                          ${
-                            index <
-                            currentStepIndex
-                              ? "bg-primary"
-                              : "bg-gray-200"
-                          }
-                        `}
-                      />
-                    )}
+                      `}
+                  >
+                    {completed ? <Check size={18} /> : index + 1}
                   </div>
-                );
-              }
-            )}
-          </div>
+
+                  <p className="mt-2 text-xs font-medium text-center whitespace-nowrap">
+                    {ORDER_STATUS_LABELS[status]}
+                  </p>
+                </div>
+
+                {index < ORDER_TRACKING_STEPS.length - 1 && (
+                  <div
+                    className={`
+                        flex-1 h-[2px] mx-2
+                        ${
+                          index < currentStepIndex
+                            ? "bg-primary"
+                            : "bg-gray-200"
+                        }
+                      `}
+                  />
+                )}
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -12,6 +12,28 @@ const TrackingTimeline = ({ order }) => {
     return order?.statusHistory?.find((item) => item.status === status)
       ?.updatedAt;
   };
+if (order?.orderStatus === "CANCELLED") {
+  return (
+    <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
+      <h3 className="font-semibold text-red-700">Order Cancelled</h3>
+
+      <p className="text-sm text-red-600 mt-2">
+        This order has been cancelled and will not be processed further.
+      </p>
+
+      {order?.statusHistory?.find((item) => item.status === "CANCELLED")
+        ?.updatedAt && (
+        <p className="text-xs text-red-500 mt-4">
+          Cancelled on{" "}
+          {formatDateTime(
+            order.statusHistory.find((item) => item.status === "CANCELLED")
+              .updatedAt,
+          )}
+        </p>
+      )}
+    </div>
+  );
+}
 
   if (order?.orderStatus === "PENDING") {
     return (

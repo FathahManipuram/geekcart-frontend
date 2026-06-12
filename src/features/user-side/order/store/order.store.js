@@ -1,69 +1,115 @@
 import { create } from "zustand";
-import { cancelOrderApi, createOrderApi, fetchOrderByIdApi, fetchOrderHistoryApi } from "../api/order.api";
+import { cancelOrderApi, cancelOrderItemApi, createOrderApi, downloadInvoicePdfApi, fetchOrderByIdApi, fetchOrderHistoryApi } from "../api/order.api";
 
 
 export const useOrderStore = create((set) => ({
-
-order: null,
-orderHistory: [],
-loading: false,
-error: null,
-
+  order: null,
+  orderHistory: [],
+  loading: false,
+  error: null,
 
   createOrder: async (payload) => {
     const res = await createOrderApi(payload);
-	console.log("Order placed: ", res.data)
+    console.log("Order placed: ", res.data);
     return res;
   },
 
   fetchOrderById: async (orderId) => {
-	try{
-		set({loading: true, error: null})
+    try {
+      set({ loading: true, error: null });
 
-    const res = await fetchOrderByIdApi(orderId);
-      set({order:res.data, loading: false });
+      const res = await fetchOrderByIdApi(orderId);
+      set({ order: res.data, loading: false });
 
-	  	console.log("fetchedOrderById: ", res.data);
-    return res.data;
-	}catch(err){
-		const message= err.response?.data?.message
-		set({ loading: false, error: message });
-		throw err
-	}
+      console.log("fetchedOrderById: ", res.data);
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message;
+      set({ loading: false, error: message });
+      throw err;
+    }
   },
 
-  fetchOrderHistory: async()=>{
-	try{
-		set({loading: true, error: null})
+  fetchOrderHistory: async (query) => {
+    try {
+      set({ loading: true, error: null });
 
-		const res= await fetchOrderHistoryApi()
+      const res = await fetchOrderHistoryApi(query);
 
-		set({orderHistory: res.data, loading: false})
-		console.log("orderHistory store: ", res.data)
+      set({ orderHistory: res.data.orders, loading: false });
+      console.log("orderHistory store: ", res.data);
 
-		return res.data
-	}catch(err){
-	const message = err.response?.data?.message|| "Failed";
-    set({ loading: false, error: message });
-    throw err;
-	}
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message || "Failed";
+      set({ loading: false, error: message });
+      throw err;
+    }
   },
 
-cancelOrder: async(orderId, payload)=>{
-	try{
-		set({ loading: true, error: null });
+  cancelOrder: async (orderId, payload) => {
+    try {
+      set({ loading: true, error: null });
 
-		const res= await cancelOrderApi(orderId, payload)
+      const res = await cancelOrderApi(orderId, payload);
 
-		set({ loading: false });
+      set({ loading: false });
 
-		return res.data
-	}catch(err){
-		const message= err.response?.data?.message || "Failed to cancel"
-		set({ loading: false, error: message });
-		throw err
-	}
-},
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message || "Failed to cancel";
+      set({ loading: false, error: message });
+      throw err;
+    }
+  },
 
-  
+  cancelOrderItem: async (orderId, itemId, payload) => {
+    try {
+      set({ loading: true, error: null });
+
+      const res = await cancelOrderItemApi(orderId, itemId, payload);
+
+      set({ loading: false });
+
+      return res;
+    } catch (err) {
+      const message = err.response?.data?.message || "Failed to cancel";
+      set({ loading: false, error: message });
+      throw err;
+    }
+  },
+
+  downloadInvoicePdf: async (orderId) => {
+    try {
+      const res = await downloadInvoicePdfApi(orderId);
+
+      // Dynamic extraction: works perfectly whether res is response or response.data
+      const rawData = res.data ? res.data : res;
+
+      // Guard checking if we actually received a binary blob
+      if (!rawData || rawData.size === 0) {
+        throw new Error("Received empty invoice data from server");
+      }
+
+      const blob = new Blob([rawData], { type: "application/pdf" });
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `invoice-${orderId}.pdf`;
+
+      document.body.appendChild(link);
+      link.click();
+
+      // Clean up memory leaks immediately
+      link.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Invoice Download Error:", err);
+      const message =
+        err.response?.data?.message || "Failed to download invoice";
+      set({ loading: false, error: message });
+      throw err;
+    }
+  },
 }));

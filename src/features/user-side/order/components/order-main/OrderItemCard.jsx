@@ -1,4 +1,9 @@
-const OrderItemCard = ({ item }) => {
+import { Button } from "@/shared/components/ui/button";
+import ItemStatusBadge from "../order-history/ItemStatusBadge";
+
+const OrderItemCard = ({ item, onCancel }) => {
+  const canCancel = ["PLACED", "PROCESSING"].includes(item.itemStatus);
+
   return (
     <div className="bg-white border rounded-xl p-5">
       <div className="flex gap-5">
@@ -9,8 +14,14 @@ const OrderItemCard = ({ item }) => {
         />
 
         <div className="flex-1">
-          <div className="flex justify-between">
-            <h3 className="font-semibold text-lg">{item.name}</h3>
+          <div className="flex justify-between items-start">
+            <div>
+              <h3 className="font-semibold text-lg">{item.name}</h3>
+
+              <div className="mt-2">
+                <ItemStatusBadge status={item.itemStatus} />
+              </div>
+            </div>
 
             <p className="font-semibold">
               ₹{(item.salePrice ?? item.price) * item.quantity}
@@ -32,6 +43,19 @@ const OrderItemCard = ({ item }) => {
               <p>Quantity</p>
               <p className="font-medium text-black">{item.quantity}</p>
             </div>
+          </div>
+          {item.itemStatus === "CANCELLED" && item.cancellation?.reason && (
+            <p className="text-sm text-red-600 mt-2">
+              Reason: {item.cancellation.reason}
+            </p>
+          )}
+
+          <div className="mt-4 flex justify-end">
+            {canCancel && (
+              <Button variant="destructive" onClick={() => onCancel(item)}>
+                Cancel Item
+              </Button>
+            )}
           </div>
         </div>
       </div>

@@ -3,9 +3,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { cancelOrderSchema } from "../../validations/cancelOrder.validation";
 
-const CancelOrderForm = ({ order, onSubmit, onClose, loading = false }) => {
+const CancelOrderForm = ({ order, item, onSubmit, onClose, loading = false }) => {
   
-  const firstItem = order?.items?.[0];
+  const product = item
 
 const {
   register,
@@ -28,24 +28,22 @@ const reason = watch("reason");
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
       <div className="border rounded-lg p-4 flex gap-4">
         <img
-          src={firstItem?.image}
-          alt={firstItem?.name}
+          src={product?.image}
+          alt={product?.name}
           className="w-20 h-20 object-cover rounded"
         />
 
         <div>
-          <h3 className="font-medium">{firstItem?.name}</h3>
+          <h3 className="font-medium">{product?.name}</h3>
+
+          <p className="text-sm text-muted-foreground">Size: {product?.size}</p>
 
           <p className="text-sm text-muted-foreground">
-            Size: {firstItem?.size}
-          </p>
-
-          <p className="text-sm text-muted-foreground">
-            Color: {firstItem?.color}
+            Color: {product?.color}
           </p>
 
           <p className="font-semibold mt-2">
-            ₹{firstItem?.salePrice ?? firstItem?.price}
+            ₹{product?.salePrice ?? product?.price}
           </p>
         </div>
       </div>

@@ -10,20 +10,31 @@ import Loader from "@/shared/components/Loader";
 import { Button } from "@/shared/components/ui/button";
 import CancelOrderModal from "../components/cancel-components/CancelOrderModal";
 import { useCancelOrder } from "../hooks/useCancelOrder";
+import { ITEM_STATUSES, ORDER_STATUSES } from "@/shared/constants/order/orderStatus";
+import { useCancelOrderItem } from "../hooks/useCancelOrderItem";
+import { PackageX } from "lucide-react";
+import EmptyPage from "@/shared/components/EmptyPage";
+import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 const OrderDetailsPage = () => {
   const { orderId } = useParams();
   const navigate= useNavigate()
   const[showCancelModal, setShowCancelModal]= useState(false)
+  const [selectedItem, setSelectedItem] = useState(null)
 
 
   const order = useOrderStore((state) => state.order);
   const loading = useOrderStore((state) => state.loading);
   const fetchOrderById = useOrderStore((state) => state.fetchOrderById);
-
+  const downloadInvoicePdf= useOrderStore((state)=> state.downloadInvoicePdf)
   const {handleCancelOrder, isLoading}= useCancelOrder({orderId, onSuccess: ()=> setShowCancelModal(false)})
+  const {handleCancelOrderItem, cancelOrderItemLoading}= useCancelOrderItem({orderId, itemId: selectedItem?._id, onSuccess: ()=> setShowCancelModal(false)})
+  console.log("selectedItem", selectedItem)
 
+const isItemCancellation= !!selectedItem
+console.log("isItemCancellation: ", isItemCancellation)
 
+const canCancelOrder= order?.items?.every((item)=> [ITEM_STATUSES.PLACED, ITEM_STATUSES.PROCESSING].includes(item.itemStatus))
 
   useEffect(() => {
     fetchOrderById(orderId);
@@ -36,30 +47,60 @@ const OrderDetailsPage = () => {
     return <Loader/>
   }
 
-  if (!order) {
-    return <p>Order not found</p>;
-  }
+ if (!order) {
+   return (
+     <EmptyPage
+       icon={PackageX}
+       title="Order Not Found"
+       description="The order you are looking for does not exist, has been removed, or the link may be invalid."
+       buttonText="Back to Orders"
+       onButtonClick={() => navigate("/account/order-history")}
+     />
+   );
+ }
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-8">
+      <Breadcrumbs
+        items={[
+          {
+            label: "Home",
+            link: "/",
+          },
+          {
+            label: "Order History",
+            link: "/account/order-history",
+          },
+          {
+            label: "Order Details",
+          },
+        ]}
+      />
       <div className="flex items-end justify-between">
         <div>
           <h1 className="text-4xl font-bold">Order Details</h1>
 
-          <p className="text-gray-500 mt-2">Order #{order.orderNumber}</p>
+          <p className="text-gray-500 mt-2">Order #{order?.orderNumber}</p>
         </div>
         <div className="flex gap-2">
-          {["PLACED", "PROCESSING"].includes(order.orderStatus) && (
+          {canCancelOrder && (
             <Button
-              onClick={() => setShowCancelModal(true)}
               variant="destructive"
+              onClick={() => setShowCancelModal(true)}
             >
               Cancel Order
             </Button>
           )}
-          <Button onClick={() => navigate(`/orders/${orderId}/tracking`)}>
-            Track Package
-          </Button>
+          {order.orderStatus !== ORDER_STATUSES.CANCELLED && (
+            <Button onClick={() => navigate(`/orders/${orderId}/tracking`)}>
+              Track Package
+            </Button>
+          )}
+          {order.orderStatus === "DELIVERED" && (
+            <Button variant="outline" onClick={() => downloadInvoicePdf(orderId)}>
+              Download invoice
+            </Button>
+          )}
         </div>
       </div>
       <div className="grid lg:grid-cols-3 gap-8 mt-8">
@@ -67,8 +108,16 @@ const OrderDetailsPage = () => {
           <OrderTimeline order={order} />
 
           <div className="space-y-4">
-            {order.items.map((item) => (
-              <OrderItemCard key={item.variantId} item={item} />
+            {order?.items?.map((item) => (
+              <OrderItemCard
+                key={item._id}
+                item={item}
+                onCancel={(item) => {
+                  console.log("item", item);
+                  setSelectedItem(item);
+                  setShowCancelModal(true);
+                }}
+              />
             ))}
           </div>
         </div>
@@ -76,17 +125,25 @@ const OrderDetailsPage = () => {
         <div className="space-y-6">
           <OrderSummaryCard order={order} />
 
-          <ShippingAddressCard address={order.shippingAddress} />
+          <ShippingAddressCard address={order?.shippingAddress} />
 
           <PaymentInfoCard order={order} />
         </div>
       </div>
       <CancelOrderModal
         open={showCancelModal}
-        onOpenChange={setShowCancelModal}
+        onOpenChange={(open) => {
+          setShowCancelModal(open);
+          if (!open) {
+            setSelectedItem(null);
+          }
+        }}
         order={order}
-        loading={isLoading}
-        onSubmit={handleCancelOrder}
+        item={selectedItem}
+        loading={isItemCancellation ? cancelOrderItemLoading : isLoading}
+        onSubmit={
+          isItemCancellation ? handleCancelOrderItem : handleCancelOrder
+        }
       />
     </section>
   );
