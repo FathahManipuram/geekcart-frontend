@@ -113,11 +113,14 @@ const isOutOfStock = currentVariant?.stock === 0;
 
   const handleAddToCart = async () => {
     try {
-      if (!currentVariant) {
+      if (!currentVariant) return;
+
+      if (isUnavailable) {
+        toast.error("Item unavailable");
         return;
       }
 
-      if (currentVariant.stock === 0) {
+      if (isOutOfStock) {
         toast.error("Out of stock");
         return;
       }
@@ -266,6 +269,53 @@ const isOutOfStock = currentVariant?.stock === 0;
                   selectedSize={selectedSize}
                   onSelectSize={setSelectedSize}
                 />
+              </div>
+
+              {/* STOCK STATUS */}
+              <div className="mt-4">
+                {isUnavailable ? (
+                  <p
+                    className="
+        text-sm
+        font-medium
+        text-red-600
+      "
+                  >
+                    Item unavailable
+                  </p>
+                ) : isOutOfStock ? (
+                  <p
+                    className="
+        text-sm
+        font-medium
+        text-red-600
+      "
+                  >
+                    Out of stock
+                  </p>
+                ) : currentVariant?.stock <= 5 ? (
+                  <p
+                    className="
+        text-sm
+        font-medium
+        text-orange-500
+      "
+                  >
+                    {currentVariant.stock === 1
+                      ? "Last item remaining"
+                      : `Only ${currentVariant.stock} left`}
+                  </p>
+                ) : (
+                  <p
+                    className="
+        text-sm
+        font-medium
+        text-green-600
+      "
+                  >
+                    In stock
+                  </p>
+                )}
               </div>
 
               {/* ACTIONS */}
