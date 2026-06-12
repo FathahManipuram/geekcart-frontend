@@ -54,9 +54,11 @@ const SubcategoryForm = ({initialData= null, schema, onSubmit, onClose}) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="flex">
+      <div className="flex gap-3">
         <div>
-          <SingleImageUploader name="image" control={control} />
+        <SingleImageUploader name="image" control={control}  title="Upload Subcategory image"
+            size="w-56 h-56"/> 
+
           {errors?.image && (
             <p className="text-xs text-red-500">{errors.image.message}</p>
           )}
