@@ -39,19 +39,21 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
     },
 
     {
+      header: "PAYMENT METHOD",
+      accessor: "paymentMethod",
+      cell: (row) => <span>{row.paymentMethod}</span>,
+    },
+
+    {
       header: "PAYMENT",
       accessor: "paymentStatus",
-      cell: (row) => (
-    <PaymentStatusBadge status={row.paymentStatus}/>
-      ),
+      cell: (row) => <PaymentStatusBadge status={row.paymentStatus} />,
     },
 
     {
       header: "STATUS",
       accessor: "orderStatus",
-      cell: (row) => (
-        <OrderStatusBadge status={row.orderStatus}/>
-      ),
+      cell: (row) => <OrderStatusBadge status={row.orderStatus} />,
     },
 
     {

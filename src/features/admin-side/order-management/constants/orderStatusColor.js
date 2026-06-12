@@ -12,8 +12,4 @@ export const ORDER_STATUS_COLORS = {
   DELIVERED: "bg-green-100 text-green-700",
 
   CANCELLED: "bg-red-100 text-red-700",
-
-  RETURN_REQUESTED: "bg-orange-100 text-orange-700",
-
-  RETURNED: "bg-slate-100 text-slate-700",
 };

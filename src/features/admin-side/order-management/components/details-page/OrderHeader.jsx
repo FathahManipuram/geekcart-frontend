@@ -17,7 +17,7 @@ const OrderHeader = ({ order }) => {
         </p>
       </div>
 
-      <Button variant="outline">Print Invoice</Button>
+      {/* <Button variant="outline">Print Invoice</Button> */}
     </div>
   );
 };

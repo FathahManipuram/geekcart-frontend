@@ -1,52 +1,82 @@
-const OrderItemsTable = ({ items = [] }) => {
+import ItemStatusBadge from "@/features/user-side/order/components/order-history/ItemStatusBadge";
+import DataTable from "@/shared/components/DataTable";
+import { Button } from "@/shared/components/ui/button";
+import { Pencil } from "lucide-react";
+
+const OrderItemsTable = ({ items = [], onEdit}) => {
+
+  const columns = [
+    {
+      header: "Product",
+      cell: (item) => (
+        <div className="flex gap-3">
+          <img src={item.image} alt={item.name} className="w-12 h-12 rounded" />
+
+          <div>
+            <p className="font-medium">{item.name}</p>
+            <p className="text-xs text-muted-foreground">
+              {item.color} / {item.size}
+            </p>
+          </div>
+        </div>
+      ),
+    },
+
+    {
+      header: "Qty",
+      accessor: "quantity",
+    },
+
+    {
+      header: "Status",
+      cell: (item) => <ItemStatusBadge status={item.itemStatus} />,
+    },
+    {
+      header: "Unit Price",
+      cell: (item) => (
+        <div className="text-center">₹{item.salePrice ?? item.price}</div>
+      ),
+    },
+
+    {
+      header: "Subtotal",
+      cell: (item) => (
+        <div className="text-center font-medium">
+          ₹{(item.salePrice ?? item.price) * item.quantity}
+        </div>
+      ),
+    },
+
+    {
+      header: "Actions",
+      cell: (item) => {
+        const isEditable = !["DELIVERED", "CANCELLED"].includes(
+          item.itemStatus,
+        );
+        return (
+          <Button
+            disabled={!isEditable}
+            onClick={()=> onEdit(item)}
+            variant="outline"
+            size="sm"
+          >
+            <Pencil size={16} />
+          </Button>
+        );
+      }
+    },
+  ];
+
+
+
+
   return (
-    <div className="bg-white border rounded-lg overflow-hidden">
-      <table className="w-full">
-        <thead>
-          <tr className="border-b">
-            <th className="text-left p-4">Product</th>
-
-            <th className="text-center p-4">Qty</th>
-
-            <th className="text-center p-4">Unit Price</th>
-
-            <th className="text-center p-4">Subtotal</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {items.map((item) => (
-            <tr key={item.variantId} className="border-b">
-              <td className="p-4">
-                <div className="flex gap-4">
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-16 h-16 rounded object-cover"
-                  />
-
-                  <div>
-                    <h4 className="font-medium">{item.name}</h4>
-
-                    <p className="text-sm text-muted-foreground">
-                      {item.color} /{item.size}
-                    </p>
-                  </div>
-                </div>
-              </td>
-
-              <td className="text-center">{item.quantity}</td>
-
-              <td className="text-center">₹{item.price}</td>
-
-              <td className="text-center font-medium">
-                ₹{item.price * item.quantity}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <DataTable
+      columns={columns}
+      data={items}
+      rowKey="_id"
+      emptyMessage="No items found"
+    />
   );
 };
 

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { fetchOrderDetailsApi, fetchOrdersApi, updateOrderStatusApi } from "../api/order.admin.api";
+import { fetchOrderDetailsApi, fetchOrdersApi, updateorderItemStatusApi, updateOrderStatusApi } from "../api/order.admin.api";
 
 export const useAdminOrderStore = create((set, get) => ({
   orders: [],
@@ -77,7 +77,7 @@ export const useAdminOrderStore = create((set, get) => ({
 console.log("updateStatustore: ", res.data)
       return res.data
     } catch(err){
-      const message = err.response?.data?.message || "Failed to fetch details";
+      const message = err.response?.data?.message || "Failed to update order Status";
       set({ error: message });
 
       throw err;
@@ -85,6 +85,26 @@ console.log("updateStatustore: ", res.data)
       set({loading : false})
     }
   },
+
+
+  updateOrderItemStatus: async(orderId, itemId, payload)=>{
+    if (!orderId || !payload | !itemId) return;
+    try {
+      set({ loading: true, error: null });
+console.log("ch:", orderId, itemId,payload)
+      const res = await updateorderItemStatusApi(orderId, itemId, payload)
+      await get().fetchOrders();
+      console.log("updateitemStatustore: ", res);
+      return res;
+    } catch (err) {
+      const message = err.response?.data?.message || "Failed to update order item status";
+      set({ error: message });
+
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
+  }
 
 
 
