@@ -1,50 +1,33 @@
 import { useEffect, useState } from "react";
 
-import { useSearchParams } from "react-router-dom";
-
 import { Sheet, SheetContent } from "@/shared/components/ui/sheet";
-
 import { Button } from "@/shared/components/ui/button";
 
 import SearchInput from "@/shared/components/SearchInput";
-
 import useDebounce from "@/shared/hooks/useDebounce";
 
 import FilterSidebar from "../components/FilterSidebar";
-
 import ProductGrid from "../components/ProductGrid";
-
 import CollectionsTopBar from "../components/CollectionsTopBar";
 
-import CollectionsPagination from "../components/CollectionsPagination";
-
 import { useCollectionsStore } from "../store/collections.store";
-
 import { useSubcategoryStore } from "@/features/admin-side/subcategory-management/store/subcategory.store";
+
 import Pagination from "@/shared/components/Pagination";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
-const CollectionsPage = () => {
+import { useCollectionFilters } from "../hooks/useCollectionFilters";
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [search, setSearch] = useState(searchParams.get("search") || "");
+const CollectionsPage = () => {
+  const { filters, updateFilters } = useCollectionFilters();
+
+  const [search, setSearch] = useState(filters.search);
 
   const debouncedSearch = useDebounce(search, 500);
 
-  const {
-    products,
+  const { products, pagination, loading, fetchCollections } =
+    useCollectionsStore();
 
-    pagination,
-
-    loading,
-
-    queryParams,
-
-    fetchCollections,
-    changePage,
-  } = useCollectionsStore();
-
-console.log("page: ", pagination)
   const subcategories = useSubcategoryStore((state) => state.subcategories);
 
   const fetchSubcategories = useSubcategoryStore(
@@ -53,88 +36,20 @@ console.log("page: ", pagination)
 
   const [openFilters, setOpenFilters] = useState(false);
 
-  
   useEffect(() => {
     fetchSubcategories();
-  }, []);
+  }, [fetchSubcategories]);
 
- 
-  const updateFilters = (updates = {}) => {
-    const params = new URLSearchParams(searchParams);
-
-    Object.entries(updates).forEach(([key, value]) => {
-     
-      if (value === "" || value === null || value === undefined) {
-        params.delete(key);
-
-        return;
-      }
-
-      
-      if (Array.isArray(value)) {
-        params.delete(key);
-
-        value.forEach((item) => {
-          params.append(key, item);
-        });
-
-        return;
-      }
-
-
-      params.set(key, value);
-    });
-
-
-    if (Object.keys(updates).some((key) => key !== "page")) {
-      params.set("page", 1);
-    }
-
-    setSearchParams(params);
-  };
-
- 
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-
-    
-    if (debouncedSearch) {
-      params.set("search", debouncedSearch);
-    } else {
-      params.delete("search");
-    }
-
-  
-    params.set("page", 1);
-
-    setSearchParams(params);
+    updateFilters({
+      search: debouncedSearch,
+    });
   }, [debouncedSearch]);
 
- 
-
   useEffect(() => {
-    const params = {
-      search: searchParams.get("search") || "",
+    fetchCollections(filters);
+  }, [JSON.stringify(filters)]);
 
-      subcategory: searchParams.getAll("subcategory"),
-
-      sizes: searchParams.getAll("sizes"),
-
-      colors: searchParams.getAll("colors"),
-
-      minPrice: searchParams.get("minPrice") || "",
-
-      maxPrice: searchParams.get("maxPrice") || "",
-
-      sortBy: searchParams.get("sortBy") || "latest",
-
-      page: Number(searchParams.get("page")) || 1,
-    };
-
-    fetchCollections(params);
-  }, [searchParams]);
-
-  
   const handleSortChange = (value) => {
     updateFilters({
       sortBy: value,
@@ -146,9 +61,7 @@ console.log("page: ", pagination)
       className="
         px-4
         py-8
-
         md:px-8
-
         lg:px-12
       "
     >
@@ -158,25 +71,24 @@ console.log("page: ", pagination)
           gap-8
         "
       >
-        {/* DESKTOP SIDEBAR */}
+ {/* Desktop sidebar */}
         <aside
           className="
             hidden
             w-72
             shrink-0
-
             lg:block
           "
         >
           <FilterSidebar
             subcategories={subcategories}
+            filters={filters}
             updateFilters={updateFilters}
           />
         </aside>
 
-        {/* CONTENT */}
+       
         <div className="flex-1">
-          {/* HEADER */}
           <Breadcrumbs
             items={[
               {
@@ -196,19 +108,16 @@ console.log("page: ", pagination)
               flex
               flex-col
               gap-4
-
               md:flex-row
               md:items-center
               md:justify-between
             "
           >
-            {/* LEFT */}
             <div>
               <h1
                 className="
                   text-3xl
                   font-bold
-
                   md:text-5xl
                 "
               >
@@ -226,7 +135,6 @@ console.log("page: ", pagination)
               </p>
             </div>
 
-            {/* RIGHT */}
             <div
               className="
                 flex
@@ -234,7 +142,6 @@ console.log("page: ", pagination)
                 gap-3
               "
             >
-              {/* SEARCH */}
               <SearchInput
                 value={search}
                 onChange={setSearch}
@@ -243,7 +150,6 @@ console.log("page: ", pagination)
                 className="w-full md:w-80"
               />
 
-              {/* MOBILE FILTER */}
               <Button
                 variant="outline"
                 className="lg:hidden"
@@ -254,14 +160,12 @@ console.log("page: ", pagination)
             </div>
           </div>
 
-          {/* TOPBAR */}
           <CollectionsTopBar
             totalProducts={pagination?.totalProducts}
-            sortBy={queryParams?.sortBy}
+            sortBy={filters.sortBy}
             onSortChange={handleSortChange}
           />
 
-          {/* LOADING */}
           {loading ? (
             <div
               className="
@@ -282,20 +186,23 @@ console.log("page: ", pagination)
             </div>
           ) : (
             <>
-              {/* GRID */}
               <ProductGrid products={products} />
 
               <Pagination
-                currentPage={pagination.currentPage}
-                totalPages={pagination.totalPages}
-                onPageChange={(page) => changePage(page)}
+                currentPage={pagination?.currentPage || 1}
+                totalPages={pagination?.totalPages || 1}
+                onPageChange={(page) =>
+                  updateFilters({
+                    page,
+                  })
+                }
               />
             </>
           )}
         </div>
       </div>
 
-      {/* MOBILE DRAWER */}
+      {/* Mobile Filters */}
       <Sheet open={openFilters} onOpenChange={setOpenFilters}>
         <SheetContent
           side="left"
@@ -306,7 +213,9 @@ console.log("page: ", pagination)
         >
           <FilterSidebar
             subcategories={subcategories}
+            filters={filters}
             updateFilters={updateFilters}
+            onClose={() => setOpenFilters(false)}
           />
         </SheetContent>
       </Sheet>
