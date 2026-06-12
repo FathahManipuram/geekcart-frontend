@@ -56,11 +56,6 @@ console.log("FINAL FORM DATA:", finalData);
 
 
 
-  //  const handleDiscard = () => {
-  //    reset();
-  //  };
-
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
       {/* Header */}
