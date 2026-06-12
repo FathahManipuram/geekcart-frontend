@@ -36,7 +36,7 @@ const debouncedSearch= useDebounce(search, 500)
   useEffect(() => {
     fetchOrders({
       page,
-      limit: 10,
+      limit:5,
       status,
       search: debouncedSearch,
     });
@@ -97,8 +97,8 @@ setPage(1)
       </div>
 
       <Pagination
-        currentPage={pagination?.currentPage}
-        totalPages={pagination?.totalPages}
+        currentPage={pagination?.currentPage || 1}
+        totalPages={pagination?.totalPages || 1}
         onPageChange={setPage}
       />
 
