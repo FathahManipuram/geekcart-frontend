@@ -84,10 +84,14 @@ const handleContinue= async()=>{
           speedCharge={speedCharge}
           shippingCharge={cart?.summary?.shippingCharge || 0}
           discount={cart?.summary?.discount || 0}
-          total={cart?.summary?.total || 0}
+          total={
+            speedCharge
+              ? cart?.summary?.total + speedCharge
+              : cart?.summary?.total
+          }
           buttonText="Review Order"
           onButtonClick={handleContinue}
-          children={<CheckoutItemsPreview/>}
+          children={<CheckoutItemsPreview />}
         />
       </div>
     </section>

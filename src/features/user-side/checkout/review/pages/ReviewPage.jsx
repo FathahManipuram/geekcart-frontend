@@ -34,6 +34,7 @@ const ReviewPage = () => {
     }
   }, [selectedAddress, selectedPaymentMethod, navigate]);
 
+const speedCharge = selectedDeliveryMethod === "EXPRESS" ? 25 : 0;
 
 const handlePlaceOrder = async () => {
   try {
@@ -61,7 +62,10 @@ const handlePlaceOrder = async () => {
             onEdit={() => navigate("/checkout/shipping")}
           />
 
-          <ReviewDeliveryCard selectedDeliveryMethod={selectedDeliveryMethod} onEdit={() => navigate("/checkout/shipping")}/>
+          <ReviewDeliveryCard
+            selectedDeliveryMethod={selectedDeliveryMethod}
+            onEdit={() => navigate("/checkout/shipping")}
+          />
 
           <ReviewPaymentCard
             selectedPaymentMethod={selectedPaymentMethod}
@@ -74,9 +78,15 @@ const handlePlaceOrder = async () => {
         <OrderSummary
           items={cart?.items || []}
           subtotal={cart?.summary?.subtotal || 0}
+          deliveryCharge={speedCharge}
+          speedCharge={speedCharge}
           shippingCharge={cart?.summary?.shippingCharge || 0}
           discount={cart?.summary?.discount || 0}
-          total={cart?.summary?.total || 0}
+          total={
+            speedCharge
+              ? cart?.summary?.total + speedCharge
+              : cart?.summary?.total
+          }
           buttonText={"Place Order"}
           onButtonClick={handlePlaceOrder}
         />

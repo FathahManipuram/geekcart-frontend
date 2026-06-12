@@ -70,7 +70,7 @@ const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
 
   return (
     <section className="max-w-7xl mx-auto px-4 py-10">
-      <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={1}/>
+      <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={1} />
 
       <div className="grid lg:grid-cols-3 gap-8 mt-10">
         <div className="lg:col-span-2 space-y-8">
@@ -83,16 +83,18 @@ const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
         </div>
 
         <OrderSummary
-  subtotal={summary.subtotal}
-  deliveryCharge={summary?.deliveryCharge + speedCharge|| 0}
-  shippingCharge={summary?.deliveryCharge || 0}
-  speedCharge={speedCharge}
-  discount={summary.discount}
-  total={summary.total}
-  buttonText="Proceed To Payment"
-  onButtonClick={handleContinue}
-  children={<CheckoutItemsPreview/>}
-/>
+          subtotal={summary.subtotal}
+          deliveryCharge={summary?.deliveryCharge + speedCharge || 0}
+          shippingCharge={summary?.deliveryCharge || 0}
+          speedCharge={speedCharge}
+          discount={summary.discount}
+          total={
+            speedCharge ? (summary.total + speedCharge) : summary.total
+          }
+          buttonText="Proceed To Payment"
+          onButtonClick={handleContinue}
+          children={<CheckoutItemsPreview />}
+        />
       </div>
     </section>
   );
