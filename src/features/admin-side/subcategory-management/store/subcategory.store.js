@@ -86,10 +86,6 @@ console.log("store: ,", res)
 			set({loading: true, error: null})
 			const res= await createSubcategoryApi(data)
 
-		// 	set((state)=> ({
-		// 		subcategories: [res.data, ...state.subcategories],
-		// 		loading: false,
-		// }))
 
 		await get().fetchSubcategories(get().queryParams)
 		set({loading: false})
@@ -130,10 +126,6 @@ console.log("store: ,", res)
 			set({loading: true, error: null})
 			const res= await deleteSubcategoryApi(subcategoryId)
 
-			// set((state)=>({
-			// 	subcategories: state.subcategories.filter((subcategory)=> subcategory._id !== subcategoryId),
-			// 	loading: false,
-			// }))
 			const {pagination, queryParams, subcategories}= get()
 			const newPage= pagination.currentPage > 1 &&
 			subcategories.length === 1 ? pagination.currentPage - 1 : pagination.currentPage
