@@ -27,16 +27,20 @@ const navigate= useNavigate()
        const totalOriginalPrice = item.price * item.quantity;
 
        const savedAmount = totalOriginalPrice - totalPrice;
+       
+const isProductAvailable =
+  item.productId?.isActive && !item.productId?.isDeleted;
 
-       const isProductAvailable = item.productId?.isActive;
+const isVariantAvailable =
+  item.variantId?.isActive && !item.variantId?.isDeleted;
+       const currentStock = item.variantId?.stock || 0;
 
-       const isVariantAvailable = item.variantId?.isActive;
 
-       const isOutOfStock = item.stock === 0;
+      const isOutOfStock = currentStock === 0;
 
         return (
           <div
-            key={item.variantId._id}
+            key={item._id || item.variantId?._id || item.variantId}
             className="border-b border-neutral-200 pb-8"
           >
             <div className="flex flex-col gap-5 sm:flex-row">
@@ -55,7 +59,21 @@ const navigate= useNavigate()
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   {/* INFO */}
                   <div>
-                    <h2 onClick={()=> handleToProductDetails(item.productId?.slug, item.variantId?._id)} className="text-base font-semibold text-black cursor-pointer">
+                    <h2
+                      onClick={() => {
+                        if (!item.productId?.slug) return;
+
+                        handleToProductDetails(
+                          item.productId.slug,
+                          item.variantId?._id,
+                        );
+                      }}
+                      className={`text-base font-semibold ${
+                        item.productId?.slug
+                          ? "cursor-pointer hover:text-primary"
+                          : "cursor-not-allowed opacity-60"
+                      }`}
+                    >
                       {item.name}
                     </h2>
 
@@ -76,9 +94,9 @@ const navigate= useNavigate()
                       <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-red-500">
                         Out of stock
                       </p>
-                    ) : item.stock <= 5 ? (
+                    ) : currentStock <= 5 ? (
                       <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-orange-500">
-                        {item.stock === 1
+                        {currentStock === 1
                           ? "Last item remaining"
                           : `Only ${item.stock} left`}
                       </p>
@@ -126,7 +144,7 @@ const navigate= useNavigate()
 
                       <button
                         disabled={
-                          item.quantity >= 5 || item.quantity >= item.stock
+                          item.quantity >= 5 || item.quantity >= currentStock
                         }
                         onClick={() =>
                           updateQuantity(item.variantId._id, item.quantity + 1)
