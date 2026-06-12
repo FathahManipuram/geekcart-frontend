@@ -1,21 +1,30 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useAdminReturnStore } from '../store/adminReturn.store';
+import { useParams } from 'react-router-dom';
+import ReturnProductCard from '../components/details/ReturnProductCard';
+import ReturnDetailsHeader from '../components/details/ReturnDetailsHeader';
+import ReturnCustomerCard from '../components/details/ReturnCustomerCard';
 
 const ReturnDetailsPage = () => {
+  const {returnId}= useParams()
+
+  const getReturnRequestDetails= useAdminReturnStore((state)=> state.getReturnRequestDetails)
+  const returnDetails= useAdminReturnStore((state)=> state.returnDetails)
+
+  useEffect(()=>{
+    getReturnRequestDetails(returnId)
+  }, [returnId])
+
+  console.log("return details in view page", returnDetails)
   return (
     <div className="grid lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2">
-        <ReturnProductCard returnRequest={returnRequest} />
+        <ReturnDetailsHeader returnRequest={returnDetails} />
+        <ReturnProductCard returnRequest={returnDetails} />
       </div>
 
-      <ReturnCustomerCard returnRequest={returnRequest} />
-      <ReturnActionsCard
-        returnRequest={returnRequest}
-        onApprove={handleApprove}
-        onReject={handleReject}
-        onMarkReceived={handleMarkReceived}
-        onProcessRefund={handleProcessRefund}
-        loading={loading}
-      />
+       <ReturnCustomerCard returnRequest={returnDetails} />
+
     </div>
   );
 }

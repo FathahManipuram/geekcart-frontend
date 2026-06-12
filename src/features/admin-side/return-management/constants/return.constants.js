@@ -4,6 +4,7 @@ export const STATUS_STYLES = {
   RETURN_APPROVED: "bg-green-100 text-green-700",
 
   RETURN_REJECTED: "bg-red-100 text-red-700",
+  ITEM_RECEIVED: "bg-yellow-100 text-primary-700",
 
   RETURN_COMPLETED: "bg-primary/10 text-primary",
 };

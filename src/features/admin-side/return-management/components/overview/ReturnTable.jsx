@@ -4,8 +4,10 @@ import ReturnStatusBadge from './ReturnStatusBadge';
 import { Button } from '@/shared/components/ui/button';
 import { Eye, Pencil } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { formatDateTime } from '@/shared/utils/date';
+import { ITEM_STATUSES } from '@/shared/constants/order/orderStatus';
 
-const ReturnTable = ({returns, loading}) => {
+const ReturnTable = ({returns, loading, onSelect}) => {
   const navigate= useNavigate()
 
   const columns = [
@@ -15,15 +17,20 @@ const ReturnTable = ({returns, loading}) => {
       cell: (row) => (
         <div className="flex gap-3">
           <img
-            src={row.image}
-            alt={row.itemName}
+            src={row.itemSnapshot?.image}
+            alt={row.itemSnapshot?.name}
             className="w-14 h-14 rounded object-cover"
           />
 
-          <div>
+          <div className="text-wrap sm:pr-15">
             <p className="font-medium">#{row.order?.orderNumber}</p>
-
-            <p className="text-sm text-muted-foreground">{row.order?.itemName}</p>
+            <p className="text-sm text-muted-foreground">
+              {row.itemSnapshot?.name}
+            </p>
+            <div className="flex text-xs gap-2">
+              <span>{row.itemSnapshot?.size}</span>
+              <span>{row.itemSnapshot?.color}</span>
+            </div>
           </div>
         </div>
       ),
@@ -32,15 +39,14 @@ const ReturnTable = ({returns, loading}) => {
     {
       header: "Customer",
       accessor: "customerName",
-      cell: (row)=> (
+      cell: (row) => (
         <>
-        <div>
+          <div className="text-wrap">
             <p className="font-medium">{row?.user?.fullName}</p>
-
             <p className="text-sm text-muted-foreground">{row.user?.email}</p>
           </div>
         </>
-      )
+      ),
     },
 
     {
@@ -66,18 +72,32 @@ const ReturnTable = ({returns, loading}) => {
       header: "Requested Date",
       accessor: "requStedDate",
 
-      cell: (row) => new Date(row.requestedAt).toLocaleDateString(),
+      cell: (row) => formatDateTime(row.updatedAt),
     },
     {
       header: "ACTIONS",
       accessor: "actions",
       cell: (row) => (
         <div className="flex gap-2">
-          <Button size="icon" variant="ghost" onClick={() => navigate(`/admin/retrns/${row._id}`)}>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => navigate(`/admin/returns/${row._id}`)}
+          >
             <Eye className="w-4 h-4" />
           </Button>
 
-          <Button size="icon" variant="ghost" onClick={() => onEdit(row)}>
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => onSelect(row)}
+            disabled={
+              row.status === "RETURN_COMPLETED" ||
+              row.status === "RETURN_REJECTED"
+                ? "disabled"
+                : ""
+            }
+          >
             <Pencil className="w-4 h-4" />
           </Button>
         </div>

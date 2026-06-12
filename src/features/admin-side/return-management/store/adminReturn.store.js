@@ -1,48 +1,71 @@
 import { create } from "zustand"
-import { getAllReturnRequestsApi, updateReturnRequestApi } from "../api/adminReturn.api"
+import { getAllReturnRequestsApi, getReturnRequestDetailsApi,  updateReturnRequestStatusApi } from "../api/adminReturn.api"
 
-export const useAdminReturnStore= create((set)=>({
+export const useAdminReturnStore = create((set, get) => ({
+  loading: false,
+  error: null,
 
-	loading: false,
-	error: null,
+  returns: [],
+  pagination: null,
+  returnDetails: null,
 
-	returns: [],
+  fetchAllReturns: async (query) => {
+	console.log("params", query)
+    try {
+      set({ loading: true, error: null });
 
+      const res = await getAllReturnRequestsApi(query);
+      console.log("adminReturn Store: ", res);
+	  console.log("returns here", res.data.pagination)
 
-fetchAllReturns: async(params)=>{
-try{
-	set({loading: true, error: null})
+      set({
+        loading: false,
+        returns: res.data.returns,
+        pagination: res.data.pagination,
+      });
 
-	const res= await getAllReturnRequestsApi(params)
-	console.log("adminReturn Store: ", res.data)
+      return res;
+    } catch (err) {
+      const message =
+        err?.response?.data?.message || "Failed to fetch return data";
+      set({ loading: false, error: message });
+      throw err;
+    }
+  },
 
-	set({loading: false, returns: res.data})
+  updateReturnRequestStatus: async (returnId, payload) => {
+    try {
+      set({ loading: true, error: null });
 
-	return res
-}catch(err){
-	const message= err?.response?.data?.message || "Failed to fetch return data"
-	set({loading: false, error: message})
-throw err
-}
-},
+      const res = await updateReturnRequestStatusApi(returnId, payload);
+      console.log("updatedRequestatustore: ", res.data);
 
-updateReturnRequest: async(returnId, payload)=>{
-	try{
-		set({loading: true, error: null})
+      set({ loading: false });
 
-		const res= await updateReturnRequestApi(returnId, payload)
-		console.log("updatedRequeststore: ", res.date)
+      return res;
+    } catch (err) {
+      const message =
+        err?.response?.data?.message || "Failed to fetch return data";
 
-		set({loading: false})
+      set({ loading: false, error: message });
+    }
+  },
 
-		return res
-	}catch(err){
-		const message =
-      err?.response?.data?.message || "Failed to fetch return data";
+  getReturnRequestDetails: async (returnId) => {
+    try {
+      set({ loading: true, error: null });
 
-    set({ loading: false, error: message });
+      const res = await getReturnRequestDetailsApi(returnId);
+      console.log("adminReturnDetails Store: ", res.data);
 
-	}
-}
+      set({ loading: false, returnDetails: res.data });
 
-}))
+      return res;
+    } catch (err) {
+      const message =
+        err?.response?.data?.message || "Failed to fetch return details";
+      set({ loading: false, error: message });
+      throw err;
+    }
+  },
+}));
