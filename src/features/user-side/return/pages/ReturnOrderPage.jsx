@@ -14,6 +14,7 @@ import RefundSummaryCard from "../components/RefundSummaryCard";
 import ReturnPolicyCard from "../components/ReturnPolicyCard";
 import { toast } from "sonner";
 import { useReturnStore } from "../store/return.store";
+import { ITEM_STATUSES } from "@/shared/constants/order/orderStatus";
 
 const ReturnOrderPage = () => {
   const { orderId } = useParams();
@@ -44,6 +45,11 @@ const ReturnOrderPage = () => {
     }
   }, [orderId, fetchOrderById]);
 
+  const returnableItems =
+    order?.items?.filter(
+      (item) => item.itemStatus === ITEM_STATUSES.DELIVERED,
+    ) || [];
+
   const handleToggleItem = (itemId) => {
     setSelectedItems((prev) =>
       prev.includes(itemId)
@@ -53,7 +59,7 @@ const ReturnOrderPage = () => {
   };
 
   const handleToggleAll = () => {
-    const allIds = order?.items?.map((item) => item._id) || [];
+    const allIds = returnableItems.map((item) => item._id) || [];
 
     setSelectedItems((prev) => (prev.length === allIds.length ? [] : allIds));
   };
@@ -70,7 +76,10 @@ const ReturnOrderPage = () => {
 
 	const res= await createReturnRequest(payload)
 
-	toast.success(res.message || "Return requst successful")
+	toast.success(res.message || "Return request submitted successfully")
+  setSelectedItems([]);
+  methods.reset();
+  navigate("/account/order-history");
 
     console.log("Return Payload:", payload);
 	}catch(err){
@@ -83,8 +92,17 @@ const ReturnOrderPage = () => {
     return <Loader />;
   }
 
-  if (!order) {
-    return <div className="text-center py-20">Order not found</div>;
+  if (returnableItems.length === 0) {
+    return (
+      <section className="max-w-4xl mx-auto py-20 text-center">
+        <h2 className="text-2xl font-semibold">No Returnable Items</h2>
+
+        <p className="text-muted-foreground mt-2">
+          All eligible items from this order have already been returned,
+          cancelled, or are under review.
+        </p>
+      </section>
+    );
   }
 
   return (
@@ -96,7 +114,7 @@ const ReturnOrderPage = () => {
         >
           <div className="lg:col-span-2 space-y-10">
             <ReturnItemsSection
-              items={order.items}
+              items={returnableItems}
               selectedItems={selectedItems}
               onToggleItem={handleToggleItem}
               onToggleAll={handleToggleAll}
@@ -109,7 +127,7 @@ const ReturnOrderPage = () => {
 
           <div className="space-y-6">
             <RefundSummaryCard
-              items={order.items}
+              items={returnableItems}
               selectedItems={selectedItems}
             />
             <ReturnPolicyCard />
