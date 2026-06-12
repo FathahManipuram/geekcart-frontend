@@ -12,6 +12,7 @@ import ProductTable from "../components/overview/ProductTable";
 
 import { useSubcategoryStore } from "../../subcategory-management/store/subcategory.store";
 import Loader from "@/shared/components/Loader";
+import Pagination from "@/shared/components/Pagination";
 
 const ProductMangementPage = () => {
   const {
@@ -20,6 +21,9 @@ const ProductMangementPage = () => {
     loading,
 
     products,
+
+    pagination,
+    changePage,
 
     productStats,
   } = useProductStore();
@@ -72,7 +76,6 @@ useEffect(() => {
       <ProductStatsCards productStats={productStats} />
 
       <ProductFilters
-       
         subcategories={subcategories}
         subcategoryValue={subcategoryFilter}
         onSubcategoryChange={(value) => {
@@ -82,9 +85,8 @@ useEffect(() => {
             subcategory: value,
           });
         }}
-        /**
-         * Product Status
-         */
+       
+         
         productStatusValue={productStatusFilter}
         onProductStatusChange={(value) => {
           setProductStatusFilter(value);
@@ -93,9 +95,9 @@ useEffect(() => {
             productStatus: value,
           });
         }}
-        /**
-         * Stock Status
-         */
+ 
+         // Stock Status
+
         stockStatusValue={stockFilter}
         onStockStatusChange={(value) => {
           setStockFilter(value);
@@ -104,9 +106,9 @@ useEffect(() => {
             stock: value,
           });
         }}
-        /**
-         * Sort
-         */
+      
+        //  Sort
+         
         sortValue={sortFilter}
         onSortChange={(value) => {
           setSortFilter(value);
@@ -118,6 +120,7 @@ useEffect(() => {
       />
 
       <ProductTable products={products} loading={loading} />
+      <Pagination currentPage={pagination?.currentPage || 1} totalPages={pagination?.totalPages || 1} onPageChange={changePage}/>
     </div>
   );
 };

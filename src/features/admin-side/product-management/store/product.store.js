@@ -14,7 +14,7 @@ export const useProductStore = create((set, get) => ({
 
   queryParams: {
     page: 1,
-    limit: 10,
+    limit: 5,
     search: "",
     status: "",
     category: "",
@@ -75,7 +75,9 @@ export const useProductStore = create((set, get) => ({
 
   //Change page
   changePage: async (page) => {
-    await get().fetchProducts({ page });
+    const {queryparams}= get()
+
+    await get().fetchProducts({...queryparams, page})
   },
 
   //Create product
