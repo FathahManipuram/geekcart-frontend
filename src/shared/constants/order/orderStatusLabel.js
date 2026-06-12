@@ -14,8 +14,18 @@ export const ORDER_STATUS_LABELS = {
   [ORDER_STATUSES.DELIVERED]: "Delivered",
 
   [ORDER_STATUSES.CANCELLED]: "Cancelled",
+};
 
-  [ORDER_STATUSES.RETURN_REQUESTED]: "Return Requested",
+export const ITEM_STATUS_LABELS = {
+  PLACED: "Placed",
 
-  [ORDER_STATUSES.RETURNED]: "Returned",
+  PROCESSING: "Processing",
+
+  SHIPPED: "Shipped",
+
+  OUT_FOR_DELIVERY: "Out For Delivery",
+
+  DELIVERED: "Delivered",
+
+  CANCELLED: "Cancelled",
 };
