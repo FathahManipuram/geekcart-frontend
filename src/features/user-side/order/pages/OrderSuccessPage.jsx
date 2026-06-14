@@ -1,11 +1,18 @@
 import { CheckCircle2 } from "lucide-react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
+import { useCheckoutStore } from "../../checkout/store/checkout.store";
+import { useEffect } from "react";
 
 
 const OrderSuccessPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {orderNumber}= useParams()
+
+  const resetCheckout= useCheckoutStore((state)=> state.resetCheckout)
+  useEffect(()=>{
+    resetCheckout()
+  }, [])
 
 const orderId= location?.state.orderId
 
