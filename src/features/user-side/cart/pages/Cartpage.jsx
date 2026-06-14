@@ -9,58 +9,61 @@ import { useCheckoutStore } from "../../checkout/store/checkout.store";
 import { toast } from "sonner";
 import Modal from "@/shared/components/Modal";
 import CheckoutValidationModal from "../../checkout/components/CheckoutValidationModal";
-
+import Loader from "@/shared/components/Loader";
 
 const CartPage = () => {
-  const [showValidationModal, setShowValidationModal]= useState(false)
-  const[issues, setIssues]= useState(null)
+  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [issues, setIssues] = useState(null);
 
   const fetchCart = useCartStore((state) => state.fetchCart);
-  const clearCart= useCartStore((state)=> state.clearCart)
+  const clearCart = useCartStore((state) => state.clearCart);
   const items = useCartStore((state) => state.items);
   const summary = useCartStore((state) => state.summary);
-    const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
   const validateCheckout = useCheckoutStore((state) => state.validateCheckout);
-const navigate= useNavigate()
+  const loading= useCartStore((state)=> state.loading)
+  const navigate = useNavigate();
   useEffect(() => {
     fetchCart();
   }, [fetchCart]);
-  
 
-const handleCheckout = async () => {
-  try {
-    const result = await validateCheckout();
+  const handleCheckout = async () => {
+    try {
+      const result = await validateCheckout();
 
-    if (!result.valid) {
-      setIssues(result.issues);
-      setShowValidationModal(true);
+      if (!result.valid) {
+        setIssues(result.issues);
+        setShowValidationModal(true);
+        return;
+      }
+
+      navigate("/checkout/shipping");
+    } catch (err) {
+      console.log(err);
+      toast.error("Unable to validate checkout");
+    }
+  };
+
+  const handleRemoveItem = async (variantId) => {
+    await removeFromCart(variantId);
+
+    const updatedValidation = await validateCheckout();
+
+    if (updatedValidation.valid) {
+      setShowValidationModal(false);
+      navigate("/checkout/shipping");
       return;
     }
 
-    navigate("/checkout/shipping");
-  } catch (err) {
-    console.log(err)
-    toast.error("Unable to validate checkout");
-  }
-};
+    setIssues(updatedValidation.issues);
+  };
 
-const handleRemoveItem = async (variantId) => {
-  await removeFromCart(variantId);
-
-  const updatedValidation = await validateCheckout();
-
-  if (updatedValidation.valid) {
-    setShowValidationModal(false);
-    navigate("/checkout/shipping");
-    return;
-  }
-
-  setIssues(updatedValidation.issues);
-};
-
-if (!items.length) {
-  return <EmptyCart/>;
+if(loading){
+  return <Loader/>
 }
+  if (!items.length) {
+    return <EmptyCart />;
+  }
 
   return (
     <section
@@ -215,8 +218,7 @@ if (!items.length) {
               <div className="my-8 border-t" />
 
               {/* TOTAL */}
-              <div
-                className="
+              <div className="
               flex
               items-center
               justify-between
