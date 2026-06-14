@@ -13,6 +13,8 @@ import ProductTable from "../components/overview/ProductTable";
 import { useSubcategoryStore } from "../../subcategory-management/store/subcategory.store";
 import Loader from "@/shared/components/Loader";
 import Pagination from "@/shared/components/Pagination";
+import SearchInput from "@/shared/components/SearchInput";
+import useDebounce from "@/shared/hooks/useDebounce";
 
 const ProductMangementPage = () => {
   const {
@@ -37,9 +39,11 @@ const ProductMangementPage = () => {
   const [stockFilter, setStockFilter] = useState("all");
 
   const [sortFilter, setSortFilter] = useState("latest");
+  const [search, setSearch]= useState("")
+   const debouncedValue = useDebounce(search, 500);
+
 
 useEffect(() => {
-  fetchProducts();
   fetchSubcategories();
 }, []);
 
@@ -53,6 +57,7 @@ useEffect(() => {
     stock = stockFilter,
 
     sort = sortFilter,
+   
   } = {}) => {
     fetchProducts({
       
@@ -60,11 +65,15 @@ useEffect(() => {
 
       subcategory: subcategory === "all" ? "" : subcategory,
       stockStatus: stock === "all" ? "" : stock,
+      search: debouncedValue,
       sort,
       page: 1,
     });
   };
 
+useEffect(()=>{
+  applyFilters()
+}, [debouncedValue])
   if(loading){
     return <Loader/>
   }
@@ -75,6 +84,7 @@ useEffect(() => {
 
       <ProductStatsCards productStats={productStats} />
 
+<SearchInput value={search} onChange={setSearch} onClear={()=> setSearch("")} placeholder="Search products"/>
       <ProductFilters
         subcategories={subcategories}
         subcategoryValue={subcategoryFilter}
