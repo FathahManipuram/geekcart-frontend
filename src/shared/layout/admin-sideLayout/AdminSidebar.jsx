@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   LayoutDashboard,
   Users,
@@ -12,11 +12,13 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Blocks,
+  BadgePercent,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { useAdminAuthStore } from "@/features/auth/store/auth.admin.store";
+import ConfirmModal from "@/shared/components/ConfirmModal";
 
 const links = [
   {
@@ -55,9 +57,14 @@ const links = [
   },
 
   {
-    label: "Offer & Coupon",
+    label: "Coupon Management",
     icon: TicketPercent,
     path: "/admin/coupons",
+  },
+  {
+    label: "Offer Management",
+    icon: BadgePercent,
+    path: "/admin/offers",
   },
 
   {
@@ -73,6 +80,7 @@ const links = [
 ];
 
 const AdminSidebar = ({collapsed, setCollapsed}) => {
+  const [showConfirmModal, setShowConfirmModal]= useState(false)
 const navigate= useNavigate()
 const logout= useAdminAuthStore((state)=> state.logout)
 
@@ -91,9 +99,12 @@ await logout()
     <aside
       className={`bg-white border-r flex flex-col h-screen transition-all duration-300 ${collapsed ? "w-20" : "w-72"}`}
     >
-      <div className="h-20 flex items-center px-6">
+      <div className="h-20 flex items-center justify-between px-4">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-lg bg-[#8B5E3C] text-white flex items-center justify-center font-bold">
+          <div
+            onClick={() => setCollapsed(!collapsed)}
+            className="h-10 w-10 rounded-lg bg-[#8B5E3C] text-white flex items-center justify-center font-bold"
+          >
             G
           </div>
 
@@ -107,6 +118,21 @@ await logout()
             </div>
           )}
         </div>
+
+        {/* <button
+          onClick={() => setCollapsed(!collapsed)}
+          className="
+      p-2 rounded-lg
+      hover:bg-muted
+      transition-colors
+    "
+        >
+          {collapsed ? (
+            <PanelLeftOpen size={18} />
+          ) : (
+            <PanelLeftClose size={18} />
+          )}
+        </button> */}
       </div>
 
       {/* Links */}
@@ -116,26 +142,31 @@ await logout()
 
           return (
             <NavLink
+              title={collapsed ? link.label : ""}
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
                 `
-                flex items-center gap-3
-                px-4 py-3 rounded-lg
-                text-sm font-medium
-                transition-all
-
-                ${
-                  isActive
-                    ? "bg-[#F3ECE5] text-[#8B5E3C]"
-                    : "text-muted-foreground hover:bg-[#F8F4EF]"
-                }
-              `
+  flex items-center
+  ${collapsed ? "justify-center" : "gap-3"}
+  px-4 py-3 rounded-lg
+  text-sm font-medium
+  transition-all
+  ${
+    isActive
+      ? "bg-[#F3ECE5] text-[#8B5E3C]"
+      : "text-muted-foreground hover:bg-[#F8F4EF]"
+  }
+`
               }
             >
               <Icon size={18} />
 
-              {!collapsed && <span className={collapsed ? "hidden" : "block"}>{link.label}</span>}
+              {!collapsed && (
+                <span className={collapsed ? "hidden" : "block"}>
+                  {link.label}
+                </span>
+              )}
             </NavLink>
           );
         })}
@@ -144,7 +175,8 @@ await logout()
       {/* Logout */}
       <div className="border-t p-4">
         <button
-          onClick={handleSignOut}
+          title={collapsed ? "Sign Out" : ""}
+          onClick={()=> setShowConfirmModal(true)}
           className="
             flex items-center gap-3
             px-4 py-3 rounded-lg
@@ -156,9 +188,17 @@ await logout()
         >
           <LogOut size={18} />
 
-          <span>Sign Out</span>
+          {!collapsed && <span>Sign Out</span>}
         </button>
       </div>
+
+      <ConfirmModal
+      open={showConfirmModal}
+      onOpenChange={setShowConfirmModal}
+      title="Are sure to sign out"
+      description=""
+      onConfirm={handleSignOut}
+      />
     </aside>
   );
 };
