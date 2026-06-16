@@ -15,6 +15,9 @@ import OrderDetailsPage from "@/features/user-side/order/pages/OrderDetailsPage"
 import AdminOrderDetailsPage from "@/features/admin-side/order-management/pages/AdminOrderDetailsPage";
 import ReturnManagementPage from "@/features/admin-side/return-management/pages/ReturnManagementPage";
 import ReturnDetailsPage from "@/features/admin-side/return-management/pages/ReturnDetailsPage";
+import CreateCouponPage from "@/features/admin-side/coupon-management/pages/CreateCouponPage";
+import CouponManagementPage from "@/features/admin-side/coupon-management/pages/CouponManagemetPage";
+import UpdateCouponPage from "@/features/admin-side/coupon-management/pages/UpdateCouponPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -79,7 +82,20 @@ const adminRoutes = {
     },
     {
       path: "returns/:returnId",
-      element: <ReturnDetailsPage/>,
+      element: <ReturnDetailsPage />,
+    },
+
+    {
+      path: "coupons",
+      element: <CouponManagementPage />,
+    },
+    {
+      path: "coupons/create",
+      element: <CreateCouponPage />,
+    },
+    {
+      path: "coupons/:couponId/update",
+      element: <UpdateCouponPage/>,
     },
   ],
 };
