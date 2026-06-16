@@ -32,7 +32,6 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
 
   const { handleSubmit, watch, setValue, reset , formState: {isDirty}} = methods;
 
-console.log("isDirty", isDirty)
   useEffect(() => {
     if (defaultValues) {
       reset({

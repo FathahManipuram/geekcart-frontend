@@ -11,10 +11,10 @@ export const COUPON_STATUS_OPTIONS = [
     label: "Inactive",
     value: "INACTIVE",
   },
-  {
-    label: "Expired",
-    value: "EXPIRED",
-  },
+  // {
+  //   label: "Expired",
+  //   value: "EXPIRED",
+  // },
 ];
 
 export const COUPON_TYPE_OPTIONS = [
@@ -23,12 +23,12 @@ export const COUPON_TYPE_OPTIONS = [
     value: "ALL",
   },
   {
-    label: "Coupon",
-    value: "COUPON",
+    label: "Percentage",
+    value: "PERCENTAGE",
   },
   {
-    label: "Auto Offer",
-    value: "AUTO_OFFER",
+    label: "Fixed Amount",
+    value: "FIXED",
   },
 ];
 
