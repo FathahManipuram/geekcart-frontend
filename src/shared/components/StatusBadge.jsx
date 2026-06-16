@@ -1,18 +1,16 @@
 import React from "react";
-
-const StatusBadge = ({ status }) => {
-  const statusStyles = {
-    active: "bg-green-100 text-green-700",
-
-    inactive: "bg-red-100 text-red-700",
-  };
-
-  const statusLabels = {
+  const STATUS_LABELS = {
     active: "ACTIVE",
-
     inactive: "INACTIVE",
   };
 
+ const STATUS_STYLES = {
+    active: "bg-green-100 text-green-700",
+    inactive: "bg-red-100 text-red-700",
+  };
+
+const StatusBadge = ({ status, statusLabels= STATUS_LABELS, statusStyles= STATUS_STYLES}) => {
+ 
   return (
     <span
       className={`

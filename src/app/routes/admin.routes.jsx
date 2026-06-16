@@ -18,6 +18,9 @@ import ReturnDetailsPage from "@/features/admin-side/return-management/pages/Ret
 import CreateCouponPage from "@/features/admin-side/coupon-management/pages/CreateCouponPage";
 import CouponManagementPage from "@/features/admin-side/coupon-management/pages/CouponManagemetPage";
 import UpdateCouponPage from "@/features/admin-side/coupon-management/pages/UpdateCouponPage";
+import OfferManagementPage from "@/features/admin-side/offer-management/pages/OfferManagementPage";
+import CreateOfferPage from "@/features/admin-side/offer-management/pages/CreateOfferPage";
+import UpdateOfferPage from "@/features/admin-side/offer-management/pages/UpdateOfferPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -95,7 +98,21 @@ const adminRoutes = {
     },
     {
       path: "coupons/:couponId/update",
-      element: <UpdateCouponPage/>,
+      element: <UpdateCouponPage />,
+    },
+
+    {
+      path: "offers",
+      element: <OfferManagementPage />,
+    },
+    {
+      path: "offers/create",
+      element: <CreateOfferPage />,
+    },
+
+    {
+      path: "offers/:offerId/update",
+      element: <UpdateOfferPage/>,
     },
   ],
 };

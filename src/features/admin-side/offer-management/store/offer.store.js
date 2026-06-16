@@ -1,0 +1,147 @@
+import { create } from "zustand";
+
+import {
+  createOfferApi,
+  getOffersApi,
+  getOfferDetailsApi,
+  updateOfferApi,
+  deleteOfferApi,
+  toggleOfferStatusApi,
+} from "../api/offer.api";
+
+
+
+export const useOfferStore = create((set, get) => ({
+  loading: false,
+
+  offers: [],
+  offer: null,
+  pagination: null,
+
+
+// Create offer
+  createOffer: async (payload) => {
+   try{
+	 set({
+      loading: true,
+    });
+      const res = await createOfferApi(payload);
+      return res;
+   } catch(err){
+	 set({
+     loading: false,
+   });
+   throw err
+   }
+  },
+
+
+// Fetch all offers
+  fetchOffers: async (params) => {
+    set({
+      loading: true,
+    });
+
+    try {
+      const res = await getOffersApi(params);
+console.log("offers store: ", res)
+      set({
+        offers: res.data.offers,
+        pagination: res.data.pagination,
+		loading: false
+      });
+
+      return res;
+    } catch(err){
+      set({
+        loading: false,
+      });
+    throw err
+	}
+  },
+
+//Get offer details
+  getOfferDetails: async (offerId) => {
+    try {
+		 set({
+       loading: true,
+     });
+
+      const res = await getOfferDetailsApi(offerId);
+      console.log("offerDetails: ", res)
+      set({
+        offer: res.data,
+		loading : false,
+      });
+
+      return res;
+    } catch(err){
+      set({
+        loading: false,
+      });
+	  throw err
+    }
+  },
+
+  updateOffer: async (offerId, payload) => {
+    set({
+      loading: true,
+    });
+
+    try {
+      const res = await updateOfferApi(offerId, payload);
+ set({
+   loading: false,
+ });
+      return res.data;
+    } catch(err) {
+      set({
+        loading: false,
+      });
+	  throw err
+    }
+  },
+
+
+  deleteOffer: async (offerId) => {
+       try {
+         set({
+           loading: true,
+         });
+
+         const res = await deleteOfferApi(offerId);
+         set({
+           loading: false,
+         });
+
+         get().fetchOffers();
+         return res.data;
+       } catch (err) {
+         set({
+           loading: false,
+         });
+         throw err;
+       }
+  },
+
+  toggleOfferStatus: async (offerId) => {
+    try{
+		   set({
+      loading: true,
+    });
+
+		const res = await toggleOfferStatusApi(offerId);
+ set({
+   loading: false,
+ });
+
+ get().fetchOffers()
+    return res.data;
+	}catch(err){
+ set({
+   loading: false,
+ });
+ throw err
+	}
+  },
+}));
