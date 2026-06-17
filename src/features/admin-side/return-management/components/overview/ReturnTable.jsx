@@ -2,10 +2,11 @@ import DataTable from '@/shared/components/DataTable';
 import React from 'react'
 import ReturnStatusBadge from './ReturnStatusBadge';
 import { Button } from '@/shared/components/ui/button';
-import { Eye, Pencil } from 'lucide-react';
+import { CheckCircle2, Clock3, Eye, Pencil } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatDateTime } from '@/shared/utils/date';
 import { ITEM_STATUSES } from '@/shared/constants/order/orderStatus';
+import { Badge } from '@/shared/components/ui/badge';
 
 const ReturnTable = ({returns, loading, onSelect}) => {
   const navigate= useNavigate()
@@ -62,11 +63,32 @@ const ReturnTable = ({returns, loading, onSelect}) => {
     },
 
     {
-      header: "Amount",
-      accessor: "amount",
+      header: "Refund Amount",
+      accessor: "refundAmount",
 
       cell: (row) => <span>₹{row.refundAmount}</span>,
     },
+
+  {
+  header: "Refund Status",
+  accessor: "refundStatus",
+
+  cell: (row) => {
+    const status = row.refundStatus;
+
+    return status === "COMPLETED" ? (
+      <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+        <CheckCircle2 className="w-3 h-3 mr-1" />
+        Refunded
+      </Badge>
+    ) : (
+      <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
+        <Clock3 className="w-3 h-3 mr-1" />
+        Pending
+      </Badge>
+    );
+  },
+},
 
     {
       header: "Requested Date",

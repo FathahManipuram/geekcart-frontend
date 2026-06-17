@@ -5,6 +5,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import OfferActionButton from "./OfferActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
+import { formatDateForDisplay } from "@/shared/utils/date";
 
 const OfferTable = ({ offers = [], loading, onDelete }) => {
   const navigate = useNavigate();
@@ -32,10 +33,10 @@ const OfferTable = ({ offers = [], loading, onDelete }) => {
       header: "Validity",
       cell: (row) => (
         <div className="text-sm">
-          <p>{new Date(row.startDate).toLocaleDateString()}</p>
+          <p>{formatDateForDisplay(row.startDate)}</p>
 
           <p className="text-muted-foreground">
-            {new Date(row.expiryDate).toLocaleDateString()}
+            {formatDateForDisplay(row.expiryDate)}
           </p>
         </div>
       ),
