@@ -2,11 +2,12 @@ import { CANCEL_REASONS } from "../../constants/cancelReasons";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { cancelOrderSchema } from "../../validations/cancelOrder.validation";
+import CancelOrderPreviewCard from "./CancelOrderPreviewCard";
 
 const CancelOrderForm = ({ order, item, onSubmit, onClose, loading = false }) => {
-  
+  const firstItemImage= order?.items?.[0].image
   const product = item
-
+console.log("firstItemImage", order)
 const {
   register,
   handleSubmit,
@@ -26,27 +27,8 @@ const reason = watch("reason");
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
-      <div className="border rounded-lg p-4 flex gap-4">
-        <img
-          src={product?.image}
-          alt={product?.name}
-          className="w-20 h-20 object-cover rounded"
-        />
-
-        <div>
-          <h3 className="font-medium">{product?.name}</h3>
-
-          <p className="text-sm text-muted-foreground">Size: {product?.size}</p>
-
-          <p className="text-sm text-muted-foreground">
-            Color: {product?.color}
-          </p>
-
-          <p className="font-semibold mt-2">
-            ₹{product?.salePrice ?? product?.price}
-          </p>
-        </div>
-      </div>
+  
+      <CancelOrderPreviewCard order={order} item={item} />
 
       <div>
         <h4 className="font-medium mb-4">Reason for cancellation</h4>

@@ -1,16 +1,14 @@
 import { Search, X } from "lucide-react";
 
 const SearchInput = ({
-	value,
-	onChange,
-	onClear,
-	placeholder="Search...",
-	className=""
+  value,
+  onChange,
+  onClear,
+  placeholder = "Search...",
+  className = "max-w-md",
 }) => {
-
-
   return (
-    <div className={`relative max-w-md ${className}`}>
+    <div className={`relative ${className}`}>
       <Search
         size={16}
         className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"

@@ -1,7 +1,6 @@
 import { Minus, Plus, X } from "lucide-react";
 
 import { useCartStore } from "../store/cart.store";
-import EmptyCart from "./EmptyCart";
 import { useNavigate } from "react-router-dom";
 
 const CartItemCard = ({ items }) => {
@@ -33,7 +32,7 @@ const isProductAvailable =
 
 const isVariantAvailable =
   item.variantId?.isActive && !item.variantId?.isDeleted;
-       const currentStock = item.variantId?.stock || 0;
+       const currentStock = item?.variantId?.stock || 0;
 
 
       const isOutOfStock = currentStock === 0;
@@ -98,7 +97,7 @@ const isVariantAvailable =
                       <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-orange-500">
                         {currentStock === 1
                           ? "Last item remaining"
-                          : `Only ${item.stock} left`}
+                          : `Only ${item?.variantId?.stock} left`}
                       </p>
                     ) : null}
                   </div>

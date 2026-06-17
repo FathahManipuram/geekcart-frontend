@@ -261,7 +261,7 @@ const cartCount= items.length
             </NavLink>
 
             <NavLink
-              to="/wallet"
+              to="/more/wallet"
               className={navLinkClass}
               onClick={() => setMobileMenuOpen(false)}
             >
