@@ -6,22 +6,40 @@ import { useCheckoutStore } from "../../store/checkout.store";
 import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 import { CHECKOUT_STEPS } from "../../constants/checkoutSteps";
 import { PAYMENT_METHODS } from "../../constants/paymentMethods";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import CheckoutItemsPreview from "../../components/CheckoutItemsPreview";
+import CouponModal from "../components/coupon/CouponModal";
+import AppliedCouponCard from "../components/coupon/AppliedCouponCard";
 
 
 
 const PaymentPage = () => {
   const navigate = useNavigate();
 
+  const [couponModalOpen, setCouponModalOpen] = useState(false);
+
+
   const selectedPaymentMethod = useCheckoutStore((state) => state.selectedPaymentMethod);
   const setPaymentMethod = useCheckoutStore((state) => state.setPaymentMethod);
   const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
   const validatePayment= useCheckoutStore((state)=> state.validatePayment)
-  const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
+  const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
+  const speedCharge = useCheckoutStore((state) => state.speedCharge);
+const availableCoupons = useCheckoutStore((state) => state.availableCoupons);
+const fetchAvailableCoupons = useCheckoutStore(
+  (state) => state.fetchAvailableCoupons,
+);
+  const summary = useCartStore((state) => state.summary);
+  const fetchCart= useCartStore((state)=> state.fetchCart)
 
-  const cart = useCartStore((state) => state.cart);
+  useEffect(()=>{
+    fetchCart()
+  },[])
+
+  useEffect(()=>{
+      fetchAvailableCoupons();
+  },[couponModalOpen])
 
 useEffect(()=>{
   if(!selectedAddress){
@@ -29,7 +47,6 @@ useEffect(()=>{
   }
 }, [selectedAddress, navigate])
 
-const speedCharge = selectedDeliveryMethod === "EXPRESS" ? 25 : 0;
 
 const handleContinue= async()=>{
 
@@ -78,22 +95,29 @@ const handleContinue= async()=>{
 
         {/* Right */}
         <OrderSummary
-          items={cart?.items || []}
-          subtotal={cart?.summary?.subtotal || 0}
-          deliveryCharge={speedCharge}
+          subtotal={summary.subtotal}
+          deliveryCharge={summary?.deliveryCharge + speedCharge || 0}
+          shippingCharge={summary?.deliveryCharge || 0}
           speedCharge={speedCharge}
-          shippingCharge={cart?.summary?.shippingCharge || 0}
-          discount={cart?.summary?.discount || 0}
-          total={
-            speedCharge
-              ? cart?.summary?.total + speedCharge
-              : cart?.summary?.total
-          }
+          couponDiscount={couponDiscount}
+          discount={summary.discount}
+          total={speedCharge ? summary.total + speedCharge : summary.total}
           buttonText="Review Order"
           onButtonClick={handleContinue}
-          children={<CheckoutItemsPreview />}
+          children={
+            <>
+              <CheckoutItemsPreview />
+              <AppliedCouponCard onOpenModal={() => setCouponModalOpen(true)} />
+            </>
+          }
         />
       </div>
+
+      <CouponModal
+        open={couponModalOpen}
+        onOpenChange={setCouponModalOpen}
+        coupons={availableCoupons}
+      />
     </section>
   );
 };

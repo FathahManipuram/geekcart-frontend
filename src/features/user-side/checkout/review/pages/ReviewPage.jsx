@@ -21,9 +21,13 @@ const ReviewPage = () => {
 	const selectedPaymentMethod=useCheckoutStore((state)=> state.selectedPaymentMethod)
   const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
   const cart = useCartStore((state) => state.cart);
+    const summary = useCartStore((state) => state.summary);
+    const speedCharge= useCheckoutStore((state)=> state.speedCharge)
   const createOrder = useOrderStore((state) => state.createOrder);
   const createRazorpayOrder= usePaymentStore((state)=> state.createRazorpayOrder)
   const verifyPayment= usePaymentStore((state)=> state.verifyPayment)
+  const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
+  const appliedCoupon= useCheckoutStore((state)=> state.appliedCoupon)
 
 
   useEffect(() => {
@@ -39,7 +43,6 @@ const ReviewPage = () => {
     }
   }, [selectedAddress, selectedPaymentMethod, navigate]);
 
-const speedCharge = selectedDeliveryMethod === "EXPRESS" ? 25 : 0;
 
 
 const handleRazorpayPayment = async () => {
@@ -54,9 +57,7 @@ const handleRazorpayPayment = async () => {
       return;
     }
 
-    const finalAmount = speedCharge
-      ? cart.summary.total + speedCharge
-      : cart.summary.total;
+ const finalAmount = cart.summary.total + speedCharge - couponDiscount;
 
     const razorpayOrder = await createRazorpayOrder({
       amount: finalAmount,
@@ -83,6 +84,8 @@ const handleRazorpayPayment = async () => {
             addressId: selectedAddress._id,
             deliveryMethod: selectedDeliveryMethod,
             paymentMethod: selectedPaymentMethod,
+            couponId: appliedCoupon?._id,
+            
             paymentDetails: {
               razorpayOrderId: response.razorpay_order_id,
               razorpayPaymentId: response.razorpay_payment_id,
@@ -111,7 +114,11 @@ const handleRazorpayPayment = async () => {
             },
           });
 
-          toast.error("Payment verification failed");
+          toast.error(
+            err?.response?.data?.message ||
+              err?.message ||
+              "Order creation failed",
+          );
         }
       },
 
@@ -167,6 +174,7 @@ const handlePlaceOrder = async () => {
         addressId: selectedAddress._id,
         deliveryMethod: selectedDeliveryMethod,
         paymentMethod: selectedPaymentMethod,
+        couponId: appliedCoupon?._id,
       });
 
       toast.success(orderRes.message);
@@ -216,17 +224,13 @@ const handlePlaceOrder = async () => {
         </div>
 
         <OrderSummary
-          items={cart?.items || []}
-          subtotal={cart?.summary?.subtotal || 0}
-          deliveryCharge={speedCharge}
+          subtotal={summary.subtotal}
+          deliveryCharge={summary?.deliveryCharge + speedCharge || 0}
+          shippingCharge={summary?.deliveryCharge || 0}
           speedCharge={speedCharge}
-          shippingCharge={cart?.summary?.shippingCharge || 0}
-          discount={cart?.summary?.discount || 0}
-          total={
-            speedCharge
-              ? cart?.summary?.total + speedCharge
-              : cart?.summary?.total
-          }
+          couponDiscount={couponDiscount}
+          discount={summary.discount}
+          total={speedCharge ? summary.total + speedCharge : summary.total}
           buttonText={processing ? "Processing..." : "Place Order"}
           buttonDisabled={processing}
           onButtonClick={handlePlaceOrder}

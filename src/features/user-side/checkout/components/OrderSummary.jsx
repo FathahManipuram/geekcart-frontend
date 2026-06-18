@@ -4,6 +4,7 @@ const OrderSummary = ({
   deliveryCharge,
   shippingCharge,
   speedCharge,
+  couponDiscount,
   discount,
   total,
   buttonText,
@@ -23,11 +24,6 @@ const OrderSummary = ({
           <span>₹{subtotal}</span>
         </div>
 
-        {/* <div className="flex justify-between">
-          <span>Delivery Charge</span>
-          <span>{deliveryCharge === 0 ? "Free" : `₹${deliveryCharge}`}</span>
-        </div> */}
-
         <div>
           <div className="flex justify-between">
             <span>Delivery Charge</span>
@@ -46,13 +42,18 @@ const OrderSummary = ({
               {shippingCharge > 0
                 ? `₹${shippingCharge} standard shipping`
                 : "free shipping"}
-              {speedCharge > 0 && ` + ₹${speedCharge} express speed`}
-              )
+              {speedCharge > 0 && ` + ₹${speedCharge} express speed`})
             </p>
           )}
         </div>
 
-        {/* ---------- */}
+        {couponDiscount > 0 && (
+          <div className="flex justify-between">
+            <span>Coupon Discount</span>
+
+            <span className="text-green-600">-₹{couponDiscount}</span>
+          </div>
+        )}
 
         <div className="flex justify-between">
           <span>Discount</span>
@@ -63,12 +64,12 @@ const OrderSummary = ({
 
         <div className="flex justify-between font-bold text-lg">
           <span>Total</span>
-          <span>₹{total}</span>
+          <span>₹{(total)-(couponDiscount ||0)}</span>
         </div>
       </div>
 
       <button
-      disabled={buttonDisabled}
+        disabled={buttonDisabled}
         onClick={onButtonClick}
         className="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:opacity-90"
       >

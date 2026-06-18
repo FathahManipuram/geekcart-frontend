@@ -22,12 +22,19 @@ const ShippingPage = () => {
   const setSelectedAddress = useCheckoutStore(
     (state) => state.setSelectedAddress,
   );
+  const speedCharge= useCheckoutStore((state)=> state.speedCharge)
   const validateShipping = useCheckoutStore((state) => state.validateShipping);
 
 
   useEffect(() => {
     fetchAddresses();
   }, []);
+
+  useEffect(()=>{
+    if(summary.total===0){
+      navigate("/")
+    }
+  },[])
 
   useEffect(() => {
     if (addresses.length && !selectedAddress) {
@@ -38,7 +45,7 @@ const ShippingPage = () => {
     }
   }, [addresses]);
 
-const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
+//const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
 
 
   const handleContinue = async () => {

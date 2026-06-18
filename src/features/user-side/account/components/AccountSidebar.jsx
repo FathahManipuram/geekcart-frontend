@@ -24,17 +24,14 @@ const links = [
     label: "Order History",
     path: "/account/order-history",
   },
-  {
-    icon: <CreditCard size={16} />,
-    label: "Payments",
-    path: "/account/payments",
-  },
+  // {
+  //   icon: <CreditCard size={16} />,
+  //   label: "Payments",
+  //   path: "/account/payments",
+  // },
 ];
 
-const handleLogout= ()=>{
-  logout()
-navigate("/login")
-}
+
 
   const navClass = ({ isActive }) =>
     `flex items-center gap-2 px-3 py-2.5 rounded-lg transition-colors ${
@@ -42,7 +39,7 @@ navigate("/login")
     }`;
 
   return (
-    <div className="bg-card p-4 sm:p-6 rounded-xl w-full md:w-72 space-y-6 shadow-sm">
+    <div className="bg-card p-4 sm:p-6 rounded-xl w-full space-y-6 shadow-sm">
       {/* profile */}
       <div className="flex flex-col items-center text-center">
         <img
@@ -51,8 +48,8 @@ navigate("/login")
           className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border"
         />
 
-        <h2 className="font-semibold mt-3 text-base sm:text-lg">
-          {user?.name}
+        <h2 className="font-semibold mt-3 text-base sm:text-lg uppercase">
+          {user?.fullName}
         </h2>
 
         <p className="text-xs sm:text-sm text-muted-foreground break-all">
@@ -81,43 +78,6 @@ navigate("/login")
             </button>
           </li>
         )}
-        {/* <li>
-          <NavLink to="/profile" className={navClass}>
-            <User size={16} />
-            Account Details
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/profile/address" className={navClass}>
-            <MapPin size={16} />
-            Saved Addresses
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/profile/orders" className={navClass}>
-            <Album size={16} />
-            Order History
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/profile/payments" className={navClass}>
-            <CreditCard size={16} />
-            Payments
-          </NavLink>
-        </li>
-
-        <li>
-          <button
-            onClick={logout}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-red-100 text-red-500 transition-colors w-full text-left"
-          >
-            <LogOut size={16} />
-            Sign Out
-          </button>
-        </li> */}
       </ul>
     </div>
   );

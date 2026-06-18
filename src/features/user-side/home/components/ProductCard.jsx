@@ -15,6 +15,10 @@ const ProductCard = ({
 }) => {
   const navigate = useNavigate();
 
+const discountPercentage = salePrice
+  ? Math.round(((price - salePrice) / price) * 100)
+  : 0
+
   return (
     <div
       onClick={() => navigate(`/products/${slug}`)}
@@ -63,9 +67,15 @@ const ProductCard = ({
           </p>
 
           {salePrice && (
-            <span className="text-xs text-neutral-400 line-through md:text-sm">
-              ₹{price}
-            </span>
+            <>
+              <span className="text-xs text-neutral-400 line-through md:text-sm">
+                ₹{price}
+              </span>
+
+              <span className="text-xs font-medium text-green-600">
+                {discountPercentage}% OFF
+              </span>
+            </>
           )}
         </div>
       </div>

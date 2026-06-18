@@ -8,6 +8,7 @@ import useDebounce from "@/shared/hooks/useDebounce";
 import Pagination from "@/shared/components/Pagination";
 
 
+
 const WalletPage = () => {
 
 const fetchWallet= useWalletStore((state)=> state.fetchWallet)
@@ -36,7 +37,10 @@ const debouncedvalue= useDebounce(search, 500)
     <div className="space-y-6 p-10">
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <WalletBalanceCard fetchWallet={fetchWallet} fetchTransactions={fetchTransactions}/>
+          <WalletBalanceCard
+            fetchWallet={fetchWallet}
+            fetchTransactions={fetchTransactions}
+          />
         </div>
 
         <div>
@@ -44,10 +48,19 @@ const debouncedvalue= useDebounce(search, 500)
         </div>
       </div>
 
-      <WalletFilters type={type} onTypeChange={setType} search={search} onSearchChange={setSearch}/>
+      <WalletFilters
+        type={type}
+        onTypeChange={setType}
+        search={search}
+        onSearchChange={setSearch}
+      />
 
-      <WalletTransactionTable transactions={transactions}/>
-      <Pagination currentPage={pagination?.currentPage || 1} totalPages={pagination?.totalPages || 1} onPageChange={setPage}/>
+      <WalletTransactionTable transactions={transactions} />
+      <Pagination
+        currentPage={pagination?.currentPage || 1}
+        totalPages={pagination?.totalPages || 1}
+        onPageChange={setPage}
+      />
     </div>
   );
 };

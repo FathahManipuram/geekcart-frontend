@@ -18,6 +18,10 @@ const OrderSummaryCard = ({ order={} }) => {
           <span>Discount</span>
           <span>-₹{order?.discount}</span>
         </div>
+        <div className="flex justify-between">
+          <span>Coupon Discount</span>
+          <span>-₹{order?.coupon?.discountAmount}</span>
+        </div>
 
         <hr />
 

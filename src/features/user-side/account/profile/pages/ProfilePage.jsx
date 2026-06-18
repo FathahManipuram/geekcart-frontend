@@ -19,7 +19,7 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="flex p-4 gap-2 bg-muted min-h-screen">
+    <div className="flex p-4 gap-2 min-h-screen">
       <ProfileCard />
     </div>
   );

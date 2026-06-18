@@ -15,7 +15,7 @@ const ProfileCard = () => {
   const [passwordEditOpen, setPasswordEditOpen] = useState(false);
  
   return (
-    <div className="flex flex-col gap-2 bg-card p-8 rounded-xl w-full">
+    <div className="flex flex-col gap-2 bg-card border p-8 rounded-xl w-full">
       <EditProfileImageForm user={user} />
       <ProfileDisplay
         user={user}

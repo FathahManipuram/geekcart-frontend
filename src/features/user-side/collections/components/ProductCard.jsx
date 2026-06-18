@@ -14,6 +14,14 @@ const ProductCard = ({
 
   const price = firstVariant?.salePrice || firstVariant?.price;
 
+const discountPercentage =
+  firstVariant?.salePrice && firstVariant?.price
+    ? Math.round(
+        ((firstVariant.price - firstVariant.salePrice) / firstVariant.price) *
+          100,
+      )
+    : 0;
+
   return (
     <Link to={`/products/${product.slug}`} className="group block">
       <div className="relative overflow-hidden rounded-2xl bg-neutral-100">
@@ -52,15 +60,21 @@ const ProductCard = ({
           {product?.subcategory?.name}
         </p>
 
-        <div className="mt-2 flex items-center gap-2">
+        <div className="mt-2 flex items-center gap-2 flex-wrap">
           <span className="font-semibold text-[#9B6C43]">
             ₹{price?.toLocaleString()}
           </span>
 
           {firstVariant?.salePrice && (
-            <span className="text-sm text-neutral-400 line-through">
-              ₹{firstVariant?.price?.toLocaleString()}
-            </span>
+            <>
+              <span className="text-sm text-neutral-400 line-through">
+                ₹{firstVariant?.price?.toLocaleString()}
+              </span>
+
+              <span className="rounded bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700">
+                {discountPercentage}% OFF
+              </span>
+            </>
           )}
         </div>
       </div>
