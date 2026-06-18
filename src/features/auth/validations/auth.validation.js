@@ -10,12 +10,19 @@ password: yup
 .required("Password is required")})
 
 //Register
-export const registerSchema= yup.object({
-	fullName: fullNameField(),
-	email: emailField(),
-	password: passwordFild(), 
-	confirmPassword: confirmPasswordField("password"),
-})
+export const registerSchema = yup.object({
+  fullName: fullNameField(),
+  email: emailField(),
+  password: passwordFild(),
+  confirmPassword: confirmPasswordField("password"),
+  referralCode: yup
+    .string()
+    .trim()
+    .uppercase()
+    .min(5, "Code is too short")
+    .max(22, "Code is too long")
+    .optional(),
+});
 
 //Forgot password
 export const forgotPasswordSchema= yup.object({

@@ -153,8 +153,8 @@ const handleOfferTypeChange = (value) => {
           <h2 className="font-semibold text-lg mb-4">Offer Configuration</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <Label>Offer Type</Label>
+            <div className="space-y-1">
+              <Label className="uppercase">Offer Type</Label>
 
               <FilterSelect
                 value={offerType}
@@ -170,7 +170,7 @@ const handleOfferTypeChange = (value) => {
 
             {offerType === "PRODUCT" && (
               <div className="space-y-1">
-                <Label>Product</Label>
+                <Label className="uppercase">Product</Label>
 
                 <FilterSelect
                   value={watch("productId")}
@@ -192,7 +192,7 @@ const handleOfferTypeChange = (value) => {
 
             {offerType === "CATEGORY" && (
               <div className="space-y-1">
-                <Label>Category</Label>
+                <Label className="uppercase">Category</Label>
 
                 <FilterSelect
                   value={watch("categoryId")}
@@ -214,7 +214,7 @@ const handleOfferTypeChange = (value) => {
 
             {offerType === "SUBCATEGORY" && (
               <div className="space-y-1">
-                <Label>Subcategory</Label>
+                <Label className="uppercase">Subcategory</Label>
 
                 <FilterSelect
                   value={watch("subcategoryId")}
@@ -242,8 +242,8 @@ const handleOfferTypeChange = (value) => {
           <h2 className="font-semibold text-lg mb-4">Discount Settings</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div>
-              <Label>Discount Type</Label>
+            <div className="space-y-1">
+              <Label className="uppercase">Discount Type</Label>
 
               <FilterSelect
                 value={watch("discountType")}

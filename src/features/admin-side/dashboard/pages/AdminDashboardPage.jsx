@@ -1,38 +1,55 @@
-import React, { useEffect } from 'react'
-import { useDashboardStore } from '../store/dashboard.store';
-import DashboardStats from '../components/DashboardStats';
-import SubcategoryBreakdown from '../components/SubcategoryBreakdown';
-import UserGrowthChart from '../components/UserGrowthChart';
-import DashboardHeader from '../components/DashboardHeader';
+import React, { useEffect } from "react";
+import { useDashboardStore } from "../store/dashboard.store";
+
+import DashboardHeader from "../components/DashboardHeader";
+import DashboardStats from "../components/DashboardStats";
+import UserGrowthChart from "../components/UserGrowthChart";
+import SalesChart from "../components/SalesChart";
+import TopProducts from "../components/TopProducts";
+import TopSubcategories from "../components/TopSubcategories";
+import SubcategoryBreakdown from "../components/SubcategoryBreakdown";
 
 const AdminDashboardPage = () => {
-	const {fetchDashboard, userDetails, subcategoryBreakdown, userGrowth}= useDashboardStore()
+  const {
+    fetchDashboard,
+    userDetails,
+    userGrowth,
+    salesChart,
+    topProducts,
+    topSubcategories,
+    subcategoryBreakdown,
+  } = useDashboardStore();
 
+  useEffect(() => {
+    fetchDashboard();
+  }, []);
 
-	useEffect(()=>{
-		fetchDashboard()
-	}, [])
   return (
     <div className="space-y-6">
-		<DashboardHeader/>
+      <DashboardHeader />
+
       <DashboardStats data={userDetails} />
 
+      {/* User Growth */}
+      <UserGrowthChart data={userGrowth} />
+
+      {/* Sales + Products */}
       <div className="grid gap-6 lg:grid-cols-3">
-        
         <div className="lg:col-span-2">
-          <UserGrowthChart data={userGrowth} />
+          <SalesChart data={salesChart} />
         </div>
 
-        <div>
-          <SubcategoryBreakdown
-            data={subcategoryBreakdown}
-          />
-        </div>
+        <TopProducts data={topProducts} />
+      </div>
 
+      {/* Categories */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <TopSubcategories data={topSubcategories} />
+
+        <SubcategoryBreakdown data={subcategoryBreakdown} />
       </div>
     </div>
   );
+};
 
-}
-
-export default AdminDashboardPage
+export default AdminDashboardPage;

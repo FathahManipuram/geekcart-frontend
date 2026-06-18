@@ -17,7 +17,7 @@ export const router = createBrowserRouter([
   adminRoutes,
   cartRoutes,
   wishlistRoute,
-  moreRoutes,
+  ...moreRoutes,
   ...checkoutRoutes,
   ...orderRoutes,
   
