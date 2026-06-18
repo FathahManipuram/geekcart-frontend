@@ -44,11 +44,11 @@ const links = [
     path: "/admin/orders",
   },
 
-  {
-    label: "Review Management",
-    icon: Star,
-    path: "/admin/reviews",
-  },
+  // {
+  //   label: "Review Management",
+  //   icon: Star,
+  //   path: "/admin/reviews",
+  // },
 
   {
     label: "Return Management",
@@ -61,11 +61,11 @@ const links = [
     icon: TicketPercent,
     path: "/admin/coupons",
   },
-  {
-    label: "Offer Management",
-    icon: BadgePercent,
-    path: "/admin/offers",
-  },
+  // {
+  //   label: "Offer Management",
+  //   icon: BadgePercent,
+  //   path: "/admin/offers",
+  // },
 
   {
     label: "Category Management",

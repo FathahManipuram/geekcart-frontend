@@ -7,9 +7,9 @@ import { getPageTitleFromPath } from "@/shared/utils/getPageTitleFromPath";
 import { useAdminAuthStore } from "@/features/auth/store/auth.admin.store";
 
 const AdminNavbar = ({
-  breadcrumb = "Admin",
+  breadcrumb = "ADMIN",
   searchPlaceholder = "Search orders, clients...",
-  showSearch = true,
+  showSearch = false,
 }) => {
   const location= useLocation()
   const navigate= useNavigate()

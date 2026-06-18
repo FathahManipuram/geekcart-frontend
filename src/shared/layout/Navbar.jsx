@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { Button } from "../components/ui/button";
 import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 import { useWishlistStore } from "@/features/user-side/wishlist/store/store.wishlist";
+import ConfirmModal from "../components/ConfirmModal";
 
 
 const navLinkClass = ({ isActive }) =>
@@ -31,6 +32,7 @@ const Navbar = () => {
   const items= useCartStore((state)=> state.items)
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showConfirmModal, setShowConfirmModal]= useState(false)
 
 useEffect(() => {
   fetchCart();
@@ -72,10 +74,16 @@ const cartCount= items.length
               </NavigationMenuItem>
 
               <NavigationMenuItem>
+                <NavLink to="/wishlist" className={navLinkClass}>
+                  Wishlist
+                </NavLink>
+              </NavigationMenuItem>
+
+              {/* <NavigationMenuItem>
                 <NavLink to="/offers" className={navLinkClass}>
                   Offers
                 </NavLink>
-              </NavigationMenuItem>
+              </NavigationMenuItem> */}
 
               {/* More */}
               <NavigationMenuItem>
@@ -83,23 +91,31 @@ const cartCount= items.length
 
                 <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
                   <ul className="flex flex-col gap-2 w-40">
-                    <li>
-                      <NavLink to="/wallet" className={navLinkClass}>
-                        Wallet
-                      </NavLink>
-                    </li>
-
-                    <li>
-                      <NavLink to="/coins" className={navLinkClass}>
-                        Coins
-                      </NavLink>
-                    </li>
-
-                    <li>
+                    {/* <li>
                       <NavLink to="/wishlist" className={navLinkClass}>
                         Wishlist
                       </NavLink>
+                    </li> */}
+
+                    <li>
+                      <NavLink to="/more/wallet" className={navLinkClass}>
+                        Wallet
+                      </NavLink>
                     </li>
+                    <li>
+                      <NavLink
+                        to="/more/referral&rewards"
+                        className={navLinkClass}
+                      >
+                        Referral & Rewards
+                      </NavLink>
+                    </li>
+
+                    {/* <li>
+                      <NavLink to="/more/coins" className={navLinkClass}>
+                        Coins
+                      </NavLink>
+                    </li> */}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -123,7 +139,7 @@ const cartCount= items.length
 
                         <li>
                           <NavLink
-                            to="/account/saved-address"
+                            to="/account/addresses"
                             className="hover:text-primary"
                           >
                             Saved Address
@@ -139,19 +155,19 @@ const cartCount= items.length
                           </NavLink>
                         </li>
 
-                        <li>
+                        {/* <li>
                           <NavLink
                             to="/account/payments"
                             className="hover:text-primary"
                           >
                             Payments
                           </NavLink>
-                        </li>
+                        </li> */}
 
                         <li>
                           <button
                             type="button"
-                            onClick={handleLogout}
+                            onClick={() => setShowConfirmModal(true)}
                             className="hover:text-primary"
                           >
                             Sign Out
@@ -251,14 +267,14 @@ const cartCount= items.length
             >
               Collections
             </NavLink>
-
+            {/* 
             <NavLink
               to="/offers"
               className={navLinkClass}
               onClick={() => setMobileMenuOpen(false)}
             >
               Offers
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/more/wallet"
@@ -267,14 +283,21 @@ const cartCount= items.length
             >
               Wallet
             </NavLink>
-
             <NavLink
+              to="/more/referral&rewards"
+              className={navLinkClass}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Referral & Rewards
+            </NavLink>
+
+            {/* <NavLink
               to="/coins"
               className={navLinkClass}
               onClick={() => setMobileMenuOpen(false)}
             >
               Coins
-            </NavLink>
+            </NavLink> */}
 
             <NavLink
               to="/wishlist"
@@ -291,7 +314,7 @@ const cartCount= items.length
                 </NavLink>
 
                 <button
-                  onClick={handleLogout}
+                  onClick={() => setShowConfirmModal(true)}
                   className="text-left text-sm font-medium hover:text-primary"
                 >
                   Sign Out
@@ -351,6 +374,14 @@ const cartCount= items.length
           </div>
         </div>
       )}
+
+      <ConfirmModal
+        open={showConfirmModal}
+        onOpenChange={setShowConfirmModal}
+        title="Are you sure to sign out?"
+        description=""
+        onConfirm={handleLogout}
+      />
     </header>
   );
 };
