@@ -5,6 +5,7 @@ import CouponForm from "../components/form/CouponForm";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { useCouponStore } from "../store/coupon.store";
+import { couponSchema } from "../validations/coupon.validation";
 
 const CreateCouponPage = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const CreateCouponPage = () => {
         </Button>
       </div>
 
-      <CouponForm onSubmit={handleCreateCoupon} loading={loading}/>
+      <CouponForm onSubmit={handleCreateCoupon} loading={loading} validation={couponSchema}/>
     </div>
   );
 };

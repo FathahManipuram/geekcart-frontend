@@ -1,4 +1,4 @@
-export const COUPON_STATUS_OPTIONS = [
+export const PROMOTION_STATUS_OPTIONS = [
   {
     label: "All Status",
     value: "ALL",
@@ -11,13 +11,17 @@ export const COUPON_STATUS_OPTIONS = [
     label: "Inactive",
     value: "INACTIVE",
   },
-  // {
-  //   label: "Expired",
-  //   value: "EXPIRED",
-  // },
+  {
+    label: "Expired",
+    value: "EXPIRED",
+  },
+  {
+    label: "Scheduled",
+    value: "SCHEDULED",
+  },
 ];
 
-export const COUPON_TYPE_OPTIONS = [
+export const PROMOTION_TYPE_OPTIONS = [
   {
     label: "All Types",
     value: "ALL",
@@ -42,3 +46,17 @@ export const DISCOUNT_TYPES = [
     value: "FIXED",
   },
 ];
+
+export const STATUS_LABELS_FOR_PROMOTION = {
+  ACTIVE: "ACTIVE",
+  INACTIVE: "INACTIVE",
+  SCHEDULED: "SCHEDULED",
+  EXPIRED: "EXPIRED",
+};
+
+export const STATUS_STYLES_FOR_PROMOTION = {
+  ACTIVE: "bg-green-100 text-green-700",
+  INACTIVE: "bg-red-100 text-red-700",
+  SCHEDULED: "bg-blue-100 text-blue-700",
+  EXPIRED: "bg-gray-100 text-gray-700",
+};

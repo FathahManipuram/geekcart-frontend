@@ -20,10 +20,12 @@ const fetchCoupons= useCouponStore((state)=> state.fetchCoupons)
 const coupons= useCouponStore((state)=> state.coupons)
 const loading= useCouponStore((state)=> state.loading)
 const pagination= useCouponStore((state)=> state.pagination)
+const stats= useCouponStore((state)=> state.stats)
 
 useEffect(()=>{
 fetchCoupons({
   page,
+  limit: 5,
   status,
   type,
   search: debouncedValue
@@ -35,7 +37,7 @@ console.log("Coupon managment: ", coupons)
     <div className="space-y-6">
       <CouponManagementHeader/>
 
-      <CouponStatsCards />
+      <CouponStatsCards stats={stats}/>
 
       <CouponFilters
         status={status}

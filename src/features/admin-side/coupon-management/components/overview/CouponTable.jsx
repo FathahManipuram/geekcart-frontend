@@ -1,9 +1,9 @@
 import DataTable from "@/shared/components/DataTable";
 import { formatDateForDisplay } from "@/shared/utils/date";
 import { Pencil, Trash2, Eye } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import CouponActionButton from "./CouponActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
+import { STATUS_LABELS_FOR_PROMOTION, STATUS_STYLES_FOR_PROMOTION } from "../../constants/coupon.constants";
 
 const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
 
@@ -12,10 +12,10 @@ const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
       header: "Campaign",
       cell: (coupon) => (
         <div>
-          <p>{coupon?.description}</p>
-          <p className="font-medium">{coupon?.name}</p>
-
-          <p className="text-xs text-muted-foreground">Code: {coupon.code}</p>
+          <p className="text-xs">
+            Code: <span className="font-semibold">{coupon.code}</span>
+          </p>
+          <p className="text-muted-foreground text-wrap ">{coupon?.description}</p>
         </div>
       ),
     },
@@ -58,7 +58,11 @@ const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
     {
       header: "Status",
       cell: (coupon) => (
-        <StatusBadge status={coupon.isActive ? "active" : "inactive"} />
+        <StatusBadge
+          status={coupon.status}
+          statusLabels={STATUS_LABELS_FOR_PROMOTION}
+          statusStyles={STATUS_STYLES_FOR_PROMOTION}
+        />
       ),
     },
 

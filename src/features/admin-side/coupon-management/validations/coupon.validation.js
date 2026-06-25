@@ -19,7 +19,8 @@ export const couponSchema = yup.object({
     .min(
       10,
       "Description should be at least 10 characters to be clear to users",
-    ),
+    )
+    .max(80),
 
   discountType: yup
     .string()
@@ -46,24 +47,32 @@ export const couponSchema = yup.object({
 
   maxDiscountAmount: yup
     .number()
-    .typeError("Maximum discount must be a number")
-    .min(0, "Maximum discount cannot be negative")
+    .nullable()
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
     .when("discountType", {
       is: "PERCENTAGE",
       then: (schema) =>
-        schema.moreThan(
-          0,
-          "Percentage coupons require a maximum discount cap to protect margins",
-        ),
-      otherwise: (schema) => schema,
+        schema
+          .required("Maximum discount is required")
+          .moreThan(0, "Percentage coupons require a maximum discount cap"),
+      otherwise: (schema) => schema.notRequired().nullable(),
     }),
+
+  // usageLimit: yup
+  //   .number()
+  //   .typeError("Total usage limit must be a number")
+  //   .integer("Usage limit must be a whole number")
+  //   .positive("Usage limit must be at least 1")
+  //   .required("Global usage limit is required"),
 
   usageLimit: yup
     .number()
-    .typeError("Total usage limit must be a number")
+    .transform((value, originalValue) => (originalValue === "" ? null : value))
+    .nullable()
+    .notRequired()
     .integer("Usage limit must be a whole number")
     .positive("Usage limit must be at least 1")
-    .required("Global usage limit is required"),
+    .typeError("Total usage limit must be a number"),
 
   perUserLimit: yup
     .number()
@@ -79,22 +88,53 @@ export const couponSchema = yup.object({
 
   startDate: yup
     .date()
-    .typeError("Invalid start date")
     .required("Start date is required")
-    .test("is-future", "Start date cannot be in the past", function (value) {
+    .test("not-in-past", "Start date cannot be in the past", (value) => {
       if (!value) return false;
-      const bufferTime = new Date(Date.now() - 5 * 60 * 1000);
-      return value >= bufferTime;
+
+      const start = new Date(value);
+      start.setHours(0, 0, 0, 0);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      return start >= today;
     }),
 
   expiryDate: yup
     .date()
-    .typeError("Invalid expiry date")
     .required("Expiry date is required")
-    .min(
-      yup.ref("startDate"),
-      "Expiry date must be scheduled after the start date",
+    .test(
+      "expiry-valid",
+      "Expiry date must be after start date",
+      function (value) {
+        const { startDate } = this.parent;
+
+        if (!value || !startDate) return true;
+
+        const expiry = new Date(value);
+        expiry.setHours(0, 0, 0, 0);
+
+        const start = new Date(startDate);
+        start.setHours(0, 0, 0, 0);
+
+        return expiry >= start;
+      },
     ),
-    
+
   isActive: yup.boolean().default(true),
+});
+
+export const updateCouponSchema = couponSchema.clone().shape({
+  code: couponSchema.fields.code.optional(),
+  description: couponSchema.fields.description.optional(),
+  discountType: couponSchema.fields.discountType.optional(),
+  discountValue: couponSchema.fields.discountValue.optional(),
+  minOrderAmount: couponSchema.fields.minOrderAmount.optional(),
+  maxDiscountAmount: couponSchema.fields.maxDiscountAmount.optional(),
+  usageLimit: couponSchema.fields.usageLimit.optional(),
+  perUserLimit: couponSchema.fields.perUserLimit.optional(),
+  startDate: yup.date().optional(),
+  expiryDate: couponSchema.fields.expiryDate.optional(),
+  isActive: couponSchema.fields.isActive.optional(),
 });

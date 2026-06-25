@@ -5,6 +5,7 @@ export const useCouponStore = create((set, get) => ({
   coupons: [],
   coupon: null,
   pagination: {},
+  stats: {},
 
   loading: false,
   error: null,
@@ -42,6 +43,7 @@ export const useCouponStore = create((set, get) => ({
       set({
         coupons: res.data.coupons,
         pagination: res.data.pagination,
+        stats: res.data.stats,
         loading: false,
       });
 

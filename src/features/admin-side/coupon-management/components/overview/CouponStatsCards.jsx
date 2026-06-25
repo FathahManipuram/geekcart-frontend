@@ -1,3 +1,5 @@
+import StatsCard from "@/shared/components/StatsCard";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 import {
   TicketPercent,
   BadgePercent,
@@ -5,45 +7,36 @@ import {
   TrendingUp,
 } from "lucide-react";
 
+
+const CouponStatsCards = ({stats}) => {
+  
 const cards = [
   {
     title: "Active Coupons",
-    value: 24,
+    value: stats?.activeCoupon || 0,
     icon: TicketPercent,
   },
   {
     title: "Expired Coupons",
-    value: 18,
+    value: stats?.expiredCoupon || 0,
     icon: BadgePercent,
   },
   {
     title: "Discount Given",
-    value: "₹1,42,800",
+    value: formatCurrency(stats?.discountGiven || 0),
     icon: IndianRupee,
   },
   {
-    title: "Most Used",
-    value: "WELCOME100",
+    title: "Most Used Coupon",
+    value: stats?.mostUsedCoupon?.code || "",
     icon: TrendingUp,
   },
 ];
-
-const CouponStatsCards = () => {
   return (
     <div className="grid md:grid-cols-4 gap-4">
-      {cards.map((card) => {
-        const Icon = card.icon;
-
-        return (
-          <div key={card.title} className="border rounded-xl p-5">
-            <Icon size={22} />
-
-            <p className="text-sm text-muted-foreground mt-2">{card.title}</p>
-
-            <h2 className="text-2xl font-bold mt-1">{card.value}</h2>
-          </div>
-        );
-      })}
+      {cards.map((card) => (
+        <StatsCard key={card.title} title={card.title} value={card.value} icon={card.icon}/>
+      ))}
     </div>
   );
 };

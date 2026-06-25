@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 
-import { couponSchema } from "../../validations/coupon.validation";
 import { DISCOUNT_TYPES } from "../../constants/coupon.constants";
 
 import AppFormInput from "@/shared/components/form/AppFormInput";
@@ -12,9 +11,9 @@ import { Switch } from "@/shared/components/ui/switch";
 import { useEffect } from "react";
 import { formatDateForInput } from "@/shared/utils/date";
 
-const CouponForm = ({ defaultValues, onSubmit, loading }) => {
+const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
   const methods = useForm({
-    resolver: yupResolver(couponSchema),
+    resolver: yupResolver(validation),
     defaultValues: {
       code: "",
       description: "",
@@ -30,7 +29,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
     },
   });
 
-  const { handleSubmit, watch, setValue, reset , formState: {isDirty}} = methods;
+  const { handleSubmit, watch, setValue, reset , formState: {isDirty, dirtyFields}} = methods;
 
   useEffect(() => {
     if (defaultValues) {
@@ -49,10 +48,31 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
     }
   }, [defaultValues, reset]);
 
-  
+
+
+  const handleFormSubmit= (data)=> {
+    if(!defaultValues){
+      return onSubmit(data)
+    }
+      console.log("data", data);
+      console.log("dirtyFields", dirtyFields);
+
+    const payload={}
+
+    Object.keys(dirtyFields).forEach((key)=>{
+      payload[key]= data[key]
+    })
+
+    onSubmit(payload)
+  }
+
+
+  const discountType = watch("discountType")
+
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         <div className="bg-white border rounded-xl p-6">
           <h2 className="font-semibold text-lg mb-4">Basic Information</h2>
 
@@ -74,7 +94,11 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
 
                 <Switch
                   checked={watch("isActive")}
-                  onCheckedChange={(checked) => setValue("isActive", checked)}
+                  onCheckedChange={(checked) =>
+                    setValue("isActive", checked, {
+                      shouldDirty: true,
+                    })
+                  }
                 />
               </div>
             </div>
@@ -103,6 +127,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
                 onValueChange={(value) =>
                   setValue("discountType", value, {
                     shouldValidate: true,
+                    shouldDirty: true,
                   })
                 }
                 options={DISCOUNT_TYPES}
@@ -124,12 +149,14 @@ const CouponForm = ({ defaultValues, onSubmit, loading }) => {
               placeholder="1000"
             />
 
-            <AppFormInput
-              name="maxDiscountAmount"
-              label="Maximum Discount"
-              type="number"
-              placeholder="500"
-            />
+            {discountType == "PERCENTAGE" && (
+              <AppFormInput
+                name="maxDiscountAmount"
+                label="Maximum Discount"
+                type="number"
+                placeholder="500"
+              />
+            )}
           </div>
         </div>
 

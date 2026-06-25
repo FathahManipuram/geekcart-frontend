@@ -6,6 +6,7 @@ import { Button } from '@/shared/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import Loader from '@/shared/components/Loader';
+import { updateCouponSchema } from '../validations/coupon.validation';
 
 const UpdateCouponPage = () => {
 	const navigate= useNavigate()
@@ -48,7 +49,7 @@ const UpdateCouponPage = () => {
         </Button>
       </div>
 
-      <CouponForm onSubmit={handleUpdateCoupon} defaultValues={coupon} loading={loading} />
+      <CouponForm onSubmit={handleUpdateCoupon} defaultValues={coupon} loading={loading} validation={updateCouponSchema}/>
     </div>
   );
 }
