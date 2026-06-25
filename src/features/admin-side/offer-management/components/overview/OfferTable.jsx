@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import OfferActionButton from "./OfferActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
 import { formatDateForDisplay } from "@/shared/utils/date";
+import { STATUS_LABELS_FOR_PROMOTION, STATUS_STYLES_FOR_PROMOTION } from "@/features/admin-side/coupon-management/constants/coupon.constants";
 
 const OfferTable = ({ offers = [], loading, onDelete }) => {
   const navigate = useNavigate();
@@ -13,11 +14,16 @@ const OfferTable = ({ offers = [], loading, onDelete }) => {
   const columns = [
     {
       header: "Offer Name",
-      accessor: "name",
+      cell: (row)=> (
+        <div>
+          <p className="font-semibold">{row.name}</p>
+          <p className="text-xs text-wrap text-muted-foreground">{row.description}</p>
+        </div>
+      ),
     },
 
     {
-      header: "Scope",
+      header: "Target",
       cell: (row) => <Badge variant="secondary">{row.offerType}</Badge>,
     },
 
@@ -44,12 +50,18 @@ const OfferTable = ({ offers = [], loading, onDelete }) => {
 
     {
       header: "Status",
-      cell: (row) => <StatusBadge status={row.isActive? "active" : "inactive"}/>,
+      cell: (row) => (
+        <StatusBadge
+          status={row.status}
+          statusLabels={STATUS_LABELS_FOR_PROMOTION}
+          statusStyles={STATUS_STYLES_FOR_PROMOTION}
+        />
+      ),
     },
 
     {
       header: "Actions",
-      cell: (row) => <OfferActionButton offer={row}/>,
+      cell: (row) => <OfferActionButton offer={row} />,
     },
   ];
 

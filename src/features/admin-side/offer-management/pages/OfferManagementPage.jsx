@@ -13,6 +13,7 @@ const OfferManagementPage = () => {
 	const offers= useOfferStore((state)=> state.offers)
 	const loading = useOfferStore((state)=> state.loading)
 	const pagination= useOfferStore((state)=> state.pagination)
+	const stats=useOfferStore((state)=> state.stats)
 
 	const [page, setPage]=useState(1)
 	const [search, setSearch]= useState("")
@@ -37,9 +38,24 @@ const OfferManagementPage = () => {
     <div className="space-y-6">
       <OfferManagementHeader />
 
-    <OfferStatsCards />
+    <OfferStatsCards stats={stats}/>
 
-      <OfferFilters search={search} onSearchChange={setSearch} status={status} onStatusChange={setStatus} offerType={offerType} onTypeChange={setOfferType}/>
+      <OfferFilters 
+	  search={search} 
+	  onSearchChange={(value)=> {
+		setSearch(value)
+		setPage(1)
+	  }} 
+	  status={status} 
+	  onStatusChange={(value)=> {
+		setStatus(value)
+		setPage(1)
+	  }} 
+	  offerType={offerType} 
+	  onTypeChange={(value)=>{
+		setOfferType(value)
+		setPage(1)
+	  }}/>
 
       <OfferTable offers={offers} loading={loading}/> 
 

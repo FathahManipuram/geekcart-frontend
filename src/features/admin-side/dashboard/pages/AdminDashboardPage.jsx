@@ -30,10 +30,10 @@ const AdminDashboardPage = () => {
 
       <DashboardStats data={userDetails} />
 
-      {/* User Growth */}
+
       <UserGrowthChart data={userGrowth} />
 
-      {/* Sales + Products */}
+
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <SalesChart data={salesChart} />
@@ -42,7 +42,7 @@ const AdminDashboardPage = () => {
         <TopProducts data={topProducts} />
       </div>
 
-      {/* Categories */}
+
       <div className="grid gap-6 lg:grid-cols-2">
         <TopSubcategories data={topSubcategories} />
 

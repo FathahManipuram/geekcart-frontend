@@ -8,6 +8,7 @@ import { useSubcategoryStore } from "../../subcategory-management/store/subcateg
 import { useEffect } from "react";
 import { useOfferStore } from "../store/offer.store";
 import { toast } from "sonner";
+import { offerSchema } from "../validations/offer.validation";
 
 const CreateOfferPage = () => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ const CreateOfferPage = () => {
 
 
 const createOffer = useOfferStore((state) => state.createOffer);
+const loading= useOfferStore((state)=> state.loading)
 
   useEffect(() => {
     fetchProducts({
@@ -72,6 +74,8 @@ const createOffer = useOfferStore((state) => state.createOffer);
         categories={categories}
         subcategories={subcategories}
         onSubmit={handleCreateOffer}
+        validation={offerSchema}
+        loading={loading}
       />
     </div>
   );

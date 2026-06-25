@@ -93,7 +93,7 @@ const VariantGroupCard = ({
         <Button
           type="button"
           variant="ghost"
-          onClick={()=>setOpenVariantGroupDeleteModal(true)}
+          onClick={() => setOpenVariantGroupDeleteModal(true)}
           className="
       text-red-500
       hover:bg-red-50
@@ -127,25 +127,16 @@ const VariantGroupCard = ({
             </Select>
           )}
         />
-		{
-  errors?.variantGroups?.[
-    index
-  ]?.color && (
-    <p
-      className="
+        {errors?.variantGroups?.[index]?.color && (
+          <p
+            className="
         text-xs
         text-red-500
       "
-    >
-      {
-        errors
-          .variantGroups?.[
-          index
-        ]?.color?.message
-      }
-    </p>
-  )
-}
+          >
+            {errors.variantGroups?.[index]?.color?.message}
+          </p>
+        )}
       </div>
 
       {/* Sizes */}
@@ -178,28 +169,20 @@ const VariantGroupCard = ({
             );
           })}
         </div>
-		{
-  errors?.variantGroups?.[
-    index
-  ]?.sizes && (
-    <p
-      className="
+        {errors?.variantGroups?.[index]?.sizes && (
+          <p
+            className="
         text-xs
         text-red-500
       "
-    >
-      {
-        errors
-          .variantGroups?.[
-          index
-        ]?.sizes?.message
-      }
-    </p>
-  )
-}
+          >
+            {errors.variantGroups?.[index]?.sizes?.message}
+          </p>
+        )}
       </div>
 
       {/* Images */}
+      
       <div className="space-y-2">
         <Label>IMAGES</Label>
 
@@ -209,12 +192,13 @@ const VariantGroupCard = ({
         />
 		
 	   </div>
-     <ConfirmModal
-     open={openVariantGroupDeleteModal}
-     onOpenChange={setOpenVariantGroupDeleteModal}
-     onConfirm={onRemove}
-     title="Do you want to delete this variant group"
-     />
+
+      <ConfirmModal
+        open={openVariantGroupDeleteModal}
+        onOpenChange={setOpenVariantGroupDeleteModal}
+        onConfirm={onRemove}
+        title="Do you want to delete this variant group"
+      />
     </div>
   );
 };

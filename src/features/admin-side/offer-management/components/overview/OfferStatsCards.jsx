@@ -5,22 +5,22 @@ const OfferStatsCards = ({ stats = {} }) => {
   const cards = [
     {
       title: "Total Offers",
-      value: stats.totalOffers || 0,
+      value: stats?.totalOffers || 0,
       icon: TicketPercent,
     },
     {
       title: "Active Offers",
-      value: stats.activeOffers || 0,
+      value: stats?.activeOffers || 0,
       icon: Tag,
     },
     {
       title: "Product Offers",
-      value: stats.productOffers || 0,
+      value: stats?.productOffers || 0,
       icon: Package,
     },
     {
       title: "Category Offers",
-      value: stats.categoryOffers || 0,
+      value: stats?.categoryOffers || 0,
       icon: Boxes,
     },
   ];

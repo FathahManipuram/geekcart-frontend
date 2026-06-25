@@ -25,6 +25,8 @@ export const COLOR_OPTIONS = [
   "Blue",
   "Lavender Blue",
   "Light Blue",
+  "Dark Blue",
+  "Navi Blue",
   "Teal Blue",
   "Olive",
   "Olive Green",

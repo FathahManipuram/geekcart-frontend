@@ -14,7 +14,22 @@ const UpdateOrderStatusModal = ({ order, onSubmit, loading, onClose }) => {
   }, [order]);
 
 
-const availableStatuses = ORDER_STATUS_TRANSITIONS[order?.orderStatus] || [];
+const hasDeliveredItems = order?.items?.some(
+  (item) => item.itemStatus === "DELIVERED",
+);
+
+const hasCancelledItems = order?.items?.some(
+  (item) => item.itemStatus === "CANCELLED",
+);
+
+
+let availableStatuses = ORDER_STATUS_TRANSITIONS[order?.orderStatus] || [];
+
+if (hasDeliveredItems || hasCancelledItems) {
+  availableStatuses = availableStatuses.filter(
+    (status) => status !== ORDER_STATUSES.CANCELLED,
+  );
+}
 
   const handleUpdate = () => {
     onSubmit?.({

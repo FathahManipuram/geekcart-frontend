@@ -17,6 +17,7 @@ export const useOfferStore = create((set, get) => ({
   offers: [],
   offer: null,
   pagination: null,
+  stats: [],
 
 
 // Create offer
@@ -48,6 +49,7 @@ console.log("offers store: ", res)
       set({
         offers: res.data.offers,
         pagination: res.data.pagination,
+        stats: res.data.stats,
 		loading: false
       });
 

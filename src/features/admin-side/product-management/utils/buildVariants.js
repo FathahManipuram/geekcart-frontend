@@ -14,14 +14,25 @@ export const buildVariants = ({
     );
 
   
-    if (existingVariant) {
-      return {
-        ...existingVariant,
+    // if (existingVariant) {
+    //   return {
+    //     ...existingVariant,
 
-        images: existingVariant.images || images,
-      };
-    }
+    //     images: existingVariant.images || images,
+    //   };
+    // }
 
+
+
+
+if (existingVariant) {
+  return {
+    ...existingVariant,
+    // FIX: Prioritize the incoming group images if they exist and are not empty.
+    // Otherwise, fall back to the variant's existing images.
+    images: images && images.length > 0 ? images : existingVariant.images || [],
+  };
+}
    
     return {
       size,

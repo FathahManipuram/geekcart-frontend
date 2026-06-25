@@ -18,7 +18,7 @@ const OfferFilters = ({
           value={search}
           onChange={onSearchChange}
           onClear={() => onSearchChange("")}
-          placeholder="Search coupon..."
+          placeholder="Search by offer or description..."
         />
 
         <FilterSelect

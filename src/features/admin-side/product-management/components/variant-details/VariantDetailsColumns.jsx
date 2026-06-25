@@ -75,24 +75,6 @@ export const variantDetailsColumns = [
   },
 
   /**
-   * Stock
-   */
-  {
-    header: "STOCK",
-
-    cell: (variant) => (
-      <div
-        className="
-            text-sm
-            font-medium
-          "
-      >
-        {variant.stock} Units
-      </div>
-    ),
-  },
-
-  /**
    * SKU
    */
   {
@@ -108,6 +90,24 @@ export const variantDetailsColumns = [
       >
         {variant.sku}
       </span>
+    ),
+  },
+
+  /**
+   * Stock
+   */
+  {
+    header: "STOCK",
+
+    cell: (variant) => (
+      <div
+        className="
+            text-sm
+            font-medium
+          "
+      >
+        {variant.stock} Units
+      </div>
     ),
   },
 
@@ -148,29 +148,29 @@ export const variantDetailsColumns = [
   /**
    * Sale Price
    */
-  {
-    header: "SALE PRICE",
+  // {
+  //   header: "SALE PRICE",
 
-    cell: (variant) =>
-      variant.salePrice ? (
-        <div
-          className="
-              text-sm
-              font-semibold
-              text-green-600
-            "
-        >
-          ₹{variant.salePrice?.toLocaleString()}
-        </div>
-      ) : (
-        <span
-          className="
-              text-xs
-              text-muted-foreground
-            "
-        >
-          —
-        </span>
-      ),
-  },
+  //   cell: (variant) =>
+  //     variant.salePrice ? (
+  //       <div
+  //         className="
+  //             text-sm
+  //             font-semibold
+  //             text-green-600
+  //           "
+  //       >
+  //         ₹{variant.salePrice?.toLocaleString()}
+  //       </div>
+  //     ) : (
+  //       <span
+  //         className="
+  //             text-xs
+  //             text-muted-foreground
+  //           "
+  //       >
+  //         —
+  //       </span>
+  //     ),
+  // },
 ];

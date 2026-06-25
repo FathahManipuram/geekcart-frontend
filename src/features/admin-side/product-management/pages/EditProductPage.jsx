@@ -23,9 +23,8 @@ const EditProductPage = () => {
       );
 
     const handleUpdateProduct = async (data) => {
-
-
           const formData = buildUpdateProductFormData(data);
+      
 
         return await updateProduct(
             productId,

@@ -1,5 +1,4 @@
 import React from "react";
-
 import { useFieldArray } from "react-hook-form";
 
 import { Button } from "@/shared/components/ui/button";
@@ -11,42 +10,30 @@ import VariantTable from "./VariantTable";
 import { buildVariants } from "../utils/buildVariants";
 
 const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
- 
   const { fields: groupFields, append } = useFieldArray({
     control,
     name: "variantGroups",
   });
 
-
   const handleRemoveVariant = (removeIndex) => {
-
     const currentVariants = watch("variants") || [];
-
-   
     const removedVariant = currentVariants[removeIndex];
-
-   
     const updatedVariants = currentVariants.filter(
       (_, index) => index !== removeIndex,
     );
 
-   
     setValue("variants", updatedVariants, {
       shouldDirty: true,
     });
 
-    
     const currentGroups = watch("variantGroups") || [];
 
-   
     const updatedGroups = currentGroups
       .map((group) => {
-       
         if (group.color !== removedVariant.color) {
           return group;
         }
 
-      
         const updatedSizes = group.sizes.filter(
           (size) => size !== removedVariant.size,
         );
@@ -57,7 +44,6 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
         };
       })
 
-      
       .filter((group) => group.sizes.length > 0);
 
     /**
@@ -68,66 +54,52 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
     });
   };
 
-  /**
-   * Remove Group
-   */
   const handleRemoveGroup = (groupIndex) => {
-   
     const currentGroups = watch("variantGroups") || [];
 
     const removedGroup = currentGroups[groupIndex];
 
-    
     const updatedGroups = currentGroups.filter(
       (_, index) => index !== groupIndex,
     );
 
-    
     setValue("variantGroups", updatedGroups, {
       shouldDirty: true,
     });
 
-    
     const currentVariants = watch("variants") || [];
 
-    /**
-     * Remove Related Variants
-     */
+    
+      // Remove Related Variants
+    
     const updatedVariants = currentVariants.filter(
       (variant) => variant.color !== removedGroup.color,
     );
 
-    /**
-     * Save Variants
-     */
     setValue("variants", updatedVariants, {
       shouldDirty: true,
     });
   };
 
-  /**
-   * Generate Final Variants
-   */
+  
+    // Generate Final Variants
+  
   const handleGenerateVariants = () => {
-    /**
-     * Current Groups
-     */
-    const groups = watch("variantGroups") || [];
-
     
+    const groups = watch("variantGroups") || [];
+console.log("groups: ", groups)
     const existingVariants = watch("variants") || [];
-
+console.log("existingVariant:", existingVariants)
     const productName = watch("name") || "";
 
     let finalVariants = [];
 
     groups.forEach((group) => {
-      
+
       if (!group.color || !group.sizes?.length) {
         return;
       }
 
-      
       const generatedVariants = buildVariants({
         productName,
         color: group.color,
@@ -136,16 +108,14 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
         existingVariants: watch("variants") || [],
       });
 
-      
       const mergedVariants = generatedVariants.map((generatedVariant) => {
-       
+
         const existingVariant = existingVariants.find(
           (existing) =>
             existing.color === generatedVariant.color &&
             existing.size === generatedVariant.size,
         );
 
-        
         if (existingVariant) {
           return {
             ...generatedVariant,
@@ -154,7 +124,7 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
 
             price: existingVariant.price,
 
-            salePrice: existingVariant.salePrice,
+           // salePrice: existingVariant.salePrice,
 
             costPrice: existingVariant.costPrice,
 
@@ -163,17 +133,17 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
             isActive: existingVariant.isActive,
 
             isDefault: existingVariant.isDefault,
+
+            images: generatedVariant.images || existingVariant.images,
           };
         }
 
-      
         return generatedVariant;
       });
 
       finalVariants = [...finalVariants, ...mergedVariants];
     });
 
-  
     setValue("variants", finalVariants, {
       shouldDirty: true,
       shouldValidate: true,
@@ -181,14 +151,15 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
   };
 
   
+
   const variants = watch("variants") || [];
-const variantGroups = watch("variantGroups") || [];
-const canGenerate =
-  variantGroups.length > 0 &&
-  variantGroups.every(
-    (group) =>
-      group.color && group.sizes?.length > 0 && group.images?.length > 0,
-  );
+  const variantGroups = watch("variantGroups") || [];
+  const canGenerate =
+    variantGroups.length > 0 &&
+    variantGroups.every(
+      (group) =>
+        group.color && group.sizes?.length > 0 && group.images?.length > 0,
+    );
   return (
     <div
       className="
@@ -240,7 +211,7 @@ const canGenerate =
             watch={watch}
             setValue={setValue}
             register={register}
-			errors={errors}
+            errors={errors}
             onRemove={() => handleRemoveGroup(index)}
           />
         ))}
@@ -267,6 +238,6 @@ const canGenerate =
       />
     </div>
   );
-};
+};;
 
 export default VariantMatrix;

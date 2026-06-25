@@ -1,112 +1,141 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import AppFormInput from "@/shared/components/form/AppFormInput";
 import AppFormTextarea from "@/shared/components/form/AppFormTextarea";
 import FilterSelect from "@/shared/components/filters/FilterSelect";
-
-import { Switch } from "@/shared/components/ui/switch";
+import { Button } from "@/shared/components/ui/button";
 import { Label } from "@/shared/components/ui/label";
+import { Switch } from "@/shared/components/ui/switch";
 
 import { OFFER_TYPES, DISCOUNT_TYPES } from "../../constants/offer.constants";
-import { createOfferSchema } from "../../validations/offer.validation";
-import { Button } from "@/shared/components/ui/button";
-import { useEffect } from "react";
+
 import { formatDateForInput } from "@/shared/utils/date";
 
-const OfferForm = ({ defaultValues, onSubmit, loading, products, categories, subcategories }) => {
-
-const productOptions =
-  products?.map((product) => ({
-    value: product._id,
-    label: product.name,
-  })) || [];
-
-const categoryOptions =
-  categories?.map((category) => ({
-    value: category._id,
-    label: category.name,
-  })) || [];
-
-const subcategoryOptions =
-  subcategories?.map((subcategory) => ({
-    value: subcategory._id,
-    label: subcategory.name,
-  })) || [];
-
-
+const OfferForm = ({
+  defaultValues,
+  onSubmit,
+  loading,
+  validation,
+  products = [],
+  categories = [],
+  subcategories = [],
+}) => {
   const methods = useForm({
-	resolver: yupResolver(createOfferSchema),
+    resolver: yupResolver(validation),
     defaultValues: {
       name: "",
       description: "",
 
-      offerType: "PRODUCT",
-
-      productId: "",
-      categoryId: "",
-      subcategoryId: "",
+      offerType: "Product",
+      targetId: "",
 
       discountType: "PERCENTAGE",
       discountValue: "",
-
-      minOrderAmount: "",
       maxDiscountAmount: "",
 
       startDate: "",
       expiryDate: "",
 
       isActive: true,
-
-      ...defaultValues,
     },
   });
 
-  const { handleSubmit, watch, setValue, reset, formState:{errors, isDirty} } = methods;
+const {
+  handleSubmit,
+  watch,
+  setValue,
+  reset,
+  formState: { errors, isDirty, dirtyFields },
+} = methods;
 
-  const offerType = watch("offerType");
+const offerType = watch("offerType");
+const discountType = watch("discountType");
 
-const handleOfferTypeChange = (value) => {
-  setValue("offerType", value, {
-    shouldValidate: true,
-    shouldDirty: true,
-  });
-
-  setValue("productId", "", {
-    shouldValidate: true,
-  });
-
-  setValue("categoryId", "", {
-    shouldValidate: true,
-  });
-
-  setValue("subcategoryId", "", {
-    shouldValidate: true,
-  });
-};
+  const targetOptions =
+    offerType === "Product"
+      ? products.map((item) => ({
+          value: item._id,
+          label: item.name,
+        }))
+      : offerType === "Category"
+        ? categories.map((item) => ({
+            value: item._id,
+            label: item.name,
+          }))
+        : subcategories.map((item) => ({
+            value: item._id,
+            label: item.name,
+          }));
 
   useEffect(() => {
-	if (defaultValues) {
-	  reset({
-		...defaultValues,
+    if (!defaultValues) return;
 
-		startDate: defaultValues.startDate
-		  ? 
-		  formatDateForInput(defaultValues.startDate)
-		  : "",
+    reset({
+      ...defaultValues,
+      
+      targetId:
+        typeof defaultValues.targetId === "object"
+          ? defaultValues.targetId._id
+          : defaultValues.targetId,
 
-		expiryDate: defaultValues.expiryDate
-		  ? formatDateForInput(defaultValues.expiryDate)
-		  : "",
-	  });
-	}
+      startDate: defaultValues.startDate
+        ? formatDateForInput(defaultValues.startDate)
+        : "",
+
+      expiryDate: defaultValues.expiryDate
+        ? formatDateForInput(defaultValues.expiryDate)
+        : "",
+    });
   }, [defaultValues, reset]);
+
+
+useEffect(() => {
+  if (discountType === "FIXED") {
+    setValue("maxDiscountAmount", null, {
+      //shouldDirty: true,
+      shouldValidate: true,
+    });
+  }
+}, [discountType, setValue]);
+
+
+
+  const handleOfferTypeChange = (value) => {
+    setValue("offerType", value, {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+
+    setValue("targetId", "", {
+      shouldDirty: true,
+      shouldValidate: true,
+    });
+  };
+
+const handleFormSubmit = (data) => {
+  if (!defaultValues) {
+    return onSubmit(data);
+  }
+
+  const payload = {};
+
+  Object.keys(dirtyFields).forEach((key) => {
+    payload[key] = data[key];
+  });
+
+  onSubmit(payload);
+};
+
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
+        {/* Basic Information */}
+
         <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Basic Information</h2>
+          <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
 
           <div className="grid lg:grid-cols-3 gap-4">
             <div className="lg:col-span-2">
@@ -131,8 +160,8 @@ const handleOfferTypeChange = (value) => {
                   checked={watch("isActive")}
                   onCheckedChange={(checked) =>
                     setValue("isActive", checked, {
-                      shouldValidate: true,
                       shouldDirty: true,
+                      //shouldValidate: true
                     })
                   }
                 />
@@ -149,115 +178,74 @@ const handleOfferTypeChange = (value) => {
           </div>
         </div>
 
+        {/* Offer Configuration */}
+
         <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Offer Configuration</h2>
+          <h2 className="text-lg font-semibold mb-4">Offer Configuration</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <Label className="uppercase">Offer Type</Label>
+              <Label>Offer Type</Label>
 
               <FilterSelect
                 value={offerType}
                 options={OFFER_TYPES}
                 onValueChange={handleOfferTypeChange}
               />
-              {methods.formState.errors.offerType && (
+
+              {errors.offerType && (
                 <p className="text-sm text-red-500">
-                  {methods.formState.errors.offerType.message}
+                  {errors.offerType.message}
                 </p>
               )}
             </div>
 
-            {offerType === "PRODUCT" && (
-              <div className="space-y-1">
-                <Label className="uppercase">Product</Label>
+            <div className="space-y-1">
+              <Label>{offerType} Target</Label>
 
-                <FilterSelect
-                  value={watch("productId")}
-                  options={productOptions}
-                  onValueChange={(value) =>
-                    setValue("productId", value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                    })
-                  }
-                />
-                {methods.formState.errors.productId && (
-                  <p className="text-sm text-red-500">
-                    {methods.formState.errors.productId.message}
-                  </p>
-                )}
-              </div>
-            )}
+              <FilterSelect
+                value={watch("targetId")}
+                options={targetOptions}
+                onValueChange={(value) =>
+                  setValue("targetId", value, {
+                    shouldDirty: true,
+                    shouldValidate: true,
+                  })
+                }
+              />
 
-            {offerType === "CATEGORY" && (
-              <div className="space-y-1">
-                <Label className="uppercase">Category</Label>
-
-                <FilterSelect
-                  value={watch("categoryId")}
-                  options={categoryOptions}
-                  onValueChange={(value) =>
-                    setValue("categoryId", value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                    })
-                  }
-                />
-                {methods.formState.errors.categoryId && (
-                  <p className="text-sm text-red-500">
-                    {methods.formState.errors.categoryId.message}
-                  </p>
-                )}
-              </div>
-            )}
-
-            {offerType === "SUBCATEGORY" && (
-              <div className="space-y-1">
-                <Label className="uppercase">Subcategory</Label>
-
-                <FilterSelect
-                  value={watch("subcategoryId")}
-                  options={subcategoryOptions}
-                  onValueChange={(value) =>
-                    setValue("subcategoryId", value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                    })
-                  }
-                />
-                {methods.formState.errors.subcategoryId && (
-                  <p className="text-sm text-red-500">
-                    {methods.formState.errors.subcategoryId.message}
-                  </p>
-                )}
-              </div>
-            )}
+              {errors.targetId && (
+                <p className="text-sm text-red-500">
+                  {errors.targetId.message}
+                </p>
+              )}
+            </div>
           </div>
         </div>
 
         {/* Discount */}
 
         <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Discount Settings</h2>
+          <h2 className="text-lg font-semibold mb-4">Discount Settings</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="space-y-1">
-              <Label className="uppercase">Discount Type</Label>
+            <div>
+              <Label>Discount Type</Label>
 
               <FilterSelect
-                value={watch("discountType")}
+                value={discountType}
                 options={DISCOUNT_TYPES}
                 onValueChange={(value) =>
                   setValue("discountType", value, {
-                    shouldValidate: true,
                     shouldDirty: true,
+                    shouldValidate: true,
                   })
                 }
               />
-              {methods.formState.errors.discountType && (
-                <p className="text-sm text-red-500">
-                  {methods.formState.errors.discountType.message}
+
+              {errors.discountType && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.discountType.message}
                 </p>
               )}
             </div>
@@ -267,33 +255,23 @@ const handleOfferTypeChange = (value) => {
               label="Discount Value"
               type="number"
             />
-          </div>
-        </div>
 
-        {/* Conditions */}
-
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Conditions</h2>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            <AppFormInput
-              name="minOrderAmount"
-              label="Minimum Order Amount"
-              type="number"
-            />
-
-            <AppFormInput
-              name="maxDiscountAmount"
-              label="Maximum Discount"
-              type="number"
-            />
+            {discountType === "PERCENTAGE" && (
+              <div className="md:col-span-2">
+                <AppFormInput
+                  name="maxDiscountAmount"
+                  label="Maximum Discount"
+                  type="number"
+                />
+              </div>
+            )}
           </div>
         </div>
 
         {/* Schedule */}
 
         <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Schedule</h2>
+          <h2 className="text-lg font-semibold mb-4">Schedule</h2>
 
           <div className="grid md:grid-cols-2 gap-4">
             <AppFormInput name="startDate" label="Start Date" type="date" />
@@ -302,7 +280,10 @@ const handleOfferTypeChange = (value) => {
           </div>
         </div>
 
-        <Button type="submit" disabled={loading || !isDirty}>
+        <Button
+          type="submit"
+          disabled={loading || (defaultValues ? !isDirty : false)}
+        >
           {loading ? "Saving..." : "Save Offer"}
         </Button>
       </form>

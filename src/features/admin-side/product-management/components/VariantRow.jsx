@@ -33,7 +33,7 @@ const previewImage =
       space-y-5
     "
     >
-      {/* Top */}
+
 
       <div
         className="
@@ -42,7 +42,7 @@ const previewImage =
     justify-between
   "
       >
-        {/* Left */}
+ 
         <div
           className="
       flex
@@ -50,7 +50,7 @@ const previewImage =
       gap-4
     "
         >
-          {/* Image */}
+        
           <img
             src={previewImage || "https://placehold.co/100x100"}
             alt={variant.color}
@@ -64,9 +64,9 @@ const previewImage =
       "
           />
 
-          {/* Details */}
+      
           <div className="flex flex-col gap-1">
-            {/* Badges */}
+        
             <div className="flex items-center gap-2">
               <div
                 className="
@@ -109,7 +109,7 @@ const previewImage =
           </div>
         </div>
 
-        {/* Remove */}
+   
         <Button
           type="button"
           variant="ghost"
@@ -123,7 +123,7 @@ const previewImage =
         </Button>
       </div>
 
-      {/* Inputs */}
+
       <div
         className="
         grid
@@ -132,7 +132,7 @@ const previewImage =
         gap-4
       "
       >
-        {/* Stock */}
+   
         <div>
           <Label>STOCK</Label>
 
@@ -176,7 +176,7 @@ const previewImage =
           )}
         </div>
 
-        {/* Price */}
+       
         <div>
           <Label>PRICE</Label>
 
@@ -198,8 +198,7 @@ const previewImage =
           )}
         </div>
 
-        {/* Sale Price */}
-        <div>
+        {/* <div>
           <Label>SALE PRICE</Label>
 
           <AppInput
@@ -218,10 +217,10 @@ const previewImage =
               {errors.variants?.[index]?.salePrice?.message}
             </p>
           )}
-        </div>
+        </div> */}
       </div>
 
-      {/* Status */}
+  
       <div
         className="
         flex

@@ -1,5 +1,5 @@
 import { phoneNumber } from "@/shared/validations/address.base";
-import { color, costPrice, description, fabric, imageField, lowStockThreshold, price, productName, salePrice, size, sizes, sku, sleeve, stock } from "@/shared/validations/base.validation"
+import { color, costPrice, description, fabric, imageField, lowStockThreshold, price, productName, size, sizes, sku, sleeve, stock } from "@/shared/validations/base.validation"
 import * as yup from "yup"
 
 const basicInformationSchema = yup.object({
@@ -54,7 +54,6 @@ const variantSchema = yup.object({
   sku: sku().required("SKU is required"),
   stock: stock().required("Stock is required"),
   price: price().required("Price is required"),
-  salePrice: salePrice(),
   costPrice: costPrice().required("Cost price is required"),
   lowStockThreshold: lowStockThreshold(),
   isDefault: yup.boolean().default(false),

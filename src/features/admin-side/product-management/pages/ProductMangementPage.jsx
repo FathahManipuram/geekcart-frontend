@@ -19,14 +19,10 @@ import useDebounce from "@/shared/hooks/useDebounce";
 const ProductMangementPage = () => {
   const {
     fetchProducts,
-
     loading,
-
     products,
-
     pagination,
     changePage,
-
     productStats,
   } = useProductStore();
 
@@ -67,6 +63,7 @@ useEffect(() => {
       stockStatus: stock === "all" ? "" : stock,
       search: debouncedValue,
       sort,
+      limit: 5,
       page: 1,
     });
   };

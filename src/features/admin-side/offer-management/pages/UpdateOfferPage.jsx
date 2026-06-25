@@ -9,6 +9,7 @@ import OfferForm from "../components/form/OfferForm";
 import { useProductStore } from "../../product-management/store/product.store";
 import { useCategoryStore } from "../../category-management/store/category.store";
 import { useSubcategoryStore } from "../../subcategory-management/store/subcategory.store";
+import { updateOfferSchema } from "../validations/offer.validation";
 
 const UpdateOfferPage = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const subcategories = useSubcategoryStore((state) => state.subcategories);
 	fetchCategories();
 
 	fetchSubcategories();
-  }, []);
+  }, [])
 
 useEffect(()=>{
 	getOfferDetails(offerId)
@@ -77,6 +78,7 @@ useEffect(()=>{
 		products={products}
 		categories={categories}
 		subcategories={subcategories}
+    validation={updateOfferSchema}
       />
     </div>
   );

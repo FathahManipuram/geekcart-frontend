@@ -6,22 +6,22 @@ export const OFFER_STATUS_OPTIONS = [
 
 export const OFFER_SCOPE_OPTIONS = [
   { value: "ALL", label: "All Types" },
-  { value: "PRODUCT", label: "Product Offer" },
-  { value: "CATEGORY", label: "Category Offer" },
-  { value: "SUBCATEGORY", label: "Subcategory Offer" },
+ { value: "Product", label: "Product Offer" },
+  { value: "Category", label: "Category Offer" },
+  { value: "Subcategory", label: "Subcategory Offer" },
 ];
 
 export const OFFER_TYPES = [
   {
-    value: "PRODUCT",
+    value: "Product",
     label: "Product Offer",
   },
   {
-    value: "CATEGORY",
+    value: "Category",
     label: "Category Offer",
   },
   {
-    value: "SUBCATEGORY",
+    value: "Subcategory",
     label: "Subcategory Offer",
   },
 ];
