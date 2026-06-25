@@ -108,7 +108,7 @@ const isVariantAvailable =
                       ₹{totalPrice?.toFixed(2)}
                     </p>
 
-                    {item.salePrice && (
+                    {item.salePrice < item.price && (
                       <>
                         <p className="mt-1 text-sm text-neutral-400 line-through">
                           ₹{totalOriginalPrice?.toFixed(2)}

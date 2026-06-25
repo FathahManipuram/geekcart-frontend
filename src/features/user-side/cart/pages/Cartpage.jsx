@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import Modal from "@/shared/components/Modal";
 import CheckoutValidationModal from "../../checkout/components/CheckoutValidationModal";
 import Loader from "@/shared/components/Loader";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 const CartPage = () => {
   const [showValidationModal, setShowValidationModal] = useState(false);
@@ -212,13 +213,29 @@ if(loading){
                     -₹ {summary.discount?.toFixed(2)}
                   </span>
                 </div>
+
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-500">Delivery Charge</span>
+                  <span
+                    className={
+                      summary.deliveryCharge === 0
+                        ? "text-green-600 font-medium"
+                        : ""
+                    }
+                  >
+                    {summary.deliveryCharge === 0
+                      ? "Free"
+                      : `₹${formatCurrency(summary.deliveryCharge)}`}
+                  </span>
+                </div>
               </div>
 
               {/* DIVIDER */}
               <div className="my-8 border-t" />
 
               {/* TOTAL */}
-              <div className="
+              <div
+                className="
               flex
               items-center
               justify-between
