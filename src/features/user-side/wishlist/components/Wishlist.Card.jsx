@@ -17,6 +17,16 @@ const WishlistCard = ({ item, onRemove, onMoveToCart }) => {
 
   const existInCart = isInCart(item.variantId?._id);
 
+
+
+const discountPercentage = item.variantId?.salePrice
+  ? Math.round(
+      ((item.variantId?.price - item.variantId?.salePrice) /
+        item.variantId?.price) *
+        100,
+    )
+  : 0;
+
   return (
     <>
       <div
@@ -140,30 +150,22 @@ const WishlistCard = ({ item, onRemove, onMoveToCart }) => {
           </div>
 
           {/* Price */}
-          <div className="mt-3 mx-4">
-            <p
-              className="
-        text-lg
-        font-semibold
-        text-[#9B6C43]
-      "
-            >
-              ₹
-              {(
-                item.variantId?.salePrice || item.variantId?.price
-              )?.toLocaleString()}
+
+          <div className="mt-1 flex items-center gap-2 mx-4">
+            <p className="text-sm font-semibold text-amber-700 md:text-base">
+              ₹{item.variantId?.salePrice || item.variantId?.price}
             </p>
 
-            {item.variantId?.salePrice && (
-              <span
-                className="
-          text-sm
-          text-neutral-400
-          line-through
-        "
-              >
-                ₹{item.variantId?.price?.toLocaleString()}
-              </span>
+            {item.variantId?.salePrice < item.variantId?.price && (
+              <>
+                <span className="text-xs text-neutral-400 line-through md:text-sm">
+                  ₹{item.variantId?.price}
+                </span>
+
+                <span className="text-xs font-medium text-green-600">
+                  {discountPercentage}% OFF
+                </span>
+              </>
             )}
           </div>
 

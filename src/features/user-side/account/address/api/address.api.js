@@ -10,5 +10,6 @@ export const updateAddressApi = async (addressId, data) =>
 
 export const removeAddressApi = async (addressId) =>
   userApi.delete(`/account/address/${addressId}`);
+  
 export const verifyPincodeApi = async (pincode) =>
   userApi.get(`https://api.postalpincode.in/pincode/${pincode}`);

@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -62,13 +63,13 @@ const discountPercentage =
 
         <div className="mt-2 flex items-center gap-2 flex-wrap">
           <span className="font-semibold text-[#9B6C43]">
-            ₹{price?.toLocaleString()}
+            ₹{formatCurrency(price)}
           </span>
 
-          {firstVariant?.salePrice && (
+          {firstVariant?.price > firstVariant?.salePrice && (
             <>
               <span className="text-sm text-neutral-400 line-through">
-                ₹{firstVariant?.price?.toLocaleString()}
+                ₹{formatCurrency(firstVariant?.price)}
               </span>
 
               <span className="rounded bg-green-50 px-2 py-0.5 text-xs font-semibold text-green-700">

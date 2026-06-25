@@ -13,6 +13,7 @@ import {
   PanelLeftOpen,
   Blocks,
   BadgePercent,
+  ChartLine,
 } from "lucide-react";
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -22,7 +23,7 @@ import ConfirmModal from "@/shared/components/ConfirmModal";
 
 const links = [
   {
-    label: "Sales Dashboard",
+    label: "Admin Dashboard",
     icon: LayoutDashboard,
     path: "/admin/dashboard",
   },
@@ -61,11 +62,11 @@ const links = [
     icon: TicketPercent,
     path: "/admin/coupons",
   },
-  // {
-  //   label: "Offer Management",
-  //   icon: BadgePercent,
-  //   path: "/admin/offers",
-  // },
+  {
+    label: "Offer Management",
+    icon: BadgePercent,
+    path: "/admin/offers",
+  },
 
   {
     label: "Category Management",
@@ -76,6 +77,11 @@ const links = [
     label: "Subcategory Management",
     icon: Blocks,
     path: "/admin/subcategories",
+  },
+  {
+    label: "Sales Report",
+    icon: ChartLine,
+    path: "/admin/sales-report",
   },
 ];
 

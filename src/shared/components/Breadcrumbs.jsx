@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const Breadcrumbs = ({ items = [] }) => {
   return (
     <nav
-      className="flex items-center text-xs font-medium leading-tight text-neutral-500"
+      className="flex items-center text-[9px] font-medium leading-tight text-neutral-500 sm:text-xs"
     >
       {items.map((item, index) => (
-        <div key={index} className="flex items-center gap-2">
+        <div key={index} className="flex items-center md:gap-2">
           {index !== 0 && <ChevronRight size={14} />}
 
           {item.link ? (

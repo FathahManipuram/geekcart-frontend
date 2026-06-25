@@ -21,6 +21,7 @@ import UpdateCouponPage from "@/features/admin-side/coupon-management/pages/Upda
 import OfferManagementPage from "@/features/admin-side/offer-management/pages/OfferManagementPage";
 import CreateOfferPage from "@/features/admin-side/offer-management/pages/CreateOfferPage";
 import UpdateOfferPage from "@/features/admin-side/offer-management/pages/UpdateOfferPage";
+import SalesReportPage from "@/features/admin-side/sales-report/pages/SalesReportPage";
 
 const adminRoutes = {
   path: "/admin",
@@ -112,7 +113,12 @@ const adminRoutes = {
 
     {
       path: "offers/:offerId/update",
-      element: <UpdateOfferPage/>,
+      element: <UpdateOfferPage />,
+    },
+
+    {
+      path: "sales-report",
+      element: <SalesReportPage />,
     },
   ],
 };

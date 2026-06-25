@@ -17,6 +17,7 @@ import Loader from "@/shared/components/Loader";
 import { useUserProductStore } from "../store/product.store";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import { useWishlist } from "../../wishlist/hooks/useWishlist";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -69,8 +70,6 @@ const fetchCart = useCartStore((state) => state.fetchCart);
    }
  }
 
-
-
  const firstVariant = productDetails.variants[0];
 
  setSelectedColor(firstVariant.color);
@@ -94,7 +93,7 @@ const fetchCart = useCartStore((state) => state.fetchCart);
   console.log("Current Variant: ", currentVariant);
   console.log("selectedColorVariants: ", selectedColorVariants)
 
-const existsInCart= currentVariant ? isInCart(currentVariant._id) : false
+const existsInCart= currentVariant ? isInCart(currentVariant?._id) : false
 
 
   const availableSizes = selectedColorVariants.map((variant) => ({
@@ -135,6 +134,15 @@ const isOutOfStock = currentVariant?.stock === 0;
       toast.error(err.response?.data?.message || "Failed to add product");
     }
   };
+
+  const discountPercentage = currentVariant?.salePrice
+    ? Math.round(
+        ((currentVariant?.price - currentVariant?.salePrice) /
+          currentVariant?.price) *
+          100,
+      )
+    : 0;
+
 
   if(productLoading){
   	return <Loader/>
@@ -215,32 +223,41 @@ const isOutOfStock = currentVariant?.stock === 0;
               >
                 <div className="flex items-center gap-3">
                   <span className="text-2xl font-semibold">
-                    ₹{currentVariant?.salePrice || currentVariant?.price}
+                    ₹
+                    {formatCurrency(
+                      currentVariant?.salePrice || currentVariant?.price,
+                    )}
                   </span>
-
-                  {currentVariant?.salePrice && (
-                    <span className="text-lg text-neutral-400 line-through">
-                      ₹{currentVariant?.price}
-                    </span>
-                  )}
                 </div>
 
-                <div
+                {currentVariant?.salePrice < currentVariant?.price && (
+                  <>
+                    <span className="text-lg text-neutral-400 line-through">
+                      ₹{formatCurrency(currentVariant?.price)}
+                    </span>
+
+                    <span className="text-xs font-medium text-green-600">
+                      {discountPercentage}% OFF
+                    </span>
+                  </>
+                )}
+
+                {/* <div
                   className="
                 h-1
                 w-1
                 rounded-full
                 bg-neutral-400
               "
-                />
+                /> */}
 
-                <span
+                {/* <span
                   className="
                 text-sm
               "
                 >
                   ★ 4.8 (52 reviews)
-                </span>
+                </span> */}
               </div>
 
               {/* COLOR */}

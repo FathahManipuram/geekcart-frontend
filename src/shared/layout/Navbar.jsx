@@ -43,6 +43,7 @@ useEffect(() => {
     try {
       await logout();
       toast.success("Logout successfully");
+      setShowConfirmModal(false)
       navigate("/");
     } catch (err) {
       console.log(err);

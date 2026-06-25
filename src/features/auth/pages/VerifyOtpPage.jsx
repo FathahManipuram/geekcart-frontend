@@ -118,7 +118,7 @@ const VerifyOtpPage = () => {
             </InputOTP>
 
             <div className="text-sm text-muted-foreground">
-              {time > 0 ? `⏱ ${time}s` : "Code expired"}
+              {time > 0 ? `⏱ ${time}s` : "Didn't receive the code?"}
             </div>
 
             <Button
@@ -131,7 +131,7 @@ const VerifyOtpPage = () => {
             <button
               onClick={handleResend}
               disabled={time > 0 || resending}
-              className={`${time > 0 || resending ? "opacity-50 cursor-not-allowed" : ""}`}
+              className={`${time > 0 || resending ? "opacity-50 cursor-not-allowed" : "cursor-pointer font-semibold"}`}
             >
               Resend Code
             </button>
