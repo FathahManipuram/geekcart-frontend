@@ -28,7 +28,14 @@ const ReviewPage = () => {
   const verifyPayment= usePaymentStore((state)=> state.verifyPayment)
   const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
   const appliedCoupon= useCheckoutStore((state)=> state.appliedCoupon)
+  const finalValidation= useCheckoutStore((state)=> state.finalValidation)
 
+
+useEffect(()=>{
+  if(cart?.items?.length=== 0){
+    navigate("/")
+  }
+},[])
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -81,7 +88,7 @@ const handleRazorpayPayment = async () => {
           }
 
           const orderRes = await createOrder({
-            addressId: selectedAddress._id,
+            addressId: selectedAddress?._id,
             deliveryMethod: selectedDeliveryMethod,
             paymentMethod: selectedPaymentMethod,
             couponId: appliedCoupon?._id,
@@ -165,11 +172,20 @@ const handleRazorpayPayment = async () => {
   }
 };
 
+
+
 const handlePlaceOrder = async () => {
   if (processing) return;
 
   try {
-    if (selectedPaymentMethod === "COD") {
+    await finalValidation({
+      addressId: selectedAddress._id,
+      deliveryMethod: selectedDeliveryMethod,
+      paymentMethod: selectedPaymentMethod,
+      couponId: appliedCoupon?._id,
+    });
+
+    if (["COD", "WALLET"].includes(selectedPaymentMethod)) {
       const orderRes = await createOrder({
         addressId: selectedAddress._id,
         deliveryMethod: selectedDeliveryMethod,
@@ -188,13 +204,15 @@ const handlePlaceOrder = async () => {
       return;
     }
 
+
+
     await handleRazorpayPayment();
   } catch (err) {
     console.error(err);
 
     setProcessing(false);
 
-    toast.error("Order creation failed");
+    toast.error(err?.response?.data?.message ||"Order creation failed");
   }
 };
 
@@ -229,6 +247,7 @@ const handlePlaceOrder = async () => {
           shippingCharge={summary?.deliveryCharge || 0}
           speedCharge={speedCharge}
           couponDiscount={couponDiscount}
+          code={appliedCoupon?.code}
           discount={summary.discount}
           total={speedCharge ? summary.total + speedCharge : summary.total}
           buttonText={processing ? "Processing..." : "Place Order"}

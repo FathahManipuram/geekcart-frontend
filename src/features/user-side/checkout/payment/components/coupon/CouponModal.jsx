@@ -2,6 +2,7 @@ import Modal from "@/shared/components/Modal";
 import { Button } from "@/shared/components/ui/button";
 import { useCheckoutStore } from "../../../store/checkout.store";
 import { toast } from "sonner";
+import { Ticket } from "lucide-react";
 
 const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
   const appliedCoupon = useCheckoutStore((state) => state.appliedCoupon);
@@ -35,33 +36,48 @@ const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
       description="Apply a coupon to save more."
     >
       <div className="space-y-4">
-        {coupons?.map((coupon) => (
-          <div key={coupon?._id} className="border rounded-xl p-4">
-            <div className="flex justify-between items-start">
-              <div>
-                <h4 className="font-semibold">{coupon?.code}</h4>
+        {coupons?.length > 0 ? (
+          coupons.map((coupon) => (
+            <div key={coupon?._id} className="border rounded-xl p-4">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-semibold">{coupon?.code}</h4>
 
-                <p className="text-sm text-muted-foreground">
-                  {coupon?.description}
-                </p>
+                  <p className="text-sm text-muted-foreground">
+                    {coupon?.description}
+                  </p>
 
-                <p className="text-xs text-green-600 mt-2">
-                  Save ₹{coupon?.discountValue}
-                </p>
+                  <p className="text-xs text-green-600 mt-2">
+                    Save ₹{coupon?.discountValue}
+                  </p>
+                </div>
+
+                <Button
+                  size="sm"
+                  variant={
+                    appliedCoupon?._id === coupon?._id ? "secondary" : "default"
+                  }
+                  onClick={() => handleApply(coupon)}
+                >
+                  {appliedCoupon?._id === coupon?._id ? "Applied" : "Apply"}
+                </Button>
               </div>
-
-              <Button
-                size="sm"
-                variant={
-                  appliedCoupon?._id === coupon?._id ? "secondary" : "default"
-                }
-                onClick={() => handleApply(coupon)}
-              >
-                {appliedCoupon?._id === coupon._id ? "Applied" : "Apply"}
-              </Button>
             </div>
+          ))
+        ) : (
+          <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
+              <Ticket/>
+            </div>
+
+            <h3 className="font-semibold text-lg">No Coupons Available</h3>
+
+            <p className="mt-2 text-sm text-muted-foreground max-w-xs">
+              There are currently no active offers for your order. Check back
+              later for exciting discounts.
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </Modal>
   );

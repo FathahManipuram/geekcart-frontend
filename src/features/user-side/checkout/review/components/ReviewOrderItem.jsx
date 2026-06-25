@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 
 const ReviewOrderItem = ({ item }) => {
@@ -22,7 +23,11 @@ const ReviewOrderItem = ({ item }) => {
       </div>
 
       <div className="font-semibold text-lg">
-        ₹{displayPrice * item.quantity}
+        <p className="line-through text-sm font-medium text-muted-foreground">
+          ₹{formatCurrency(item.price)}
+        </p>
+        
+        ₹{formatCurrency(displayPrice * item.quantity)}
       </div>
     </div>
   );

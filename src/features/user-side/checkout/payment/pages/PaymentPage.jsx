@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import CheckoutItemsPreview from "../../components/CheckoutItemsPreview";
 import CouponModal from "../components/coupon/CouponModal";
 import AppliedCouponCard from "../components/coupon/AppliedCouponCard";
+import { useWalletStore } from "@/features/user-side/wallet/store/wallet.store";
 
 
 
@@ -25,16 +26,24 @@ const PaymentPage = () => {
   const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
   const validatePayment= useCheckoutStore((state)=> state.validatePayment)
   const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
+  const appliedCoupon= useCheckoutStore((state)=> state.appliedCoupon)
   const speedCharge = useCheckoutStore((state) => state.speedCharge);
 const availableCoupons = useCheckoutStore((state) => state.availableCoupons);
+const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
 const fetchAvailableCoupons = useCheckoutStore(
   (state) => state.fetchAvailableCoupons,
 );
   const summary = useCartStore((state) => state.summary);
   const fetchCart= useCartStore((state)=> state.fetchCart)
+  const fetchWallet= useWalletStore((state)=> state.fetchWallet)
+  const wallet= useWalletStore((state)=> state.wallet)
 
+
+const finalAmount =
+  (speedCharge ? summary.total + speedCharge : summary.total) - couponDiscount;
   useEffect(()=>{
     fetchCart()
+    fetchWallet()
   },[])
 
   useEffect(()=>{
@@ -55,7 +64,11 @@ const handleContinue= async()=>{
      return;
    }
   try{
-    const res= await validatePayment({paymentMethod: selectedPaymentMethod})
+    const res = await validatePayment({
+      deliveryMethod: selectedDeliveryMethod,
+      paymentMethod: selectedPaymentMethod,
+      couponId: appliedCoupon?._id,
+    });
 
      if (!res.valid) {
        toast.error(res.issues[0]?.message);
@@ -64,7 +77,7 @@ const handleContinue= async()=>{
       navigate("/checkout/review");
 
   }catch(err){
-   toast.error("Unable to validate payment");
+   toast.error(err.response?.data?.message || "Unable to validate payment");
   }
 }
 
@@ -73,7 +86,7 @@ const handleContinue= async()=>{
       <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={2} />
 
       <div className="grid lg:grid-cols-3 gap-8 mt-10">
-        {/* Left */}
+       
         <div className="lg:col-span-2">
           <h1 className="text-3xl font-bold mb-2">Payment Method</h1>
 
@@ -85,9 +98,12 @@ const handleContinue= async()=>{
             {PAYMENT_METHODS.map((method) => (
               <PaymentMethodCard
                 key={method.id}
+                value= {method.id}
                 method={method}
                 selected={selectedPaymentMethod === method.id}
                 onSelect={setPaymentMethod}
+                wallet={wallet}
+                orderTotal={finalAmount}
               />
             ))}
           </div>
@@ -100,6 +116,7 @@ const handleContinue= async()=>{
           shippingCharge={summary?.deliveryCharge || 0}
           speedCharge={speedCharge}
           couponDiscount={couponDiscount}
+          code={appliedCoupon?.code}
           discount={summary.discount}
           total={speedCharge ? summary.total + speedCharge : summary.total}
           buttonText="Review Order"

@@ -1,11 +1,11 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { applyCouponApi, getAvailableCouponsApi, validateCheckoutApi, validatePaymentApi, validateShippingApi } from "../api/checkout.api";
+import { applyCouponApi, getAvailableCouponsApi, validateCheckoutApi, validateFinalCheckoutApi, validatePaymentApi, validateShippingApi } from "../api/checkout.api";
 
 
 export const useCheckoutStore = create(
   persist(
-    (set,get) => ({
+    (set, get) => ({
       loading: false,
       error: null,
 
@@ -20,29 +20,42 @@ export const useCheckoutStore = create(
       speedCharge: 0,
 
       setSelectedAddress: (address) => set({ selectedAddress: address }),
-      setDeliveryMethod: (method) => set({ 
-        selectedDeliveryMethod: method,
-        speedCharge: method==="EXPRESS"? 25 : 0,
+      setDeliveryMethod: (method) =>
+        set({
+          selectedDeliveryMethod: method,
+          speedCharge: method === "EXPRESS" ? 25 : 0,
         }),
       setPaymentMethod: (method) => set({ selectedPaymentMethod: method }),
 
+      // Validate checkout
       validateCheckout: async () => {
         const res = await validateCheckoutApi();
         console.log("checkoutValidation: ", res.data);
         return res.data;
       },
 
+      //Validate shippping
       validateShipping: async (payload) => {
         const res = await validateShippingApi(payload);
         console.log(res.data);
         return res.data;
       },
 
+      // Validate payment
       validatePayment: async (payload) => {
         const res = await validatePaymentApi(payload);
+        console.log("res", res);
         return res.data;
       },
 
+      // Final validation
+      finalValidation: async (payload) => {
+        const res = await validateFinalCheckoutApi(payload);
+        console.log("res", res);
+        return res.data;
+      },
+
+      //Reset checkout
       resetCheckout: () =>
         set({
           selectedAddress: null,
@@ -52,7 +65,7 @@ export const useCheckoutStore = create(
           availableCoupons: [],
           appliedCoupon: null,
           couponDiscount: 0,
-          speedCharge:0,
+          speedCharge: 0,
         }),
 
       //Coupon
@@ -68,7 +81,7 @@ export const useCheckoutStore = create(
             availableCoupons: data,
             loading: false,
           });
-console.log("availableCoupon store:", data)
+          console.log("availableCoupon store:", data);
           return data;
         } catch (error) {
           set({ loading: false });

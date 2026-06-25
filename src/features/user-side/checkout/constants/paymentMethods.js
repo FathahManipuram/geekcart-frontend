@@ -9,4 +9,9 @@ export const PAYMENT_METHODS = [
     title: "Cash On Delivery",
     description: "Pay when order arrives",
   },
+  {
+    id: "WALLET",
+    title: "Wallet",
+    description: "Pay instantly using your wallet balance",
+  },
 ];

@@ -9,7 +9,7 @@ const CheckoutItemsPreview = () => {
 
       <div className="space-y-3">
         {cart?.items.map((item) => (
-          <div key={item.variantId} className="flex gap-3">
+          <div key={item.variantId._id} className="flex gap-3">
             <img
               src={item.image}
               className="w-14 h-14 rounded-md object-cover"

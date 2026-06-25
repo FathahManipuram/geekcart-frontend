@@ -28,10 +28,10 @@ const ShippingPage = () => {
 
   useEffect(() => {
     fetchAddresses();
-  }, []);
+  }, [fetchAddresses]);
 
   useEffect(()=>{
-    if(summary.total===0){
+    if(summary.subtotal===0){
       navigate("/")
     }
   },[])
