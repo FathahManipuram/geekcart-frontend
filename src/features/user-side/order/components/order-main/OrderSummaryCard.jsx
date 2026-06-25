@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/shared/utils/formatCurrency";
+
 const OrderSummaryCard = ({ order={} }) => {
   return (
     <div className="bg-white border rounded-xl p-6">
@@ -6,28 +8,35 @@ const OrderSummaryCard = ({ order={} }) => {
       <div className="space-y-3">
         <div className="flex justify-between">
           <span>Subtotal</span>
-          <span>₹{order?.subtotal}</span>
+          <span>₹{formatCurrency(order?.subtotal)}</span>
         </div>
 
         <div className="flex justify-between">
           <span>Delivery charge</span>
-          <span>₹{order?.deliveryCharge}</span>
+          <span>₹{formatCurrency(order?.deliveryCharge)}</span>
         </div>
 
         <div className="flex justify-between">
           <span>Discount</span>
-          <span>-₹{order?.discount}</span>
+          <span>-₹{formatCurrency(order?.discount)}</span>
         </div>
-        <div className="flex justify-between">
-          <span>Coupon Discount</span>
-          <span>-₹{order?.coupon?.discountAmount}</span>
-        </div>
+        {order?.coupon?.discountAmount && (
+            <div className="flex justify-between">
+              <span>
+                Coupon Discount <span className="text-xs text-muted-foreground">({order?.coupon?.code})</span>
+              </span>
+              <span>
+                -₹{formatCurrency(order?.coupon?.discountAmount) || 0}
+              </span>
+            </div>
+
+        )}
 
         <hr />
 
         <div className="flex justify-between font-bold text-lg">
           <span>Total</span>
-          <span>₹{order?.totalAmount}</span>
+          <span>₹{formatCurrency(order?.totalAmount)}</span>
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
 import { Button } from "@/shared/components/ui/button";
 import ItemStatusBadge from "../order-history/ItemStatusBadge";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 const OrderItemCard = ({ item, onCancel }) => {
   const canCancel = ["PLACED", "PROCESSING"].includes(item.itemStatus);
-
+const itemPrice = item.salePrice ?? item.price * item.quantity;
   return (
     <div className="bg-white border rounded-xl p-5">
       <div className="flex gap-5">
@@ -22,10 +23,12 @@ const OrderItemCard = ({ item, onCancel }) => {
                 <ItemStatusBadge status={item.itemStatus} />
               </div>
             </div>
-
-            <p className="font-semibold">
-              ₹{(item.salePrice ?? item.price) * item.quantity}
-            </p>
+            <div>
+              <p className="text-sm line-through text-muted-foreground">
+                ₹{formatCurrency(item.price * item.quantity)}
+              </p>
+              <p className="font-semibold">₹{formatCurrency(itemPrice)}</p>
+            </div>
           </div>
 
           <div className="grid grid-cols-3 gap-4 mt-4 text-sm text-muted-foreground">

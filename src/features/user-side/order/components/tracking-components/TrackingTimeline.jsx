@@ -10,7 +10,7 @@ const TrackingTimeline = ({ order }) => {
 
   const getStatusDate = (status) => {
     return order?.statusHistory?.find((item) => item.status === status)
-      ?.updatedAt;
+      ?.updatedAt || order?.createdAt;
   };
 if (order?.orderStatus === "CANCELLED") {
   return (
