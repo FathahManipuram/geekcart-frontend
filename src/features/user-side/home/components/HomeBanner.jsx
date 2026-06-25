@@ -1,3 +1,4 @@
+import Loader from '@/shared/components/Loader';
 import { Carousel, CarouselContent, CarouselItem } from '@/shared/components/ui/carousel';
 import Autoplay from 'embla-carousel-autoplay';
 import React from 'react'
@@ -30,6 +31,7 @@ const banners = [
 ];
 
 const HomeBanner = () => {
+  
    return (
      <div className="w-full">
        <Carousel

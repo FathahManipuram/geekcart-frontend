@@ -5,6 +5,7 @@ import { fetchHomeDataApi } from "../api/home.api";
 export const useHomeStore = create((set, get) => ({
   categories: [],
   newDrops: [],
+  offers: [],
 
   loading: false,
   error: null,
@@ -30,6 +31,7 @@ console.log("HomeStore: ", res.data)
             newDrops:
               res.data
                 .newDrops,
+                offers: res.data.offers,
 
             loading: false,
           });

@@ -1,3 +1,4 @@
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 import { Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -63,13 +64,13 @@ const discountPercentage = salePrice
         </h3>
         <div className="mt-1 flex items-center gap-2">
           <p className="text-sm font-semibold text-amber-700 md:text-base">
-            ₹{salePrice || price}
+            ₹{formatCurrency(salePrice || price)}
           </p>
 
-          {salePrice && (
+          {salePrice < price && (
             <>
               <span className="text-xs text-neutral-400 line-through md:text-sm">
-                ₹{price}
+                ₹{formatCurrency(price)}
               </span>
 
               <span className="text-xs font-medium text-green-600">

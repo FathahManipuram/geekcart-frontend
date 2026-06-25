@@ -10,11 +10,9 @@ const CategoryCollection = ({subcategories}) => {
     <section className="px-4 md:px-8 lg:px-12 py-10">
       {/* Heading */}
       <div className="mb-6">
-        <h2 className="text-2xl md:text-3xl font-semibold text-neutral-900">
-          Curated Categories
-        </h2>
+        <h2 className="mt-2 text-4xl font-bold"> Curated Categories</h2>
 
-        <div className="w-14 h-[2px] bg-black mt-2" />
+        <div className="w-18 h-[3px] bg-primary mt-2" />
       </div>
 
       {/* Categories Grid */}

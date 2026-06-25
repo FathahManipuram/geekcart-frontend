@@ -1,5 +1,3 @@
-// src/features/home/components/CategoryCard.jsx
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
