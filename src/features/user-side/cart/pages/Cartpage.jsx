@@ -15,6 +15,7 @@ import { formatCurrency } from "@/shared/utils/formatCurrency";
 const CartPage = () => {
   const [showValidationModal, setShowValidationModal] = useState(false);
   const [issues, setIssues] = useState(null);
+const [initialLoading, setInitialLoading] = useState(true);
 
   const fetchCart = useCartStore((state) => state.fetchCart);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -22,11 +23,16 @@ const CartPage = () => {
   const summary = useCartStore((state) => state.summary);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const validateCheckout = useCheckoutStore((state) => state.validateCheckout);
-  const loading= useCartStore((state)=> state.loading)
+ const changes = useCartStore((state) => state.changes);
   const navigate = useNavigate();
   useEffect(() => {
-    fetchCart();
-  }, [fetchCart]);
+    const load= async()=>{
+await fetchCart();
+setInitialLoading(false);
+    }
+    load()
+  }, []);
+
 
   const handleCheckout = async () => {
     try {
@@ -59,7 +65,7 @@ const CartPage = () => {
     setIssues(updatedValidation.issues);
   };
 
-if(loading){
+if(initialLoading){
   return <Loader/>
 }
   if (!items.length) {
@@ -129,6 +135,7 @@ if(loading){
           >
             Your Cart
           </h1>
+
         </div>
 
         {/* RIGHT */}

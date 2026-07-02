@@ -12,6 +12,7 @@ const OrderSummary = ({
   buttonText,
   onButtonClick,
   buttonDisabled,
+  loading,
   children,
 }) => {
   return (
@@ -77,7 +78,7 @@ const OrderSummary = ({
       </div>
 
       <button
-        disabled={buttonDisabled}
+        disabled={buttonDisabled || loading}
         onClick={onButtonClick}
         className="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:opacity-90"
       >

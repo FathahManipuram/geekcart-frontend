@@ -10,13 +10,11 @@ import {
 
 export const useCartStore = create((set, get) => ({
   cart: null,
-
   items: [],
-
   summary: {},
+  changes: [],
 
   loading: false,
-
   error: null,
 
   fetchCart: async () => {
@@ -34,11 +32,9 @@ export const useCartStore = create((set, get) => ({
 
       set({
         cart,
-
         items: cart?.items || [],
-
         summary: cart?.summary || {},
-
+        changes: cart.changes || [],
         loading: false,
       });
 
@@ -66,6 +62,7 @@ export const useCartStore = create((set, get) => ({
         error: null,
       });
 
+
       const res = await addToCartApi({
         variantId,
 
@@ -90,7 +87,7 @@ export const useCartStore = create((set, get) => ({
 
   updateQuantity: async (variantId, quantity) => {
     try {
-      set({ loading: true, error: null });
+      //set({ loading: true, error: null });
       if (quantity > 5) {
         return;
       }
@@ -103,12 +100,12 @@ export const useCartStore = create((set, get) => ({
         quantity,
       });
 
-      set({ loading: false });
-      await get().fetchCart();
+      //set({ loading: false });
+     await get().fetchCart();
       return res;
     } catch (err) {
       set({
-        loading: false,
+     //   loading: false,
         error: err.response?.data?.message || "Failed to add to cart",
       });
 

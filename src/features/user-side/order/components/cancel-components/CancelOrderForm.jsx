@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { cancelOrderSchema } from "../../validations/cancelOrder.validation";
 import CancelOrderPreviewCard from "./CancelOrderPreviewCard";
+import { Info } from "lucide-react";
 
 const CancelOrderForm = ({ order, item, onSubmit, onClose, loading = false }) => {
   const firstItemImage= order?.items?.[0].image
@@ -27,7 +28,6 @@ const reason = watch("reason");
 
   return (
     <form onSubmit={handleSubmit(onFormSubmit)} className="space-y-6">
-  
       <CancelOrderPreviewCard order={order} item={item} />
 
       <div>
@@ -75,11 +75,17 @@ const reason = watch("reason");
 
       {/* Warning */}
 
-      <div className="border border-yellow-200 bg-yellow-50 rounded-lg p-4">
-        <p className="text-sm">
-          Important Information: Cancellation may affect shipping and refund
-          timelines.
-        </p>
+      <div className="flex gap-3 border-l-4 border-amber-500 bg-gray-50 rounded-r-xl p-4 shadow-sm">
+        <Info className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+        <div className="space-y-1">
+          <h4 className="font-medium text-sm text-gray-900">
+            Return & Cancellation Policy
+          </h4>
+          <p className="text-xs text-gray-600 leading-relaxed">
+            Modifying this order might disqualify applied promotional discounts.
+            Refunds will be processed back to your wallet.
+          </p>
+        </div>
       </div>
 
       {/* Actions */}

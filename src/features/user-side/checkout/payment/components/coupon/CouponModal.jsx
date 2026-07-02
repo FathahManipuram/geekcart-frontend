@@ -32,7 +32,7 @@ const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
     <Modal
       open={open}
       onOpenChange={onOpenChange}
-      title="Offers & Coupons"
+      title="Available Coupons"
       description="Apply a coupon to save more."
     >
       <div className="space-y-4">
@@ -48,7 +48,10 @@ const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
                   </p>
 
                   <p className="text-xs text-green-600 mt-2">
-                    Save ₹{coupon?.discountValue}
+                    Save{" "}
+                    {coupon.discountType === "FIXED"
+                      ? `₹${coupon?.discountValue}`
+                      : `${coupon?.discountValue}%`} OFF
                   </p>
                 </div>
 
@@ -67,7 +70,7 @@ const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
         ) : (
           <div className="flex flex-col items-center justify-center py-12 text-center">
             <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-muted">
-              <Ticket/>
+              <Ticket />
             </div>
 
             <h3 className="font-semibold text-lg">No Coupons Available</h3>

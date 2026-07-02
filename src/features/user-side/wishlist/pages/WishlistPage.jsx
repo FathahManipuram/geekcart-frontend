@@ -51,9 +51,9 @@ const addToCart= useCartStore((state)=> state.addToCart)
     }
   };
 
-if(loading){
-  return <Loader/>
-}
+// if(loading){
+//   return <Loader/>
+// }
 if (wishlist.length === 0) {
   return <EmptyWishlist />;
 }

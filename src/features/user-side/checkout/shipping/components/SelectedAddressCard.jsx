@@ -3,25 +3,26 @@ import AddressSelectionModal from "./AddressSelectionModal";
 import Modal from "@/shared/components/Modal";
 import { useCheckoutStore } from "../../store/checkout.store";
 import { Button } from "@/shared/components/ui/button";
-import { Pencil } from "lucide-react";
-import AddressForm from "@/features/user-side/account/address/components/AddressForm";
 
-const SelectedAddressCard = ({selectedAddress, addresses}) => {
-	const [showModal, setShowModal] = useState(false);
-  const [editModalOpen, setEditModalOpen]= useState(false)
-  const setSelectedAddress= useCheckoutStore((state)=> state.setSelectedAddress)
-   
+const SelectedAddressCard = ({ selectedAddress, addresses }) => {
+  const [showModal, setShowModal] = useState(false);
+  const setSelectedAddress = useCheckoutStore(
+    (state) => state.setSelectedAddress,
+  );
+
   return (
-    <div className="border rounded-md p-4 flex justify-between items-start">
+    <div className="border rounded-md p-4 flex justify-between items-start gap-3">
       <div>
         <h3 className="text-lg">
           Deliver to:
           <span className="font-semibold ml-2">
             {selectedAddress?.fullName}
           </span>
-          <span className="ml-3 text-xs bg-gray-100 px-2 py-1 rounded">
-            {selectedAddress?.addressLabel}
-          </span>
+          {selectedAddress?.addressLabel && (
+            <span className="ml-3 text-xs bg-gray-100 px-2 py-1 rounded">
+              {selectedAddress?.addressLabel}
+            </span>
+          )}
         </h3>
 
         <p className="text-gray-600 mt-2">
@@ -31,10 +32,6 @@ const SelectedAddressCard = ({selectedAddress, addresses}) => {
       </div>
 
       <div className="flex gap-2">
-        <Button onClick={()=> setEditModalOpen(true)} variant="outline">
-          <Pencil />
-        </Button>
-
         <Button
           variant="outline"
           onClick={() => setShowModal(true)}
@@ -44,35 +41,20 @@ const SelectedAddressCard = ({selectedAddress, addresses}) => {
         </Button>
       </div>
 
-      {showModal && (
-        <Modal
-          open={showModal}
-          onOpenChange={setShowModal}
-          title="Select Address"
-        >
-          <AddressSelectionModal
-            addresses={addresses}
-            selectedAddressId={selectedAddress?._id}
-            onSelect={(address) => {
-              setSelectedAddress(address);
-              setShowModal(false);
-            }}
-          />
-        </Modal>
-      )}
-
-      {editModalOpen && (
-        <Modal
-          open={editModalOpen}
-          onOpenChange={setEditModalOpen}
-          title="Edit Address"
-        >
-          <AddressForm
-            initialData={selectedAddress}
-            onClose={() => setEditModalOpen(false)}
-          />
-        </Modal>
-      )}
+      <Modal
+        open={showModal}
+        onOpenChange={setShowModal}
+        title="Select Address"
+      >
+        <AddressSelectionModal
+          addresses={addresses}
+          selectedAddressId={selectedAddress?._id}
+          onSelect={(address) => {
+            setSelectedAddress(address);
+            setShowModal(false);
+          }}
+        />
+      </Modal>
     </div>
   );
 };

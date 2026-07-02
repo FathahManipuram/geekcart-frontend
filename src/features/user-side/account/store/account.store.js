@@ -1,12 +1,12 @@
 import { create } from "zustand";
-import { createAddressApi, getAddressesApi, removeAddressApi, updateAddressApi } from "../address/api/address.api"
+import { createAddressApi, getAddressByIdApi, getAddressesApi, removeAddressApi, updateAddressApi } from "../address/api/address.api"
 
 export const useAccountStore = create((set, get) => ({
   addresses: [],
   loading: false,
+  address: null,
 
-
-//Fetch address
+  //Fetch address
   fetchAddresses: async () => {
     try {
       set({ loading: true });
@@ -16,15 +16,14 @@ export const useAccountStore = create((set, get) => ({
         addresses: res.data,
         loading: false,
       });
-      return res
+      return res;
     } catch (err) {
       set({ loading: false });
       throw err;
     }
   },
 
-
-// Add address
+  // Add address
   addAddress: async (data) => {
     try {
       set({ loading: true });
@@ -35,7 +34,7 @@ export const useAccountStore = create((set, get) => ({
         addresses: [res.data, ...state.addresses],
         loading: false,
       }));
-      get().fetchAddresses()
+      get().fetchAddresses();
 
       return res;
     } catch (err) {
@@ -45,41 +44,51 @@ export const useAccountStore = create((set, get) => ({
     }
   },
 
+  //Update Address
+  updateAddress: async (id, data) => {
+    try {
+      set({ loading: true });
+      const res = await updateAddressApi(id, data);
 
-//Update Address
-  updateAddress: async(id, data)=>{
-    try{
-      set({loading: true})
-      const res= await updateAddressApi(id, data)
-      
-      set((state)=>({
-        addresses: state.addresses.map((address)=> address._id ===id ? res.data: address),
-        loading: false,
-      }))
+      get().fetchAddresses();
 
-      return res
-    }catch(err){
-      set({loading: false})
-      throw err
+      return res;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
     }
   },
 
+  //Remove Address
+  removeAddress: async (addressId) => {
+    try {
+      set({ loading: true });
+      await removeAddressApi(addressId);
 
-//Remove Address
-  removeAddress: async(addressId)=>{
-    try{
-      set({loading: true})
-      await removeAddressApi(addressId)
-
-      set((state)=>({
-        addresses: state.addresses.filter((address)=> address._id !== addressId),
-        loading: false
-      }))
-    }catch(err){
-      set({loading: false})
-      throw err
+      set((state) => ({
+        addresses: state.addresses.filter(
+          (address) => address._id !== addressId,
+        ),
+        loading: false,
+      }));
+    } catch (err) {
+      set({ loading: false });
+      throw err;
     }
-  }
+  },
 
-
+  getAddressById: async (addressId) => {
+    try {
+      set({ loading: true });
+      const res = await getAddressByIdApi(addressId);
+      set({
+        address: res.data,
+        loading: false,
+      });
+      return res;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
+  },
 }));

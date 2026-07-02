@@ -1,5 +1,4 @@
 import { Heart, ShoppingBag, ShoppingCart } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
 
 const ProductActions = ({
@@ -12,12 +11,11 @@ const ProductActions = ({
   isOutOfStock,
 }) => {
   const navigate = useNavigate();
-
   const addToCartDisabled = loading || isUnavailable || isOutOfStock;
 
   return (
-    <div className="mt-10 flex gap-4">
-      {/* CART BUTTON */}
+    <div className="mt-10 flex gap-4 w-full">
+
       {existsInCart && !isUnavailable ? (
         <button
           onClick={() => navigate("/cart")}
@@ -53,7 +51,6 @@ const ProductActions = ({
             justify-center
             gap-2
             transition-colors
-
             ${
               addToCartDisabled
                 ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
@@ -62,7 +59,6 @@ const ProductActions = ({
           `}
         >
           <ShoppingBag className="w-5 h-5" />
-
           {isUnavailable
             ? "Unavailable"
             : isOutOfStock
@@ -73,37 +69,36 @@ const ProductActions = ({
         </button>
       )}
 
-      {/* WISHLIST BUTTON */}
-      <button
-        disabled={isUnavailable}
-        onClick={onWishlist}
-        className={`
-          w-14
-          h-14
-          rounded-full
-          border
-          flex
-          items-center
-          justify-center
-          transition-colors
-
-          ${
-            isUnavailable
-              ? "cursor-not-allowed opacity-50 border-neutral-200"
-              : "border-neutral-300 hover:border-black"
-          }
-        `}
-      >
-        <Heart
+      {!existsInCart && (
+        <button
+          disabled={isUnavailable}
+          onClick={onWishlist}
           className={`
-            w-5
-            h-5
+            w-14
+            h-14
+            rounded-full
+            border
+            flex
+            items-center
+            justify-center
             transition-colors
-
-            ${isWishlisted ? "fill-red-500 text-red-500" : "text-black"}
+            ${
+              isUnavailable
+                ? "cursor-not-allowed opacity-50 border-neutral-200"
+                : "border-neutral-300 hover:border-black"
+            }
           `}
-        />
-      </button>
+        >
+          <Heart
+            className={`
+              w-5
+              h-5
+              transition-colors
+              ${isWishlisted ? "fill-red-500 text-red-500" : "text-black"}
+            `}
+          />
+        </button>
+      )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { formatCurrency } from "@/shared/utils/formatCurrency";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../../cart/store/cart.store";
 
 const ProductCard = ({
   product,
@@ -10,11 +11,12 @@ const ProductCard = ({
   variantId,
 }) => {
   const firstVariant = product?.variants?.[0];
-
   const image = firstVariant?.images?.[0] || product?.coverImage;
-
   const price = firstVariant?.salePrice || firstVariant?.price;
 
+  const isInCart= useCartStore((state)=> state.isInCart)
+  const isExistInCart= isInCart(firstVariant?._id)
+console.log("CollectionVarint", firstVariant)
 const discountPercentage =
   firstVariant?.salePrice && firstVariant?.price
     ? Math.round(
@@ -33,23 +35,25 @@ const discountPercentage =
         />
 
         {/* WISHLIST */}
-        <button
-          type="button"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
+        {!isExistInCart && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
 
-            onWishlist?.(productId, variantId);
-          }}
-          className="absolute right-3 top-3 rounded-full bg-white/90 p-2 backdrop-blur"
-        >
-          <Heart
-            size={18}
-            className={
-              isWishlisted ? "fill-red-500 text-red-500" : "text-neutral-700"
-            }
-          />
-        </button>
+              onWishlist?.(productId, variantId);
+            }}
+            className="absolute right-3 top-3 rounded-full bg-white/90 p-2 backdrop-blur"
+          >
+            <Heart
+              size={18}
+              className={
+                isWishlisted ? "fill-red-500 text-red-500" : "text-neutral-700"
+              }
+            />
+          </button>
+        )}
       </div>
 
       <div className="mt-4">

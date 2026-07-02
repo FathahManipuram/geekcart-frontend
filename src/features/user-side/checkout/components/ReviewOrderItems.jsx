@@ -1,4 +1,5 @@
 import { useCartStore } from "@/features/user-side/cart/store/cart.store";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 const ReviewOrderItems = () => {
   const cart = useCartStore((state) => state.cart);
@@ -32,16 +33,14 @@ const ReviewOrderItems = () => {
             </div>
 
             <div className="text-right">
-              {item.salePrice ? (
-                <>
-                  <p className="font-semibold">₹{item.salePrice}</p>
+              <p className="font-semibold">
+                ₹{formatCurrency(item.salePrice ?? item.price)}
+              </p>
 
-                  <p className="text-sm text-gray-400 line-through">
-                    ₹{item.price}
-                  </p>
-                </>
-              ) : (
-                <p className="font-semibold">₹{item.price}</p>
+              {item.salePrice != null && item.salePrice < item.price && (
+                <p className="text-sm text-gray-400 line-through">
+                  ₹{formatCurrency(item.price)}
+                </p>
               )}
             </div>
           </div>

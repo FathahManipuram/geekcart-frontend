@@ -156,6 +156,7 @@ const FilterSidebar = ({
               />
             ))}
           </div>
+         
         </div>
 
         {/* Price */}

@@ -8,9 +8,7 @@ import {
 
 const CollectionsTopBar = ({
   totalProducts = 0,
-
   sortBy = "latest",
-
   onSortChange,
 }) => {
   return (
@@ -49,11 +47,10 @@ const CollectionsTopBar = ({
 
           <SelectContent>
             <SelectItem value="latest">Latest</SelectItem>
-
             <SelectItem value="oldest">Oldest</SelectItem>
-
+            <SelectItem value="A-Z">Alphabetically A-Z</SelectItem>
+            <SelectItem value="Z-A">Alphabetically Z-A</SelectItem>
             <SelectItem value="price-low">Price: Low To High</SelectItem>
-
             <SelectItem value="price-high">Price: High To Low</SelectItem>
           </SelectContent>
         </Select>

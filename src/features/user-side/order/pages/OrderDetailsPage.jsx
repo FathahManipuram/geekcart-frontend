@@ -35,12 +35,11 @@ const isItemCancellation= !!selectedItem
 console.log("isItemCancellation: ", isItemCancellation)
 
 const canCancelOrder= order?.items?.every((item)=> [ITEM_STATUSES.PLACED, ITEM_STATUSES.PROCESSING].includes(item.itemStatus))
+const delivered = order?.orderStatus === "DELIVERED";
 
   useEffect(() => {
     fetchOrderById(orderId);
   }, [orderId, fetchOrderById]);
-
-
 
 
   if (loading) {
@@ -96,8 +95,22 @@ const canCancelOrder= order?.items?.every((item)=> [ITEM_STATUSES.PLACED, ITEM_S
               Track Package
             </Button>
           )}
+
+          {delivered && (
+            <>
+              <Button
+                variant="outline"
+                onClick={() => navigate(`/orders/${order._id}/return`)}
+              >
+                Return Item
+              </Button>
+            </>
+          )}
           {order.orderStatus === "DELIVERED" && (
-            <Button variant="outline" onClick={() => downloadInvoicePdf(orderId)}>
+            <Button
+              variant="outline"
+              onClick={() => downloadInvoicePdf(orderId)}
+            >
               Download invoice
             </Button>
           )}
@@ -112,6 +125,7 @@ const canCancelOrder= order?.items?.every((item)=> [ITEM_STATUSES.PLACED, ITEM_S
               <OrderItemCard
                 key={item._id}
                 item={item}
+                order={order}
                 onCancel={(item) => {
                   console.log("item", item);
                   setSelectedItem(item);

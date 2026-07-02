@@ -37,6 +37,7 @@ const fetchAvailableCoupons = useCheckoutStore(
   const fetchCart= useCartStore((state)=> state.fetchCart)
   const fetchWallet= useWalletStore((state)=> state.fetchWallet)
   const wallet= useWalletStore((state)=> state.wallet)
+  const cart = useCartStore((state) => state.cart);
 
 
 const finalAmount =
@@ -55,6 +56,12 @@ useEffect(()=>{
     navigate("/checkout/shipping", {replace: true});  
   }
 }, [selectedAddress, navigate])
+
+useEffect(()=> {
+  if(cart?.items?.length===0){
+    navigate("/")
+  }
+},[cart, navigate])
 
 
 const handleContinue= async()=>{
@@ -123,7 +130,7 @@ const handleContinue= async()=>{
           onButtonClick={handleContinue}
           children={
             <>
-              <CheckoutItemsPreview />
+              <CheckoutItemsPreview cart={cart}/>
               <AppliedCouponCard onOpenModal={() => setCouponModalOpen(true)} />
             </>
           }

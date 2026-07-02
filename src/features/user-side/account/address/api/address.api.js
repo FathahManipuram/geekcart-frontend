@@ -13,3 +13,5 @@ export const removeAddressApi = async (addressId) =>
   
 export const verifyPincodeApi = async (pincode) =>
   userApi.get(`https://api.postalpincode.in/pincode/${pincode}`);
+
+export const getAddressByIdApi= async(addressId)=> userApi.get(`/account/address/${addressId}`)

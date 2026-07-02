@@ -17,6 +17,7 @@ const ShippingPage = () => {
   const fetchAddresses = useAccountStore((state) => state.fetchAddresses);
   const addresses = useAccountStore((state) => state.addresses);
   const summary= useCartStore((state)=> state.summary)
+  const cart = useCartStore((state) => state.cart);
   const selectedAddress = useCheckoutStore((state) => state.selectedAddress);
   const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
   const setSelectedAddress = useCheckoutStore(
@@ -30,11 +31,12 @@ const ShippingPage = () => {
     fetchAddresses();
   }, [fetchAddresses]);
 
-  useEffect(()=>{
-    if(summary.subtotal===0){
-      navigate("/")
-    }
-  },[])
+useEffect(() => {
+  if (cart?.items?.length===0) {
+    navigate("/");
+  }
+}, []);
+
 
   useEffect(() => {
     if (addresses.length && !selectedAddress) {
@@ -70,8 +72,8 @@ const ShippingPage = () => {
       }
 
       navigate("/checkout/payment");
-    } catch (error) {
-      toast.error("Unable to validate shipping");
+    } catch (err) {
+      toast.error(err?.response.data?.message || "Unable to validate shipping");
     }
   };
 
@@ -100,7 +102,7 @@ const ShippingPage = () => {
           }
           buttonText="Proceed To Payment"
           onButtonClick={handleContinue}
-          children={<CheckoutItemsPreview />}
+          children={<CheckoutItemsPreview cart={cart}/>}
         />
       </div>
     </section>

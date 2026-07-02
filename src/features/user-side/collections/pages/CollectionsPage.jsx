@@ -57,21 +57,13 @@ const CollectionsPage = () => {
   };
 
   return (
-    <section
-      className="
-        px-4
-        py-8
-        md:px-8
-        lg:px-12
-      "
-    >
+    <section className="px-4 py-8 md:px-8 lg:px-12">
       <div
-        className="
-          flex
+        className="flex
           gap-8
         "
       >
- {/* Desktop sidebar */}
+        {/* Desktop sidebar */}
         <aside
           className="
             hidden
@@ -87,7 +79,6 @@ const CollectionsPage = () => {
           />
         </aside>
 
-       
         <div className="flex-1">
           <Breadcrumbs
             items={[

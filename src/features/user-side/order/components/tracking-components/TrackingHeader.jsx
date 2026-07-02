@@ -16,7 +16,7 @@ const TrackingHeader = ({ order }) => {
           },
           {
             label: "Order Details",
-            link: `/orders/${order._id}`,
+            link: `/orders/${order?._id}`,
           },
           {
             label: "Order Status",

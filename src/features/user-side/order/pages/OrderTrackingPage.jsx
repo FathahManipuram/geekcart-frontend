@@ -34,7 +34,7 @@ const OrderTrackingPage = () => {
             <PackageDetailsCard key={item?._id} item={item}/>
           ))}
           <ShippingInfoCard address={order?.shippingAddress} deliveryMethod={order?.deliveryMethod}/>
-          <SupportCard />
+          <SupportCard orderNumber={order?.orderNumber}/>
         </div>
       </div>
     </section>

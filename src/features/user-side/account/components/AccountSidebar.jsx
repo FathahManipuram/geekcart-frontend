@@ -1,11 +1,14 @@
 import { useAuthStore } from "@/features/auth/store/auth.store";
+import ConfirmModal from "@/shared/components/ConfirmModal";
 import { Album, CreditCard, LogOut, MapPin, User } from "lucide-react";
-import React from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const AccountSidebar = () => {
-  const navigate= useNavigate()
+ 
   const { user, logout } = useAuthStore();
+   const [showConfirmModal, setShowConfirmModal]= useState(false)
+  
 
 
 const links = [
@@ -70,7 +73,7 @@ const links = [
         {user && (
           <li>
             <button
-              onClick={logout}
+              onClick={() => setShowConfirmModal(true)}
               className="flex items-center gap-2 px-3 py-2.5 rounded-lg hover:bg-red-100 text-red-500 transition-colors w-full text-left"
             >
               <LogOut size={16} />
@@ -79,6 +82,14 @@ const links = [
           </li>
         )}
       </ul>
+
+      <ConfirmModal
+        open={showConfirmModal}
+        onOpenChange={setShowConfirmModal}
+        title="Are you sure to sign out?"
+        description=""
+        onConfirm={()=>logout()}
+      />
     </div>
   );
 };

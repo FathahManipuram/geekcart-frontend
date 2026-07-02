@@ -29,7 +29,7 @@ const ReferralCodeCard = ({ user }) => {
       <p className="text-sm text-muted-foreground">Your Referral Code</p>
 
       <div className="flex items-center justify-between mt-3">
-        <h2 className="text-2xl font-bold tracking-wider">
+        <h2 className="text-xl md:text-2xl font-bold tracking-tight sm:tracking-wider">
           {user?.referralCode}
         </h2>
 

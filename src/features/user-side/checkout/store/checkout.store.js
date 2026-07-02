@@ -50,7 +50,9 @@ export const useCheckoutStore = create(
 
       // Final validation
       finalValidation: async (payload) => {
+        set({loading: true})
         const res = await validateFinalCheckoutApi(payload);
+        set({ loading: false });
         console.log("res", res);
         return res.data;
       },

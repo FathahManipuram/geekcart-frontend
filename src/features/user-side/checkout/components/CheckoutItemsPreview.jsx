@@ -1,8 +1,6 @@
 import React from 'react'
-import { useCartStore } from '../../cart/store/cart.store';
-
-const CheckoutItemsPreview = () => {
-	  const cart = useCartStore((state) => state.cart);
+const CheckoutItemsPreview = ({cart}) => {
+	  
   return (
     <div className="bg-white rounded-xl p-4 mb-5">
       <h3 className="font-semibold mb-4">Items ({cart?.items?.length})</h3>
@@ -28,7 +26,7 @@ const CheckoutItemsPreview = () => {
                   <div className="w-1 h-1 rounded-full bg-accent" />
                   <div className="flex gap-2 items-center">
                     <span>₹{item.salePrice || item.prcice}</span>
-                    {item.salePrice && (
+                    {item.salePrice != null && item.salePrice < item.price && (
                       <span className="text-neutral-400 line-through">
                         ₹{item.price}
                       </span>

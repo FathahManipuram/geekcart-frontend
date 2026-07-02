@@ -8,10 +8,18 @@ const TrackingTimeline = ({ order }) => {
 
   const isDelivered = order?.orderStatus === "DELIVERED";
 
-  const getStatusDate = (status) => {
-    return order?.statusHistory?.find((item) => item.status === status)
-      ?.updatedAt || order?.createdAt;
-  };
+const getStatusDate = (status, index) => {
+
+  const historyItem = order?.statusHistory?.find((item) => item.status === status)
+  if (historyItem) return historyItem.updatedAt;
+
+  if (index === 0) {
+    return order?.createdAt;
+  }
+
+  return null;
+};
+
 if (order?.orderStatus === "CANCELLED") {
   return (
     <div className="bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
@@ -62,8 +70,7 @@ if (order?.orderStatus === "CANCELLED") {
             : index < currentIndex;
 
           const active = !isDelivered && index === currentIndex;
-
-          const statusDate = getStatusDate(step.key);
+          const statusDate = getStatusDate(step.key, index);
 
           return (
             <div key={step.key} className="flex items-start gap-6">

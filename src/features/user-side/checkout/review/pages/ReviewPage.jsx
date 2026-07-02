@@ -31,11 +31,12 @@ const ReviewPage = () => {
   const finalValidation= useCheckoutStore((state)=> state.finalValidation)
 
 
-useEffect(()=>{
-  if(cart?.items?.length=== 0){
-    navigate("/")
+useEffect(() => {
+  if (cart?.items?.length===0) {
+    navigate("/");
   }
-},[])
+}, [cart, navigate]);
+
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -178,6 +179,8 @@ const handlePlaceOrder = async () => {
   if (processing) return;
 
   try {
+    setProcessing(true)
+
     await finalValidation({
       addressId: selectedAddress._id,
       deliveryMethod: selectedDeliveryMethod,

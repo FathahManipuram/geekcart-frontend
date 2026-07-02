@@ -1,4 +1,15 @@
-const SupportCard = () => {
+import { Link } from "react-router-dom";
+
+const SupportCard = ({orderNumber}) => {
+
+  const email = "support@geekcart.com";
+  const subject = encodeURIComponent(
+    `Delivery Issue - Order #${orderNumber || "UNKNOWN"}`,
+  );
+  const body = encodeURIComponent(
+    "Hi Support Team,\n\nI am experiencing an issue with my delivery. Here are my details...\n\n",
+  );
+
   return (
     <div className="bg-primary text-white rounded-2xl p-8">
       <h3 className="text-2xl font-semibold">Need Assistance?</h3>
@@ -7,7 +18,12 @@ const SupportCard = () => {
         Our support team is available to help with any delivery issues.
       </p>
 
-      <button className="mt-6 font-semibold">Contact Support →</button>
+      <a
+        href={`mailto:${email}?subject=${subject}&body=${body}`}
+        className="inline-block mt-4 font-semibold text hover:underline"
+      >
+        Contact Support →
+      </a>
     </div>
   );
 };

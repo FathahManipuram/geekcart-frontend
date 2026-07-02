@@ -8,7 +8,6 @@ const WishlistCard = ({ item, onRemove, onMoveToCart }) => {
   const navigate = useNavigate();
 
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
   const isInCart = useCartStore((state) => state.isInCart);
 
   const isUnavailable = !item.productId?.isActive || !item.variantId?.isActive;
@@ -62,7 +61,7 @@ const discountPercentage = item.variantId?.salePrice
             "
           />
 
-          {/* REMOVE */}
+        
           <button
             onClick={() => setOpenDeleteModal(true)}
             className="

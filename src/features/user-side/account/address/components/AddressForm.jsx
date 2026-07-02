@@ -199,24 +199,6 @@ const AddressForm = ({ initialData = null, onClose }) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-1">
-          <Label>State</Label>
-          <Input {...register("state")} placeholder="e.g. Kerala" />
-          {errors.state && (
-            <p className="text-sm text-red-500">{errors.state.message}</p>
-          )}
-        </div>
-
-        <div className="space-y-1">
-          <Label>City</Label>
-          <Input {...register("city")} placeholder="City / District" />
-          {errors.city && (
-            <p className="text-sm text-red-500">{errors.city.message}</p>
-          )}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="space-y-1">
           <Label>Country</Label>
           <Controller
             name="country"
@@ -260,6 +242,24 @@ const AddressForm = ({ initialData = null, onClose }) => {
           />
           {errors.pincode && (
             <p className="text-sm text-red-500">{errors.pincode.message}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-1">
+          <Label>State</Label>
+          <Input {...register("state")} placeholder="e.g. Kerala" />
+          {errors.state && (
+            <p className="text-sm text-red-500">{errors.state.message}</p>
+          )}
+        </div>
+
+        <div className="space-y-1">
+          <Label>City</Label>
+          <Input {...register("city")} placeholder="City / District" />
+          {errors.city && (
+            <p className="text-sm text-red-500">{errors.city.message}</p>
           )}
         </div>
       </div>
