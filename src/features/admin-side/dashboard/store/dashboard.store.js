@@ -8,20 +8,19 @@ export const useDashboardStore = create((set) => ({
   salesChart: [],
   topProducts: [],
   topSubcategories: [],
-
-
+  sample: null,
 
   loading: false,
   error: null,
 
-  fetchDashboard: async () => {
+  fetchDashboard: async (payload) => {
     try {
       set({
         loading: true,
         error: null,
       });
 
-      const res = await fetchDashboardApi();
+      const res = await fetchDashboardApi(payload);
       console.log("dashboard data", res.data);
       set({
         userDetails: res.data.userDetails,
@@ -31,6 +30,7 @@ export const useDashboardStore = create((set) => ({
         topProducts: res.data.topProducts,
         topSubcategories: res.data.topSubcategories,
         loading: false,
+      
       });
 
       return res;

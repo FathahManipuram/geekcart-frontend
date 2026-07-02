@@ -1,5 +1,14 @@
+import React from "react";
+
 const ReturnProductCard = ({ returnRequest }) => {
   const item = returnRequest?.itemSnapshot;
+
+  const basePrice = item?.priceAtPurchase || 0;
+  const couponDiscount = item?.couponDiscount || 0;
+  const offerDiscount = item?.appliedOffer?.discountAmount || 0;
+
+  const truePurchasePrice = basePrice - couponDiscount - offerDiscount;
+  const hasDiscount = couponDiscount > 0 || offerDiscount > 0;
 
   return (
     <div className="bg-white border rounded-xl p-6">
@@ -18,13 +27,11 @@ const ReturnProductCard = ({ returnRequest }) => {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
             <div>
               <p className="text-xs uppercase text-muted-foreground">Size</p>
-
               <p className="font-medium mt-1">{item?.size || "-"}</p>
             </div>
 
             <div>
               <p className="text-xs uppercase text-muted-foreground">Color</p>
-
               <p className="font-medium mt-1">{item?.color || "-"}</p>
             </div>
 
@@ -33,7 +40,16 @@ const ReturnProductCard = ({ returnRequest }) => {
                 Purchase Price
               </p>
 
-              <p className="font-medium mt-1">₹{item?.priceAtPurchase}</p>
+              <div className="flex items-baseline gap-2 mt-1">
+                <span className="font-semibold text-lg text-foreground">
+                  ₹{truePurchasePrice.toFixed(2)}
+                </span>
+                {hasDiscount && (
+                  <span className="line-through text-sm text-muted-foreground">
+                    ₹{basePrice.toFixed(2)}
+                  </span>
+                )}
+              </div>
             </div>
           </div>
 
@@ -41,7 +57,6 @@ const ReturnProductCard = ({ returnRequest }) => {
             <p className="text-xs uppercase text-muted-foreground">
               Return Reason
             </p>
-
             <p className="mt-2 font-medium">{returnRequest?.reason}</p>
           </div>
 
@@ -50,7 +65,6 @@ const ReturnProductCard = ({ returnRequest }) => {
               <p className="text-xs uppercase text-muted-foreground">
                 Customer Comment
               </p>
-
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                 {returnRequest.customerComment}
               </p>

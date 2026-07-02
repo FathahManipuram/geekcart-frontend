@@ -21,8 +21,10 @@ const columns = [
     header: "Customer",
     cell: (row) => (
       <div>
-        <p>{row.user?.fullName}</p>
-        <p className="text-xs text-muted-foreground">{row.user?.email}</p>
+        <p>{row.user?.fullName || "Guest"}</p>
+        <p className="text-xs text-muted-foreground">
+          {row.user?.email || "N/A"}
+        </p>
       </div>
     ),
   },
@@ -36,17 +38,27 @@ const columns = [
   },
   {
     header: "Offer",
-    cell: (row) => `₹${row.discount.toFixed(2)}`,
+    cell: (row) => `₹${(row.discount ?? 0).toFixed(2)}`,
   },
   {
     header: "Coupon",
     cell: (row) => `₹${(row.coupon?.discountAmount ?? 0).toFixed(2)}`,
   },
   {
-    header: "Total",
-    cell: (row) => (
-      <span className="font-semibold">₹{row.totalAmount.toFixed(2)}</span>
-    ),
+    // ✅ CHANGED: Explicitly calculating Net Sales (Gross - Offers - Coupons)
+    header: "Net Sales",
+    cell: (row) => {
+      const gross = row.subtotal;
+      const offer = row.discount ?? 0;
+      const coupon = row.coupon?.discountAmount ?? 0;
+      const netSales = gross - offer - coupon;
+
+      return (
+        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+          ₹{netSales.toFixed(2)}
+        </span>
+      );
+    },
   },
   {
     header: "Status",

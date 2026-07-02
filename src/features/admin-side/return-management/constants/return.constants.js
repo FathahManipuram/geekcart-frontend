@@ -27,6 +27,10 @@ export const RETURN_FILTERS = [
     value: "RETURN_REJECTED",
   },
   {
+    label: "Item Received",
+    value: "ITEM_RECEIVED",
+  },
+  {
     label: "Completed",
     value: "RETURN_COMPLETED",
   },

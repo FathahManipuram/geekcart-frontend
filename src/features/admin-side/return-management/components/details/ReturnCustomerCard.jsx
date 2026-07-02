@@ -4,7 +4,9 @@ import ReturnStatusBadge from "../overview/ReturnStatusBadge";
 const ReturnCustomerCard = ({ returnRequest }) => {
   return (
     <div className="bg-white border rounded-xl p-6">
-      <h2 className="text-lg font-semibold mb-6">Customer & Order Information</h2>
+      <h2 className="text-lg font-semibold mb-6">
+        Customer & Order Information
+      </h2>
 
       <div className="space-y-5">
         {/* Customer */}
@@ -47,7 +49,9 @@ const ReturnCustomerCard = ({ returnRequest }) => {
           </p>
 
           <p className="font-bold mt-1">
-            ₹{returnRequest?.itemSnapshot?.priceAtPurchase}
+            ₹
+            {returnRequest?.itemSnapshot?.priceAtPurchase -
+              returnRequest?.itemSnapshot?.couponDiscount}
           </p>
         </div>
 

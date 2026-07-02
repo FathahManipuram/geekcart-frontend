@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -8,9 +8,7 @@ import {
   Tooltip,
   Filler,
 } from "chart.js";
-
 import { Line } from "react-chartjs-2";
-
 
 ChartJS.register(
   CategoryScale,
@@ -21,50 +19,72 @@ ChartJS.register(
   Filler,
 );
 
-const UserGrowthChart = ({data=[]}) => {
-   const chartData = {
-     labels: data.map((item) => item.month),
+const UserGrowthChart = ({ data = [] }) => {
+  const chartData = {
+    labels: data?.map((item) => item?.month || ""),
+    datasets: [
+      {
+        label: "Registered Users",
+        data: data?.map((item) => item?.users || 0),
+        borderColor: "#948b89",
+        backgroundColor: "#fefdfb",
+        fill: true,
+        tension: 0.4,
+        pointHoverBackgroundColor: "#4F46E5",
+        pointHoverBorderColor: "#fff",
+        pointHoverBorderWidth: 2,
+      },
+    ],
+  };
 
-     datasets: [
-       {
-         label: "Registered Users",
+  const options = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: "rgba(17, 24, 39, 0.9)", // Dark slate wrapper layout
+        padding: 12,
+        cornerRadius: 8,
+        callbacks: {
+          label: (context) => ` Users: ${context.parsed.y.toLocaleString()}`,
+        },
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false }, // Removes vertical lines to prevent clutter
+        ticks: { color: "#737373", font: { size: 11 } },
+      },
+      y: {
+        border: { dash: [4, 4] }, // Clean dashed guideline indicators
+        grid: { color: "#f5f5f5" },
+        ticks: {
+          color: "#737373",
+          font: { size: 11 },
+          callback: (value) => Number(value).toLocaleString(), // Format numbers with commas
+        },
+      },
+    },
+  };
 
-         data: data.map((item) => item.users),
+  return (
+    <div className="rounded-3xl border bg-white p-6 shadow-sm">
+      <div>
+        <h3 className="text-lg font-semibold tracking-tight text-neutral-900">
+          User Growth
+        </h3>
+        <p className="mt-0.5 text-sm text-neutral-500">
+          Monthly registration tracking
+        </p>
+      </div>
 
-         borderColor: "#8B5E34",
+      {/* FIX: Swapped out invalid height layout token for explicit standard sizing */}
+      <div className="mt-6 h-[350px] w-full">
+        <Line data={chartData} options={options} />
+      </div>
+    </div>
+  );
+};
 
-         backgroundColor: "rgba(139,94,52,0.12)",
-
-         fill: true,
-
-         tension: 0.4,
-       },
-     ],
-   };
-
-   const options = {
-     responsive: true,
-
-     maintainAspectRatio: false,
-
-     plugins: {
-       legend: {
-         display: false,
-       },
-     },
-   };
-
-   return (
-     <div className="rounded-3xl border bg-white p-6 shadow-sm">
-       <h3 className="text-lg font-semibold">User Growth</h3>
-
-       <p className="mt-1 text-sm text-neutral-500">Monthly registrations</p>
-
-       <div className="mt-6 h-87.5">
-         <Line data={chartData} options={options} />
-       </div>
-     </div>
-   );
-}
-
-export default UserGrowthChart
+export default UserGrowthChart;

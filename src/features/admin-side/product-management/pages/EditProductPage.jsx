@@ -50,17 +50,15 @@ const EditProductPage = () => {
     }
 
     return (
-      <ProductForm
-        initialData={
-          productDetails
-        }
-        onSubmitHandler={
-          handleUpdateProduct
-        }
-        submitLabel="Update Product"
-        title="Edit Product"
-        description="Update and refine your product information."
-      />
+      <div className='space-y-6'>
+        <ProductForm
+          initialData={productDetails}
+          onSubmitHandler={handleUpdateProduct}
+          submitLabel="Update Product"
+          title="Edit Product"
+          description="Update and refine your product information."
+        />
+      </div>
     );
   };
 

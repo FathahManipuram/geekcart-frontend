@@ -42,8 +42,7 @@ export const couponSchema = yup.object({
   minOrderAmount: yup
     .number()
     .typeError("Minimum order amount must be a number")
-    .min(0, "Minimum order amount cannot be negative")
-    .default(0),
+    .min(0, "Minimum order amount cannot be negative"),
 
   maxDiscountAmount: yup
     .number()

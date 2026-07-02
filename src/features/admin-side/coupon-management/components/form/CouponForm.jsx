@@ -19,7 +19,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
       description: "",
       discountType: "PERCENTAGE",
       discountValue: "",
-      minOrderAmount: "",
+      minOrderAmount: null,
       maxDiscountAmount: "",
       usageLimit: 100,
       perUserLimit: 1,
@@ -36,9 +36,13 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
       reset({
         ...defaultValues,
 
+        minOrderAmount: defaultValues.minOrderAmount ?? "",
+          
+        usageLimit: defaultValues.usageLimit ?? 100,
+        perUserLimit: defaultValues.perUserLimit ?? 1,
+
         startDate: defaultValues.startDate
-          ? 
-          formatDateForInput(defaultValues.startDate)
+          ? formatDateForInput(defaultValues.startDate)
           : "",
 
         expiryDate: defaultValues.expiryDate
@@ -174,7 +178,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
             <AppFormInput
               name="perUserLimit"
               label="Per User Limit"
-              type="number"
+              // type="number"
               required
             />
           </div>

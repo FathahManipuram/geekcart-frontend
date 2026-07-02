@@ -16,12 +16,12 @@ const AddProductPage = () => {
   };
 
   return (
-    <ProductForm
-      onSubmitHandler={handleCreateProduct}
-      submitLabel="Publish Product"
-      title="Add New Product"
-      description="Add a masterpiece to the MenStore collection."
-    />
+        <ProductForm
+          onSubmitHandler={handleCreateProduct}
+          submitLabel="Publish Product"
+          title="Add New Product"
+          description="Add a masterpiece to the MenStore collection."
+        />
   );
 };
 

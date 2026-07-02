@@ -10,6 +10,7 @@ import OrderStatsCard from "../components/overview-page/OrderStatsCard";
 import Modal from "@/shared/components/Modal";
 import UpdateOrderStatusModal from "../components/edit-page/UpdateOrderStatusModal";
 import { toast } from "sonner";
+import Header from "@/shared/components/Header";
 
 
 const OrderManagementPage = () => {
@@ -75,6 +76,7 @@ setPage(1)
 
   return (
     <div className="space-y-5">
+      <Header title="Order Management"/>
       <div>
         <OrderStatsCard orderStats={orderStats} />
       </div>

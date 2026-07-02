@@ -6,9 +6,9 @@ const ORDER_STATUSES = [
   { label: "PLACED", value: "PLACED" },
   { label: "PROCESSING", value: "PROCESSING" },
   { label: "SHIPPED", value: "SHIPPED" },
+  { label: "OUT FOR DELIVERY", value: "OUT_FOR_DELIVERY"},
   { label: "DELIVERED", value: "DELIVERED" },
   { label: "CANCELLED", value: "CANCELLED" },
-  { label: "RETURNED", value: "RETURNED" },
 ];
 
 const OrderFilters = ({ search, setSearch, status, setStatus }) => {

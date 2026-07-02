@@ -8,10 +8,11 @@ import SalesSummaryCards from "../components/SalesSummaryCards";
 import SalesReportTable from "../components/SalesReportTable";
 
 import { useSalesReportStore } from "../store/salesReport.store";
+import Header from "@/shared/components/Header";
 
 const DEFAULT_FILTERS = {
   search: "",
-  type: "monthly",
+  type: "yearly",
   startDate: "",
   endDate: "",
 };
@@ -115,6 +116,7 @@ const handlePdf = () => {
 };
   return (
     <div className="space-y-6">
+      <Header title="Sales Report"/>
       <SalesSummaryCards summary={summary} loading={loading} />
 
       <SalesReportFilters

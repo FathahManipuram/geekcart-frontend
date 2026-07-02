@@ -1,3 +1,6 @@
 import adminApi from "@/services/adminApi";
 
-export const fetchDashboardApi = async () => adminApi.get("/admin/dashboard");
+export const fetchDashboardApi = async (type = "monthly") =>
+  adminApi.get("/admin/dashboard", {
+    params: { type },
+  });
