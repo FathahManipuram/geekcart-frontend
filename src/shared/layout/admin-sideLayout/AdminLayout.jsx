@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import AdminSidebar from './AdminSidebar';
 import AdminNavbar from './AdminNavbar';
 import { Outlet } from 'react-router-dom';
+import ScrollToTop from '@/shared/components/ScrollToTop';
 
 const AdminLayout = () => {
 
@@ -16,6 +17,7 @@ const AdminLayout = () => {
         <AdminNavbar/>
 
         <main className="flex-1 overflow-y-auto p-8">
+          <ScrollToTop/>
           <Outlet />
         </main>
       </div>

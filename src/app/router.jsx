@@ -8,6 +8,7 @@ import wishlistRoute from "./routes/wishlist.routes";
 import { checkoutRoutes } from "./routes/checkout.routes";
 import { orderRoutes } from "./routes/order.routes";
 import moreRoutes from "./routes/more.routes";
+import NotFoundPage from "@/shared/components/NotFoundPage";
 
 export const router = createBrowserRouter([
   
@@ -21,6 +22,9 @@ export const router = createBrowserRouter([
   ...checkoutRoutes,
   ...orderRoutes,
   
-  
+  {
+    path: "*",
+    element: <NotFoundPage/>
+  }
   
 ]);
