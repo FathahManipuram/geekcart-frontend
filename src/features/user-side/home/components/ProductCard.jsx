@@ -46,7 +46,7 @@ const discountPercentage = salePrice
         {!existInCart && (
           <button
             type="button"
-            className="absolute right-3 top-3 z-20"
+            className="absolute right-3 top-3 z-20 bg-white p-2 rounded-full"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -55,7 +55,7 @@ const discountPercentage = salePrice
             }}
           >
             <Heart
-              className={`h-5 w-5 transition-colors ${
+              className={`h-5 w-5 transition-colors cursor-pointer ${
                 isWishlisted
                   ? "fill-red-500 text-red-500"
                   : "text-neutral-700 hover:text-red-500"

@@ -43,7 +43,7 @@ const EditProfileImageForm = () => {
           type="button"
           disabled={loading}
           onClick={() => fileRef.current.click()}
-          className="bg-amber-300 p-1 absolute bottom-0 right-0 shadow disabled:opacity-50 rounded-full text-center"
+          className="bg-amber-300 p-1 absolute bottom-0 right-0 shadow disabled:opacity-50 rounded-full text-center cursor-pointer"
         >
           {loading ? "..." : <ImageUp size={14} />}
         </button>

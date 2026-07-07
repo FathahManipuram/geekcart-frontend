@@ -110,7 +110,9 @@ console.log("Razorpay Loaded:", isLoaded);
             Wallet Balance
           </p>
 
-          <h2 className="text-5xl font-bold mt-3">₹{wallet?.balance?.toFixed(2) ||"0.00"}</h2>
+          <h2 className="text-5xl font-bold mt-3">
+            ₹{wallet?.balance?.toFixed(2) || "0.00"}
+          </h2>
 
           <p className="mt-3 text-white/80">
             Available for purchases, refunds and rewards.
@@ -121,7 +123,12 @@ console.log("Razorpay Loaded:", isLoaded);
       </div>
 
       <div className="mt-8">
-        <Button onClick={() => setOpen(true)} size="lg" variant="secondary">
+        <Button
+          className="cursor-pointer"
+          onClick={() => setOpen(true)}
+          size="lg"
+          variant="secondary"
+        >
           Add Money
         </Button>
       </div>

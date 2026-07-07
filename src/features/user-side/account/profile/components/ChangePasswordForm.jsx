@@ -75,7 +75,7 @@ const ChangePasswordForm = ({ user, onClose }) => {
           <button
             type="button"
             onClick={() => setShowNew(!showNew)}
-            className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground"
+            className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground cursor-pointer"
           >
             {showNew ? <EyeClosed size={20} /> : <Eye size={20} />}
           </button>
@@ -103,7 +103,7 @@ const ChangePasswordForm = ({ user, onClose }) => {
         )}
       </div>
 
-      <Button type="submit" disabled={isSubmitting}>
+      <Button className="cursor-pointer" type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Updating..." : "Change Password"}
       </Button>
     </form>

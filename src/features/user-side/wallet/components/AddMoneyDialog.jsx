@@ -43,6 +43,7 @@ const AddMoneyDialog = ({ open, onOpenChange, onSubmit, loading }) => {
           <div className="grid grid-cols-2 gap-3">
             {QUICK_AMOUNTS.map((value) => (
               <Button
+                className="cursor-pointer"
                 key={value}
                 type="button"
                 variant="outline"
@@ -55,7 +56,7 @@ const AddMoneyDialog = ({ open, onOpenChange, onSubmit, loading }) => {
         </div>
 
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           disabled={loading || !amount || Number(amount) < 100}
           onClick={handleSubmit}
         >

@@ -20,8 +20,11 @@ useEffect(()=>{
     <>
       <div className="flex flex-row items center justify-between mb-6">
         <p className="text-xl font-bold">Saved Address</p>
-        <Button onClick={() => setAddressModalOpen(true)}>
-          <Plus/>
+        <Button
+          className="cursor-pointer"
+          onClick={() => setAddressModalOpen(true)}
+        >
+          <Plus />
           Add New Address
         </Button>
       </div>

@@ -32,6 +32,7 @@ const ProductActions = ({
             gap-2
             hover:bg-[#875a33]
             transition-colors
+            cursor-pointer
           "
         >
           <ShoppingCart className="w-5 h-5" />
@@ -51,6 +52,7 @@ const ProductActions = ({
             justify-center
             gap-2
             transition-colors
+            cursor-pointer
             ${
               addToCartDisabled
                 ? "bg-neutral-300 text-neutral-500 cursor-not-allowed"
@@ -82,6 +84,7 @@ const ProductActions = ({
             items-center
             justify-center
             transition-colors
+            cursor-pointer
             ${
               isUnavailable
                 ? "cursor-not-allowed opacity-50 border-neutral-200"

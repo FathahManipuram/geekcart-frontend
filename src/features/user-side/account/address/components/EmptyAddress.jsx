@@ -2,7 +2,7 @@ import React from "react";
 import { MapPin } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 
-const EmptyAddress = ({ onAdd }) => {
+const EmptyAddress = () => {
   return (
     <div className="border border-dashed rounded-2xl p-10 text-center bg-muted/20">
       <div className="flex justify-center mb-4">

@@ -143,7 +143,7 @@ const CollectionsPage = () => {
 
               <Button
                 variant="outline"
-                className="lg:hidden"
+                className="lg:hidden cursor-pointer"
                 onClick={() => setOpenFilters(true)}
               >
                 Filters

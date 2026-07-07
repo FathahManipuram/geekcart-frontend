@@ -34,11 +34,21 @@ const ReferralCodeCard = ({ user }) => {
         </h2>
 
         <div className="flex gap-2">
-          <Button variant="outline" size="icon" onClick={handleCopy}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            size="icon"
+            onClick={handleCopy}
+          >
             <Copy size={18} />
           </Button>
 
-          <Button variant="outline" size="icon" onClick={handleShare}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            size="icon"
+            onClick={handleShare}
+          >
             <Share2 size={18} />
           </Button>
         </div>

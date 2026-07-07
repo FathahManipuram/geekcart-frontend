@@ -57,7 +57,7 @@ const VariantImageSelector = ({
                   rounded-full
                   border-2
                   transition-all
-                  
+                  cursor-pointer
                   ${
                     isSelected ? "border-black scale-105" : "border-neutral-200"
                   }

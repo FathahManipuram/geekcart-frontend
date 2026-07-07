@@ -95,6 +95,7 @@ const FilterSidebar = ({
                 className="flex items-center gap-3 text-sm"
               >
                 <input
+                  className="cursor-pointer"
                   type="checkbox"
                   checked={selectedSubcategories.includes(subcategory._id)}
                   onChange={() =>
@@ -118,8 +119,12 @@ const FilterSidebar = ({
 
           <div className="space-y-3">
             {sizes.map((size) => (
-              <label key={size} className="flex items-center gap-3 text-sm">
+              <label
+                key={size}
+                className="flex items-center gap-3 text-sm"
+              >
                 <input
+                  className="cursor-pointer"
                   type="checkbox"
                   checked={selectedSizes.includes(size)}
                   onChange={() =>
@@ -145,7 +150,7 @@ const FilterSidebar = ({
                 onClick={() =>
                   toggleValue(color, selectedColors, setSelectedColors)
                 }
-                className={`h-8 w-8 rounded-full border-2 ${
+                className={`h-8 w-8 rounded-full border-2 cursor-pointer ${
                   selectedColors.includes(color)
                     ? "border-black"
                     : "border-transparent"
@@ -156,7 +161,6 @@ const FilterSidebar = ({
               />
             ))}
           </div>
-         
         </div>
 
         {/* Price */}
@@ -187,6 +191,7 @@ const FilterSidebar = ({
           <button
             onClick={handleApplyFilters}
             className="
+            cursor-pointer
               w-full
               rounded-xl
               bg-black
@@ -204,6 +209,7 @@ const FilterSidebar = ({
               rounded-xl
               border
               py-3
+              cursor-pointer
             "
           >
             Clear Filters
@@ -216,6 +222,7 @@ const FilterSidebar = ({
       rounded-xl
       border
       py-3
+      cursor-pointer
     "
             >
               Cancel

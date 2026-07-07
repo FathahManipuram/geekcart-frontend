@@ -48,9 +48,7 @@ const discountPercentage =
           >
             <Heart
               size={18}
-              className={
-                isWishlisted ? "fill-red-500 text-red-500" : "text-neutral-700"
-              }
+              className={`cursor-pointer ${isWishlisted ? "fill-red-500 text-red-500" : "text-neutral-700"}`}
             />
           </button>
         )}

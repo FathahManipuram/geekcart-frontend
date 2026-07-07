@@ -62,7 +62,7 @@ const EmailEditForm = ({ user }) => {
         <Input {...register("email")} type="email" className="h-8" />
         <p className="text-xs text-red-500">{errors?.email?.message}</p>
       </div>
-      <Button type="submit" disabled={isSubmitting} className="w-full mt-6">
+      <Button type="submit" disabled={isSubmitting} className="w-full mt-6 cursor-pointer">
         {isSubmitting ? "Sendinding..." : "Change Email"}
       </Button>
     </form>

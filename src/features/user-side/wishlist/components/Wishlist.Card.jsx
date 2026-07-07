@@ -61,7 +61,6 @@ const discountPercentage = item.variantId?.salePrice
             "
           />
 
-        
           <button
             onClick={() => setOpenDeleteModal(true)}
             className="
@@ -77,6 +76,7 @@ const discountPercentage = item.variantId?.salePrice
               bg-white/90
               shadow
               backdrop-blur
+              cursor-pointer
             "
           >
             <Trash2 size={14} className="text-neutral-600 hover:text-red-500" />
@@ -174,7 +174,7 @@ const discountPercentage = item.variantId?.salePrice
             onClick={() =>
               existInCart ? navigate("/cart") : onMoveToCart(item.variantId._id)
             }
-            className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition
+            className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition cursor-pointer
       ${
         isUnavailable || isOutOfStock
           ? "cursor-not-allowed bg-neutral-200 text-neutral-500"

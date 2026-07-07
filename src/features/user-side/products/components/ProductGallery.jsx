@@ -18,7 +18,7 @@ useEffect(()=>{
           <button
             key={index}
             onClick={() => setSelectedImage(image)}
-            className={`overflow-hidden rounded-lg border transition-all ${
+            className={`overflow-hidden rounded-lg border transition-all cursor-pointer ${
               selectedImage === image
                 ? "border-black ring-2 ring-black"
                 : "border-transparent"

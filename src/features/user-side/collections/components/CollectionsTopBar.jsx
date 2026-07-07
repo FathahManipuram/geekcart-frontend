@@ -46,12 +46,24 @@ const CollectionsTopBar = ({
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="latest">Latest</SelectItem>
-            <SelectItem value="oldest">Oldest</SelectItem>
-            <SelectItem value="A-Z">Alphabetically A-Z</SelectItem>
-            <SelectItem value="Z-A">Alphabetically Z-A</SelectItem>
-            <SelectItem value="price-low">Price: Low To High</SelectItem>
-            <SelectItem value="price-high">Price: High To Low</SelectItem>
+            <SelectItem value="latest" className="cursor-pointer">
+              Latest
+            </SelectItem>
+            <SelectItem value="oldest" className="cursor-pointer">
+              Oldest
+            </SelectItem>
+            <SelectItem value="A-Z" className="cursor-pointer">
+              Alphabetically A-Z
+            </SelectItem>
+            <SelectItem value="Z-A" className="cursor-pointer">
+              Alphabetically Z-A
+            </SelectItem>
+            <SelectItem value="price-low" className="cursor-pointer">
+              Price: Low To High
+            </SelectItem>
+            <SelectItem value="price-high" className="cursor-pointer">
+              Price: High To Low
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>

@@ -46,7 +46,7 @@ Email: ${product?.manufacturer?.email || ""}
     <Accordion type="single" collapsible className="w-full mt-10">
       {accordionItems.map((item) => (
         <AccordionItem key={item.value} value={item.value}>
-          <AccordionTrigger className="font-bold">{item.title}</AccordionTrigger>
+          <AccordionTrigger className="font-bold cursor-pointer">{item.title}</AccordionTrigger>
 
           <AccordionContent>
             <div className="text-sm text-neutral-600 leading-relaxed whitespace-pre-line">

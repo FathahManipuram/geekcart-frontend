@@ -148,6 +148,7 @@ const AddressForm = ({ initialData = null, onClose }) => {
         <div className="grid grid-cols-3 gap-3">
           {["Home", "Work", "Other"].map((label) => (
             <Button
+              className="cursor-pointer"
               key={label}
               type="button"
               variant={selectedLabel === label ? "default" : "outline"}
@@ -210,7 +211,7 @@ const AddressForm = ({ initialData = null, onClose }) => {
                   setValue("country", value, { shouldDirty: true })
                 }
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className="w-full cursor-pointer">
                   <SelectValue placeholder="Select country" />
                 </SelectTrigger>
                 <SelectContent>
@@ -268,13 +269,13 @@ const AddressForm = ({ initialData = null, onClose }) => {
         <input
           type="checkbox"
           {...register("isDefault")}
-          className="h-4 w-4 accent-primary"
+          className="h-4 w-4 accent-primary cursor-pointer"
         />
         <p className="text-sm">Set as default address</p>
       </div>
 
       <div className="flex gap-4 pt-4">
-        <Button type="submit" disabled={loading} className="flex-1">
+        <Button type="submit" disabled={loading} className="flex-1 cursor-pointer">
           {loading
             ? "Saving..."
             : isEditMode
@@ -285,7 +286,7 @@ const AddressForm = ({ initialData = null, onClose }) => {
           onClick={onClose}
           type="button"
           variant="outline"
-          className="flex-1"
+          className="flex-1 cursor-pointer"
         >
           Cancel
         </Button>

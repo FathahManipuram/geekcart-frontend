@@ -25,7 +25,7 @@ const ProductCollection = ({
         {showViewAll && (
           <button
             onClick={() => navigate("/collections")}
-            className="hidden items-center gap-2 text-sm font-semibold text-amber-700 transition-colors hover:text-amber-800 md:flex"
+            className="hidden items-center gap-2 text-sm font-semibold text-amber-700 transition-colors hover:text-amber-800 md:flex cursor-pointer"
           >
             View All Products →
           </button>
@@ -58,7 +58,7 @@ const ProductCollection = ({
         <div className="mt-8 flex justify-center md:hidden">
           <button
             onClick={() => navigate("/collections")}
-            className="text-sm font-semibold text-amber-700"
+            className="text-sm font-semibold text-amber-700 cursor-pointer"
           >
             View All Products →
           </button>
