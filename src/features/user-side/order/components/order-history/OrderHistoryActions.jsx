@@ -9,6 +9,7 @@ const OrderHistoryActions = ({ order }) => {
   return (
     <div className="flex gap-2 flex-wrap justify-end">
       <Button
+        className="cursor-pointer"
         variant="outline"
         onClick={() => navigate(`/orders/${order._id}`)}
       >
@@ -16,7 +17,10 @@ const OrderHistoryActions = ({ order }) => {
       </Button>
 
       {!delivered && (
-        <Button onClick={() => navigate(`/orders/${order._id}/tracking`)}>
+        <Button
+          className="cursor-pointer"
+          onClick={() => navigate(`/orders/${order._id}/tracking`)}
+        >
           Track Order
         </Button>
       )}

@@ -100,6 +100,7 @@ const OrderItemCard = ({ item, order, onCancel }) => {
           <div className="mt-4 flex flex-col items-end gap-1.5">
             {canCancel && (
               <Button
+                className="cursor-pointer"
                 variant="destructive"
                 size="sm"
                 onClick={() => onCancel(item)}

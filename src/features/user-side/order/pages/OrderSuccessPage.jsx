@@ -41,14 +41,14 @@ const orderId= location?.state.orderId
         <div className="flex justify-center gap-4 mt-8">
           <button
             onClick={() => navigate(`/orders/${orderId}`)}
-            className="px-6 py-3 bg-primary text-white rounded-lg"
+            className="px-6 py-3 bg-primary text-white rounded-lg cursor-pointer"
           >
             View Order
           </button>
 
           <button
             onClick={() => navigate("/collections")}
-            className="px-6 py-3 border rounded-lg"
+            className="px-6 py-3 border rounded-lg cursor-pointer"
           >
             Continue Shopping
           </button>

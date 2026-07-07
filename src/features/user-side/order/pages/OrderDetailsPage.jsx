@@ -84,6 +84,7 @@ const delivered = order?.orderStatus === "DELIVERED";
         <div className="flex gap-2">
           {canCancelOrder && (
             <Button
+              className="cursor-pointer"
               variant="destructive"
               onClick={() => setShowCancelModal(true)}
             >
@@ -91,7 +92,10 @@ const delivered = order?.orderStatus === "DELIVERED";
             </Button>
           )}
           {order.orderStatus !== ORDER_STATUSES.CANCELLED && (
-            <Button onClick={() => navigate(`/orders/${orderId}/tracking`)}>
+            <Button
+              className="cursor-pointer"
+              onClick={() => navigate(`/orders/${orderId}/tracking`)}
+            >
               Track Package
             </Button>
           )}
@@ -99,6 +103,7 @@ const delivered = order?.orderStatus === "DELIVERED";
           {delivered && (
             <>
               <Button
+                className="cursor-pointer"
                 variant="outline"
                 onClick={() => navigate(`/orders/${order._id}/return`)}
               >
@@ -108,6 +113,7 @@ const delivered = order?.orderStatus === "DELIVERED";
           )}
           {order.orderStatus === "DELIVERED" && (
             <Button
+              className="cursor-pointer"
               variant="outline"
               onClick={() => downloadInvoicePdf(orderId)}
             >
