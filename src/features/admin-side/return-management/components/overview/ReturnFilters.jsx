@@ -23,7 +23,7 @@ const ReturnFilters = ({ search, onSearchChange, status, onStatusChange }) => {
             onClick={() => onStatusChange(filter.value)}
             className={`
               px-4 py-2 rounded-lg text-sm font-medium
-              transition-colors
+              transition-colors cursor-pointer
               ${
                 status === filter.value
                   ? "bg-primary text-white"

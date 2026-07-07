@@ -2,13 +2,15 @@ import DataTable from '@/shared/components/DataTable'
 import { formatTitleCase } from '@/shared/utils/formatTitleCase'
 import React, { useState } from 'react'
 import SubCategoryImages from './SubCategoryImages'
-import {SquarePen, Trash2 } from 'lucide-react'
+import {Pencil, SquarePen, Trash2 } from 'lucide-react'
 import { useSubcategoryStore } from '../store/subcategory.store'
 import { toast } from 'sonner'
 import SubcategoryForm from './SubcategoryForm'
 import { updateSubcategorySchema } from '../validations/subcategory.validation'
 import Modal from '@/shared/components/Modal'
 import ConfirmModal from '@/shared/components/ConfirmModal'
+import { Button } from '@/shared/components/ui/button'
+import StatusBadge from '@/shared/components/StatusBadge'
 
 const SubcategoryTable = ({subcategories, loading}) => {
   const [selectedSubcategory, setSelectedSubcategory]= useState(null)
@@ -35,16 +37,12 @@ const columns = [
   },
   {
     header: "PRODUCTS",
-    cell: (subcategory) => <span>{subcategory.productCount}</span>
+    cell: (subcategory) => <span>{subcategory.productCount}</span>,
   },
   {
     header: "STATUS",
     cell: (subcategory) => (
-      <span
-        className={`text-xs font-semibold tracking-wide ${subcategory.isActive ? "text-green-700" : "text-red-600"}`}
-      >
-        {subcategory.isActive ? "ACTIVE" : "INACTIVE"}
-      </span>
+      <StatusBadge status={subcategory?.isActive ? "active" : "inactive"} />
     ),
   },
   {
@@ -52,34 +50,31 @@ const columns = [
     cell: (subcategory) => (
       <div className="flex items-center gap-3">
         {/* EDIT */}
-        <button
+        <Button
+          variant="outline"
+          size="icon"
           onClick={() => {
-            setSelectedSubcategory(subcategory)
+            setSelectedSubcategory(subcategory);
             setEditModalOpen(true);
           }}
-          className="
-              text-muted-foreground
-              hover:text-black
-              transition
-            "
+          disabled={loading}
         >
-          <SquarePen size={16} />
-        </button>
+          <Pencil size={15} />
+        </Button>
 
         {/* DELETE */}
-        <button
+        <Button
+          variant="outline"
+          size="icon"
           onClick={() => {
-            setSelectedSubcategory(subcategory)
-            setDeleteModalOpen(true)
+            setSelectedSubcategory(subcategory);
+            setDeleteModalOpen(true);
           }}
-          className="
-              text-red-500
-              hover:text-red-700
-              transition
-            "
+          className="text-red-500 hover:text-red-600 hover:bg-red-50"
+          disabled={loading}
         >
-          <Trash2 size={16} />
-        </button>
+          <Trash2 size={15} />
+        </Button>
       </div>
     ),
   },

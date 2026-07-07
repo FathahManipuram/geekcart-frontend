@@ -131,7 +131,7 @@ useEffect(()=>{
         <Button
           type="submit"
           disabled={loading || (isEditMode && !Object.keys(dirtyFields).length)}
-          className="flex-1"
+          className="flex-1 cursor-pointer"
         >
           {loading ? "Saving..." : isEditMode ? "Update User" : "Create User"}
         </Button>
@@ -140,7 +140,7 @@ useEffect(()=>{
           onClick={onClose}
           type="button"
           variant="outline"
-          className="flex-1"
+          className="flex-1 cursor-pointer"
         >
           Cancel
         </Button>

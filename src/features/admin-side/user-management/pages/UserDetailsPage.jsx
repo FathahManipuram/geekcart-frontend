@@ -12,6 +12,10 @@ const {userId}= useParams()
 const fetchUserById= useUserManagementStore((state)=> state.fetchUserById)
 const loading= useUserManagementStore((state)=> state.loading)
 const selectedUser= useUserManagementStore((state)=> state.selectedUser)
+const selectedUserWallet= useUserManagementStore((state)=> state.selectedUserWallet)
+const selectedUserAddress = useUserManagementStore(
+  (state) => state.selectedUserAddress,
+);
 
 
 	useEffect(()=>{
@@ -30,11 +34,11 @@ const selectedUser= useUserManagementStore((state)=> state.selectedUser)
       <div>
         <UserHeader user={selectedUser} />
       </div>
-	  <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8'>
-		<UserPersonalCard user={selectedUser}/>
-		<UserFinancialCard user={selectedUser} />
-		<UserAddressCard user={selectedUser}/>
-	  </div>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-8">
+        <UserPersonalCard user={selectedUser} />
+        <UserFinancialCard wallet={selectedUserWallet} />
+        <UserAddressCard address={selectedUserAddress} />
+      </div>
     </>
   );
 }

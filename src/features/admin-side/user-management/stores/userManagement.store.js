@@ -19,6 +19,8 @@ export const useUserManagementStore = create((set) => ({
   totalAdmins: 0,
   search: "",
   selectedUser: null,
+  selectedUserWallet: null,
+  selectedUserAddress: null,
   status: "all",
   error: null,
 
@@ -66,10 +68,11 @@ export const useUserManagementStore = create((set) => ({
     try {
       set({ loading: true });
       const res = await getUserByIdApi(userId);
-      console.log("getuserById: ", res);
 
       set({
-        selectedUser: res.data,
+        selectedUser: res.data.user,
+        selectedUserWallet: res.data.wallet,
+        selectedUserAddress: res.data.address,
         loading: false,
       });
 	  return res

@@ -1,13 +1,16 @@
 import ConfirmModal from '@/shared/components/ConfirmModal';
 import DataTable from '@/shared/components/DataTable'
 import { formatTitleCase } from '@/shared/utils/formatTitleCase';
-import {SquarePen, Trash2 } from 'lucide-react';
+import {Pencil, Trash2 } from 'lucide-react';
 import React, { useState } from 'react'
 import CategoryForm from './CategoryForm';
 import { updateCategorySchema } from '../validations/category.validation';
 import Modal from '@/shared/components/Modal';
 import { useCategoryStore } from '../store/category.store';
 import { toast } from 'sonner';
+import { Button } from '@/shared/components/ui/button';
+import { Badge } from '@/shared/components/ui/badge';
+import StatusBadge from '@/shared/components/StatusBadge';
 
 const CategoryTable = ({categories, loading, currentPage, perPage}) => {
 const [deleteModalOpen, setDeleteModalOpen]= useState(false)
@@ -79,13 +82,7 @@ const {updateCategory, deleteCategory}= useCategoryStore()
     {
       header: "STATUS",
       cell: (category) => (
-        <span
-          className={`text-xs font-semibold tracking-wide ${
-            category.isActive ? "text-green-700" : "text-red-600"
-          }`}
-        >
-          {category.isActive ? "ACTIVE" : "INACTIVE"}
-        </span>
+        <StatusBadge status={category?.isActive ? "active" : "inactive"}/>
       ),
     },
 
@@ -94,31 +91,28 @@ const {updateCategory, deleteCategory}= useCategoryStore()
       cell: (category) => (
         <div className="flex items-center gap-3">
           {/* EDIT */}
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => {
               setSelectedCategory(category);
               setEditModalOpen(true);
             }}
-            className="
-              text-muted-foreground
-              hover:text-black
-              transition
-            "
+            disabled={loading}
           >
-            <SquarePen size={16} />
-          </button>
+            <Pencil size={15} />
+          </Button>
 
           {/* DELETE */}
-          <button
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => openDeleteModal(category)}
-            className="
-              text-red-500
-              hover:text-red-700
-              transition
-            "
+            className="text-red-500 hover:text-red-600 hover:bg-red-50"
+            disabled={loading}
           >
-            <Trash2 size={16} />
-          </button>
+            <Trash2 size={15} />
+          </Button>
         </div>
       ),
     },

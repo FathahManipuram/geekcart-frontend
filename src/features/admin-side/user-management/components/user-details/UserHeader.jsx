@@ -18,8 +18,6 @@ const UserHeader = ({ user }) => {
 
 const handleBlock= async()=>{
   try{
-    console.log("selectedUser",selectedUser)
-    console.log(selectedUser._id)
     await blockUser(selectedUser._id)
 
     toast.success(selectedUser.isBlocked ? "User unblocked": "User blocked")
@@ -40,7 +38,7 @@ const handleSubmit= async(data)=>{
       finalData[key]= value
     }
   })
-  console.log("Id; ", selectedUser, finalData)
+
   const res= await updateUser(selectedUser._id, finalData)
   toast.success(res.message || "User updated")
   setUserEditModal(false)
@@ -66,7 +64,7 @@ const handleSubmit= async(data)=>{
           "
           />
 
-          <div >
+          <div>
             <p
               className={`uppercase tracking-[0.2em] text-xs font-semibold ${
                 user?.isBlocked ? "text-destructive" : "text-green-600"
@@ -85,7 +83,11 @@ const handleSubmit= async(data)=>{
 
         {/* RIGHT */}
         <div className="flex gap-4">
-          <Button onClick={() => setUserEditModal(true)} variant="outline">
+          <Button
+            onClick={() => setUserEditModal(true)}
+            variant="outline"
+            className="cursor-pointer"
+          >
             Edit User
           </Button>
 
@@ -94,6 +96,7 @@ const handleSubmit= async(data)=>{
               setBlockModalOpen(true);
             }}
             variant={user?.isBlocked ? "default" : "destructive"}
+            className="cursor-pointer"
           >
             {user?.isBlocked ? "Unblock User" : "Block User"}
           </Button>

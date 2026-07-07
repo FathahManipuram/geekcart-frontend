@@ -83,7 +83,7 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
             className="
               text-red-500
               hover:text-red-700
-              transition
+              transition cursor-pointer
             "
           >
             <Trash2 size={16} />
@@ -95,7 +95,7 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
             className="
               text-muted-foreground
               hover:text-black
-              transition
+              transition cursor-pointer
             "
           >
             <Eye size={16} />

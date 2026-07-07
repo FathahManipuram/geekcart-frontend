@@ -1,6 +1,5 @@
 import DataTable from "@/shared/components/DataTable";
 import { formatDateForDisplay } from "@/shared/utils/date";
-import { Pencil, Trash2, Eye } from "lucide-react";
 import CouponActionButton from "./CouponActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
 import { STATUS_LABELS_FOR_PROMOTION, STATUS_STYLES_FOR_PROMOTION } from "../../constants/coupon.constants";

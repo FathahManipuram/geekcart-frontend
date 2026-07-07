@@ -11,7 +11,7 @@ const ProductOverviewHeader = () => {
       <Header title="Product Management" />
 
       <div className="flex items-center gap-4">
-        <Button onClick={() => navigate("/admin/products/create")}>
+        <Button className="cursor-pointer" onClick={() => navigate("/admin/products/create")}>
           <Plus size={16} />
           Add New Product
         </Button>

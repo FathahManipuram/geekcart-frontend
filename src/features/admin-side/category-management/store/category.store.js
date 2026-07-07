@@ -25,14 +25,13 @@ fetchCategories: async(params={})=>{
 			...get().queryParams,
 			...params,
 		}
-		console.log("Fetching with params:", currentParams);
 		set({
 				loading: true,
 				error: null,
 				queryParams: currentParams
 			})
 		const res= await fetchCategoryApi(currentParams)
-		console.log("All categories: ", res.data)
+
 		set({
 			categories: res.data.categories,
 			pagination: res.data.pagination,
@@ -55,7 +54,6 @@ fetchCategories: async(params={})=>{
 
 //Change page
 changePage: async(page)=>{
-	console.log("Changing page: ", page)
 	await get().fetchCategories({page})
 },
 
@@ -63,7 +61,6 @@ changePage: async(page)=>{
 //Create category
 	createCategory: async(data)=>{
 		try{
-			console.log("store: ", data)
 			set({
 				loading: true,
 				error: null,

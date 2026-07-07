@@ -32,7 +32,6 @@ fetchCoupons({
 })
 },[type, status, page, debouncedValue, fetchCoupons])
 
-console.log("Coupon managment: ", coupons)
   return (
     <div className="space-y-6">
       <CouponManagementHeader/>

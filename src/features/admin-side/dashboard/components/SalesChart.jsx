@@ -97,14 +97,14 @@ const SalesChart = ({
           </p>
         </div>
 
-        {/* Dashboard Inline Filter Buttons */}
+
         <div className="flex items-center gap-1 bg-neutral-100 p-1 rounded-xl self-start sm:self-center">
           {TIMELINE_FILTERS.map((filter) => (
             <button
               key={filter.value}
               type="button"
               onClick={() => onFilterChange?.(filter.value)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer ${
                 activeFilter === filter.value
                   ? "bg-white text-neutral-900 shadow-sm"
                   : "text-neutral-500 hover:text-neutral-900"

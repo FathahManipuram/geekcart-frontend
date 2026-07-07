@@ -1,6 +1,7 @@
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 import React from "react";
 
-const UserFinancialCard = () => {
+const UserFinancialCard = ({wallet}) => {
   return (
     <div
       className="
@@ -18,13 +19,7 @@ const UserFinancialCard = () => {
         <div>
           <p className="text-sm opacity-70">Wallet Balance</p>
 
-          <h3 className="text-4xl font-bold mt-2">₹1250</h3>
-        </div>
-
-        <div>
-          <p className="text-sm opacity-70">GeekCoins</p>
-
-          <h3 className="text-4xl font-bold mt-2">2840</h3>
+          <h3 className="text-4xl font-bold mt-2">{`₹${formatCurrency(wallet?.balance)}`}</h3>
         </div>
       </div>
     </div>

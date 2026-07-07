@@ -21,7 +21,7 @@ const UpdateCouponPage = () => {
 	}, [])
 
 	const handleUpdateCoupon= async(payload)=>{
-		console.log("updationdata; ", couponId, payload)
+
 		try{
 			const res= await updateCoupon(couponId, payload)
 

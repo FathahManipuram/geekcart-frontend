@@ -53,7 +53,7 @@ const UserManagementHeader = () => {
                 <SelectItem value="blocked">Blocked</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={() => setOpenCreateUserModal(true)}>
+            <Button onClick={() => setOpenCreateUserModal(true)} className="cursor-pointer">
               <UserPlus size={16} />
               Add New User
             </Button>

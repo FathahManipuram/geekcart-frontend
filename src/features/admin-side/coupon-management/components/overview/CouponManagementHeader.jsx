@@ -1,4 +1,5 @@
 import Header from "@/shared/components/Header";
+import { Button } from "@/shared/components/ui/button";
 import { Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -14,13 +15,13 @@ const CouponManagementHeader = () => {
         </p>
       </div>
 
-      <button
+      <Button
         onClick={() => navigate("/admin/coupons/create")}
         className="bg-primary text-white px-4 py-2 rounded-lg flex items-center gap-2"
       >
         <Plus size={18} />
         Create Coupon
-      </button>
+      </Button>
     </div>
   );
 };

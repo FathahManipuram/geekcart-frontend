@@ -7,7 +7,7 @@ import { formatDateForDisplay } from "@/shared/utils/date";
 
 const columns = [
   {
-    header: "Order",
+    header: "Order No",
     cell: (row) => (
       <Link
         to={`/admin/orders/${row._id}`}
@@ -21,7 +21,7 @@ const columns = [
     header: "Customer",
     cell: (row) => (
       <div>
-        <p>{row.user?.fullName || "Guest"}</p>
+        <p className="font-medium text-sm">{row.user?.fullName || "Guest"}</p>
         <p className="text-xs text-muted-foreground">
           {row.user?.email || "N/A"}
         </p>
@@ -33,36 +33,115 @@ const columns = [
     cell: (row) => formatDateForDisplay(row.createdAt),
   },
   {
-    header: "Gross",
-    cell: (row) => `₹${row.subtotal.toFixed(2)}`,
-  },
-  {
-    header: "Offer",
-    cell: (row) => `₹${(row.discount ?? 0).toFixed(2)}`,
-  },
-  {
-    header: "Coupon",
-    cell: (row) => `₹${(row.coupon?.discountAmount ?? 0).toFixed(2)}`,
-  },
-  {
-    // ✅ CHANGED: Explicitly calculating Net Sales (Gross - Offers - Coupons)
-    header: "Net Sales",
+    // ✅ Sum of all original items' quantities
+    header: "Ordered Qty",
     cell: (row) => {
-      const gross = row.subtotal;
-      const offer = row.discount ?? 0;
-      const coupon = row.coupon?.discountAmount ?? 0;
-      const netSales = gross - offer - coupon;
-
+      const qty =
+        row.items?.reduce((acc, item) => acc + (item.quantity ?? 0), 0) ?? 0;
+      return <span className="text-center block">{qty}</span>;
+    },
+  },
+  {
+    // ✅ Sum of quantities where itemStatus is "CANCELLED"
+    header: "Cancelled Qty",
+    cell: (row) => {
+      const qty =
+        row.items?.reduce(
+          (acc, item) =>
+            item.itemStatus === "CANCELLED" ? acc + (item.quantity ?? 0) : acc,
+          0,
+        ) ?? 0;
       return (
-        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
-          ₹{netSales.toFixed(2)}
+        <span
+          className={`text-center block ${qty > 0 ? "text-destructive font-medium" : ""}`}
+        >
+          {qty}
         </span>
       );
     },
   },
   {
-    header: "Status",
-    cell: (row) => <Badge variant="secondary">{row.orderStatus}</Badge>,
+    // ✅ Sum of quantities where itemStatus is "RETURN_COMPLETED" (or matching your returned flags)
+    header: "Returned Qty",
+    cell: (row) => {
+      const qty =
+        row.items?.reduce(
+          (acc, item) =>
+            item.itemStatus === "RETURN_COMPLETED"
+              ? acc + (item.quantity ?? 0)
+              : acc,
+          0,
+        ) ?? 0;
+      return (
+        <span
+          className={`text-center block ${qty > 0 ? "text-orange-500 font-medium" : ""}`}
+        >
+          {qty}
+        </span>
+      );
+    },
+  },
+  {
+    header: "Gross Subtotal",
+    cell: (row) => `₹${(row.subtotal ?? 0).toFixed(2)}`,
+  },
+  {
+    header: "Offer Discount",
+    cell: (row) => `₹${(row.discount ?? 0).toFixed(2)}`,
+  },
+  {
+    header: "Coupon Discount",
+    cell: (row) => `₹${(row.coupon?.discountAmount ?? 0).toFixed(2)}`,
+  },
+  {
+    // ✅ Sums the refundAmount inside each item block if the refund status is COMPLETED
+    header: "Refunded Amt",
+    cell: (row) => {
+      const totalRefunded =
+        row.items?.reduce((acc, item) => {
+          if (item.refundStatus === "COMPLETED") {
+            return acc + (item.refundAmount ?? 0);
+          }
+          return acc;
+        }, 0) ?? 0;
+
+      return (
+        <span
+          className={
+            totalRefunded > 0
+              ? "text-destructive font-medium"
+              : "text-muted-foreground"
+          }
+        >
+          ₹{totalRefunded.toFixed(2)}
+        </span>
+      );
+    },
+  },
+  {
+    // ✅ Correct Net Total calculation matching standard e-commerce books
+    header: "Net Total",
+    cell: (row) => {
+      const gross = row.subtotal ?? 0;
+      const offer = row.discount ?? 0;
+      const coupon = row.coupon?.discountAmount ?? 0;
+
+      const totalRefunded =
+        row.items?.reduce((acc, item) => {
+          if (item.refundStatus === "COMPLETED") {
+            return acc + (item.refundAmount ?? 0);
+          }
+          return acc;
+        }, 0) ?? 0;
+
+      const netTotal = gross - offer - coupon - totalRefunded;
+
+      return (
+        <span className="font-semibold text-emerald-600 dark:text-emerald-400">
+          ₹{netTotal.toFixed(2)}
+        </span>
+      );
+    },
   },
   {
     header: "Payment",

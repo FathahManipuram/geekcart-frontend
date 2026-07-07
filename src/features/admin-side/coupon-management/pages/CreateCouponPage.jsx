@@ -15,7 +15,6 @@ const CreateCouponPage = () => {
 
   const handleCreateCoupon = async (data) => {
     try {
-      console.log("Coupon Data:", data);
 
      await createCoupon(data);
 
