@@ -80,7 +80,7 @@ const OrderSummary = ({
       <button
         disabled={buttonDisabled || loading}
         onClick={onButtonClick}
-        className="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:opacity-90"
+        className="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:opacity-90 cursor-pointer"
       >
         {buttonText}
       </button>

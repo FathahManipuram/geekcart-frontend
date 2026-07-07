@@ -51,11 +51,13 @@ const CouponModal = ({ open, onOpenChange, coupons = [] }) => {
                     Save{" "}
                     {coupon.discountType === "FIXED"
                       ? `₹${coupon?.discountValue}`
-                      : `${coupon?.discountValue}%`} OFF
+                      : `${coupon?.discountValue}%`}{" "}
+                    OFF
                   </p>
                 </div>
 
                 <Button
+                  className="cursor-pointer"
                   size="sm"
                   variant={
                     appliedCoupon?._id === coupon?._id ? "secondary" : "default"

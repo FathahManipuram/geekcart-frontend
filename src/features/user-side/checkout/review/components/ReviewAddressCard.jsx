@@ -6,7 +6,7 @@ const ReviewAddressCard = ({ address, onEdit }) => {
       <div className="flex justify-between mb-4">
         <h3 className="font-semibold">Shipping Address</h3>
 
-        <button onClick={onEdit} className="text-primary">
+        <button onClick={onEdit} className="text-primary cursor-pointer">
           Edit
         </button>
       </div>

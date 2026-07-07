@@ -6,7 +6,7 @@ const ReviewDeliveryCard = ({ selectedDeliveryMethod, onEdit }) => {
 	  <div className="flex justify-between mb-4">
 		<h3 className="font-semibold">Delivery Method</h3>
 
-		<button onClick={onEdit} className="text-primary">
+		<button onClick={onEdit} className="text-primary cursor-pointer">
 		  Edit
 		</button>
 	  </div>

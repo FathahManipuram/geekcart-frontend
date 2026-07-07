@@ -47,8 +47,6 @@ useEffect(() => {
     }
   }, [addresses]);
 
-//const speedCharge= selectedDeliveryMethod==="EXPRESS"? 25 : 0
-
 
   const handleContinue = async () => {
     if (!selectedAddress) {

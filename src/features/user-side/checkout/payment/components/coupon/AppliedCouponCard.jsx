@@ -21,7 +21,11 @@ const AppliedCouponCard = ({ onOpenModal }) => {
             </p>
           </div>
 
-          <Button variant="outline" onClick={onOpenModal}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={onOpenModal}
+          >
             View Coupons
           </Button>
         </div>
@@ -39,11 +43,21 @@ const AppliedCouponCard = ({ onOpenModal }) => {
         </div>
 
         <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={onOpenModal}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            size="sm"
+            onClick={onOpenModal}
+          >
             Change
           </Button>
 
-          <Button variant="destructive" size="sm" onClick={removeAppliedCoupon}>
+          <Button
+            className="cursor-pointer"
+            variant="destructive"
+            size="sm"
+            onClick={removeAppliedCoupon}
+          >
             Remove
           </Button>
         </div>

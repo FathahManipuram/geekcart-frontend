@@ -23,6 +23,8 @@ const PaymentMethodCard = ({
         rounded-xl
         text-left
         transition
+        cursor-pointer
+        disabled:cursor-not-allowed
         ${selected ? "border-primary bg-primary/5" : ""}
       `}
     >
@@ -32,7 +34,7 @@ const PaymentMethodCard = ({
           type="radio"
           checked={selected}
           readOnly
-          className="accent-primary mt-1"
+          className="accent-primary mt-1 cursor-pointer disabled:cursor-not-allowed"
         />
 
         <div className="flex-1">
