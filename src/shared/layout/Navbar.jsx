@@ -237,7 +237,7 @@ const cartCount= items.length
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden"
+          className="lg:hidden cursor-pointer"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? (

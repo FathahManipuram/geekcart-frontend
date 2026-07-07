@@ -109,9 +109,14 @@ await logout()
         <div className="flex items-center gap-3">
           <div
             onClick={() => setCollapsed(!collapsed)}
-            className="h-10 w-10 rounded-lg bg-[#8B5E3C] text-white flex items-center justify-center font-bold"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") setCollapsed(!collapsed);
+            }}
+            className="h-10 w-10 rounded-lg flex items-center justify-center font-bold contain-content border cursor-pointer"
           >
-            G
+            <img src="/GeekCart-favicon.png" alt="geekCart-icon" />
           </div>
 
           {!collapsed && (
@@ -182,7 +187,7 @@ await logout()
       <div className="border-t p-4">
         <button
           title={collapsed ? "Sign Out" : ""}
-          onClick={()=> setShowConfirmModal(true)}
+          onClick={() => setShowConfirmModal(true)}
           className="
             flex items-center gap-3
             px-4 py-3 rounded-lg
@@ -199,11 +204,11 @@ await logout()
       </div>
 
       <ConfirmModal
-      open={showConfirmModal}
-      onOpenChange={setShowConfirmModal}
-      title="Are sure to sign out"
-      description=""
-      onConfirm={handleSignOut}
+        open={showConfirmModal}
+        onOpenChange={setShowConfirmModal}
+        title="Are sure to sign out"
+        description=""
+        onConfirm={handleSignOut}
       />
     </aside>
   );

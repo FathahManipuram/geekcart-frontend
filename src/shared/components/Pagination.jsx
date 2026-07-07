@@ -100,8 +100,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
   return (
     <div className="flex items-center justify-center gap-2 pt-6">
-    
       <Button
+        className="cursor-pointer"
         aria-label="Previous page"
         variant="outline"
         size="icon"
@@ -111,7 +111,6 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <ChevronLeft size={16} />
       </Button>
 
-    
       {visiblePages.map((page, index) => {
         if (page === "...") {
           return (
@@ -126,6 +125,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
 
         return (
           <Button
+            className="cursor-pointer"
             aria-label={`Go to page ${page}`}
             key={`page-${page}`}
             variant={currentPage === page ? "default" : "outline"}
@@ -137,8 +137,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         );
       })}
 
-     
       <Button
+        className="cursor-pointer"
         aria-label="Next page"
         variant="outline"
         size="icon"

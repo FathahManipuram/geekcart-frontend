@@ -18,11 +18,20 @@ loading= false,
         <p className="text-muted-foreground text-sm">{description}</p>
 
         <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={() => onOpenChange(false)}
+          >
             {cancelText}
           </Button>
 
-          <Button variant="destructive" onClick={onConfirm} disabled={loading}>
+          <Button
+            className="cursor-pointer"
+            variant="destructive"
+            onClick={onConfirm}
+            disabled={loading}
+          >
             {loading ? "Please wait..." : confirmText}
           </Button>
         </div>
