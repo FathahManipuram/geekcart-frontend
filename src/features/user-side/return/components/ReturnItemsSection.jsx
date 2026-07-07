@@ -28,7 +28,7 @@ const ReturnItemsSection = ({
                 type="checkbox"
                 checked={checked}
                 onChange={() => onToggleItem(item._id)}
-                className="accent-primary"
+                className="accent-primary cursor-pointer"
               />
 
               <img
