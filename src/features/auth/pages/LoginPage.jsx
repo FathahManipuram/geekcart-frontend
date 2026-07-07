@@ -53,8 +53,6 @@ const LoginPage = () => {
   <div className="flex-1 h-px bg-border/60" />
 </div>
 
-				{/* <button className='w-full border rounded-lg py-2 flex items-center justify-center gap-2 mb-8'> <FcGoogle size={20}/> <span className=''>Continue with Google</span></button> */}
-
 				<GoogleLogin shape='circle' onSuccess={async(credentialResponse)=>{
 					try{
 						console.log("googllogCredential",credentialResponse)
@@ -65,7 +63,7 @@ const LoginPage = () => {
 						navigate("/")
 					} catch(err){
 						console.log(err)
-						toast.error("Google login failed")
+						toast.error(err?.response?.data?.message|| "Google login failed")
 					}
 				}}
 				onError={()=>{

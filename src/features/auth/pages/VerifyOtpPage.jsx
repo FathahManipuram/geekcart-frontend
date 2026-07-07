@@ -131,7 +131,7 @@ const VerifyOtpPage = () => {
             <button
               onClick={handleResend}
               disabled={time > 0 || resending}
-              className={`${time > 0 || resending ? "opacity-50 cursor-not-allowed" : "cursor-pointer font-semibold"}`}
+              className={`hover:text-black ${time > 0 || resending ? "opacity-50 cursor-not-allowed" : "cursor-pointer font-semibold"}`}
             >
               Resend Code
             </button>
