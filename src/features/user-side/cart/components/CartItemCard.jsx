@@ -132,7 +132,7 @@ const isVariantAvailable =
                         onClick={() =>
                           updateQuantity(item.variantId._id, item.quantity - 1)
                         }
-                        className="flex h-11 w-11 items-center justify-center rounded-l-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex h-11 w-11 items-center justify-center rounded-l-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                       >
                         <Minus size={16} />
                       </button>
@@ -148,7 +148,7 @@ const isVariantAvailable =
                         onClick={() =>
                           updateQuantity(item.variantId._id, item.quantity + 1)
                         }
-                        className="flex h-11 w-11 items-center justify-center rounded-r-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
+                        className="flex h-11 w-11 items-center justify-center rounded-r-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
                       >
                         <Plus size={16} />
                       </button>
@@ -159,7 +159,7 @@ const isVariantAvailable =
                   {/* REMOVE */}
                   <button
                     onClick={() => removeFromCart(item.variantId._id)}
-                    className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 transition hover:text-red-500"
+                    className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 transition hover:text-red-500 cursor-pointer"
                   >
                     <X size={15} />
                     Remove

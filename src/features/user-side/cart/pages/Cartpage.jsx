@@ -147,8 +147,8 @@ if(initialLoading){
             tracking-[0.2em]
             text-neutral-400
             transition
-
             hover:text-black
+            cursor-pointer
           "
             onClick={() => clearCart()}
           >
@@ -288,8 +288,8 @@ if(initialLoading){
               tracking-[0.2em]
               text-white
               transition
-
               hover:opacity-90
+              cursor-pointer
             "
               >
                 Proceed To Checkout
