@@ -1,8 +1,8 @@
 import React from "react";
 
 import FilterBar from "@/shared/components/filters/FilterBar";
+import FilterSelect from "@/shared/components/filters/FilterSelect";
 
-import FilterSelect from "@/shared/components/filters/filterSelect";
 
 const ProductFilters = ({
   subcategories = [],
