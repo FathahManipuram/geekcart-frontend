@@ -75,19 +75,32 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
       accessor: "orderStatus",
       cell: (row) => <OrderStatusBadge status={row.orderStatus} />,
     },
+
     {
       header: "ACTIONS",
       accessor: "actions",
-      cell: (row) => (
-        <div className="flex gap-2">
-          <Button size="icon" variant="ghost" onClick={() => onView(row)}>
-            <Eye className="h-4 w-4" />
-          </Button>
-          <Button size="icon" variant="ghost" onClick={() => onEdit(row)}>
-            <Pencil className="h-4 w-4" />
-          </Button>
-        </div>
-      ),
+      cell: (row) => {
+        const isActionDisabled =
+          row.orderStatus === "DELIVERED" || row.orderStatus === "CANCELLED";
+
+        return (
+          <div className="flex gap-2">
+            <Button size="icon" variant="ghost" onClick={() => onView(row)}>
+              <Eye className="h-4 w-4" />
+            </Button>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => onEdit(row)}
+              disabled={isActionDisabled}
+              className="disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 
