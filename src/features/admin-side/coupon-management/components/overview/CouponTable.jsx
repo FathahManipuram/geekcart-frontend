@@ -2,10 +2,12 @@ import DataTable from "@/shared/components/DataTable";
 import { formatDateForDisplay } from "@/shared/utils/date";
 import CouponActionButton from "./CouponActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
-import { STATUS_LABELS_FOR_PROMOTION, STATUS_STYLES_FOR_PROMOTION } from "../../constants/coupon.constants";
+import {
+  STATUS_LABELS_FOR_PROMOTION,
+  STATUS_STYLES_FOR_PROMOTION,
+} from "../../constants/coupon.constants";
 
 const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
-
   const columns = [
     {
       header: "Campaign",
@@ -14,7 +16,9 @@ const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
           <p className="text-xs">
             Code: <span className="font-semibold">{coupon.code}</span>
           </p>
-          <p className="text-muted-foreground text-wrap ">{coupon?.description}</p>
+          <p className="text-muted-foreground text-wrap">
+            {coupon?.description}
+          </p>
         </div>
       ),
     },
@@ -22,7 +26,7 @@ const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
     {
       header: "Type",
       cell: (coupon) => (
-        <span className="px-2 py-1 rounded-full text-xs bg-muted">
+        <span className="bg-muted rounded-full px-2 py-1 text-xs">
           {coupon.discountType}
         </span>
       ),
@@ -47,7 +51,7 @@ const CouponTable = ({ coupons = [], loading, onEdit, onDelete, onView }) => {
         <div>
           <p>{formatDateForDisplay(coupon?.startDate)}</p>
 
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             {formatDateForDisplay(coupon?.expiryDate)}
           </p>
         </div>

@@ -1,25 +1,19 @@
 import { Mail, Phone } from "lucide-react";
 
-const CustomerInfoCard = ({
-  customer,
-}) => {
+const CustomerInfoCard = ({ customer }) => {
   return (
-    <div className="border rounded-lg p-5">
-      <h3 className="font-semibold mb-4">
-        Customer Information
-      </h3>
+    <div className="rounded-lg border p-5">
+      <h3 className="mb-4 font-semibold">Customer Information</h3>
 
-      <div className="flex gap-4 items-center">
+      <div className="flex items-center gap-4">
         <img
           src={customer?.avatar}
           alt={customer?.fullName}
-          className="w-14 h-14 rounded-full"
+          className="h-14 w-14 rounded-full"
         />
 
         <div>
-          <h4 className="font-semibold">
-            {customer?.fullName}
-          </h4>
+          <h4 className="font-semibold">{customer?.fullName}</h4>
         </div>
       </div>
 

@@ -4,7 +4,6 @@ import ProfilePage from "@/features/user-side/account/profile/pages/ProfilePage"
 import AddressPage from "@/features/user-side/account/address/pages/AddressPage";
 import OrderHistoryPage from "@/features/user-side/order/pages/OrderHistoryPage";
 
-
 const accountRoutes = {
   path: "/account",
   element: (
@@ -24,10 +23,9 @@ const accountRoutes = {
     },
     {
       path: "order-history",
-      element: <OrderHistoryPage/>,
+      element: <OrderHistoryPage />,
     },
-    
   ],
 };
 
-export default accountRoutes
+export default accountRoutes;

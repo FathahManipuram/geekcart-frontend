@@ -32,59 +32,51 @@ const SalesReportPage = () => {
     (state) => state.downloadSalesExcel,
   );
 
-   const downloadSalesPdf = useSalesReportStore(
-     (state) => state.downloadSalesPdf,
-   );
+  const downloadSalesPdf = useSalesReportStore(
+    (state) => state.downloadSalesPdf,
+  );
 
+  const fetchReport = useCallback(
+    (pageNumber, currentFilters) => {
+      getSalesReport({
+        page: pageNumber,
+        limit: PAGE_SIZE,
+        ...currentFilters,
+      });
+    },
+    [getSalesReport],
+  );
 
- const fetchReport = useCallback(
-   (pageNumber, currentFilters) => {
-    console.log("rendered");
-     getSalesReport({
-       page: pageNumber,
-       limit: PAGE_SIZE,
-       ...currentFilters,
-     });
-   },
-   [getSalesReport],
- );
+  useEffect(() => {
+    fetchReport(page, {
+      ...filters,
+      search: debouncedSearch,
+    });
+  }, [page]);
 
+  useEffect(() => {
+    if (page !== 1) {
+      setPage(1);
+    }
 
-useEffect(() => {
-  fetchReport(page, {
-    ...filters,
-    search: debouncedSearch,
-  });
-}, [page]);
+    fetchReport(1, {
+      ...filters,
+      search: debouncedSearch,
+    });
+  }, [debouncedSearch]);
 
- 
-useEffect(() => {
-  
-  if (page !== 1) {
+  const handleApply = () => {
+    if (filters.type === "custom" && (!filters.startDate || !filters.endDate)) {
+      return;
+    }
+
     setPage(1);
-  }
 
-  fetchReport(1, {
-    ...filters,
-    search: debouncedSearch,
-  });
-}, [debouncedSearch]);
-
-   const handleApply = () => {
-     if (
-       filters.type === "custom" &&
-       (!filters.startDate || !filters.endDate)
-     ) {
-       return;
-     }
-
-     setPage(1);
-
-     fetchReport(1, {
-       ...filters,
-       search: debouncedSearch,
-     });
-   };
+    fetchReport(1, {
+      ...filters,
+      search: debouncedSearch,
+    });
+  };
 
   useEffect(() => {
     if (filters.type === "custom") return;
@@ -100,23 +92,22 @@ useEffect(() => {
     fetchReport(1, DEFAULT_FILTERS);
   };
 
+  const handleExcel = () => {
+    downloadSalesExcel({
+      ...filters,
+      search: debouncedSearch,
+    });
+  };
 
-const handleExcel = () => {
-  downloadSalesExcel({
-    ...filters,
-    search: debouncedSearch,
-  });
-};
-
-const handlePdf = () => {
-  downloadSalesPdf({
-    ...filters,
-    search: debouncedSearch,
-  });
-};
+  const handlePdf = () => {
+    downloadSalesPdf({
+      ...filters,
+      search: debouncedSearch,
+    });
+  };
   return (
     <div className="space-y-6">
-      <Header title="Sales Report"/>
+      <Header title="Sales Report" />
       <SalesSummaryCards summary={summary} loading={loading} />
 
       <SalesReportFilters

@@ -1,45 +1,48 @@
-import { Button } from '@/shared/components/ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
-import { UserPlus } from 'lucide-react'
-import React, { useState } from 'react'
-import { Navigate } from 'react-router-dom'
-import { useUserManagementStore } from '../stores/userManagement.store'
-import Modal from '@/shared/components/Modal'
-import UserForm from './create-user/UserForm'
-import { toast } from 'sonner'
-import { createUserApi } from '../api/api.userManagement'
-import { createUserSchema } from '../validations/createUser.validation'
-import Header from '@/shared/components/Header'
+import { Button } from "@/shared/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+import { UserPlus } from "lucide-react";
+import React, { useState } from "react";
+import { useUserManagementStore } from "../stores/userManagement.store";
+import Modal from "@/shared/components/Modal";
+import UserForm from "./create-user/UserForm";
+import { toast } from "sonner";
+import { createUserApi } from "../api/api.userManagement";
+import { createUserSchema } from "../validations/createUser.validation";
+import Header from "@/shared/components/Header";
 
 const UserManagementHeader = () => {
   const [openCreateUserModal, setOpenCreateUserModal] = useState(false);
 
-  const {status, search, fetchUsers}= useUserManagementStore()
+  const { status, search, fetchUsers } = useUserManagementStore();
 
-  const handleStatusChange= (value)=>{
-    console.log("value= ", value)
+  const handleStatusChange = (value) => {
     fetchUsers({
-      page:1,
-      limit:5,
+      page: 1,
+      limit: 5,
       search,
       status: value,
-    })
-  }
+    });
+  };
 
-
-  const handleSubmit= async(data)=>{
-    try{ 
-      const res= await createUserApi(data);
-      toast.success(res.message || "User created successfully")
-      setOpenCreateUserModal(false)
-    }catch(err){
-      toast.error(err.response?.data?.message || "User creation failed")
+  const handleSubmit = async (data) => {
+    try {
+      const res = await createUserApi(data);
+      toast.success(res.message || "User created successfully");
+      setOpenCreateUserModal(false);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "User creation failed");
     }
-  }
+  };
   return (
     <>
       <div className="space-y-6">
-        <div className="flex justify-between sm:flex-col gap-3 lg:flex-row">
+        <div className="flex justify-between gap-3 sm:flex-col lg:flex-row">
           <Header title="User Management" />
 
           <div className="flex items-center gap-4">
@@ -53,7 +56,10 @@ const UserManagementHeader = () => {
                 <SelectItem value="blocked">Blocked</SelectItem>
               </SelectContent>
             </Select>
-            <Button onClick={() => setOpenCreateUserModal(true)} className="cursor-pointer">
+            <Button
+              onClick={() => setOpenCreateUserModal(true)}
+              className="cursor-pointer"
+            >
               <UserPlus size={16} />
               Add New User
             </Button>
@@ -74,6 +80,6 @@ const UserManagementHeader = () => {
       </Modal>
     </>
   );
-}
+};
 
-export default UserManagementHeader
+export default UserManagementHeader;

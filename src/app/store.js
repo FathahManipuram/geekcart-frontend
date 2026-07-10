@@ -1,10 +1,7 @@
-import {create} from "zustand"
+import { create } from "zustand";
 
-export const useAppStore= create((set)=>(
-	{
-	isLoading: false,
+export const useAppStore = create((set) => ({
+  isLoading: false,
 
-	setLoading: (value)=> set({isLoading: value})
-
-}
-))
+  setLoading: (value) => set({ isLoading: value }),
+}));

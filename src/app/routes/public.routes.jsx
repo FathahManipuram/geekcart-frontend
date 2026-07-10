@@ -1,9 +1,7 @@
 import CollectionsPage from "@/features/user-side/collections/pages/CollectionsPage";
 import HomePage from "@/features/user-side/home/pages/HomePage";
-import ProductDetails from "@/features/user-side/products/components/ProductDetails";
 import ProductShowPage from "@/features/user-side/products/pages/ProductShowPage";
 import MainLayout from "@/shared/layout/MainLayout";
-
 
 const publicRoutes = {
   path: "/",
@@ -29,4 +27,4 @@ const publicRoutes = {
   ],
 };
 
-export default publicRoutes
+export default publicRoutes;

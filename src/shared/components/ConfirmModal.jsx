@@ -1,16 +1,16 @@
-import React from 'react'
-import Modal from './Modal'
-import { Button } from './ui/button';
+import React from "react";
+import Modal from "./Modal";
+import { Button } from "./ui/button";
 
 const ConfirmModal = ({
-open, 
-onOpenChange,
-title="Are you Sure?",
-description="This action cannot be undone",
-confirmText= "Confirm",
-cancelText= "Cancel",
-onConfirm,
-loading= false,
+  open,
+  onOpenChange,
+  title = "Are you Sure?",
+  description = "This action cannot be undone",
+  confirmText = "Confirm",
+  cancelText = "Cancel",
+  onConfirm,
+  loading = false,
 }) => {
   return (
     <Modal open={open} onOpenChange={onOpenChange} title={title}>
@@ -38,6 +38,6 @@ loading= false,
       </div>
     </Modal>
   );
-}
+};
 
-export default ConfirmModal
+export default ConfirmModal;

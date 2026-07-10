@@ -25,11 +25,11 @@ const ReferralCodeCard = ({ user }) => {
   };
 
   return (
-    <div className="bg-white border rounded-2xl p-6">
-      <p className="text-sm text-muted-foreground">Your Referral Code</p>
+    <div className="rounded-2xl border bg-white p-6">
+      <p className="text-muted-foreground text-sm">Your Referral Code</p>
 
-      <div className="flex items-center justify-between mt-3">
-        <h2 className="text-xl md:text-2xl font-bold tracking-tight sm:tracking-wider">
+      <div className="mt-3 flex items-center justify-between">
+        <h2 className="text-xl font-bold tracking-tight sm:tracking-wider md:text-2xl">
           {user?.referralCode}
         </h2>
 

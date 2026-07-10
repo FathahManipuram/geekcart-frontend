@@ -1,15 +1,11 @@
-// features/admin/product-management/components/ProductStatusPanel.jsx
-
 import React from "react";
-import { Controller} from "react-hook-form";
+import { Controller } from "react-hook-form";
 import { Sparkles } from "lucide-react";
 
 import { Label } from "@/shared/components/ui/label";
 import { Switch } from "@/shared/components/ui/switch";
 
-
-const ProductStatusPanel = ({control}) => {
-
+const ProductStatusPanel = ({ control }) => {
   const toggles = [
     {
       name: "isActive",
@@ -19,20 +15,17 @@ const ProductStatusPanel = ({control}) => {
     {
       name: "isFeatured",
       label: "Featured",
-      description:
-        "Show this product in featured sections.",
+      description: "Show this product in featured sections.",
     },
     {
       name: "isLimited",
-      label:
-        "Limited Edition",
-      description:
-        "Mark this product as a special release.",
+      label: "Limited Edition",
+      description: "Mark this product as a special release.",
     },
   ];
-if (!control) return null;
+  if (!control) return null;
   return (
-    <div className="rounded-lg border bg-white p-8 space-y-6">
+    <div className="space-y-6 rounded-lg border bg-white p-8">
       {/* Title */}
       <div className="flex items-center gap-3">
         <Sparkles size={18} className="text-amber-700" />
@@ -53,7 +46,7 @@ if (!control) return null;
                     {toggle.label}
                   </Label>
 
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     {toggle.description}
                   </p>
                 </div>

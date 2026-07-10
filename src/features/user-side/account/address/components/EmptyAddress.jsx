@@ -1,6 +1,5 @@
 import React from "react";
 import { MapPin } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
 
 const EmptyAddress = () => {
   return (

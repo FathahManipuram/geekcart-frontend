@@ -28,13 +28,13 @@ const ResetPasswordForm = ({ onSubmit }) => {
           />
           <button
             onClick={() => setShow(!show)}
-            className="absolute translate-y-1/2 right-2 top-2 text-muted-foreground"
+            className="text-muted-foreground absolute top-2 right-2 translate-y-1/2"
           >
             {show ? <EyeClosed size={20} /> : <Eye size={20} />}
           </button>
         </div>
         {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
+          <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
       </div>
       <div className="space-y-1">
@@ -45,7 +45,7 @@ const ResetPasswordForm = ({ onSubmit }) => {
           {...register("confirmPassword")}
         />
         {errors?.confirmPassword && (
-          <p className="text-red-500 text-sm">
+          <p className="text-sm text-red-500">
             {errors.confirmPassword.message}
           </p>
         )}

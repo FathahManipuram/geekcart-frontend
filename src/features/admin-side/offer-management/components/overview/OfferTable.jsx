@@ -1,23 +1,23 @@
 import DataTable from "@/shared/components/DataTable";
 import { Badge } from "@/shared/components/ui/badge";
-import { Button } from "@/shared/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 import OfferActionButton from "./OfferActionButton";
 import StatusBadge from "@/shared/components/StatusBadge";
 import { formatDateForDisplay } from "@/shared/utils/date";
-import { STATUS_LABELS_FOR_PROMOTION, STATUS_STYLES_FOR_PROMOTION } from "@/features/admin-side/coupon-management/constants/coupon.constants";
+import {
+  STATUS_LABELS_FOR_PROMOTION,
+  STATUS_STYLES_FOR_PROMOTION,
+} from "@/features/admin-side/coupon-management/constants/coupon.constants";
 
-const OfferTable = ({ offers = [], loading, onDelete }) => {
-  const navigate = useNavigate();
-
+const OfferTable = ({ offers = [], loading }) => {
   const columns = [
     {
       header: "Offer Name",
-      cell: (row)=> (
+      cell: (row) => (
         <div>
           <p className="font-semibold">{row.name}</p>
-          <p className="text-xs text-wrap text-muted-foreground">{row.description}</p>
+          <p className="text-muted-foreground text-xs text-wrap">
+            {row.description}
+          </p>
         </div>
       ),
     },

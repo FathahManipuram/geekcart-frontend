@@ -3,8 +3,8 @@ import { addProductSchema } from "../validations/product.validation";
 import { useForm } from "react-hook-form";
 import { groupVariants } from "../utils/groupVariants";
 
-const useProductForm=(initialData= null)=>{
-	const defaultValues = {
+const useProductForm = (initialData = null) => {
+  const defaultValues = {
     name: "",
     description: "",
     coverImage: "",
@@ -36,14 +36,13 @@ const useProductForm=(initialData= null)=>{
         sizes: [],
 
         images: [],
-
       },
     ],
 
     variants: [],
   };
 
-	const mappedValues = initialData
+  const mappedValues = initialData
     ? {
         ...defaultValues,
         ...initialData,
@@ -57,9 +56,7 @@ const useProductForm=(initialData= null)=>{
           ...(initialData.manufacturer || {}),
         },
 
-
-        coverImage:
-  initialData.coverImage || "",
+        coverImage: initialData.coverImage || "",
 
         variantGroups: initialData?.variants
           ? groupVariants(initialData.variants)
@@ -76,20 +73,15 @@ const useProductForm=(initialData= null)=>{
         variants: initialData.variants || [],
       }
     : defaultValues;
-  
-  
-const form = useForm({
-    resolver: yupResolver(
-      addProductSchema
-    ),
-    defaultValues:
-      mappedValues,
+
+  const form = useForm({
+    resolver: yupResolver(addProductSchema),
+    defaultValues: mappedValues,
     mode: "onSubmit",
-    reValidateMode:
-      "onChange",
+    reValidateMode: "onChange",
   });
 
   return form;
-}
+};
 
-export default useProductForm
+export default useProductForm;

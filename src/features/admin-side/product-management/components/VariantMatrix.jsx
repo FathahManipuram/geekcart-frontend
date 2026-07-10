@@ -1,12 +1,8 @@
 import React from "react";
 import { useFieldArray } from "react-hook-form";
-
 import { Button } from "@/shared/components/ui/button";
-
 import VariantGroupCard from "./VariantGroupCard";
-
 import VariantTable from "./VariantTable";
-
 import { buildVariants } from "../utils/buildVariants";
 
 const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
@@ -69,9 +65,8 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
 
     const currentVariants = watch("variants") || [];
 
-    
-      // Remove Related Variants
-    
+    // Remove Related Variants
+
     const updatedVariants = currentVariants.filter(
       (variant) => variant.color !== removedGroup.color,
     );
@@ -81,21 +76,17 @@ const VariantMatrix = ({ control, register, errors, watch, setValue }) => {
     });
   };
 
-  
-    // Generate Final Variants
-  
+  // Generate Final Variants
+
   const handleGenerateVariants = () => {
-    
     const groups = watch("variantGroups") || [];
-console.log("groups: ", groups)
+
     const existingVariants = watch("variants") || [];
-console.log("existingVariant:", existingVariants)
     const productName = watch("name") || "";
 
     let finalVariants = [];
 
     groups.forEach((group) => {
-
       if (!group.color || !group.sizes?.length) {
         return;
       }
@@ -109,7 +100,6 @@ console.log("existingVariant:", existingVariants)
       });
 
       const mergedVariants = generatedVariants.map((generatedVariant) => {
-
         const existingVariant = existingVariants.find(
           (existing) =>
             existing.color === generatedVariant.color &&
@@ -123,8 +113,6 @@ console.log("existingVariant:", existingVariants)
             stock: existingVariant.stock,
 
             price: existingVariant.price,
-
-           // salePrice: existingVariant.salePrice,
 
             costPrice: existingVariant.costPrice,
 
@@ -150,8 +138,6 @@ console.log("existingVariant:", existingVariants)
     });
   };
 
-  
-
   const variants = watch("variants") || [];
   const variantGroups = watch("variantGroups") || [];
   const canGenerate =
@@ -161,31 +147,10 @@ console.log("existingVariant:", existingVariants)
         group.color && group.sizes?.length > 0 && group.images?.length > 0,
     );
   return (
-    <div
-      className="
-        rounded-xl
-        border
-        bg-white
-        p-8
-        space-y-8
-      "
-    >
+    <div className="space-y-8 rounded-xl border bg-white p-8">
       {/* Header */}
-      <div
-        className="
-          flex
-          items-center
-          justify-between
-        "
-      >
-        <h2
-          className="
-            text-xl
-            font-bold
-          "
-        >
-          Variant Groups
-        </h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold">Variant Groups</h2>
 
         <Button
           type="button"
@@ -238,6 +203,6 @@ console.log("existingVariant:", existingVariants)
       />
     </div>
   );
-};;
+};
 
 export default VariantMatrix;

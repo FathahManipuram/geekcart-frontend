@@ -1,5 +1,3 @@
-// src/features/products/components/ProductZoomImage.jsx
-
 import { useState } from "react";
 
 const ProductZoomImage = ({ image }) => {
@@ -26,13 +24,7 @@ const ProductZoomImage = ({ image }) => {
 
   return (
     <div
-      className="
-        relative
-        overflow-hidden
-        rounded-2xl
-        bg-[#f3f0eb]
-        md:cursor-zoom-in
-      "
+      className="relative overflow-hidden rounded-2xl bg-[#f3f0eb] md:cursor-zoom-in"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => {
         if (window.innerWidth >= 768) {
@@ -44,18 +36,7 @@ const ProductZoomImage = ({ image }) => {
       <img
         src={image || null}
         alt="product"
-        className={`
-          w-full
-          h-87.5
-          sm:h-112.5
-          md:h-162.5
-          object-cover
-          transition-transform
-          duration-300
-          ease-out
-          will-change-transform
-          ${isZoomed ? "scale-150" : "scale-100"}
-        `}
+        className={`h-87.5 w-full object-cover transition-transform duration-300 ease-out will-change-transform sm:h-112.5 md:h-162.5 ${isZoomed ? "scale-150" : "scale-100"} `}
         style={{
           transformOrigin: `${position.x}% ${position.y}%`,
         }}

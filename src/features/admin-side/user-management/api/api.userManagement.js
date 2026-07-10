@@ -1,9 +1,9 @@
-import adminApi from "@/services/adminApi"
-
+import adminApi from "@/services/adminApi";
 
 export const getUsersApi = async ({ page, limit, search, status }) =>
   adminApi.get("/admin/users/", { params: { page, limit, search, status } });
-export const getUserByIdApi= async (userId)=> adminApi.get(`/admin/users/${userId}`)
+export const getUserByIdApi = async (userId) =>
+  adminApi.get(`/admin/users/${userId}`);
 export const deleteUserApi = async (userId) =>
   adminApi.delete(`/admin/users/${userId}`);
 export const blockUserApi = async (userId) =>

@@ -1,7 +1,7 @@
 const ShippingAddressCard = ({ address }) => {
   return (
-    <div className="border rounded-lg p-5">
-      <h3 className="font-semibold mb-4">Shipping Address</h3>
+    <div className="rounded-lg border p-5">
+      <h3 className="mb-4 font-semibold">Shipping Address</h3>
 
       <div className="space-y-1">
         <p>{address?.fullName}</p>

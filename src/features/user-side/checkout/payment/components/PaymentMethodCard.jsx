@@ -16,19 +16,9 @@ const PaymentMethodCard = ({
     <button
       disabled={value === "COD" && orderTotal > 2000}
       onClick={() => onSelect(method.id)}
-      className={`
-        w-full
-        p-5
-        border
-        rounded-xl
-        text-left
-        transition
-        cursor-pointer
-        disabled:cursor-not-allowed
-        ${selected ? "border-primary bg-primary/5" : ""}
-      `}
+      className={`w-full cursor-pointer rounded-xl border p-5 text-left transition disabled:cursor-not-allowed ${selected ? "border-primary bg-primary/5" : ""} `}
     >
-      <div className="flex gap-3 items-start">
+      <div className="flex items-start gap-3">
         <input
           disabled={value === "COD" && orderTotal > 2000}
           type="radio"
@@ -40,14 +30,14 @@ const PaymentMethodCard = ({
         <div className="flex-1">
           <h3 className="font-medium">{method.title}</h3>
 
-          <p className="text-sm text-muted-foreground">{method.description}</p>
+          <p className="text-muted-foreground text-sm">{method.description}</p>
           {value === "COD" && orderTotal > 2000 && (
             <p className="mt-2 text-sm text-amber-600">
               Cash on Delivery is available only for orders up to ₹2,000.
             </p>
           )}
           {isWallet && (
-            <div className="mt-4 rounded-lg bg-green-50 border border-green-100 p-3">
+            <div className="mt-4 rounded-lg border border-green-100 bg-green-50 p-3">
               <div className="flex items-center gap-2">
                 <Wallet size={16} />
 
@@ -58,12 +48,12 @@ const PaymentMethodCard = ({
                 ₹{wallet?.balance?.toFixed(2) || "0.00"}
               </p>
 
-              <div className="mt-2 text-xs text-muted-foreground">
+              <div className="text-muted-foreground mt-2 text-xs">
                 Order Total: ₹{orderTotal.toFixed(2)}
               </div>
 
               {!hasEnoughBalance && (
-                <p className="mt-2 text-xs text-red-500 font-medium">
+                <p className="mt-2 text-xs font-medium text-red-500">
                   Insufficient wallet balance
                 </p>
               )}

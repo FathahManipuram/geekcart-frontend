@@ -1,22 +1,19 @@
-import React, { useEffect } from 'react'
-import CategoryCard from './CategoryCard';
+import React, { useEffect } from "react";
+import CategoryCard from "./CategoryCard";
 
-const CategoryCollection = ({subcategories}) => {
-
-	useEffect(()=>{
-		
-	})
+const CategoryCollection = ({ subcategories }) => {
+  useEffect(() => {});
   return (
-    <section className="px-4 md:px-8 lg:px-12 py-10">
+    <section className="px-4 py-10 md:px-8 lg:px-12">
       {/* Heading */}
       <div className="mb-6">
         <h2 className="mt-2 text-4xl font-bold"> Curated Categories</h2>
 
-        <div className="w-18 h-[3px] bg-primary mt-2" />
+        <div className="bg-primary mt-2 h-[3px] w-18" />
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+      <div className="grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4">
         {(subcategories || []).map((subcategory) => (
           <CategoryCard
             key={subcategory._id}
@@ -29,6 +26,6 @@ const CategoryCollection = ({subcategories}) => {
       </div>
     </section>
   );
-}
+};
 
 export default CategoryCollection;

@@ -1,19 +1,23 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useEffect, useState } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { Input } from '@/shared/components/ui/input'
-import { Label } from '@/shared/components/ui/label'
-import { Button } from '@/shared/components/ui/button'
-import { Eye, EyeClosed } from 'lucide-react'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
-import { useUserManagementStore } from '../../stores/userManagement.store'
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useEffect, useState } from "react";
+import { Controller, useForm } from "react-hook-form";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
+import { Button } from "@/shared/components/ui/button";
+import { Eye, EyeClosed } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+import { useUserManagementStore } from "../../stores/userManagement.store";
 
-const UserForm = ({initialData=null, onClose, onSubmit, schema}) => {
-  const [showPassword, setShowPassword]= useState(false)
-  const loading= useUserManagementStore((state)=> state.loading)
-    const isEditMode = Boolean(initialData);
-
-console.log("isEditmode",isEditMode)
+const UserForm = ({ initialData = null, onClose, onSubmit, schema }) => {
+  const [showPassword, setShowPassword] = useState(false);
+  const loading = useUserManagementStore((state) => state.loading);
+  const isEditMode = Boolean(initialData);
 
   const {
     register,
@@ -32,17 +36,17 @@ console.log("isEditmode",isEditMode)
     },
   });
 
-useEffect(()=>{
-  if(initialData){
-    reset({
-      fullName: initialData.fullName || "",
-      email: initialData.email || "",
-      role: initialData.role || "user",
-      password: "",
-      conformPassword: "",
-    })
-  }
-}, [initialData, reset])
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        fullName: initialData.fullName || "",
+        email: initialData.email || "",
+        role: initialData.role || "user",
+        password: "",
+        conformPassword: "",
+      });
+    }
+  }, [initialData, reset]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -50,7 +54,7 @@ useEffect(()=>{
         <Label>FULL NAME</Label>
         <Input placeholder="Abdul fathah" {...register("fullName")} />
         {errors?.fullName && (
-          <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+          <p className="text-sm text-red-500">{errors.fullName.message}</p>
         )}
       </div>
 
@@ -58,7 +62,7 @@ useEffect(()=>{
         <Label>EMAIL ADDRESS</Label>
         <Input placeholder="abdulfathah@gmail.com" {...register("email")} />
         {errors?.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <p className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
@@ -69,7 +73,7 @@ useEffect(()=>{
           control={control}
           render={({ field }) => (
             <Select value={field.value} onValueChange={field.onChange}>
-              <SelectTrigger className="w-full border-none border-b-2 rounded-none shadow-none">
+              <SelectTrigger className="w-full rounded-none border-b-2 border-none shadow-none">
                 <SelectValue placeholder="Select role" />
               </SelectTrigger>
               <SelectContent className="rounded-none">
@@ -84,7 +88,7 @@ useEffect(()=>{
           )}
         />
         {errors.role && (
-          <p className="text-red-500 text-sm">{errors.role.message}</p>
+          <p className="text-sm text-red-500">{errors.role.message}</p>
         )}
       </div>
 
@@ -101,13 +105,13 @@ useEffect(()=>{
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground"
+                className="text-muted-foreground absolute top-1 right-2 translate-y-1/2"
               >
                 {showPassword ? <EyeClosed size={20} /> : <Eye size={20} />}
               </button>
             </div>
             {errors?.password && (
-              <p className="text-red-500 text-sm">{errors.password.message}</p>
+              <p className="text-sm text-red-500">{errors.password.message}</p>
             )}
           </div>
 
@@ -119,7 +123,7 @@ useEffect(()=>{
               {...register("confirmPassword")}
             />
             {errors?.confirmPassword && (
-              <p className="text-red-500 text-sm">
+              <p className="text-sm text-red-500">
                 {errors.confirmPassword.message}
               </p>
             )}
@@ -147,6 +151,6 @@ useEffect(()=>{
       </div>
     </form>
   );
-}
+};
 
 export default UserForm;

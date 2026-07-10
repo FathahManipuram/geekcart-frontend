@@ -31,15 +31,15 @@ and get rewards after your first order.
   };
 
   return (
-    <div className="bg-white border rounded-2xl p-6">
-      <h3 className="font-semibold text-lg mb-5">Referral & Rewards</h3>
+    <div className="rounded-2xl border bg-white p-6">
+      <h3 className="mb-5 text-lg font-semibold">Referral & Rewards</h3>
 
       <div className="space-y-5">
         <div>
-          <p className="text-sm text-muted-foreground">Your Referral Code</p>
+          <p className="text-muted-foreground text-sm">Your Referral Code</p>
 
-          <div className="flex items-center justify-between mt-2 border rounded-lg px-4 py-3">
-            <span className="font-bold text-lg">{user.referralCode}</span>
+          <div className="mt-2 flex items-center justify-between rounded-lg border px-4 py-3">
+            <span className="text-lg font-bold">{user.referralCode}</span>
 
             <div className="flex gap-2">
               <Button size="icon" variant="outline" onClick={handleCopy}>
@@ -54,14 +54,14 @@ and get rewards after your first order.
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="border rounded-lg p-4">
-            <p className="text-sm text-muted-foreground">Referrals</p>
+          <div className="rounded-lg border p-4">
+            <p className="text-muted-foreground text-sm">Referrals</p>
 
             <p className="text-2xl font-bold">{user.referralCount}</p>
           </div>
 
-          <div className="border rounded-lg p-4">
-            <p className="text-sm text-muted-foreground">Earnings</p>
+          <div className="rounded-lg border p-4">
+            <p className="text-muted-foreground text-sm">Earnings</p>
 
             <p className="text-2xl font-bold text-green-600">
               ₹{user.totalReferralEarnings}

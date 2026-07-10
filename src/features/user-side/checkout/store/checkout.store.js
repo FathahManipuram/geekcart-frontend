@@ -1,11 +1,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { applyCouponApi, getAvailableCouponsApi, validateCheckoutApi, validateFinalCheckoutApi, validatePaymentApi, validateShippingApi } from "../api/checkout.api";
-
+import {
+  applyCouponApi,
+  getAvailableCouponsApi,
+  validateCheckoutApi,
+  validateFinalCheckoutApi,
+  validatePaymentApi,
+  validateShippingApi,
+} from "../api/checkout.api";
 
 export const useCheckoutStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       loading: false,
       error: null,
 
@@ -30,30 +36,26 @@ export const useCheckoutStore = create(
       // Validate checkout
       validateCheckout: async () => {
         const res = await validateCheckoutApi();
-        console.log("checkoutValidation: ", res.data);
         return res.data;
       },
 
       //Validate shippping
       validateShipping: async (payload) => {
         const res = await validateShippingApi(payload);
-        console.log(res.data);
         return res.data;
       },
 
       // Validate payment
       validatePayment: async (payload) => {
         const res = await validatePaymentApi(payload);
-        console.log("res", res);
         return res.data;
       },
 
       // Final validation
       finalValidation: async (payload) => {
-        set({loading: true})
+        set({ loading: true });
         const res = await validateFinalCheckoutApi(payload);
         set({ loading: false });
-        console.log("res", res);
         return res.data;
       },
 
@@ -83,7 +85,7 @@ export const useCheckoutStore = create(
             availableCoupons: data,
             loading: false,
           });
-          console.log("availableCoupon store:", data);
+
           return data;
         } catch (error) {
           set({ loading: false });
@@ -93,7 +95,6 @@ export const useCheckoutStore = create(
 
       //Applycoupon
       applyCoupon: async (couponCode) => {
-        console.log("appliedcoupon:", get().appliedCoupon);
         try {
           set({ loading: true });
 

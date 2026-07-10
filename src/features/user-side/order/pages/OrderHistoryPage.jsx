@@ -10,25 +10,23 @@ import SearchInput from "@/shared/components/SearchInput";
 import useDebounce from "@/shared/hooks/useDebounce";
 
 const OrderHistoryPage = () => {
-  const navigate= useNavigate()
-  const [search, setSearch]= useState("")
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
-  const debouncedValue= useDebounce(search, 500)
- 
+  const debouncedValue = useDebounce(search, 500);
+
   const orderHistory = useOrderStore((state) => state.orderHistory);
   const loading = useOrderStore((state) => state.loading);
-  const fetchOrderHistory= useOrderStore((state)=> state.fetchOrderHistory)
+  const fetchOrderHistory = useOrderStore((state) => state.fetchOrderHistory);
 
-console.log("LoadinG: ", loading)
   useEffect(() => {
     fetchOrderHistory({
       search: debouncedValue,
-    })
+    });
   }, [debouncedValue]);
 
-console.log("orderhistorypage: ", orderHistory)
   return (
-    <section className="max-w-7xl mx-auto px-4">
+    <section className="mx-auto max-w-7xl px-4">
       <div className="mb-8">
         <Breadcrumbs
           items={[
@@ -55,7 +53,7 @@ console.log("orderhistorypage: ", orderHistory)
         placeholder="Search by order number or product name..."
       />
 
-      <div className="space-y-6 mt-6">
+      <div className="mt-6 space-y-6">
         {loading ? (
           <>
             <OrderHistorySkeleton />

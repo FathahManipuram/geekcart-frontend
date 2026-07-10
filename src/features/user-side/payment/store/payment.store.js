@@ -15,14 +15,15 @@ export const usePaymentStore = create((set) => ({
 
       return res.data;
     } catch (err) {
-		const message= err.response?.data?.message || "Razorpayment creation failed"
-      set({ loading: false, error: message});
+      const message =
+        err.response?.data?.message || "Razorpayment creation failed";
+      set({ loading: false, error: message });
 
       throw err;
     }
   },
 
-  verifyPayment: async(payload)=> {
+  verifyPayment: async (payload) => {
     try {
       set({ loading: true, error: null });
 
@@ -38,5 +39,5 @@ export const usePaymentStore = create((set) => ({
 
       throw err;
     }
-  }
+  },
 }));

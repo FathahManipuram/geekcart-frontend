@@ -1,23 +1,39 @@
-import { Label } from '@/shared/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
-import { Boxes } from 'lucide-react';
-import React from 'react'
-import { Controller } from 'react-hook-form';
+import { Label } from "@/shared/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+import { Boxes } from "lucide-react";
+import React from "react";
+import { Controller } from "react-hook-form";
 
-
-const OrganizationAttributes = ({control, watch, categories, subcategories, errors, sleeveOptions, fabricOptions, setValue}) => {
-
-const selectedCategory= watch("category")
-const filteredSubcategories = subcategories.filter((subcategory)=> String(subcategory.category?._id || subcategory.category)===String(selectedCategory))
-
+const OrganizationAttributes = ({
+  control,
+  watch,
+  categories,
+  subcategories,
+  errors,
+  sleeveOptions,
+  fabricOptions,
+  setValue,
+}) => {
+  const selectedCategory = watch("category");
+  const filteredSubcategories = subcategories.filter(
+    (subcategory) =>
+      String(subcategory.category?._id || subcategory.category) ===
+      String(selectedCategory),
+  );
 
   return (
-    <div className="rounded-lg border bg-white p-8 space-y-6">
+    <div className="space-y-6 rounded-lg border bg-white p-8">
       <div className="flex items-center gap-3">
         <Boxes size={18} className="text-amber-700" />
         <h2 className="text-lg font-semibold">Organization & Attributes</h2>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="space-y-2">
           <Label>PRIMARY CATEGORY</Label>
           <Controller
@@ -34,7 +50,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
                   });
                 }}
               >
-                <SelectTrigger className="w-full h-12">
+                <SelectTrigger className="h-12 w-full">
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
 
@@ -63,7 +79,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
                 onValueChange={field.onChange}
                 disabled={!selectedCategory}
               >
-                <SelectTrigger className="w-full h-12">
+                <SelectTrigger className="h-12 w-full">
                   <SelectValue placeholder="Select subcategory" />
                 </SelectTrigger>
                 <SelectContent>
@@ -91,7 +107,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
             control={control}
             render={({ field }) => (
               <Select value={field.value || ""} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full h-12">
+                <SelectTrigger className="h-12 w-full">
                   <SelectValue placeholder="Select sleeve type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -105,9 +121,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
             )}
           />
           {errors?.sleeve && (
-            <p className="text-xs text-red-500">
-              {errors.sleeve.message}
-            </p>
+            <p className="text-xs text-red-500">{errors.sleeve.message}</p>
           )}
         </div>
         <div className="space-y-2">
@@ -117,7 +131,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
             control={control}
             render={({ field }) => (
               <Select value={field.value || ""} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full h-12">
+                <SelectTrigger className="h-12 w-full">
                   <SelectValue placeholder="Select fabric" />
                 </SelectTrigger>
                 <SelectContent>
@@ -131,9 +145,7 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
             )}
           />
           {errors?.fabric && (
-            <p className="text-xs text-red-500">
-              {errors.fabric.message}
-            </p>
+            <p className="text-xs text-red-500">{errors.fabric.message}</p>
           )}
         </div>
       </div>
@@ -141,4 +153,4 @@ const filteredSubcategories = subcategories.filter((subcategory)=> String(subcat
   );
 };
 
-export default OrganizationAttributes
+export default OrganizationAttributes;

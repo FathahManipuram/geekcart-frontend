@@ -1,9 +1,8 @@
-import StatsCard from '@/shared/components/StatsCard';
-import React from 'react'
+import StatsCard from "@/shared/components/StatsCard";
+import React from "react";
 
-const OrderStatsCard = ({orderStats}) => {
-
-	const stats = [
+const OrderStatsCard = ({ orderStats }) => {
+  const stats = [
     {
       title: "Total Orders",
       value: orderStats?.totalOrders || 0,
@@ -18,10 +17,9 @@ const OrderStatsCard = ({orderStats}) => {
       title: "Total Revenue",
       value: `₹${orderStats?.totalRevenue || 0}`,
     },
-
   ];
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
       {stats.map((stat) => (
         <StatsCard
           key={stat.title}
@@ -32,8 +30,6 @@ const OrderStatsCard = ({orderStats}) => {
       ))}
     </div>
   );
-}
+};
 
-export default OrderStatsCard
-
-
+export default OrderStatsCard;

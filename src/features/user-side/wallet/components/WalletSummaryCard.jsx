@@ -8,14 +8,14 @@ const WalletSummaryCard = ({ wallet, transactions = [] }) => {
     .reduce((sum, item) => sum + item.amount, 0);
 
   return (
-    <div className="bg-white border rounded-2xl p-6">
-      <h3 className="font-semibold text-lg mb-6">Wallet Summary</h3>
+    <div className="rounded-2xl border bg-white p-6">
+      <h3 className="mb-6 text-lg font-semibold">Wallet Summary</h3>
 
       <div className="space-y-5">
         <div>
           <p className="text-muted-foreground text-sm">Total Credits</p>
 
-          <p className="font-bold text-xl text-green-600">
+          <p className="text-xl font-bold text-green-600">
             ₹{totalCredits.toFixed(2)}
           </p>
         </div>
@@ -23,7 +23,7 @@ const WalletSummaryCard = ({ wallet, transactions = [] }) => {
         <div>
           <p className="text-muted-foreground text-sm">Total Debits</p>
 
-          <p className="font-bold text-xl text-red-500">
+          <p className="text-xl font-bold text-red-500">
             ₹{totalDebits.toFixed(2)}
           </p>
         </div>
@@ -31,7 +31,7 @@ const WalletSummaryCard = ({ wallet, transactions = [] }) => {
         <div>
           <p className="text-muted-foreground text-sm">Current Balance</p>
 
-          <p className="font-bold text-2xl">
+          <p className="text-2xl font-bold">
             ₹{wallet?.balance?.toFixed(2) || "0.00"}
           </p>
         </div>

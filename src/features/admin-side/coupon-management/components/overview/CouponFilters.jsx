@@ -1,7 +1,10 @@
 import FilterBar from "@/shared/components/filters/FilterBar";
 import FilterSelect from "@/shared/components/filters/FilterSelect";
 import SearchInput from "@/shared/components/SearchInput";
-import { PROMOTION_STATUS_OPTIONS, PROMOTION_TYPE_OPTIONS } from "../../constants/coupon.constants";
+import {
+  PROMOTION_STATUS_OPTIONS,
+  PROMOTION_TYPE_OPTIONS,
+} from "../../constants/coupon.constants";
 
 const CouponFilters = ({
   status,
@@ -12,9 +15,14 @@ const CouponFilters = ({
   onSearchChange,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col gap-4 md:flex-row">
       <FilterBar>
-        <SearchInput value={search} onChange={onSearchChange} onClear={()=> onSearchChange("")} placeholder="Search by coupon code or description..." />
+        <SearchInput
+          value={search}
+          onChange={onSearchChange}
+          onClear={() => onSearchChange("")}
+          placeholder="Search by coupon code or description..."
+        />
 
         <FilterSelect
           value={status}

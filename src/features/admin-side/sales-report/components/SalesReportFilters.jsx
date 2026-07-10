@@ -23,15 +23,14 @@ const SalesReportFilters = ({
   onDownloadPdf,
   onDownloadExcel,
 }) => {
-
   const isApplyDisabled = !filters.startDate || !filters.endDate;
 
   return (
-    <div className="rounded-xl border bg-white p-6 space-y-5">
+    <div className="space-y-5 rounded-xl border bg-white p-6">
       <div>
         <h2 className="text-lg font-semibold">Sales Report</h2>
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Filter and export your sales reports.
         </p>
       </div>
@@ -108,7 +107,11 @@ const SalesReportFilters = ({
       )}
 
       <div className="flex flex-wrap gap-3">
-        {filters.type === "custom" && <Button disabled={isApplyDisabled} onClick={onApply}>Apply</Button>}
+        {filters.type === "custom" && (
+          <Button disabled={isApplyDisabled} onClick={onApply}>
+            Apply
+          </Button>
+        )}
         <Button variant="outline" onClick={onReset}>
           Reset
         </Button>

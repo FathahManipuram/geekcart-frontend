@@ -8,109 +8,85 @@ import { useWalletStore } from "../store/wallet.store";
 import { toast } from "sonner";
 import { loadRazorpay } from "@/shared/helpers/loadRazorpay";
 
-const WalletBalanceCard = ({fetchWallet, fetchTransactions}) => {
+const WalletBalanceCard = ({ fetchWallet, fetchTransactions }) => {
   const [open, setOpen] = useState(false);
 
   const createWalletTopupOrder = useWalletStore(
     (state) => state.createWalletTopupOrder,
-  )
-  const wallet= useWalletStore((state)=> state.wallet)
+  );
+  const wallet = useWalletStore((state) => state.wallet);
 
   const verifyWalletTopup = useWalletStore((state) => state.verifyWalletTopup);
-  const loading= useWalletStore((state)=> state.loading)
+  const loading = useWalletStore((state) => state.loading);
 
   const handleAddMoney = async (amount) => {
     try {
       const res = await createWalletTopupOrder(amount);
+      const { orderId, amount: orderAmount } = res;
 
-      console.log("Topup Order:", res);
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: orderAmount * 100,
+        currency: "INR",
+        name: "GeekCart Wallet",
+        description: "Wallet Topup",
+        order_id: orderId,
 
-       const { orderId, amount: orderAmount } = res;
+        handler: async (razorpayResponse) => {
+          try {
+            await verifyWalletTopup(razorpayResponse);
+            await fetchWallet();
+            await fetchTransactions({ page: 1 });
 
-       const options = {
-         key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+            toast.success("Money added successfully");
 
-         amount: orderAmount * 100,
+            setOpen(false);
 
-         currency: "INR",
+            // refresh wallet later
+          } catch (error) {
+            toast.error(
+              error?.response?.data?.message || "Verification failed",
+            );
+          }
+        },
+        modal: {
+          ondismiss: () => {
+            toast.error("Payment cancelled");
+          },
+        },
 
-         name: "GeekCart Wallet",
+        theme: {
+          color: "#825026",
+        },
+      };
 
-         description: "Wallet Topup",
+      const isLoaded = await loadRazorpay();
+      if (!isLoaded) {
+        toast.error("Failed to load Razorpay");
+        return;
+      }
 
-         order_id: orderId,
+      const razorpay = new window.Razorpay(options);
 
-         handler: async (razorpayResponse) => { 
-           console.log("SUCCESS", razorpayResponse);
-           try {
-             await verifyWalletTopup(razorpayResponse);
-             await fetchWallet();
-             await fetchTransactions({ page: 1 });
+      razorpay.on("payment.failed", (res) => {
+        toast.error("Payment failed");
+      });
 
-             toast.success("Money added successfully");
-
-             setOpen(false);
-
-             // refresh wallet later
-           } catch (error) {
-             toast.error(
-               error?.response?.data?.message || "Verification failed",
-             );
-           }
-         },
-         modal: {
-                 ondismiss: () => {
-                   toast.error("Payment cancelled");
-                 },
-               },
-         
-               theme: {
-                 color: "#825026",
-               },
-       }
-
-       const isLoaded = await loadRazorpay();
-console.log("Razorpay Loaded:", isLoaded);
-       if (!isLoaded) {
-         toast.error("Failed to load Razorpay");
-         return;
-       }
-
-       const razorpay = new window.Razorpay(options);
-
-
-   razorpay.on("payment.failed", (res) => {
-     toast.error("Payment failed");
-   });
-
-   razorpay.open();
-
+      razorpay.open();
     } catch (err) {
-      toast.error(
-        err?.response?.data?.message || "Failed to create order",
-      );
+      toast.error(err?.response?.data?.message || "Failed to create order");
     }
-  }
+  };
 
- 
   return (
-    <div
-      className="
-        rounded-2xl
-        bg-linear-to-r
-        from-primary
-        to-primary/80
-        text-white
-        p-8
-      "
-    >
+    <div className="from-primary to-primary/80 rounded-2xl bg-linear-to-r p-8 text-white">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm uppercase tracking-wider opacity-80">
+          <p className="text-sm tracking-wider uppercase opacity-80">
             Wallet Balance
           </p>
 
-          <h2 className="text-5xl font-bold mt-3">
+          <h2 className="mt-3 text-5xl font-bold">
             ₹{wallet?.balance?.toFixed(2) || "0.00"}
           </h2>
 

@@ -5,8 +5,8 @@ const ReviewOrderItems = () => {
   const cart = useCartStore((state) => state.cart);
 
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="text-lg font-semibold mb-5">
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-5 text-lg font-semibold">
         Order Items ({cart?.items?.length || 0})
       </h2>
 
@@ -19,13 +19,13 @@ const ReviewOrderItems = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-24 h-24 rounded-lg object-cover border"
+              className="h-24 w-24 rounded-lg border object-cover"
             />
 
             <div className="flex-1">
               <h3 className="font-medium">{item.name}</h3>
 
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="mt-1 text-sm text-gray-500">
                 {item.color} / {item.size}
               </p>
 

@@ -11,8 +11,6 @@ export const useCollectionsStore = create((set, get) => ({
 
   error: null,
 
-
-
   fetchCollections: async (params = {}) => {
     try {
       set({

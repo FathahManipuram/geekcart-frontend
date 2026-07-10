@@ -38,8 +38,7 @@ const ProfileForm = ({ user, onClose }) => {
   }, [user, reset]);
 
   const onSubmit = async (data) => {
-    console.log("DataTO: ", data);
-    console.log("Dirtyfields: ", dirtyFields);
+
     const updatedData = {};
 
     Object.keys(dirtyFields).forEach((key) => {
@@ -58,7 +57,7 @@ const ProfileForm = ({ user, onClose }) => {
       toast.info("No changes made");
       return;
     }
-    console.log("UpdatedData: ", updatedData);
+
     try {
       await updateProfile(updatedData);
       toast.success("Profile updated successfully");

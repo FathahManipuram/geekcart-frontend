@@ -3,7 +3,7 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 const SalesReportTableSkeleton = () => {
   return (
     <div className="rounded-xl border bg-white">
-      <div className="p-6 border-b">
+      <div className="border-b p-6">
         <Skeleton className="h-6 w-48" />
       </div>
 

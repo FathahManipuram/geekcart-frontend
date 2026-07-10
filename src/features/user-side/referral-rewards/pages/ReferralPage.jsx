@@ -5,12 +5,12 @@ import { useEffect } from "react";
 import ReferralStatsCard from "../components/ReferralStatsCard";
 
 const ReferralPage = () => {
-	const fetchProfile = useAuthStore((state) => state.fetchProfile);
-	const user= useAuthStore((state)=> state.user)
+  const fetchProfile = useAuthStore((state) => state.fetchProfile);
+  const user = useAuthStore((state) => state.user);
 
-	useEffect(()=>{
-		fetchProfile();
-	},[])
+  useEffect(() => {
+    fetchProfile();
+  }, []);
   return (
     <div className="space-y-6 p-12">
       <div>
@@ -21,9 +21,9 @@ const ReferralPage = () => {
         </p>
       </div>
 
-      <ReferralCodeCard user={user}/>
+      <ReferralCodeCard user={user} />
 
-      <ReferralStatsCard user={user}/>
+      <ReferralStatsCard user={user} />
 
       <ReferralHowItWorks />
     </div>

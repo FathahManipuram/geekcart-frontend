@@ -26,7 +26,7 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
           <p className="font-medium">
             {row.user?.fullName || "Guest Customer"}
           </p>
-          <p className="text-xs text-muted-foreground">
+          <p className="text-muted-foreground text-xs">
             {row.user?.email || "-"}
           </p>
         </div>
@@ -36,7 +36,6 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
       header: "TOTAL",
       accessor: "totalAmount",
       cell: (row) => {
-        // Calculate dynamic live net total considering any processed item updates
         const totalRefunds = (row.items || []).reduce(
           (sum, item) => sum + (item.refundAmount ?? 0),
           0,
@@ -49,7 +48,7 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
               ₹{formatCurrency(netLiveAmount)}
             </span>
             {totalRefunds > 0 && (
-              <span className="text-[10px] text-red-600 font-medium bg-red-50 px-1 py-0.5 rounded mt-0.5 w-max">
+              <span className="mt-0.5 w-max rounded bg-red-50 px-1 py-0.5 text-[10px] font-medium text-red-600">
                 Ref: -₹{formatCurrency(totalRefunds)}
               </span>
             )}
@@ -82,10 +81,10 @@ const OrderTable = ({ orders = [], loading = false, onView, onEdit }) => {
       cell: (row) => (
         <div className="flex gap-2">
           <Button size="icon" variant="ghost" onClick={() => onView(row)}>
-            <Eye className="w-4 h-4" />
+            <Eye className="h-4 w-4" />
           </Button>
           <Button size="icon" variant="ghost" onClick={() => onEdit(row)}>
-            <Pencil className="w-4 h-4" />
+            <Pencil className="h-4 w-4" />
           </Button>
         </div>
       ),

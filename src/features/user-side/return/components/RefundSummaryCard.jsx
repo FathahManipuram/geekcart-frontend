@@ -9,8 +9,8 @@ const RefundSummaryCard = ({ items = [], selectedItems = [] }) => {
   );
 
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="font-semibold text-lg mb-6">Refund Summary</h2>
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-6 text-lg font-semibold">Refund Summary</h2>
 
       <div className="space-y-4">
         <div className="flex justify-between">
@@ -25,7 +25,7 @@ const RefundSummaryCard = ({ items = [], selectedItems = [] }) => {
           <span>Original Payment Method</span>
         </div>
 
-        <div className="border-t pt-4 flex justify-between font-semibold text-lg">
+        <div className="flex justify-between border-t pt-4 text-lg font-semibold">
           <span>Estimated Refund</span>
 
           <span>₹{refundAmount.toLocaleString()}</span>

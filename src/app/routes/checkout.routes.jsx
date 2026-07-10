@@ -24,7 +24,7 @@ export const checkoutRoutes = [
     path: "/checkout/review",
     element: (
       <ProtectedRoute>
-        <ReviewPage/>
+        <ReviewPage />
       </ProtectedRoute>
     ),
   },

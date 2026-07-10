@@ -1,4 +1,3 @@
-
 import FilterBar from "@/shared/components/filters/FilterBar";
 import FilterSelect from "@/shared/components/filters/FilterSelect";
 import SearchInput from "@/shared/components/SearchInput";
@@ -22,7 +21,7 @@ const WalletFilters = ({ type, onTypeChange, search, onSearchChange }) => {
       <SearchInput
         value={search}
         onChange={onSearchChange}
-        onClear={()=> onSearchChange("")}
+        onClear={() => onSearchChange("")}
         placeholder="Search reason..."
         className="max-w-full"
       />

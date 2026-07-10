@@ -13,89 +13,86 @@ import CouponModal from "../components/coupon/CouponModal";
 import AppliedCouponCard from "../components/coupon/AppliedCouponCard";
 import { useWalletStore } from "@/features/user-side/wallet/store/wallet.store";
 
-
-
 const PaymentPage = () => {
   const navigate = useNavigate();
 
   const [couponModalOpen, setCouponModalOpen] = useState(false);
 
-
-  const selectedPaymentMethod = useCheckoutStore((state) => state.selectedPaymentMethod);
+  const selectedPaymentMethod = useCheckoutStore(
+    (state) => state.selectedPaymentMethod,
+  );
   const setPaymentMethod = useCheckoutStore((state) => state.setPaymentMethod);
-  const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
-  const validatePayment= useCheckoutStore((state)=> state.validatePayment)
-  const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
-  const appliedCoupon= useCheckoutStore((state)=> state.appliedCoupon)
+  const selectedAddress = useCheckoutStore((state) => state.selectedAddress);
+  const validatePayment = useCheckoutStore((state) => state.validatePayment);
+  const couponDiscount = useCheckoutStore((state) => state.couponDiscount);
+  const appliedCoupon = useCheckoutStore((state) => state.appliedCoupon);
   const speedCharge = useCheckoutStore((state) => state.speedCharge);
-const availableCoupons = useCheckoutStore((state) => state.availableCoupons);
-const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
-const fetchAvailableCoupons = useCheckoutStore(
-  (state) => state.fetchAvailableCoupons,
-);
+  const availableCoupons = useCheckoutStore((state) => state.availableCoupons);
+  const selectedDeliveryMethod = useCheckoutStore(
+    (state) => state.selectedDeliveryMethod,
+  );
+  const fetchAvailableCoupons = useCheckoutStore(
+    (state) => state.fetchAvailableCoupons,
+  );
   const summary = useCartStore((state) => state.summary);
-  const fetchCart= useCartStore((state)=> state.fetchCart)
-  const fetchWallet= useWalletStore((state)=> state.fetchWallet)
-  const wallet= useWalletStore((state)=> state.wallet)
+  const fetchCart = useCartStore((state) => state.fetchCart);
+  const fetchWallet = useWalletStore((state) => state.fetchWallet);
+  const wallet = useWalletStore((state) => state.wallet);
   const cart = useCartStore((state) => state.cart);
 
+  const finalAmount =
+    (speedCharge ? summary.total + speedCharge : summary.total) -
+    couponDiscount;
+  useEffect(() => {
+    fetchCart();
+    fetchWallet();
+  }, []);
 
-const finalAmount =
-  (speedCharge ? summary.total + speedCharge : summary.total) - couponDiscount;
-  useEffect(()=>{
-    fetchCart()
-    fetchWallet()
-  },[])
+  useEffect(() => {
+    fetchAvailableCoupons();
+  }, [couponModalOpen]);
 
-  useEffect(()=>{
-      fetchAvailableCoupons();
-  },[couponModalOpen])
+  useEffect(() => {
+    if (!selectedAddress) {
+      navigate("/checkout/shipping", { replace: true });
+    }
+  }, [selectedAddress, navigate]);
 
-useEffect(()=>{
-  if(!selectedAddress){
-    navigate("/checkout/shipping", {replace: true});  
-  }
-}, [selectedAddress, navigate])
+  useEffect(() => {
+    if (cart?.items?.length === 0) {
+      navigate("/");
+    }
+  }, [cart, navigate]);
 
-useEffect(()=> {
-  if(cart?.items?.length===0){
-    navigate("/")
-  }
-},[cart, navigate])
+  const handleContinue = async () => {
+    if (!selectedPaymentMethod) {
+      toast.error("Please select a payment method");
+      return;
+    }
+    try {
+      const res = await validatePayment({
+        deliveryMethod: selectedDeliveryMethod,
+        paymentMethod: selectedPaymentMethod,
+        couponId: appliedCoupon?._id,
+      });
 
-
-const handleContinue= async()=>{
-
-   if (!selectedPaymentMethod) {
-     toast.error("Please select a payment method");
-     return;
-   }
-  try{
-    const res = await validatePayment({
-      deliveryMethod: selectedDeliveryMethod,
-      paymentMethod: selectedPaymentMethod,
-      couponId: appliedCoupon?._id,
-    });
-
-     if (!res.valid) {
-       toast.error(res.issues[0]?.message);
-       return;
-     }
+      if (!res.valid) {
+        toast.error(res.issues[0]?.message);
+        return;
+      }
       navigate("/checkout/review");
-
-  }catch(err){
-   toast.error(err.response?.data?.message || "Unable to validate payment");
-  }
-}
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Unable to validate payment");
+    }
+  };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-8">
       <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={2} />
 
-      <div className="grid lg:grid-cols-3 gap-8 mt-10">
-       
+      <div className="mt-10 grid gap-8 lg:grid-cols-3">
         <div className="lg:col-span-2">
-          <h1 className="text-3xl font-bold mb-2">Payment Method</h1>
+          <h1 className="mb-2 text-3xl font-bold">Payment Method</h1>
 
           <p className="text-muted-foreground mb-8">
             Select how you would like to complete your purchase.
@@ -105,7 +102,7 @@ const handleContinue= async()=>{
             {PAYMENT_METHODS.map((method) => (
               <PaymentMethodCard
                 key={method.id}
-                value= {method.id}
+                value={method.id}
                 method={method}
                 selected={selectedPaymentMethod === method.id}
                 onSelect={setPaymentMethod}
@@ -130,7 +127,7 @@ const handleContinue= async()=>{
           onButtonClick={handleContinue}
           children={
             <>
-              <CheckoutItemsPreview cart={cart}/>
+              <CheckoutItemsPreview cart={cart} />
               <AppliedCouponCard onOpenModal={() => setCouponModalOpen(true)} />
             </>
           }

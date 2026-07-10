@@ -1,7 +1,7 @@
 const PaymentInfoCard = ({ order }) => {
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="font-semibold text-lg mb-4">Payment Information</h2>
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-4 text-lg font-semibold">Payment Information</h2>
 
       <div className="space-y-3">
         <div className="flex justify-between">

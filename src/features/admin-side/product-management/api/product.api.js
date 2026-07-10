@@ -18,6 +18,6 @@ export const deleteproductApi = async (productId) =>
 
 export const fetchProductDetailsApi = async (slug) =>
   adminApi.get(`/admin/products/${slug}`);
-  
+
 export const toggleProductStatusApi = async (productId) =>
   adminApi.patch(`/admin/products/${productId}/status`);

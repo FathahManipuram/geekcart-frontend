@@ -1,5 +1,4 @@
-import { ArrowRight, Clock3 } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
+import { Clock3 } from "lucide-react";
 import { Badge } from "@/shared/components/ui/badge";
 
 const OFFER_STYLES = {
@@ -37,30 +36,17 @@ const OfferCard = ({ offer }) => {
 
   return (
     <div
-      className={`
-      group
-      relative
-      overflow-hidden
-      rounded-3xl
-      border
-      ${style.border}
-      ${style.background}
-      p-6
-      transition-all
-      duration-300
-      hover:-translate-y-1
-      hover:shadow-xl
-    `}
+      className={`group relative overflow-hidden rounded-3xl border ${style.border} ${style.background} p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl`}
     >
       <div
-        className={`absolute right-0 top-0 h-28 w-28 rounded-full ${style.accent} opacity-10 blur-3xl`}
+        className={`absolute top-0 right-0 h-28 w-28 rounded-full ${style.accent} opacity-10 blur-3xl`}
       />
 
       <Badge className="bg-primary text-primary-foreground">
         {style.badge}
       </Badge>
 
-      <h2 className="mt-6 text-3xl font-bold text-primary">
+      <h2 className="text-primary mt-6 text-3xl font-bold">
         {offer.discountType === "PERCENTAGE"
           ? `${offer.discountValue}% OFF`
           : `₹${offer.discountValue} OFF`}
@@ -68,20 +54,15 @@ const OfferCard = ({ offer }) => {
 
       <h3 className="mt-4 text-lg font-semibold">{offer.name}</h3>
 
-      <p className="mt-2 line-clamp-2 text-sm text-muted-foreground">
+      <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
         {offer.description}
       </p>
 
       <div className="mt-6 flex items-center justify-between">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex items-center gap-2 text-sm">
           <Clock3 className="h-4 w-4" />
           Ends in {remainingDays} days
         </div>
-
-        {/* <Button size="sm" className="rounded-full">
-          Shop
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button> */}
       </div>
     </div>
   );

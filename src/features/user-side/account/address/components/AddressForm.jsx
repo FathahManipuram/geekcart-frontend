@@ -50,12 +50,10 @@ const AddressForm = ({ initialData = null, onClose }) => {
   const selectedLabel = watch("addressLabel");
   const watchedPincode = watch("pincode");
 
-
   const countries = useMemo(
     () => Country.getAllCountries().filter((c) => c.isoCode === "IN"),
     [],
   );
-
 
   useEffect(() => {
     if (initialData) {
@@ -73,7 +71,6 @@ const AddressForm = ({ initialData = null, onClose }) => {
       });
     }
   }, [initialData, reset]);
-
 
   useEffect(() => {
     if (isEditMode && !dirtyFields.pincode) return;
@@ -198,7 +195,7 @@ const AddressForm = ({ initialData = null, onClose }) => {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-1">
           <Label>Country</Label>
           <Controller
@@ -247,7 +244,7 @@ const AddressForm = ({ initialData = null, onClose }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="space-y-1">
           <Label>State</Label>
           <Input {...register("state")} placeholder="e.g. Kerala" />
@@ -269,13 +266,17 @@ const AddressForm = ({ initialData = null, onClose }) => {
         <input
           type="checkbox"
           {...register("isDefault")}
-          className="h-4 w-4 accent-primary cursor-pointer"
+          className="accent-primary h-4 w-4 cursor-pointer"
         />
         <p className="text-sm">Set as default address</p>
       </div>
 
       <div className="flex gap-4 pt-4">
-        <Button type="submit" disabled={loading} className="flex-1 cursor-pointer">
+        <Button
+          type="submit"
+          disabled={loading}
+          className="flex-1 cursor-pointer"
+        >
           {loading
             ? "Saving..."
             : isEditMode

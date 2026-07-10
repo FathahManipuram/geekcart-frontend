@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 const ProductActiveStatusBadge = () => {
   const statusStyles = {
@@ -15,20 +15,11 @@ const ProductActiveStatusBadge = () => {
 
   return (
     <span
-      className={`
-        inline-flex
-        items-center
-        rounded-full
-        px-3
-        py-1
-        text-[10px]
-        font-semibold
-        ${statusStyles[status]}
-      `}
+      className={`inline-flex items-center rounded-full px-3 py-1 text-[10px] font-semibold ${statusStyles[status]} `}
     >
       ● {statusLabels[status]}
     </span>
   );
 };
 
-export default ProductActiveStatusBadge
+export default ProductActiveStatusBadge;

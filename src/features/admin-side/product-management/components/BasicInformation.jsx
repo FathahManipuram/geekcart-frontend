@@ -7,52 +7,17 @@ import React from "react";
 import { Controller } from "react-hook-form";
 
 const BasicInformation = ({ register, control, errors, watch }) => {
- 
   const isReturnable = watch("isReturnable");
 
   return (
-    <div
-      className="
-        grid
-        grid-cols-1
-        lg:grid-cols-3
-        gap-6
-      "
-    >
+    <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
       {/* Left Section */}
-      <div
-        className="
-          lg:col-span-2
-          space-y-6
-          border
-          rounded-xl
-          bg-white
-          p-8
-        "
-      >
+      <div className="space-y-6 rounded-xl border bg-white p-8 lg:col-span-2">
         {/* Header */}
-        <div
-          className="
-            flex
-            items-center
-            gap-3
-          "
-        >
-          <Package2
-            size={18}
-            className="
-              text-amber-900
-            "
-          />
+        <div className="flex items-center gap-3">
+          <Package2 size={18} className="text-amber-900" />
 
-          <h2
-            className="
-              text-lg
-              font-semibold
-            "
-          >
-            Basic Information
-          </h2>
+          <h2 className="text-lg font-semibold">Basic Information</h2>
         </div>
 
         {/* Product Name */}
@@ -66,14 +31,7 @@ const BasicInformation = ({ register, control, errors, watch }) => {
           />
 
           {errors?.name && (
-            <p
-              className="
-                text-xs
-                text-red-500
-              "
-            >
-              {errors.name.message}
-            </p>
+            <p className="text-xs text-red-500">{errors.name.message}</p>
           )}
         </div>
 
@@ -89,53 +47,23 @@ const BasicInformation = ({ register, control, errors, watch }) => {
                 {...field}
                 rows={6}
                 placeholder="Describe the craftsmanship, fit, and soul of this garment..."
-                className="
-                  w-full
-                  rounded-md
-                  border
-                  bg-background
-                  px-4
-                  py-3
-                  text-sm
-                  outline-none
-                  resize-none
-                "
+                className="bg-background w-full resize-none rounded-md border px-4 py-3 text-sm outline-none"
               />
             )}
           />
 
           {errors?.description && (
-            <p
-              className="
-                text-xs
-                text-red-500
-              "
-            >
-              {errors.description.message}
-            </p>
+            <p className="text-xs text-red-500">{errors.description.message}</p>
           )}
         </div>
 
         {/* Manufacturer */}
         <div className="space-y-4">
-          <h3
-            className="
-              text-sm
-              font-semibold
-              text-muted-foreground
-            "
-          >
+          <h3 className="text-muted-foreground text-sm font-semibold">
             Manufacturer Information
           </h3>
 
-          <div
-            className="
-              grid
-              grid-cols-1
-              md:grid-cols-2
-              gap-4
-            "
-          >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {/* Name */}
             <div className="space-y-1">
               <Label>MANUFACTURER NAME</Label>
@@ -147,12 +75,7 @@ const BasicInformation = ({ register, control, errors, watch }) => {
               />
 
               {errors?.manufacturer?.name && (
-                <p
-                  className="
-                    text-xs
-                    text-red-500
-                  "
-                >
+                <p className="text-xs text-red-500">
                   {errors.manufacturer.name.message}
                 </p>
               )}
@@ -169,24 +92,14 @@ const BasicInformation = ({ register, control, errors, watch }) => {
               />
 
               {errors?.manufacturer?.phone && (
-                <p
-                  className="
-                    text-xs
-                    text-red-500
-                  "
-                >
+                <p className="text-xs text-red-500">
                   {errors.manufacturer.phone.message}
                 </p>
               )}
             </div>
 
             {/* Email */}
-            <div
-              className="
-                space-y-1
-                md:col-span-2
-              "
-            >
+            <div className="space-y-1 md:col-span-2">
               <Label>EMAIL</Label>
 
               <AppInput
@@ -196,50 +109,25 @@ const BasicInformation = ({ register, control, errors, watch }) => {
               />
 
               {errors?.manufacturer?.email && (
-                <p
-                  className="
-                    text-xs
-                    text-red-500
-                  "
-                >
+                <p className="text-xs text-red-500">
                   {errors.manufacturer.email.message}
                 </p>
               )}
             </div>
 
             {/* Address */}
-            <div
-              className="
-                space-y-1
-                md:col-span-2
-              "
-            >
+            <div className="space-y-1 md:col-span-2">
               <Label>ADDRESS</Label>
 
               <textarea
                 {...register("manufacturer.address")}
                 rows={3}
                 placeholder="Manufacturer address"
-                className="
-                  w-full
-                  rounded-md
-                  border
-                  bg-background
-                  px-4
-                  py-3
-                  text-sm
-                  outline-none
-                  resize-none
-                "
+                className="bg-background w-full resize-none rounded-md border px-4 py-3 text-sm outline-none"
               />
 
               {errors?.manufacturer?.address && (
-                <p
-                  className="
-                    text-xs
-                    text-red-500
-                  "
-                >
+                <p className="text-xs text-red-500">
                   {errors.manufacturer.address.message}
                 </p>
               )}
@@ -249,48 +137,20 @@ const BasicInformation = ({ register, control, errors, watch }) => {
       </div>
 
       {/* Right Section */}
-      <div
-        className="
-   rounded-xl
-    border
-    bg-white
-    p-6
-    space-y-8
-    self-start"
-      >
+      <div className="space-y-8 self-start rounded-xl border bg-white p-6">
         {/* Cover Image */}
         <div className="space-y-5">
           {/* Header */}
           <div className="space-y-1">
-            <h3
-              className="
-                text-lg
-                font-semibold
-              "
-            >
-              Main Product Thumbnail
-            </h3>
+            <h3 className="text-lg font-semibold">Main Product Thumbnail</h3>
 
-            <p
-              className="
-                text-sm
-                text-muted-foreground
-              "
-            >
+            <p className="text-muted-foreground text-sm">
               Upload the primary image customers see first.
             </p>
           </div>
 
           {/* Upload */}
-          <div
-            className="
-              rounded-xl
-              border
-              border-dashed
-              bg-muted/30
-              p-5
-            "
-          >
+          <div className="bg-muted/30 rounded-xl border border-dashed p-5">
             <div className="flex justify-center">
               <SingleImageUploader
                 name="coverImage"
@@ -305,13 +165,7 @@ const BasicInformation = ({ register, control, errors, watch }) => {
 
           {/* Error */}
           {errors?.coverImage && (
-            <p
-              className="
-                text-center
-                text-xs
-                text-red-500
-              "
-            >
+            <p className="text-center text-xs text-red-500">
               {errors.coverImage.message}
             </p>
           )}
@@ -324,45 +178,19 @@ const BasicInformation = ({ register, control, errors, watch }) => {
         <div className="space-y-5">
           {/* Header */}
           <div className="space-y-1">
-            <h3
-              className="
-                text-lg
-                font-semibold
-              "
-            >
-              Customer Returns
-            </h3>
+            <h3 className="text-lg font-semibold">Customer Returns</h3>
 
-            <p
-              className="
-                text-sm
-                text-muted-foreground
-              "
-            >
+            <p className="text-muted-foreground text-sm">
               Configure return eligibility and duration.
             </p>
           </div>
 
           {/* Return Switch */}
-          <div
-            className="
-              rounded-xl
-              border
-              p-4
-              flex
-              items-center
-              justify-between
-            "
-          >
+          <div className="flex items-center justify-between rounded-xl border p-4">
             <div className="space-y-1">
               <p className="font-medium">Returnable Product</p>
 
-              <p
-                className="
-                  text-sm
-                  text-muted-foreground
-                "
-              >
+              <p className="text-muted-foreground text-sm">
                 Customers can return this item.
               </p>
             </div>
@@ -394,12 +222,7 @@ const BasicInformation = ({ register, control, errors, watch }) => {
               />
 
               {errors?.returnWindowDays && (
-                <p
-                  className="
-                    text-xs
-                    text-red-500
-                  "
-                >
+                <p className="text-xs text-red-500">
                   {errors.returnWindowDays.message}
                 </p>
               )}

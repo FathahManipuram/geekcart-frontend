@@ -1,27 +1,6 @@
-// WalletTransactionTable.jsx
-
 import DataTable from "@/shared/components/DataTable";
 import { Badge } from "@/shared/components/ui/badge";
-import { formatDateForDisplay, formatDateTime } from "@/shared/utils/date";
-
-const data = [
-  {
-    id: 1,
-    date: "15 Jun 2026",
-    description: "Return Refund",
-    type: "CREDIT",
-    amount: 500,
-    balance: 2450,
-  },
-  {
-    id: 2,
-    date: "14 Jun 2026",
-    description: "Order Payment",
-    type: "DEBIT",
-    amount: 300,
-    balance: 1950,
-  },
-];
+import { formatDateTime } from "@/shared/utils/date";
 
 const WalletTransactionTable = ({ transactions, loading }) => {
   const columns = [
@@ -55,8 +34,8 @@ const WalletTransactionTable = ({ transactions, loading }) => {
         <span
           className={
             row.type === "CREDIT"
-              ? "text-green-600 font-medium"
-              : "text-red-500 font-medium"
+              ? "font-medium text-green-600"
+              : "font-medium text-red-500"
           }
         >
           {row.type === "CREDIT" ? "+" : "-"}₹{row.amount}

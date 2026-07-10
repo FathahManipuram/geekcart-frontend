@@ -24,7 +24,7 @@ const TrackingHeader = ({ order }) => {
         ]}
       />
 
-      <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mt-3">
+      <h1 className="mt-3 text-2xl font-bold md:text-4xl lg:text-5xl">
         #{order?.orderNumber}
       </h1>
 

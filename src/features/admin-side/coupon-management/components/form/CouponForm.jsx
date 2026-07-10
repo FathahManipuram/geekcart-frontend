@@ -29,7 +29,13 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
     },
   });
 
-  const { handleSubmit, watch, setValue, reset , formState: {isDirty, dirtyFields}} = methods;
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { isDirty, dirtyFields },
+  } = methods;
 
   useEffect(() => {
     if (defaultValues) {
@@ -37,7 +43,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
         ...defaultValues,
 
         minOrderAmount: defaultValues.minOrderAmount ?? "",
-          
+
         usageLimit: defaultValues.usageLimit ?? 100,
         perUserLimit: defaultValues.perUserLimit ?? 1,
 
@@ -52,35 +58,29 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
     }
   }, [defaultValues, reset]);
 
-
-
-  const handleFormSubmit= (data)=> {
-    if(!defaultValues){
-      return onSubmit(data)
+  const handleFormSubmit = (data) => {
+    if (!defaultValues) {
+      return onSubmit(data);
     }
-      console.log("data", data);
-      console.log("dirtyFields", dirtyFields);
 
-    const payload={}
+    const payload = {};
 
-    Object.keys(dirtyFields).forEach((key)=>{
-      payload[key]= data[key]
-    })
+    Object.keys(dirtyFields).forEach((key) => {
+      payload[key] = data[key];
+    });
 
-    onSubmit(payload)
-  }
+    onSubmit(payload);
+  };
 
-
-  const discountType = watch("discountType")
-
+  const discountType = watch("discountType");
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Basic Information</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Basic Information</h2>
 
-          <div className="grid lg:grid-cols-3 gap-4">
+          <div className="grid gap-4 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <AppFormInput
                 name="code"
@@ -90,7 +90,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
               />
             </div>
 
-            <div className="border rounded-lg p-3">
+            <div className="rounded-lg border p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">Active Coupon</p>
@@ -119,10 +119,10 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
           </div>
         </div>
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Discount Settings</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Discount Settings</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-1">
               <Label>Discount Type</Label>
 
@@ -164,10 +164,10 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
           </div>
         </div>
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Usage Limits</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Usage Limits</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <AppFormInput
               name="usageLimit"
               label="Usage Limit"
@@ -184,10 +184,10 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
           </div>
         </div>
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="font-semibold text-lg mb-4">Schedule</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Schedule</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <AppFormInput
               name="startDate"
               label="Start Date"
@@ -207,7 +207,7 @@ const CouponForm = ({ defaultValues, onSubmit, loading, validation }) => {
         <button
           type="submit"
           disabled={loading || !isDirty}
-          className="bg-primary text-white px-6 py-3 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-primary rounded-lg px-6 py-3 text-white disabled:cursor-not-allowed disabled:opacity-50"
         >
           {loading ? "Saving..." : "Save Coupon"}
         </button>

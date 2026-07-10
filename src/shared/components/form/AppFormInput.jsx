@@ -8,7 +8,6 @@ const AppFormInput = ({ name, label, type = "text", ...props }) => {
     formState: { errors },
   } = useFormContext();
 
-
   return (
     <div className="space-y-1">
       {label && <Label className="uppercase">{label}</Label>}
@@ -25,7 +24,7 @@ const AppFormInput = ({ name, label, type = "text", ...props }) => {
       />
 
       {errors[name] && (
-        <p className="text-red-500 text-sm">{errors[name]?.message}</p>
+        <p className="text-sm text-red-500">{errors[name]?.message}</p>
       )}
     </div>
   );

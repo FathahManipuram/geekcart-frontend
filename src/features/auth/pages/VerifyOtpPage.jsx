@@ -48,8 +48,6 @@ const VerifyOtpPage = () => {
   const type = location?.state?.type;
   const config = OTP_CONFIG[type];
 
-  console.log("VerifyOtp page: ", location);
-
   useEffect(() => {
     if (!email || !type || !config) {
       toast.error("Session expired. Please try again");
@@ -78,67 +76,67 @@ const VerifyOtpPage = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Invalid OTP");
     }
-  }
-
-    const handleResend = async () => {
-      try {
-        setResending(true);
-        await resendOtpApi({ email, type });
-        toast.success("OTP resent successfully");
-        setTime(30);
-        setOtp("");
-      } catch (err) {
-        toast.error(err.response?.data?.message || "Resend failed");
-      } finally {
-        setResending(false);
-      }
-    };
-
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
-        <Card className="w-105 shadow-lg lg:p-8 rounded-none">
-          <CardHeader>
-            <CardTitle className="font-extrabold text-3xl">
-              {config?.title}
-            </CardTitle>
-            <p className="text-sm text-muted-foreground">
-              Enter the 6-digit code sent to your email.
-            </p>
-          </CardHeader>
-          <CardContent className="space-y-5">
-            <InputOTP maxLength={6} value={otp} onChange={setOtp}>
-              <InputOTPGroup>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-                <InputOTPSlot index={4} />
-                <InputOTPSlot index={5} />
-              </InputOTPGroup>
-            </InputOTP>
-
-            <div className="text-sm text-muted-foreground">
-              {time > 0 ? `⏱ ${time}s` : "Didn't receive the code?"}
-            </div>
-
-            <Button
-              onClick={handleVerify}
-              disabled={otp.length !== 6}
-              className="w-full"
-            >
-              Verify-OTP
-            </Button>
-            <button
-              onClick={handleResend}
-              disabled={time > 0 || resending}
-              className={`hover:text-black ${time > 0 || resending ? "opacity-50 cursor-not-allowed" : "cursor-pointer font-semibold"}`}
-            >
-              Resend Code
-            </button>
-          </CardContent>
-        </Card>
-      </div>
-    );
   };
+
+  const handleResend = async () => {
+    try {
+      setResending(true);
+      await resendOtpApi({ email, type });
+      toast.success("OTP resent successfully");
+      setTime(30);
+      setOtp("");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Resend failed");
+    } finally {
+      setResending(false);
+    }
+  };
+
+  return (
+    <div className="bg-background flex min-h-screen items-center justify-center">
+      <Card className="w-105 rounded-none shadow-lg lg:p-8">
+        <CardHeader>
+          <CardTitle className="text-3xl font-extrabold">
+            {config?.title}
+          </CardTitle>
+          <p className="text-muted-foreground text-sm">
+            Enter the 6-digit code sent to your email.
+          </p>
+        </CardHeader>
+        <CardContent className="space-y-5">
+          <InputOTP maxLength={6} value={otp} onChange={setOtp}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
+
+          <div className="text-muted-foreground text-sm">
+            {time > 0 ? `⏱ ${time}s` : "Didn't receive the code?"}
+          </div>
+
+          <Button
+            onClick={handleVerify}
+            disabled={otp.length !== 6}
+            className="w-full"
+          >
+            Verify-OTP
+          </Button>
+          <button
+            onClick={handleResend}
+            disabled={time > 0 || resending}
+            className={`hover:text-black ${time > 0 || resending ? "cursor-not-allowed opacity-50" : "cursor-pointer font-semibold"}`}
+          >
+            Resend Code
+          </button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
 
 export default VerifyOtpPage;

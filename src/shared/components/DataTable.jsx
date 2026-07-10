@@ -1,4 +1,11 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 const DataTable = ({
   columns = [],
@@ -8,25 +15,25 @@ const DataTable = ({
   emptyMessage = "No data found",
   rowKey = "_id",
 }) => {
-   if (loading) {
-     return (
-       loadingComponent ?? (
-         <div className="bg-white border rounded-lg p-10 text-center">
-           Loading...
-         </div>
-       )
-     );
-   }
+  if (loading) {
+    return (
+      loadingComponent ?? (
+        <div className="rounded-lg border bg-white p-10 text-center">
+          Loading...
+        </div>
+      )
+    );
+  }
 
   return (
-    <div className="bg-white border rounded-lg overflow-hidden">
+    <div className="overflow-hidden rounded-lg border bg-white">
       <Table>
         <TableHeader>
           <TableRow>
             {columns.map((column, index) => (
               <TableHead
                 key={column.accessor || `col-${index}`}
-                className="font-semibold text-xs"
+                className="text-xs font-semibold"
               >
                 {column.header}
               </TableHead>
@@ -51,7 +58,7 @@ const DataTable = ({
             <TableRow>
               <TableCell
                 colSpan={columns.length}
-                className=" text-center p-10 text-muted-foreground"
+                className="text-muted-foreground p-10 text-center"
               >
                 {emptyMessage}
               </TableCell>
@@ -63,4 +70,4 @@ const DataTable = ({
   );
 };
 
-export default DataTable
+export default DataTable;

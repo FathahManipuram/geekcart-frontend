@@ -1,63 +1,78 @@
-import { AppInput } from '@/shared/components/AppInput'
-import { Button } from '@/shared/components/ui/button'
-import { Label } from '@/shared/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select'
-import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useEffect} from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import SingleImageUploader from '@/shared/helpers/SingleImageUploader'
-import { Switch } from '@/shared/components/ui/switch'
-import { useSubcategoryStore } from '../store/subcategory.store'
+import { AppInput } from "@/shared/components/AppInput";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
+import SingleImageUploader from "@/shared/helpers/SingleImageUploader";
+import { Switch } from "@/shared/components/ui/switch";
+import { useSubcategoryStore } from "../store/subcategory.store";
 
-
-const SubcategoryForm = ({initialData= null, schema, onSubmit, onClose}) => {
- const categories = useSubcategoryStore((state) => state.categories);
- const fetchCategories = useSubcategoryStore((state) => state.fetchCategories);
-	const {register, handleSubmit, reset, watch, control, formState:{errors, isDirty, isSubmitting}}= useForm({
-		resolver: yupResolver(schema),
-		defaultValues:{
-			name:"",
-			category: "",
+const SubcategoryForm = ({ initialData = null, schema, onSubmit, onClose }) => {
+  const categories = useSubcategoryStore((state) => state.categories);
+  const fetchCategories = useSubcategoryStore((state) => state.fetchCategories);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    control,
+    formState: { errors, isDirty, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      name: "",
+      category: "",
       image: "",
-			isActive: true,
-		}
-	})
+      isActive: true,
+    },
+  });
 
-	useEffect(()=>{
-		if(initialData && categories.length > 0){
-			reset({
-				name: initialData.name || "",
-				category: initialData.category?._id || initialData?.category || "",
+  useEffect(() => {
+    if (initialData && categories.length > 0) {
+      reset({
+        name: initialData.name || "",
+        category: initialData.category?._id || initialData?.category || "",
         image: initialData.image || "",
-				isActive: initialData.isActive ?? true,
-			})
-		}
-	}, [initialData, reset, categories])
+        isActive: initialData.isActive ?? true,
+      });
+    }
+  }, [initialData, reset, categories]);
 
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
-   useEffect(() => {
-     fetchCategories();
-   }, [fetchCategories]);
+  const name = watch("name");
+  const isActive = watch("isActive");
 
-	const name= watch("name")
-	const isActive= watch("isActive")
-
-	const handleCancel= ()=>{
-		reset({
-			name: "",
-			category: "",
+  const handleCancel = () => {
+    reset({
+      name: "",
+      category: "",
       image: "",
-			isActive: true,
-		})
-		onClose?.()
-	}
+      isActive: true,
+    });
+    onClose?.();
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       <div className="flex gap-3">
         <div>
-        <SingleImageUploader name="image" control={control}  title="Upload Subcategory image"
-            size="w-56 h-56"/> 
+          <SingleImageUploader
+            name="image"
+            control={control}
+            title="Upload Subcategory image"
+            size="w-56 h-56"
+          />
 
           {errors?.image && (
             <p className="text-xs text-red-500">{errors.image.message}</p>
@@ -142,6 +157,6 @@ const SubcategoryForm = ({initialData= null, schema, onSubmit, onClose}) => {
       </div>
     </form>
   );
-}
+};
 
-export default SubcategoryForm
+export default SubcategoryForm;

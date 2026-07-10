@@ -65,8 +65,6 @@ const ProfileDisplay = ({ user, editProfileOpen, setEditProfileOpen }) => {
         </div>
       </div>
 
-      {/* <Button onClick={()=> setOpen(true)}>Edit</Button> */}
-
       <Modal
         open={editProfileOpen}
         onOpenChange={setEditProfileOpen}

@@ -16,30 +16,17 @@ const WishlistCard = ({ item, onRemove, onMoveToCart }) => {
 
   const existInCart = isInCart(item.variantId?._id);
 
-
-
-const discountPercentage = item.variantId?.salePrice
-  ? Math.round(
-      ((item.variantId?.price - item.variantId?.salePrice) /
-        item.variantId?.price) *
-        100,
-    )
-  : 0;
+  const discountPercentage = item.variantId?.salePrice
+    ? Math.round(
+        ((item.variantId?.price - item.variantId?.salePrice) /
+          item.variantId?.price) *
+          100,
+      )
+    : 0;
 
   return (
     <>
-      <div
-        className="
-          flex
-          flex-col
-          rounded-2xl
-          bg-white
-          transition-all
-          duration-300
-          hover:-translate-y-1
-          hover:shadow-lg
-        "
-      >
+      <div className="flex flex-col rounded-2xl bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
         {/* IMAGE */}
         <div className="relative overflow-hidden rounded-2xl">
           <img
@@ -50,73 +37,25 @@ const discountPercentage = item.variantId?.salePrice
                 `/products/${item.productId.slug}?variant=${item.variantId._id}`,
               )
             }
-            className="
-              aspect-[3/4]
-              w-full
-              cursor-pointer
-              object-cover
-              transition-transform
-              duration-500
-              hover:scale-105
-            "
+            className="aspect-[3/4] w-full cursor-pointer object-cover transition-transform duration-500 hover:scale-105"
           />
 
           <button
             onClick={() => setOpenDeleteModal(true)}
-            className="
-              absolute
-              right-3
-              top-3
-              flex
-              h-8
-              w-8
-              items-center
-              justify-center
-              rounded-full
-              bg-white/90
-              shadow
-              backdrop-blur
-              cursor-pointer
-            "
+            className="absolute top-3 right-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white/90 shadow backdrop-blur"
           >
             <Trash2 size={14} className="text-neutral-600 hover:text-red-500" />
           </button>
 
           {/* STATUS */}
           {isUnavailable && (
-            <span
-              className="
-                absolute
-                left-3
-                top-3
-                rounded-full
-                bg-red-500
-                px-3
-                py-1
-                text-xs
-                font-medium
-                text-white
-              "
-            >
+            <span className="absolute top-3 left-3 rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white">
               Unavailable
             </span>
           )}
 
           {!isUnavailable && isOutOfStock && (
-            <span
-              className="
-                  absolute
-                  left-3
-                  top-3
-                  rounded-full
-                  bg-orange-500
-                  px-3
-                  py-1
-                  text-xs
-                  font-medium
-                  text-white
-                "
-            >
+            <span className="absolute top-3 left-3 rounded-full bg-orange-500 px-3 py-1 text-xs font-medium text-white">
               Out of Stock
             </span>
           )}
@@ -125,32 +64,19 @@ const discountPercentage = item.variantId?.salePrice
         {/* CONTENT */}
         <div className="mt-4">
           {/* Top Row */}
-          <div className="flex items-start justify-between gap-3 mx-4">
-            <h3
-              className="
-        line-clamp-2
-        text-sm
-        font-semibold
-        text-neutral-900
-      "
-            >
+          <div className="mx-4 flex items-start justify-between gap-3">
+            <h3 className="line-clamp-2 text-sm font-semibold text-neutral-900">
               {item.productId?.name}
             </h3>
 
-            <span
-              className="
-        shrink-0
-        text-xs
-        text-neutral-500
-      "
-            >
+            <span className="shrink-0 text-xs text-neutral-500">
               {item.variantId?.color} • {item.variantId?.size}
             </span>
           </div>
 
           {/* Price */}
 
-          <div className="mt-1 flex items-center gap-2 mx-4">
+          <div className="mx-4 mt-1 flex items-center gap-2">
             <p className="text-sm font-semibold text-amber-700 md:text-base">
               ₹{item.variantId?.salePrice || item.variantId?.price}
             </p>
@@ -174,12 +100,11 @@ const discountPercentage = item.variantId?.salePrice
             onClick={() =>
               existInCart ? navigate("/cart") : onMoveToCart(item.variantId._id)
             }
-            className={`mt-4 flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition cursor-pointer
-      ${
-        isUnavailable || isOutOfStock
-          ? "cursor-not-allowed bg-neutral-200 text-neutral-500"
-          : "bg-[#9B6C43] text-white hover:bg-[#865a35]"
-      }`}
+            className={`mt-4 flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium transition ${
+              isUnavailable || isOutOfStock
+                ? "cursor-not-allowed bg-neutral-200 text-neutral-500"
+                : "bg-[#9B6C43] text-white hover:bg-[#865a35]"
+            }`}
           >
             <ShoppingBag size={16} />
 

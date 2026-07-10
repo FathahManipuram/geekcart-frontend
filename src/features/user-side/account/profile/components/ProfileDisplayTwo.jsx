@@ -3,11 +3,9 @@ import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { Edit3 } from "lucide-react";
 import EmailEditForm from "./EmailEditForm";
-import { useAuthStore } from "@/features/auth/store/auth.store";
-import { toast } from "sonner";
 
 const ProfileDisplayTwo = ({ user, emailEditOpen, setEmailEditOpen }) => {
-  const changeEmail = useAuthStore((state) => state.changeEmail);
+
   return (
     <>
       <div className="grid grid-cols-1 gap-4 text-sm mb-3 mt-3">

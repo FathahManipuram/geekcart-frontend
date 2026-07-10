@@ -1,8 +1,8 @@
-import StatsCard from '@/shared/components/StatsCard';
-import React from 'react'
+import StatsCard from "@/shared/components/StatsCard";
+import React from "react";
 
-const DashboardStats = ({data}) => {
-	const cards = [
+const DashboardStats = ({ data }) => {
+  const cards = [
     {
       title: "Total Users",
       value: data?.totalUsers || 0,
@@ -21,12 +21,12 @@ const DashboardStats = ({data}) => {
     },
   ];
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-4">
       {cards.map((card, index) => (
         <StatsCard key={index} title={card.title} value={card.value} />
       ))}
     </div>
   );
-}
+};
 
-export default DashboardStats
+export default DashboardStats;

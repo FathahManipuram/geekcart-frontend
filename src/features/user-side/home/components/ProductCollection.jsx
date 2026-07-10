@@ -12,7 +12,7 @@ const ProductCollection = ({
   const { isWishlisted, handleWishlist } = useWishlist();
 
   return (
-    <section className="px-4 py-10 md:px-8 lg:px-12 bg-[#f6f3ee]">
+    <section className="bg-[#f6f3ee] px-4 py-10 md:px-8 lg:px-12">
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-neutral-900 md:text-4xl">
@@ -25,7 +25,7 @@ const ProductCollection = ({
         {showViewAll && (
           <button
             onClick={() => navigate("/collections")}
-            className="hidden items-center gap-2 text-sm font-semibold text-amber-700 transition-colors hover:text-amber-800 md:flex cursor-pointer"
+            className="hidden cursor-pointer items-center gap-2 text-sm font-semibold text-amber-700 transition-colors hover:text-amber-800 md:flex"
           >
             View All Products →
           </button>
@@ -58,7 +58,7 @@ const ProductCollection = ({
         <div className="mt-8 flex justify-center md:hidden">
           <button
             onClick={() => navigate("/collections")}
-            className="text-sm font-semibold text-amber-700 cursor-pointer"
+            className="cursor-pointer text-sm font-semibold text-amber-700"
           >
             View All Products →
           </button>

@@ -28,7 +28,6 @@ export const useUserManagementStore = create((set) => ({
   fetchUsers: async ({ page = 1, limit = 5, search = "", status = "all" }) => {
     try {
       set({ loading: true, error: null });
-      console.log("before store: ", page, limit, search, status);
 
       const res = await getUsersApi({
         page,
@@ -36,9 +35,8 @@ export const useUserManagementStore = create((set) => ({
         search,
         status,
       });
-      console.log("FetchStore: ", res);
+
       const data = res.data;
-      console.log(data);
 
       set({
         users: data.users,
@@ -75,7 +73,7 @@ export const useUserManagementStore = create((set) => ({
         selectedUserAddress: res.data.address,
         loading: false,
       });
-	  return res
+      return res;
     } catch (err) {
       const message = err.response?.data?.message || "Something went wrong";
 
@@ -91,13 +89,13 @@ export const useUserManagementStore = create((set) => ({
   deleteUser: async (userId) => {
     try {
       set({ loading: true });
-      const res= await deleteUserApi(userId);
+      const res = await deleteUserApi(userId);
       set((state) => ({
         users: state.users.filter((user) => user._id !== userId),
         loading: false,
       }));
 
-	  return res
+      return res;
     } catch (err) {
       const message = err.response?.data?.message || "Something went wrong";
 
@@ -137,7 +135,6 @@ export const useUserManagementStore = create((set) => ({
 
   //Create user
   createUser: async (data) => {
-    console.log("newuserData", data);
     try {
       set({ loading: true });
       const res = await createUserApi(data);
@@ -187,9 +184,8 @@ export const useUserManagementStore = create((set) => ({
     }
   },
 
-
-//Clear selected user
-  clearSelectedUser: ()=>{
-	set({selectedUser: null})
+  //Clear selected user
+  clearSelectedUser: () => {
+    set({ selectedUser: null });
   },
 }));

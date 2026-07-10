@@ -11,41 +11,41 @@ const ReturnProductCard = ({ returnRequest }) => {
   const hasDiscount = couponDiscount > 0 || offerDiscount > 0;
 
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="text-lg font-semibold mb-6">Product Details</h2>
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-6 text-lg font-semibold">Product Details</h2>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col gap-6 lg:flex-row">
         <img
           src={item?.image}
           alt={item?.name}
-          className="w-52 h-52 object-cover rounded-lg border"
+          className="h-52 w-52 rounded-lg border object-cover"
         />
 
         <div className="flex-1">
           <h3 className="text-3xl font-semibold">{item?.name}</h3>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mt-6">
+          <div className="mt-6 grid grid-cols-2 gap-6 md:grid-cols-3">
             <div>
-              <p className="text-xs uppercase text-muted-foreground">Size</p>
-              <p className="font-medium mt-1">{item?.size || "-"}</p>
+              <p className="text-muted-foreground text-xs uppercase">Size</p>
+              <p className="mt-1 font-medium">{item?.size || "-"}</p>
             </div>
 
             <div>
-              <p className="text-xs uppercase text-muted-foreground">Color</p>
-              <p className="font-medium mt-1">{item?.color || "-"}</p>
+              <p className="text-muted-foreground text-xs uppercase">Color</p>
+              <p className="mt-1 font-medium">{item?.color || "-"}</p>
             </div>
 
             <div>
-              <p className="text-xs uppercase text-muted-foreground">
+              <p className="text-muted-foreground text-xs uppercase">
                 Purchase Price
               </p>
 
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="font-semibold text-lg text-foreground">
+              <div className="mt-1 flex items-baseline gap-2">
+                <span className="text-foreground text-lg font-semibold">
                   ₹{truePurchasePrice.toFixed(2)}
                 </span>
                 {hasDiscount && (
-                  <span className="line-through text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm line-through">
                     ₹{basePrice.toFixed(2)}
                   </span>
                 )}
@@ -54,7 +54,7 @@ const ReturnProductCard = ({ returnRequest }) => {
           </div>
 
           <div className="mt-8">
-            <p className="text-xs uppercase text-muted-foreground">
+            <p className="text-muted-foreground text-xs uppercase">
               Return Reason
             </p>
             <p className="mt-2 font-medium">{returnRequest?.reason}</p>
@@ -62,10 +62,10 @@ const ReturnProductCard = ({ returnRequest }) => {
 
           {returnRequest?.customerComment && (
             <div className="mt-8">
-              <p className="text-xs uppercase text-muted-foreground">
+              <p className="text-muted-foreground text-xs uppercase">
                 Customer Comment
               </p>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
                 {returnRequest.customerComment}
               </p>
             </div>

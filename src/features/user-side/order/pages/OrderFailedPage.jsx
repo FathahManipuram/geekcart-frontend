@@ -8,32 +8,32 @@ const OrderFailedPage = () => {
   const reason = location.state?.reason || "Payment could not be completed.";
 
   return (
-    <section className="max-w-3xl mx-auto px-4 py-16">
-      <div className="bg-white border rounded-2xl p-10 text-center">
+    <section className="mx-auto max-w-3xl px-4 py-16">
+      <div className="rounded-2xl border bg-white p-10 text-center">
         <XCircle className="mx-auto text-red-500" size={80} />
 
-        <h1 className="text-3xl font-bold mt-6">Payment Failed</h1>
+        <h1 className="mt-6 text-3xl font-bold">Payment Failed</h1>
 
-        <p className="text-gray-500 mt-3">{reason}</p>
+        <p className="mt-3 text-gray-500">{reason}</p>
 
-        <div className="flex flex-wrap justify-center gap-4 mt-8">
+        <div className="mt-8 flex flex-wrap justify-center gap-4">
           <button
             onClick={() => navigate("/checkout/review")}
-            className="px-6 py-3 bg-primary text-white rounded-lg"
+            className="bg-primary rounded-lg px-6 py-3 text-white"
           >
             Retry Payment
           </button>
 
           <button
             onClick={() => navigate("/checkout/payment")}
-            className="px-6 py-3 border rounded-lg"
+            className="rounded-lg border px-6 py-3"
           >
             Change Payment Method
           </button>
 
           <button
             onClick={() => navigate("/collections")}
-            className="px-6 py-3 border rounded-lg"
+            className="rounded-lg border px-6 py-3"
           >
             Continue Shopping
           </button>

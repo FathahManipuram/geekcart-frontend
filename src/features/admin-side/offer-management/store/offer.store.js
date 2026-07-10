@@ -9,8 +9,6 @@ import {
   toggleOfferStatusApi,
 } from "../api/offer.api";
 
-
-
 export const useOfferStore = create((set, get) => ({
   loading: false,
 
@@ -19,25 +17,23 @@ export const useOfferStore = create((set, get) => ({
   pagination: null,
   stats: [],
 
-
-// Create offer
+  // Create offer
   createOffer: async (payload) => {
-   try{
-	 set({
-      loading: true,
-    });
+    try {
+      set({
+        loading: true,
+      });
       const res = await createOfferApi(payload);
       return res;
-   } catch(err){
-	 set({
-     loading: false,
-   });
-   throw err
-   }
+    } catch (err) {
+      set({
+        loading: false,
+      });
+      throw err;
+    }
   },
 
-
-// Fetch all offers
+  // Fetch all offers
   fetchOffers: async (params) => {
     set({
       loading: true,
@@ -45,43 +41,42 @@ export const useOfferStore = create((set, get) => ({
 
     try {
       const res = await getOffersApi(params);
-console.log("offers store: ", res)
       set({
         offers: res.data.offers,
         pagination: res.data.pagination,
         stats: res.data.stats,
-		loading: false
+        loading: false,
       });
 
       return res;
-    } catch(err){
+    } catch (err) {
       set({
         loading: false,
       });
-    throw err
-	}
+      throw err;
+    }
   },
 
-//Get offer details
+  //Get offer details
   getOfferDetails: async (offerId) => {
     try {
-		 set({
-       loading: true,
-     });
+      set({
+        loading: true,
+      });
 
       const res = await getOfferDetailsApi(offerId);
-      console.log("offerDetails: ", res)
+
       set({
         offer: res.data,
-		loading : false,
+        loading: false,
       });
 
       return res;
-    } catch(err){
+    } catch (err) {
       set({
         loading: false,
       });
-	  throw err
+      throw err;
     }
   },
 
@@ -92,58 +87,57 @@ console.log("offers store: ", res)
 
     try {
       const res = await updateOfferApi(offerId, payload);
- set({
-   loading: false,
- });
-      return res.data;
-    } catch(err) {
       set({
         loading: false,
       });
-	  throw err
+      return res.data;
+    } catch (err) {
+      set({
+        loading: false,
+      });
+      throw err;
     }
   },
 
-
   deleteOffer: async (offerId) => {
-       try {
-         set({
-           loading: true,
-         });
+    try {
+      set({
+        loading: true,
+      });
 
-         const res = await deleteOfferApi(offerId);
-         set({
-           loading: false,
-         });
+      const res = await deleteOfferApi(offerId);
+      set({
+        loading: false,
+      });
 
-         get().fetchOffers();
-         return res.data;
-       } catch (err) {
-         set({
-           loading: false,
-         });
-         throw err;
-       }
+      get().fetchOffers();
+      return res.data;
+    } catch (err) {
+      set({
+        loading: false,
+      });
+      throw err;
+    }
   },
 
   toggleOfferStatus: async (offerId) => {
-    try{
-		   set({
-      loading: true,
-    });
+    try {
+      set({
+        loading: true,
+      });
 
-		const res = await toggleOfferStatusApi(offerId);
- set({
-   loading: false,
- });
+      const res = await toggleOfferStatusApi(offerId);
+      set({
+        loading: false,
+      });
 
- get().fetchOffers()
-    return res.data;
-	}catch(err){
- set({
-   loading: false,
- });
- throw err
-	}
+      get().fetchOffers();
+      return res.data;
+    } catch (err) {
+      set({
+        loading: false,
+      });
+      throw err;
+    }
   },
 }));

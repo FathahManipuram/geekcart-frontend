@@ -12,24 +12,23 @@ const AddressSelectionModal = ({
   const [editingAddress, setEditingAddress] = useState(null);
   const [isAddingNew, setIsAddingNew] = useState(false);
 
-
   if (!addresses || addresses.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center text-center py-8 px-4 border border-dashed border-gray-200 dark:border-zinc-800 rounded-xl bg-gray-50/30 dark:bg-zinc-900/10">
-        <div className="bg-gray-100 dark:bg-zinc-800 p-3 rounded-full mb-3 text-muted-foreground">
-          <MapPinPlus className="w-6 h-6 text-gray-400" />
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-gray-200 bg-gray-50/30 px-4 py-8 text-center dark:border-zinc-800 dark:bg-zinc-900/10">
+        <div className="text-muted-foreground mb-3 rounded-full bg-gray-100 p-3 dark:bg-zinc-800">
+          <MapPinPlus className="h-6 w-6 text-gray-400" />
         </div>
         <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100">
           No Addresses Found
         </h3>
-        <p className="text-xs text-gray-500 max-w-65 mt-1 mb-4">
-          You haven't add any delivery options yet. Add your first
-          address to proceed.
+        <p className="mt-1 mb-4 max-w-65 text-xs text-gray-500">
+          You haven't add any delivery options yet. Add your first address to
+          proceed.
         </p>
         <Button
           type="button"
           onClick={() => setIsAddingNew(true)}
-          className="text-xs font-medium cursor-pointer"
+          className="cursor-pointer text-xs font-medium"
         >
           Add New Address
         </Button>
@@ -50,20 +49,16 @@ const AddressSelectionModal = ({
     );
   }
 
-
   return (
     <div className="space-y-4">
       {addresses.map((address) => (
         <label
           key={address._id}
-          className={`
-            flex items-start justify-between border rounded-xl p-4 cursor-pointer transition-all
-            ${
-              selectedAddressId === address._id
-                ? "border-primary bg-gray-50/50"
-                : "border-gray-200 hover:border-gray-300"
-            }
-          `}
+          className={`flex cursor-pointer items-start justify-between rounded-xl border p-4 transition-all ${
+            selectedAddressId === address._id
+              ? "border-primary bg-gray-50/50"
+              : "border-gray-200 hover:border-gray-300"
+          } `}
         >
           <div className="flex gap-4">
             <input
@@ -75,7 +70,7 @@ const AddressSelectionModal = ({
 
             <div>
               <h3 className="font-medium text-gray-900">{address.fullName}</h3>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="mt-1 text-sm text-gray-500">
                 {address.addressLine}
               </p>
               <p className="text-sm text-gray-500">
@@ -91,13 +86,12 @@ const AddressSelectionModal = ({
               e.stopPropagation();
               setEditingAddress(address);
             }}
-            className="text-xs font-semibold text-gray-600 hover:text-primary border border-gray-200 hover:border-primary rounded-md px-2.5 py-1 transition-all cursor-pointer"
+            className="hover:text-primary hover:border-primary cursor-pointer rounded-md border border-gray-200 px-2.5 py-1 text-xs font-semibold text-gray-600 transition-all"
           >
             <Pencil size={16} />
           </button>
         </label>
       ))}
-
 
       {!!editingAddress && (
         <Modal

@@ -57,13 +57,6 @@ export const couponSchema = yup.object({
       otherwise: (schema) => schema.notRequired().nullable(),
     }),
 
-  // usageLimit: yup
-  //   .number()
-  //   .typeError("Total usage limit must be a number")
-  //   .integer("Usage limit must be a whole number")
-  //   .positive("Usage limit must be at least 1")
-  //   .required("Global usage limit is required"),
-
   usageLimit: yup
     .number()
     .transform((value, originalValue) => (originalValue === "" ? null : value))

@@ -1,42 +1,46 @@
-import React, { useEffect, useState } from 'react'
-import { CHECKOUT_STEPS } from '../../constants/checkoutSteps';
-import CheckoutStepper from '../../components/CheckoutStepper';
-import ReviewAddressCard from '../components/ReviewAddressCard';
-import ReviewPaymentCard from '../components/ReviewPaymentCard';
-import ReviewOrderItems from '../components/ReviewOrderItems';
-import OrderSummary from '../../components/OrderSummary';
-import { useCartStore } from '@/features/user-side/cart/store/cart.store';
-import { useCheckoutStore } from '../../store/checkout.store';
-import { useNavigate } from 'react-router-dom';
-import { useOrderStore } from '@/features/user-side/order/store/order.store';
-import ReviewDeliveryCard from '../components/ReviewDeliveryCard';
-import { toast } from 'sonner';
-import { usePaymentStore } from '@/features/user-side/payment/store/payment.store';
-import { loadRazorpay } from '@/shared/helpers/loadRazorpay';
+import React, { useEffect, useState } from "react";
+import { CHECKOUT_STEPS } from "../../constants/checkoutSteps";
+import CheckoutStepper from "../../components/CheckoutStepper";
+import ReviewAddressCard from "../components/ReviewAddressCard";
+import ReviewPaymentCard from "../components/ReviewPaymentCard";
+import ReviewOrderItems from "../components/ReviewOrderItems";
+import OrderSummary from "../../components/OrderSummary";
+import { useCartStore } from "@/features/user-side/cart/store/cart.store";
+import { useCheckoutStore } from "../../store/checkout.store";
+import { useNavigate } from "react-router-dom";
+import { useOrderStore } from "@/features/user-side/order/store/order.store";
+import ReviewDeliveryCard from "../components/ReviewDeliveryCard";
+import { toast } from "sonner";
+import { usePaymentStore } from "@/features/user-side/payment/store/payment.store";
+import { loadRazorpay } from "@/shared/helpers/loadRazorpay";
 
 const ReviewPage = () => {
-  const navigate=useNavigate()
-  const [processing, setProcessing] = useState(false)
-	const selectedAddress= useCheckoutStore((state)=> state.selectedAddress)
-	const selectedPaymentMethod=useCheckoutStore((state)=> state.selectedPaymentMethod)
-  const selectedDeliveryMethod= useCheckoutStore((state)=> state.selectedDeliveryMethod)
+  const navigate = useNavigate();
+  const [processing, setProcessing] = useState(false);
+  const selectedAddress = useCheckoutStore((state) => state.selectedAddress);
+  const selectedPaymentMethod = useCheckoutStore(
+    (state) => state.selectedPaymentMethod,
+  );
+  const selectedDeliveryMethod = useCheckoutStore(
+    (state) => state.selectedDeliveryMethod,
+  );
   const cart = useCartStore((state) => state.cart);
-    const summary = useCartStore((state) => state.summary);
-    const speedCharge= useCheckoutStore((state)=> state.speedCharge)
+  const summary = useCartStore((state) => state.summary);
+  const speedCharge = useCheckoutStore((state) => state.speedCharge);
   const createOrder = useOrderStore((state) => state.createOrder);
-  const createRazorpayOrder= usePaymentStore((state)=> state.createRazorpayOrder)
-  const verifyPayment= usePaymentStore((state)=> state.verifyPayment)
-  const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
-  const appliedCoupon= useCheckoutStore((state)=> state.appliedCoupon)
-  const finalValidation= useCheckoutStore((state)=> state.finalValidation)
+  const createRazorpayOrder = usePaymentStore(
+    (state) => state.createRazorpayOrder,
+  );
+  const verifyPayment = usePaymentStore((state) => state.verifyPayment);
+  const couponDiscount = useCheckoutStore((state) => state.couponDiscount);
+  const appliedCoupon = useCheckoutStore((state) => state.appliedCoupon);
+  const finalValidation = useCheckoutStore((state) => state.finalValidation);
 
-
-useEffect(() => {
-  if (cart?.items?.length===0) {
-    navigate("/");
-  }
-}, [cart, navigate]);
-
+  useEffect(() => {
+    if (cart?.items?.length === 0) {
+      navigate("/");
+    }
+  }, [cart, navigate]);
 
   useEffect(() => {
     if (!selectedAddress) {
@@ -51,181 +55,169 @@ useEffect(() => {
     }
   }, [selectedAddress, selectedPaymentMethod, navigate]);
 
+  const handleRazorpayPayment = async () => {
+    try {
+      setProcessing(true);
 
+      const loaded = await loadRazorpay();
 
-const handleRazorpayPayment = async () => {
-  try {
-    setProcessing(true);
+      if (!loaded) {
+        toast.error("Failed to load Razorpay");
+        setProcessing(false);
+        return;
+      }
 
-    const loaded = await loadRazorpay();
+      const finalAmount = cart.summary.total + speedCharge - couponDiscount;
 
-    if (!loaded) {
-      toast.error("Failed to load Razorpay");
-      setProcessing(false);
-      return;
-    }
+      const razorpayOrder = await createRazorpayOrder({
+        amount: finalAmount,
+      });
 
- const finalAmount = cart.summary.total + speedCharge - couponDiscount;
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: razorpayOrder.amount,
+        currency: razorpayOrder.currency,
+        order_id: razorpayOrder.id,
+        name: "GeekCart",
+        description: "Order Payment",
 
-    const razorpayOrder = await createRazorpayOrder({
-      amount: finalAmount,
-    });
+        handler: async (response) => {
+          try {
+            const verifyRes = await verifyPayment(response);
+            if (!verifyRes?.verified) {
+              throw new Error("Payment verification failed");
+            }
 
-    const options = {
-      key: import.meta.env.VITE_RAZORPAY_KEY_ID,
-      amount: razorpayOrder.amount,
-      currency: razorpayOrder.currency,
-      order_id: razorpayOrder.id,
-      name: "GeekCart",
-      description: "Order Payment",
+            const orderRes = await createOrder({
+              addressId: selectedAddress?._id,
+              deliveryMethod: selectedDeliveryMethod,
+              paymentMethod: selectedPaymentMethod,
+              couponId: appliedCoupon?._id,
 
-      handler: async (response) => {
-        try {
-          const verifyRes = await verifyPayment(response);
-          console.log("verifyRes.verified: ", verifyRes?.verified)
+              paymentDetails: {
+                razorpayOrderId: response.razorpay_order_id,
+                razorpayPaymentId: response.razorpay_payment_id,
+                razorpaySignature: response.razorpay_signature,
+              },
+            });
 
-          if (!verifyRes?.verified) {
-            throw new Error("Payment verification failed");
+            setProcessing(false);
+
+            toast.success(orderRes.message);
+
+            navigate(`/orders/success/${orderRes?.data?.orderNumber}`, {
+              state: {
+                orderId: orderRes.data.orderId,
+              },
+            });
+          } catch (err) {
+            console.error(err);
+
+            setProcessing(false);
+            navigate("/orders/payment-failed", {
+              state: {
+                reason: "Payment verification failed.",
+              },
+            });
+
+            toast.error(
+              err?.response?.data?.message ||
+                err?.message ||
+                "Order creation failed",
+            );
           }
-
-          const orderRes = await createOrder({
-            addressId: selectedAddress?._id,
-            deliveryMethod: selectedDeliveryMethod,
-            paymentMethod: selectedPaymentMethod,
-            couponId: appliedCoupon?._id,
-            
-            paymentDetails: {
-              razorpayOrderId: response.razorpay_order_id,
-              razorpayPaymentId: response.razorpay_payment_id,
-              razorpaySignature: response.razorpay_signature,
-            },
-          });
-
-          console.log("OrderRes.data.orderId: ", orderRes?.data?.orderNumber);
-
-          setProcessing(false);
-
-          toast.success(orderRes.message);
-
-          navigate(`/orders/success/${orderRes?.data?.orderNumber}`, {
-            state: {
-              orderId: orderRes.data.orderId,
-            },
-          });
-        } catch (err) {
-          console.error(err);
-
-          setProcessing(false);
-          navigate("/orders/payment-failed", {
-            state: {
-              reason: "Payment verification failed.",
-            },
-          });
-
-          toast.error(
-            err?.response?.data?.message ||
-              err?.message ||
-              "Order creation failed",
-          );
-        }
-      },
-
-      modal: {
-        ondismiss: () => {
-          setProcessing(false);
-
-          navigate("/orders/payment-failed", {
-            state: {
-              reason: "Payment was cancelled by user.",
-            },
-          });
-
-          toast.error("Payment cancelled");
         },
-      },
 
-      prefill: {
-        name: selectedAddress?.fullName || "",
-        contact: selectedAddress?.phone || "",
-      },
+        modal: {
+          ondismiss: () => {
+            setProcessing(false);
 
-      theme: {
-        color: "#825026",
-      },
-    };
+            navigate("/orders/payment-failed", {
+              state: {
+                reason: "Payment was cancelled by user.",
+              },
+            });
 
-    const paymentObject = new window.Razorpay(options);
+            toast.error("Payment cancelled");
+          },
+        },
 
-    paymentObject.open();
-  } catch (err) {
-    console.error(err);
-    
-     navigate("/orders/payment-failed", {
-       state: {
-         reason:
-           "Payment failed. Please try again.",
-       },
-     });
+        prefill: {
+          name: selectedAddress?.fullName || "",
+          contact: selectedAddress?.phone || "",
+        },
 
-    setProcessing(false);
+        theme: {
+          color: "#825026",
+        },
+      };
 
-    toast.error("Failed to initiate payment");
-  }
-};
+      const paymentObject = new window.Razorpay(options);
 
+      paymentObject.open();
+    } catch (err) {
+      console.error(err);
 
+      navigate("/orders/payment-failed", {
+        state: {
+          reason: "Payment failed. Please try again.",
+        },
+      });
 
-const handlePlaceOrder = async () => {
-  if (processing) return;
+      setProcessing(false);
 
-  try {
-    setProcessing(true)
+      toast.error("Failed to initiate payment");
+    }
+  };
 
-    await finalValidation({
-      addressId: selectedAddress._id,
-      deliveryMethod: selectedDeliveryMethod,
-      paymentMethod: selectedPaymentMethod,
-      couponId: appliedCoupon?._id,
-    });
+  const handlePlaceOrder = async () => {
+    if (processing) return;
 
-    if (["COD", "WALLET"].includes(selectedPaymentMethod)) {
-      const orderRes = await createOrder({
+    try {
+      setProcessing(true);
+
+      await finalValidation({
         addressId: selectedAddress._id,
         deliveryMethod: selectedDeliveryMethod,
         paymentMethod: selectedPaymentMethod,
         couponId: appliedCoupon?._id,
       });
 
-      toast.success(orderRes.message);
+      if (["COD", "WALLET"].includes(selectedPaymentMethod)) {
+        const orderRes = await createOrder({
+          addressId: selectedAddress._id,
+          deliveryMethod: selectedDeliveryMethod,
+          paymentMethod: selectedPaymentMethod,
+          couponId: appliedCoupon?._id,
+        });
 
-      navigate(`/orders/success/${orderRes.data.orderNumber}`, {
-        state: {
-          orderId: orderRes.data.orderId,
-        },
-      });
+        toast.success(orderRes.message);
 
-      return;
+        navigate(`/orders/success/${orderRes.data.orderNumber}`, {
+          state: {
+            orderId: orderRes.data.orderId,
+          },
+        });
+
+        return;
+      }
+
+      await handleRazorpayPayment();
+    } catch (err) {
+      console.error(err);
+
+      setProcessing(false);
+
+      toast.error(err?.response?.data?.message || "Order creation failed");
     }
-
-
-
-    await handleRazorpayPayment();
-  } catch (err) {
-    console.error(err);
-
-    setProcessing(false);
-
-    toast.error(err?.response?.data?.message ||"Order creation failed");
-  }
-};
-
+  };
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-8">
       <CheckoutStepper steps={CHECKOUT_STEPS} currentStep={3} />
 
-      <div className="grid lg:grid-cols-3 gap-8 mt-10">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="mt-10 grid gap-8 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
           <ReviewAddressCard
             address={selectedAddress}
             onEdit={() => navigate("/checkout/shipping")}
@@ -262,4 +254,4 @@ const handlePlaceOrder = async () => {
   );
 };
 
-export default ReviewPage
+export default ReviewPage;

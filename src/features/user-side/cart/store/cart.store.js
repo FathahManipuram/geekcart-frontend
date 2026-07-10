@@ -26,7 +26,6 @@ export const useCartStore = create((set, get) => ({
       });
 
       const res = await fetchCartApi();
-      console.log("cartstore", res.data);
 
       const cart = res.data || {};
 
@@ -62,7 +61,6 @@ export const useCartStore = create((set, get) => ({
         error: null,
       });
 
-
       const res = await addToCartApi({
         variantId,
 
@@ -87,7 +85,6 @@ export const useCartStore = create((set, get) => ({
 
   updateQuantity: async (variantId, quantity) => {
     try {
-      //set({ loading: true, error: null });
       if (quantity > 5) {
         return;
       }
@@ -100,12 +97,10 @@ export const useCartStore = create((set, get) => ({
         quantity,
       });
 
-      //set({ loading: false });
-     await get().fetchCart();
+      await get().fetchCart();
       return res;
     } catch (err) {
       set({
-     //   loading: false,
         error: err.response?.data?.message || "Failed to add to cart",
       });
 
@@ -132,22 +127,22 @@ export const useCartStore = create((set, get) => ({
   },
 
   clearCart: async () => {
-  try{
-    set({ loading: true, error: null });
+    try {
+      set({ loading: true, error: null });
       const res = await clearCartApi();
-      set({items: [], summary: {}, loading: false });
+      set({ items: [], summary: {}, loading: false });
       return res;
-  } catch(err){
-     set({
-       loading: false,
-       error: err.response?.data?.message || "Failed to add to cart",
-     });
+    } catch (err) {
+      set({
+        loading: false,
+        error: err.response?.data?.message || "Failed to add to cart",
+      });
 
-     throw err;
-  }
+      throw err;
+    }
   },
 
-  isInCart: (variantId)=>{
-    return get().items.some((item)=> item.variantId._id === variantId)
-  }
+  isInCart: (variantId) => {
+    return get().items.some((item) => item.variantId._id === variantId);
+  },
 }));

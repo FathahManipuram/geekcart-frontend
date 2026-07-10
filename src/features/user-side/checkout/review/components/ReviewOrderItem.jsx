@@ -6,41 +6,40 @@ const ReviewOrderItem = ({ item }) => {
   const hasDiscount = salePrice < originalPrice;
 
   return (
-    <div className="flex gap-4 py-4 border-b">
+    <div className="flex gap-4 border-b py-4">
       <img
         src={item.image}
         alt={item.name}
-        className="w-24 h-24 object-cover rounded-md border"
+        className="h-24 w-24 rounded-md border object-cover"
       />
 
       <div className="flex-1">
-        <h3 className="font-semibold text-base">{item.name}</h3>
+        <h3 className="text-base font-semibold">{item.name}</h3>
 
-        <p className="text-sm text-muted-foreground mt-1">
+        <p className="text-muted-foreground mt-1 text-sm">
           Size: {item.size} | Color: {item.color}
         </p>
 
-        <p className="text-xs text-muted-foreground mt-0.5">
+        <p className="text-muted-foreground mt-0.5 text-xs">
           Unit Price: ₹{formatCurrency(salePrice)}{" "}
           {hasDiscount && (
-            <span className="line-through ml-1 text-gray-400">
+            <span className="ml-1 text-gray-400 line-through">
               ₹{formatCurrency(originalPrice)}
             </span>
           )}
         </p>
 
-        <p className="text-sm font-medium mt-1">Qty: {item.quantity}</p>
+        <p className="mt-1 text-sm font-medium">Qty: {item.quantity}</p>
       </div>
 
-
-      <div className="text-right flex flex-col justify-center">
+      <div className="flex flex-col justify-center text-right">
         {hasDiscount && (
-          <p className="line-through text-xs font-medium text-muted-foreground">
+          <p className="text-muted-foreground text-xs font-medium line-through">
             ₹{formatCurrency(originalPrice * item.quantity)}
           </p>
         )}
 
-        <p className="font-semibold text-lg">
+        <p className="text-lg font-semibold">
           ₹{formatCurrency(salePrice * item.quantity)}
         </p>
       </div>

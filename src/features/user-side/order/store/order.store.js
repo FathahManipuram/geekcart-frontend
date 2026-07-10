@@ -1,6 +1,12 @@
 import { create } from "zustand";
-import { cancelOrderApi, cancelOrderItemApi, createOrderApi, downloadInvoicePdfApi, fetchOrderByIdApi, fetchOrderHistoryApi } from "../api/order.api";
-
+import {
+  cancelOrderApi,
+  cancelOrderItemApi,
+  createOrderApi,
+  downloadInvoicePdfApi,
+  fetchOrderByIdApi,
+  fetchOrderHistoryApi,
+} from "../api/order.api";
 
 export const useOrderStore = create((set) => ({
   order: null,
@@ -10,7 +16,6 @@ export const useOrderStore = create((set) => ({
 
   createOrder: async (payload) => {
     const res = await createOrderApi(payload);
-    console.log("Order placed: ", res.data);
     return res;
   },
 
@@ -21,7 +26,6 @@ export const useOrderStore = create((set) => ({
       const res = await fetchOrderByIdApi(orderId);
       set({ order: res.data, loading: false });
 
-      console.log("fetchedOrderById: ", res.data);
       return res.data;
     } catch (err) {
       const message = err.response?.data?.message;
@@ -37,7 +41,6 @@ export const useOrderStore = create((set) => ({
       const res = await fetchOrderHistoryApi(query);
 
       set({ orderHistory: res.data.orders, loading: false });
-      console.log("orderHistory store: ", res.data);
 
       return res.data;
     } catch (err) {
@@ -83,10 +86,8 @@ export const useOrderStore = create((set) => ({
     try {
       const res = await downloadInvoicePdfApi(orderId);
 
-      // Dynamic extraction: works perfectly whether res is response or response.data
       const rawData = res.data ? res.data : res;
 
-      // Guard checking if we actually received a binary blob
       if (!rawData || rawData.size === 0) {
         throw new Error("Received empty invoice data from server");
       }
@@ -101,7 +102,7 @@ export const useOrderStore = create((set) => ({
       document.body.appendChild(link);
       link.click();
 
-      // Clean up memory leaks immediately
+      // Clean up memory leaks
       link.remove();
       window.URL.revokeObjectURL(url);
     } catch (err) {

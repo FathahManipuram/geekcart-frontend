@@ -7,41 +7,39 @@ import { ORDER_STATUSES } from "@/shared/constants/order/orderStatus";
 
 const UpdateOrderStatusModal = ({ order, onSubmit, loading, onClose }) => {
   const [selectedStatus, setSelectedStatus] = useState("");
- // const [notifyCustomer, setNotifyCustomer] = useState(true);
+  // const [notifyCustomer, setNotifyCustomer] = useState(true);
 
   useEffect(() => {
     setSelectedStatus(order?.orderStatus || "");
   }, [order]);
 
-
-const hasDeliveredItems = order?.items?.some(
-  (item) => item.itemStatus === "DELIVERED",
-);
-
-const hasCancelledItems = order?.items?.some(
-  (item) => item.itemStatus === "CANCELLED",
-);
-
-
-let availableStatuses = ORDER_STATUS_TRANSITIONS[order?.orderStatus] || [];
-
-if (hasDeliveredItems || hasCancelledItems) {
-  availableStatuses = availableStatuses.filter(
-    (status) => status !== ORDER_STATUSES.CANCELLED,
+  const hasDeliveredItems = order?.items?.some(
+    (item) => item.itemStatus === "DELIVERED",
   );
-}
+
+  const hasCancelledItems = order?.items?.some(
+    (item) => item.itemStatus === "CANCELLED",
+  );
+
+  let availableStatuses = ORDER_STATUS_TRANSITIONS[order?.orderStatus] || [];
+
+  if (hasDeliveredItems || hasCancelledItems) {
+    availableStatuses = availableStatuses.filter(
+      (status) => status !== ORDER_STATUSES.CANCELLED,
+    );
+  }
 
   const handleUpdate = () => {
     onSubmit?.({
-		orderId: order._id,
+      orderId: order._id,
       orderStatus: selectedStatus,
-    //   notifyCustomer,
+      //   notifyCustomer,
     });
   };
 
   return (
     <div>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {Object.values(ORDER_STATUSES).map((status) => {
           const isCurrent = status === order?.orderStatus;
 
@@ -79,7 +77,7 @@ if (hasDeliveredItems || hasCancelledItems) {
         </div>
       </div> */}
 
-      <div className="flex justify-end gap-3 mt-6">
+      <div className="mt-6 flex justify-end gap-3">
         <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>

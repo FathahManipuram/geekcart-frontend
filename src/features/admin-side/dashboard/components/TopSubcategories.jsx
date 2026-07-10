@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-const TopSubcategories = ({data=[]}) => {
+const TopSubcategories = ({ data = [] }) => {
   return (
     <div className="rounded-3xl border bg-white p-6 shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">Best Selling Subcategories</h3>
+      <h3 className="mb-4 text-lg font-semibold">Best Selling Subcategories</h3>
 
       <div className="space-y-3">
         {data.map((item, index) => (
@@ -18,6 +18,6 @@ const TopSubcategories = ({data=[]}) => {
       </div>
     </div>
   );
-}
+};
 
-export default TopSubcategories
+export default TopSubcategories;

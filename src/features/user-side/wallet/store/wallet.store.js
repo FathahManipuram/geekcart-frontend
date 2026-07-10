@@ -1,6 +1,10 @@
 import { create } from "zustand";
-import { createWalletTopupOrderApi, getWalletApi, getWalletTransactionsApi, verifyWalletTopupApi } from "../api/wallet.api";
-
+import {
+  createWalletTopupOrderApi,
+  getWalletApi,
+  getWalletTransactionsApi,
+  verifyWalletTopupApi,
+} from "../api/wallet.api";
 
 export const useWalletStore = create((set) => ({
   loading: false,
@@ -37,37 +41,37 @@ export const useWalletStore = create((set) => ({
   },
 
   fetchWallet: async () => {
- try {
-   set({ loading: true })
+    try {
+      set({ loading: true });
 
       const { data } = await getWalletApi();
 
       set({
         wallet: data,
-		loading: false,
+        loading: false,
       });
-   return data;
- } catch (err) {
-   set({ loading: false });
-   throw err;
- }
+      return data;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
   },
 
   fetchTransactions: async (params) => {
-try {
-  set({ loading: true });
+    try {
+      set({ loading: true });
 
-  const { data } = await getWalletTransactionsApi(params);
+      const { data } = await getWalletTransactionsApi(params);
 
-  set({
-    transactions: data.transactions,
-    pagination: data.pagination,
-	loading: false
-  });
-  return data;
-} catch (err) {
-  set({ loading: false });
-  throw err;
-}  
+      set({
+        transactions: data.transactions,
+        pagination: data.pagination,
+        loading: false,
+      });
+      return data;
+    } catch (err) {
+      set({ loading: false });
+      throw err;
+    }
   },
 }));

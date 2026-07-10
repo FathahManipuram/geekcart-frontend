@@ -15,7 +15,7 @@ import { formatCurrency } from "@/shared/utils/formatCurrency";
 const CartPage = () => {
   const [showValidationModal, setShowValidationModal] = useState(false);
   const [issues, setIssues] = useState(null);
-const [initialLoading, setInitialLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
 
   const fetchCart = useCartStore((state) => state.fetchCart);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -23,16 +23,14 @@ const [initialLoading, setInitialLoading] = useState(true);
   const summary = useCartStore((state) => state.summary);
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const validateCheckout = useCheckoutStore((state) => state.validateCheckout);
- const changes = useCartStore((state) => state.changes);
   const navigate = useNavigate();
   useEffect(() => {
-    const load= async()=>{
-await fetchCart();
-setInitialLoading(false);
-    }
-    load()
+    const load = async () => {
+      await fetchCart();
+      setInitialLoading(false);
+    };
+    load();
   }, []);
-
 
   const handleCheckout = async () => {
     try {
@@ -46,8 +44,9 @@ setInitialLoading(false);
 
       navigate("/checkout/shipping");
     } catch (err) {
-      console.log(err);
-      toast.error("Unable to validate checkout");
+      toast.error(
+        err?.response?.data?.message || "Unable to validate checkout",
+      );
     }
   };
 
@@ -65,26 +64,15 @@ setInitialLoading(false);
     setIssues(updatedValidation.issues);
   };
 
-if(initialLoading){
-  return <Loader/>
-}
+  if (initialLoading) {
+    return <Loader />;
+  }
   if (!items.length) {
     return <EmptyCart />;
   }
 
   return (
-    <section
-      className="
-        min-h-screen
-        bg-[#f7f5f2]
-        px-4
-        py-10
-
-        md:px-8
-
-        lg:px-14
-      "
-    >
+    <section className="min-h-screen bg-[#f7f5f2] px-4 py-10 md:px-8 lg:px-14">
       <div className="mb-3">
         <Breadcrumbs
           items={[
@@ -99,57 +87,22 @@ if(initialLoading){
         />
       </div>
       {/* TOP */}
-      <div
-        className="
-          mb-10
-          flex
-          flex-col
-          gap-5
-
-          md:flex-row
-          md:items-end
-          md:justify-between
-        "
-      >
+      <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
         {/* LEFT */}
         <div>
-          <p
-            className="
-              text-[11px]
-              uppercase
-              tracking-[0.3em]
-              text-[#9B6C43]
-            "
-          >
+          <p className="text-[11px] tracking-[0.3em] text-[#9B6C43] uppercase">
             Your Selection
           </p>
 
-          <h1
-            className="
-              text-4xl
-              font-bold
-              tracking-tight
-
-              md:text-6xl
-            "
-          >
+          <h1 className="text-4xl font-bold tracking-tight md:text-6xl">
             Your Cart
           </h1>
-
         </div>
 
         {/* RIGHT */}
         {items.length !== 0 && (
           <button
-            className="
-            text-xs
-            uppercase
-            tracking-[0.2em]
-            text-neutral-400
-            transition
-            hover:text-black
-            cursor-pointer
-          "
+            className="cursor-pointer text-xs tracking-[0.2em] text-neutral-400 uppercase transition hover:text-black"
             onClick={() => clearCart()}
           >
             Clear Cart
@@ -158,47 +111,19 @@ if(initialLoading){
       </div>
 
       {/* MAIN */}
-      <div
-        className="
-          grid
-          gap-10
-          lg:grid-cols-[1fr_360px]
-        "
-      >
+      <div className="grid gap-10 lg:grid-cols-[1fr_360px]">
         {/* CART ITEMS */}
         <CartItemCard key={items.id} items={items} />
 
         {items.length !== 0 && (
           <>
             {/* SUMMARY */}
-            <aside
-              className="
-            h-fit
-            rounded-3xl
-            bg-white
-            p-8
-            shadow-sm
-          "
-            >
-              <h2
-                className="
-              text-3xl
-              font-semibold
-            "
-              >
-                Summary
-              </h2>
+            <aside className="h-fit rounded-3xl bg-white p-8 shadow-sm">
+              <h2 className="text-3xl font-semibold">Summary</h2>
 
               {/* PRICE DETAILS */}
               <div className="mt-8 space-y-5">
-                <div
-                  className="
-                flex
-                items-center
-                justify-between
-                text-sm
-              "
-                >
+                <div className="flex items-center justify-between text-sm">
                   <span className="text-neutral-500">Subtotal</span>
 
                   <span className="font-medium">
@@ -206,14 +131,7 @@ if(initialLoading){
                   </span>
                 </div>
 
-                <div
-                  className="
-                flex
-                items-center
-                justify-between
-                text-sm
-              "
-                >
+                <div className="flex items-center justify-between text-sm">
                   <span className="text-neutral-500">Discount</span>
 
                   <span className="font-medium text-red-500">
@@ -226,7 +144,7 @@ if(initialLoading){
                   <span
                     className={
                       summary.deliveryCharge === 0
-                        ? "text-green-600 font-medium"
+                        ? "font-medium text-green-600"
                         : ""
                     }
                   >
@@ -241,29 +159,10 @@ if(initialLoading){
               <div className="my-8 border-t" />
 
               {/* TOTAL */}
-              <div
-                className="
-              flex
-              items-center
-              justify-between
-            "
-              >
-                <span
-                  className="
-                text-lg
-                font-semibold
-              "
-                >
-                  Total
-                </span>
+              <div className="flex items-center justify-between">
+                <span className="text-lg font-semibold">Total</span>
 
-                <span
-                  className="
-                text-2xl
-                font-bold
-                text-[#9B6C43]
-              "
-                >
+                <span className="text-2xl font-bold text-[#9B6C43]">
                   ₹ {summary.total?.toFixed(2)}
                 </span>
               </div>
@@ -271,26 +170,7 @@ if(initialLoading){
               {/* BUTTON */}
               <button
                 onClick={handleCheckout}
-                className="
-              mt-10
-              flex
-              w-full
-              items-center
-              justify-center
-              gap-3
-              rounded-full
-              bg-[#9B6C43]
-              px-6
-              py-4
-              text-xs
-              font-semibold
-              uppercase
-              tracking-[0.2em]
-              text-white
-              transition
-              hover:opacity-90
-              cursor-pointer
-            "
+                className="mt-10 flex w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-[#9B6C43] px-6 py-4 text-xs font-semibold tracking-[0.2em] text-white uppercase transition hover:opacity-90"
               >
                 Proceed To Checkout
                 <ArrowRight size={18} />

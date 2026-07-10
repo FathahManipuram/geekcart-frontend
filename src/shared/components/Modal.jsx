@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -7,11 +7,11 @@ import {
   DialogTitle,
   DialogPortal,
 } from "@/shared/components/ui/dialog";
-const Modal = ({open, onOpenChange, title, description, children}) => {
+const Modal = ({ open, onOpenChange, title, description, children }) => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogPortal>
-        <DialogContent className="sm:max-w-xl max-h-[90vh] overflow-y-auto pb-6">
+        <DialogContent className="max-h-[90vh] overflow-y-auto pb-6 sm:max-w-xl">
           <DialogHeader>
             <DialogTitle className="text-lg font-bold">{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
@@ -21,6 +21,6 @@ const Modal = ({open, onOpenChange, title, description, children}) => {
       </DialogPortal>
     </Dialog>
   );
-}
+};
 
-export default Modal
+export default Modal;

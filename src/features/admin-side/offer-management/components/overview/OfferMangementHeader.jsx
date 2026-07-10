@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const OfferManagementHeader = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex items-start flex-col gap-4 md:justify-between md:flex-row">
+    <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between">
       <div>
         <Header title="Offer Management" />
 
@@ -15,9 +15,7 @@ const OfferManagementHeader = () => {
         </p>
       </div>
 
-      <Button
-        onClick={() => navigate("/admin/offers/create")}
-      >
+      <Button onClick={() => navigate("/admin/offers/create")}>
         <Plus size={18} />
         Create Offer
       </Button>

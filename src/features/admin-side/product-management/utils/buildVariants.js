@@ -8,32 +8,18 @@ export const buildVariants = ({
   existingVariants = [],
 }) => {
   return sizes.map((size, index) => {
-    
     const existingVariant = existingVariants.find(
       (variant) => variant.color === color && variant.size === size,
     );
 
-  
-    // if (existingVariant) {
-    //   return {
-    //     ...existingVariant,
+    if (existingVariant) {
+      return {
+        ...existingVariant,
+        images:
+          images && images.length > 0 ? images : existingVariant.images || [],
+      };
+    }
 
-    //     images: existingVariant.images || images,
-    //   };
-    // }
-
-
-
-
-if (existingVariant) {
-  return {
-    ...existingVariant,
-    // FIX: Prioritize the incoming group images if they exist and are not empty.
-    // Otherwise, fall back to the variant's existing images.
-    images: images && images.length > 0 ? images : existingVariant.images || [],
-  };
-}
-   
     return {
       size,
 

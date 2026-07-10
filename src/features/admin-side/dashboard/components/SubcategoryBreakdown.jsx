@@ -65,10 +65,10 @@ const SubcategoryBreakdown = ({ data = [] }) => {
         <Doughnut data={chartData} options={options} />
 
         {/* CENTER */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
           <h2 className="text-4xl font-bold">{totalProducts}</h2>
 
-          <p className="text-xs uppercase tracking-wider text-neutral-500">
+          <p className="text-xs tracking-wider text-neutral-500 uppercase">
             Products
           </p>
         </div>
@@ -77,7 +77,6 @@ const SubcategoryBreakdown = ({ data = [] }) => {
       {/* LEGEND */}
       <div className="mt-8 space-y-3">
         {data.map((item, index) => {
-
           return (
             <div key={item._id} className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -92,7 +91,9 @@ const SubcategoryBreakdown = ({ data = [] }) => {
               </div>
 
               <div className="text-right">
-                <p className="text-sm font-semibold">{String(item.count).padStart(2, "0")}</p>
+                <p className="text-sm font-semibold">
+                  {String(item.count).padStart(2, "0")}
+                </p>
               </div>
             </div>
           );

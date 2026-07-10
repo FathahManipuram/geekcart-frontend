@@ -1,7 +1,10 @@
 import FilterBar from "@/shared/components/filters/FilterBar";
 import FilterSelect from "@/shared/components/filters/FilterSelect";
 import SearchInput from "@/shared/components/SearchInput";
-import { OFFER_SCOPE_OPTIONS, OFFER_STATUS_OPTIONS } from "../../constants/offer.constants";
+import {
+  OFFER_SCOPE_OPTIONS,
+  OFFER_STATUS_OPTIONS,
+} from "../../constants/offer.constants";
 
 const OfferFilters = ({
   status,
@@ -12,7 +15,7 @@ const OfferFilters = ({
   onSearchChange,
 }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-4">
+    <div className="flex flex-col gap-4 md:flex-row">
       <FilterBar>
         <SearchInput
           value={search}

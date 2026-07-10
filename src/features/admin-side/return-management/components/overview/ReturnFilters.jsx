@@ -1,4 +1,3 @@
-import { Search } from 'lucide-react';
 import React from 'react'
 import { RETURN_FILTERS } from '../../constants/return.constants';
 import SearchInput from '@/shared/components/SearchInput';

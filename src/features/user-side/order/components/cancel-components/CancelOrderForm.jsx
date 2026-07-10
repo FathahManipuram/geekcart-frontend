@@ -5,21 +5,24 @@ import { cancelOrderSchema } from "../../validations/cancelOrder.validation";
 import CancelOrderPreviewCard from "./CancelOrderPreviewCard";
 import { Info } from "lucide-react";
 
-const CancelOrderForm = ({ order, item, onSubmit, onClose, loading = false }) => {
-  const firstItemImage= order?.items?.[0].image
-  const product = item
-console.log("firstItemImage", order)
-const {
-  register,
-  handleSubmit,
-  watch,
-  formState: { errors, isSubmitting },
-} = useForm({
-  resolver: yupResolver(cancelOrderSchema),
-});
+const CancelOrderForm = ({
+  order,
+  item,
+  onSubmit,
+  onClose,
+  loading = false,
+}) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(cancelOrderSchema),
+  });
 
-const reason = watch("reason");
-  const onFormSubmit = async(data) => {
+  const reason = watch("reason");
+  const onFormSubmit = async (data) => {
     const finalReason =
       data.reason === "Other" ? data.customReason : data.reason;
 
@@ -31,13 +34,13 @@ const reason = watch("reason");
       <CancelOrderPreviewCard order={order} item={item} />
 
       <div>
-        <h4 className="font-medium mb-4">Reason for cancellation</h4>
+        <h4 className="mb-4 font-medium">Reason for cancellation</h4>
 
         <div className="space-y-3">
           {CANCEL_REASONS.map((item) => (
             <label
               key={item}
-              className="flex items-center gap-3 cursor-pointer"
+              className="flex cursor-pointer items-center gap-3"
             >
               <input
                 type="radio"
@@ -62,7 +65,7 @@ const reason = watch("reason");
             {...register("customReason")}
             placeholder="Enter reason"
             rows={4}
-            className="w-full border rounded-lg p-3"
+            className="w-full rounded-lg border p-3"
           />
 
           {errors.customReason && (
@@ -75,13 +78,13 @@ const reason = watch("reason");
 
       {/* Warning */}
 
-      <div className="flex gap-3 border-l-4 border-amber-500 bg-gray-50 rounded-r-xl p-4 shadow-sm">
-        <Info className="h-5 w-5 text-amber-600 shrink-0 mt-0.5" />
+      <div className="flex gap-3 rounded-r-xl border-l-4 border-amber-500 bg-gray-50 p-4 shadow-sm">
+        <Info className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
         <div className="space-y-1">
-          <h4 className="font-medium text-sm text-gray-900">
+          <h4 className="text-sm font-medium text-gray-900">
             Return & Cancellation Policy
           </h4>
-          <p className="text-xs text-gray-600 leading-relaxed">
+          <p className="text-xs leading-relaxed text-gray-600">
             Modifying this order might disqualify applied promotional discounts.
             Refunds will be processed back to your wallet.
           </p>
@@ -94,7 +97,7 @@ const reason = watch("reason");
         <button
           type="submit"
           disabled={loading || isSubmitting}
-          className="flex-1 bg-primary text-white py-3 rounded-lg"
+          className="bg-primary flex-1 rounded-lg py-3 text-white"
         >
           {loading || isSubmitting ? "Cancelling..." : "Confirm Cancellation"}
         </button>
@@ -102,7 +105,7 @@ const reason = watch("reason");
         <button
           type="button"
           onClick={onClose}
-          className="flex-1 border py-3 rounded-lg"
+          className="flex-1 rounded-lg border py-3"
         >
           Keep Order
         </button>

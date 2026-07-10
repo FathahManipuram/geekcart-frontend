@@ -1,7 +1,11 @@
-import { create } from "zustand"
-import { getAllReturnRequestsApi, getReturnRequestDetailsApi,  updateReturnRequestStatusApi } from "../api/adminReturn.api"
+import { create } from "zustand";
+import {
+  getAllReturnRequestsApi,
+  getReturnRequestDetailsApi,
+  updateReturnRequestStatusApi,
+} from "../api/adminReturn.api";
 
-export const useAdminReturnStore = create((set, get) => ({
+export const useAdminReturnStore = create((set) => ({
   loading: false,
   error: null,
 
@@ -10,14 +14,10 @@ export const useAdminReturnStore = create((set, get) => ({
   returnDetails: null,
 
   fetchAllReturns: async (query) => {
-	console.log("params", query)
     try {
       set({ loading: true, error: null });
 
       const res = await getAllReturnRequestsApi(query);
-      console.log("adminReturn Store: ", res);
-	  console.log("returns here", res.data.pagination)
-
       set({
         loading: false,
         returns: res.data.returns,
@@ -38,7 +38,6 @@ export const useAdminReturnStore = create((set, get) => ({
       set({ loading: true, error: null });
 
       const res = await updateReturnRequestStatusApi(returnId, payload);
-      console.log("updatedRequestatustore: ", res.data);
 
       set({ loading: false });
 
@@ -56,7 +55,6 @@ export const useAdminReturnStore = create((set, get) => ({
       set({ loading: true, error: null });
 
       const res = await getReturnRequestDetailsApi(returnId);
-      console.log("adminReturnDetails Store: ", res.data);
 
       set({ loading: false, returnDetails: res.data });
 

@@ -27,9 +27,8 @@ const CreateOfferPage = () => {
 
   const subcategories = useSubcategoryStore((state) => state.subcategories);
 
-
-const createOffer = useOfferStore((state) => state.createOffer);
-const loading= useOfferStore((state)=> state.loading)
+  const createOffer = useOfferStore((state) => state.createOffer);
+  const loading = useOfferStore((state) => state.loading);
 
   useEffect(() => {
     fetchProducts({
@@ -41,7 +40,6 @@ const loading= useOfferStore((state)=> state.loading)
     fetchSubcategories();
   }, []);
 
-  
   const handleCreateOffer = async (payload) => {
     try {
       const res = await createOffer(payload);

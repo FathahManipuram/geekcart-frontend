@@ -11,7 +11,7 @@ const STATUS_STYLES = {
 const PaymentStatusBadge = ({ status }) => {
   return (
     <span
-      className={`px-2 py-1 rounded-full text-xs font-medium ${
+      className={`rounded-full px-2 py-1 text-xs font-medium ${
         STATUS_STYLES[status] || "bg-gray-100 text-gray-700"
       }`}
     >

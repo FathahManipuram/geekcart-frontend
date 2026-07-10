@@ -43,13 +43,15 @@ Email: ${product?.manufacturer?.email || ""}
   ];
 
   return (
-    <Accordion type="single" collapsible className="w-full mt-10">
+    <Accordion type="single" collapsible className="mt-10 w-full">
       {accordionItems.map((item) => (
         <AccordionItem key={item.value} value={item.value}>
-          <AccordionTrigger className="font-bold cursor-pointer">{item.title}</AccordionTrigger>
+          <AccordionTrigger className="cursor-pointer font-bold">
+            {item.title}
+          </AccordionTrigger>
 
           <AccordionContent>
-            <div className="text-sm text-neutral-600 leading-relaxed whitespace-pre-line">
+            <div className="text-sm leading-relaxed whitespace-pre-line text-neutral-600">
               {item.content}
             </div>
           </AccordionContent>

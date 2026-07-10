@@ -1,21 +1,18 @@
-import React, { useRef, useState } from 'react'
-import { Controller } from 'react-hook-form';
-import { toast } from 'sonner'
-import { Button } from '../components/ui/button';
-import { Camera } from 'lucide-react';
-import ImageCropModal from '../components/image-cropper/ImageCropModal';
+import React, { useRef, useState } from "react";
+import { Controller } from "react-hook-form";
+import { toast } from "sonner";
+import { Button } from "../components/ui/button";
+import { Camera } from "lucide-react";
+import ImageCropModal from "../components/image-cropper/ImageCropModal";
 
-const DEFAULT_PLACEHOLDER=  "https://placehold.co/200x200?text=Upload";
+const DEFAULT_PLACEHOLDER = "https://placehold.co/200x200?text=Upload";
 
-const getPreview= (value, fallback)=>{
-  if(value instanceof File){
-    return URL.createObjectURL(value)
+const getPreview = (value, fallback) => {
+  if (value instanceof File) {
+    return URL.createObjectURL(value);
   }
-  return value || fallback
-}
-
-
-
+  return value || fallback;
+};
 
 const handleImageChange = (event, maxSizeMB, setSelectedImage, setCropOpen) => {
   const file = event.target.files?.[0];
@@ -52,87 +49,81 @@ const handleImageChange = (event, maxSizeMB, setSelectedImage, setCropOpen) => {
   event.target.value = "";
 };
 
-
 const SingleImageUploader = ({
-  name="image",
+  name = "image",
   control,
-  loading= false,
-  alt= "Preview",
-  title="Upload photo",
-  size="w-24 h-24",
-  accept= "image/*",
-  shape="rounded-sm",
-  maxSizeMB =5,
-  fallback= DEFAULT_PLACEHOLDER,
-
+  loading = false,
+  alt = "Preview",
+  title = "Upload photo",
+  size = "w-24 h-24",
+  accept = "image/*",
+  shape = "rounded-sm",
+  maxSizeMB = 5,
+  fallback = DEFAULT_PLACEHOLDER,
 }) => {
   const [cropOpen, setCropOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const fileInputRef = useRef(null);
 
-  const fileInputRef= useRef(null)
-
-    const openFilePicker= ()=>{
-
-      fileInputRef.current?.click()
-    }
-
+  const openFilePicker = () => {
+    fileInputRef.current?.click();
+  };
 
   return (
-
     <Controller
-    name={name}
-    control={control}
-    render={({field})=>{
-      const preview= getPreview(field.value, fallback)
-      return (
-        <>
-          <div className="space-y-2">
-            <img
-              src={preview}
-              alt={alt}
-              className={`${size} ${shape} object-cover border bg-muted`}
-            />
+      name={name}
+      control={control}
+      render={({ field }) => {
+        const preview = getPreview(field.value, fallback);
+        return (
+          <>
+            <div className="space-y-2">
+              <img
+                src={preview}
+                alt={alt}
+                className={`${size} ${shape} bg-muted border object-cover`}
+              />
 
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept={accept}
-              onChange={(event) =>
-                handleImageChange(
-                  event,
-                  maxSizeMB,
-                  setSelectedImage,
-                  setCropOpen,
-                )
-              }
-              hidden
-            />
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={openFilePicker}
-              disabled={loading}
-            >
-              <Camera size={16} />
-              {loading ? "Uploading..." : title}
-            </Button>
-          </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept={accept}
+                onChange={(event) =>
+                  handleImageChange(
+                    event,
+                    maxSizeMB,
+                    setSelectedImage,
+                    setCropOpen,
+                  )
+                }
+                hidden
+              />
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={openFilePicker}
+                disabled={loading}
+              >
+                <Camera size={16} />
+                {loading ? "Uploading..." : title}
+              </Button>
+            </div>
 
-          <ImageCropModal
-            open={cropOpen}
-            image={selectedImage}
-            aspect={1}
-            onClose={() => setCropOpen(false)}
-            onCropDone={(croppedFile) => {
-              field.onChange(croppedFile);
-            }}
-          />
-        </>
-      );
-    }}
+            <ImageCropModal
+              open={cropOpen}
+              image={selectedImage}
+              aspect={1}
+              onClose={() => setCropOpen(false)}
+              onCropDone={(croppedFile) => {
+                field.onChange(croppedFile);
+              }}
+            />
+          </>
+        );
+      }}
     />
   );
-}
+};
 
-export default SingleImageUploader
+export default SingleImageUploader;

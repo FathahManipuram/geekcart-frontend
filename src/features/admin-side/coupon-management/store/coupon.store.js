@@ -39,7 +39,7 @@ export const useCouponStore = create((set, get) => ({
       });
 
       const res = await fetchCouponsApi(query);
-      console.log("Coupon store: ", res);
+      
       set({
         coupons: res.data.coupons,
         pagination: res.data.pagination,
@@ -60,7 +60,6 @@ export const useCouponStore = create((set, get) => ({
 
   updateCoupon: async(couponId, payload)=>{
 	try {
-    console.log("updationdata Store: ", couponId, payload)
     set({ loading: true, error: null });
 
     const res = await updateCouponApi(couponId, payload);
@@ -128,7 +127,6 @@ export const useCouponStore = create((set, get) => ({
      });
 
      const res = await getCuponDetailsApi(couponId)
-     console.log("Coupon details: ", res);
      set({
        coupon: res.data,
        loading: false,

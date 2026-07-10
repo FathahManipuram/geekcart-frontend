@@ -10,7 +10,10 @@ import Loader from "@/shared/components/Loader";
 import { Button } from "@/shared/components/ui/button";
 import CancelOrderModal from "../components/cancel-components/CancelOrderModal";
 import { useCancelOrder } from "../hooks/useCancelOrder";
-import { ITEM_STATUSES, ORDER_STATUSES } from "@/shared/constants/order/orderStatus";
+import {
+  ITEM_STATUSES,
+  ORDER_STATUSES,
+} from "@/shared/constants/order/orderStatus";
 import { useCancelOrderItem } from "../hooks/useCancelOrderItem";
 import { PackageX } from "lucide-react";
 import EmptyPage from "@/shared/components/EmptyPage";
@@ -18,48 +21,53 @@ import Breadcrumbs from "@/shared/components/Breadcrumbs";
 
 const OrderDetailsPage = () => {
   const { orderId } = useParams();
-  const navigate= useNavigate()
-  const[showCancelModal, setShowCancelModal]= useState(false)
-  const [selectedItem, setSelectedItem] = useState(null)
-
+  const navigate = useNavigate();
+  const [showCancelModal, setShowCancelModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const order = useOrderStore((state) => state.order);
   const loading = useOrderStore((state) => state.loading);
   const fetchOrderById = useOrderStore((state) => state.fetchOrderById);
-  const downloadInvoicePdf= useOrderStore((state)=> state.downloadInvoicePdf)
-  const {handleCancelOrder, isLoading}= useCancelOrder({orderId, onSuccess: ()=> setShowCancelModal(false)})
-  const {handleCancelOrderItem, cancelOrderItemLoading}= useCancelOrderItem({orderId, itemId: selectedItem?._id, onSuccess: ()=> setShowCancelModal(false)})
-  console.log("selectedItem", selectedItem)
+  const downloadInvoicePdf = useOrderStore((state) => state.downloadInvoicePdf);
+  const { handleCancelOrder, isLoading } = useCancelOrder({
+    orderId,
+    onSuccess: () => setShowCancelModal(false),
+  });
+  const { handleCancelOrderItem, cancelOrderItemLoading } = useCancelOrderItem({
+    orderId,
+    itemId: selectedItem?._id,
+    onSuccess: () => setShowCancelModal(false),
+  });
 
-const isItemCancellation= !!selectedItem
-console.log("isItemCancellation: ", isItemCancellation)
+  const isItemCancellation = !!selectedItem;
 
-const canCancelOrder= order?.items?.every((item)=> [ITEM_STATUSES.PLACED, ITEM_STATUSES.PROCESSING].includes(item.itemStatus))
-const delivered = order?.orderStatus === "DELIVERED";
+  const canCancelOrder = order?.items?.every((item) =>
+    [ITEM_STATUSES.PLACED, ITEM_STATUSES.PROCESSING].includes(item.itemStatus),
+  );
+  const delivered = order?.orderStatus === "DELIVERED";
 
   useEffect(() => {
     fetchOrderById(orderId);
   }, [orderId, fetchOrderById]);
 
-
   if (loading) {
-    return <Loader/>
+    return <Loader />;
   }
 
- if (!order) {
-   return (
-     <EmptyPage
-       icon={PackageX}
-       title="Order Not Found"
-       description="The order you are looking for does not exist, has been removed, or the link may be invalid."
-       buttonText="Back to Orders"
-       onButtonClick={() => navigate("/account/order-history")}
-     />
-   );
- }
+  if (!order) {
+    return (
+      <EmptyPage
+        icon={PackageX}
+        title="Order Not Found"
+        description="The order you are looking for does not exist, has been removed, or the link may be invalid."
+        buttonText="Back to Orders"
+        onButtonClick={() => navigate("/account/order-history")}
+      />
+    );
+  }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-8">
       <Breadcrumbs
         items={[
           {
@@ -79,7 +87,7 @@ const delivered = order?.orderStatus === "DELIVERED";
         <div>
           <h1 className="text-4xl font-bold">Order Details</h1>
 
-          <p className="text-gray-500 mt-2">Order #{order?.orderNumber}</p>
+          <p className="mt-2 text-gray-500">Order #{order?.orderNumber}</p>
         </div>
         <div className="flex gap-2">
           {canCancelOrder && (
@@ -122,8 +130,8 @@ const delivered = order?.orderStatus === "DELIVERED";
           )}
         </div>
       </div>
-      <div className="grid lg:grid-cols-3 gap-8 mt-8">
-        <div className="lg:col-span-2 space-y-6">
+      <div className="mt-8 grid gap-8 lg:grid-cols-3">
+        <div className="space-y-6 lg:col-span-2">
           <OrderTimeline order={order} />
 
           <div className="space-y-4">
@@ -133,7 +141,6 @@ const delivered = order?.orderStatus === "DELIVERED";
                 item={item}
                 order={order}
                 onCancel={(item) => {
-                  console.log("item", item);
                   setSelectedItem(item);
                   setShowCancelModal(true);
                 }}

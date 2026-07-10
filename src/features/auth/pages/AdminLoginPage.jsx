@@ -12,10 +12,9 @@ const AdminLoginPage = () => {
 
 	const handleSubmit= async(data)=>{
 		try{
-			console.log("adminlogindata: ", data)
 			const res= await adminLogin(data)
 			const {user}= res.data
-			console.log("user ", user)
+	
 			toast.success("Admin login successful")
 
 			if(user.role !== "admin"){
@@ -41,16 +40,6 @@ const AdminLoginPage = () => {
         </CardHeader>
         <CardContent>
           <LoginForm onSubmit={handleSubmit} isAdmin={isAdmin}/>
-
-          {/* <p className="text-center font-light text-xs mt-8">
-            New to GeekCart?{" "}
-            <Link
-              to="/register"
-              className="text-primary cursor-pointer font-bold"
-            >
-              Create an account
-            </Link>
-          </p> */}
         </CardContent>
       </Card>
     </div>

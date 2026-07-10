@@ -4,7 +4,7 @@ const NotFoundPage = () => {
   return (
     <section className="flex min-h-screen items-center justify-center bg-[#f7f5f2] px-6">
       <div className="max-w-lg text-center">
-        <p className="text-sm font-semibold uppercase tracking-[0.3em] text-primary">
+        <p className="text-primary text-sm font-semibold tracking-[0.3em] uppercase">
           Error 404
         </p>
 
@@ -12,7 +12,7 @@ const NotFoundPage = () => {
           Page Not Found
         </h1>
 
-        <p className="mt-6 text-neutral-500 leading-7">
+        <p className="mt-6 leading-7 text-neutral-500">
           Sorry, the page you're looking for doesn't exist, has been moved, or
           the URL is incorrect.
         </p>
@@ -20,7 +20,7 @@ const NotFoundPage = () => {
         <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             to="/"
-            className="rounded-full bg-primary px-8 py-3 font-medium text-white transition hover:opacity-90"
+            className="bg-primary rounded-full px-8 py-3 font-medium text-white transition hover:opacity-90"
           >
             Back to Home
           </Link>
@@ -32,8 +32,6 @@ const NotFoundPage = () => {
             Continue Shopping
           </Link>
         </div>
-
-     
       </div>
     </section>
   );

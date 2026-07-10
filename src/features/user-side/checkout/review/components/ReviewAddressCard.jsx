@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const ReviewAddressCard = ({ address, onEdit }) => {
   return (
-    <div className="border rounded-xl p-5">
-      <div className="flex justify-between mb-4">
+    <div className="rounded-xl border p-5">
+      <div className="mb-4 flex justify-between">
         <h3 className="font-semibold">Shipping Address</h3>
 
         <button onClick={onEdit} className="text-primary cursor-pointer">
@@ -24,5 +24,4 @@ const ReviewAddressCard = ({ address, onEdit }) => {
   );
 };
 
-
-export default ReviewAddressCard
+export default ReviewAddressCard;

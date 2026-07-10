@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 const ReviewPaymentCard = ({ selectedPaymentMethod, onEdit }) => {
   return (
-    <div className="border rounded-xl p-5">
-      <div className="flex justify-between mb-4">
+    <div className="rounded-xl border p-5">
+      <div className="mb-4 flex justify-between">
         <h3 className="font-semibold">Payment Method</h3>
 
         <button onClick={onEdit} className="text-primary cursor-pointer">
@@ -16,5 +16,4 @@ const ReviewPaymentCard = ({ selectedPaymentMethod, onEdit }) => {
   );
 };
 
-
-export default ReviewPaymentCard
+export default ReviewPaymentCard;

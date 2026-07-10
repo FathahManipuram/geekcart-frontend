@@ -14,16 +14,15 @@ const ProductCard = ({
   const image = firstVariant?.images?.[0] || product?.coverImage;
   const price = firstVariant?.salePrice || firstVariant?.price;
 
-  const isInCart= useCartStore((state)=> state.isInCart)
-  const isExistInCart= isInCart(firstVariant?._id)
-console.log("CollectionVarint", firstVariant)
-const discountPercentage =
-  firstVariant?.salePrice && firstVariant?.price
-    ? Math.round(
-        ((firstVariant.price - firstVariant.salePrice) / firstVariant.price) *
-          100,
-      )
-    : 0;
+  const isInCart = useCartStore((state) => state.isInCart);
+  const isExistInCart = isInCart(firstVariant?._id);
+  const discountPercentage =
+    firstVariant?.salePrice && firstVariant?.price
+      ? Math.round(
+          ((firstVariant.price - firstVariant.salePrice) / firstVariant.price) *
+            100,
+        )
+      : 0;
 
   return (
     <Link to={`/products/${product.slug}`} className="group block">
@@ -31,7 +30,7 @@ const discountPercentage =
         <img
           src={image}
           alt={product.name}
-          className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+          className="aspect-3/4 w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
 
         {/* WISHLIST */}
@@ -44,7 +43,7 @@ const discountPercentage =
 
               onWishlist?.(productId, variantId);
             }}
-            className="absolute right-3 top-3 rounded-full bg-white/90 p-2 backdrop-blur"
+            className="absolute top-3 right-3 rounded-full bg-white/90 p-2 backdrop-blur"
           >
             <Heart
               size={18}
@@ -63,7 +62,7 @@ const discountPercentage =
           {product?.subcategory?.name}
         </p>
 
-        <div className="mt-2 flex items-center gap-2 flex-wrap">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <span className="font-semibold text-[#9B6C43]">
             ₹{formatCurrency(price)}
           </span>

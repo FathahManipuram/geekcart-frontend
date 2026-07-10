@@ -32,7 +32,7 @@ const ImageCropModal = ({ open, image, aspect = 1, onClose, onCropDone }) => {
 
       onClose();
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
@@ -42,67 +42,23 @@ const ImageCropModal = ({ open, image, aspect = 1, onClose, onCropDone }) => {
   if (!open) return null;
 
   return (
-    <div
-      className="
-        fixed
-        inset-0
-        z-50
-        bg-black/70
-        flex
-        items-center
-        justify-center
-        p-4
-      "
-    >
-      <div
-        className="
-          w-full
-          max-w-2xl
-          rounded-xl
-          bg-white
-          overflow-hidden
-        "
-      >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+      <div className="w-full max-w-2xl overflow-hidden rounded-xl bg-white">
         {/* Header */}
-        <div
-          className="
-            flex
-            items-center
-            justify-between
-            border-b
-            px-5
-            py-4
-          "
-        >
-          <h2
-            className="
-              text-lg
-              font-semibold
-            "
-          >
-            Crop Image
-          </h2>
+        <div className="flex items-center justify-between border-b px-5 py-4">
+          <h2 className="text-lg font-semibold">Crop Image</h2>
 
           <button
-          type="button"
+            type="button"
             onClick={onClose}
-            className="
-              text-sm
-              text-muted-foreground
-            "
+            className="text-muted-foreground text-sm"
           >
             Close
           </button>
         </div>
 
         {/* Crop Area */}
-        <div
-          className="
-            relative
-            h-[450px]
-            bg-black
-          "
-        >
+        <div className="relative h-[450px] bg-black">
           <Cropper
             image={image}
             crop={crop}
@@ -115,16 +71,7 @@ const ImageCropModal = ({ open, image, aspect = 1, onClose, onCropDone }) => {
         </div>
 
         {/* Footer */}
-        <div
-          className="
-            flex
-            items-center
-            gap-4
-            px-5
-            py-4
-            border-t
-          "
-        >
+        <div className="flex items-center gap-4 border-t px-5 py-4">
           {/* Zoom */}
           <input
             type="range"
@@ -138,15 +85,9 @@ const ImageCropModal = ({ open, image, aspect = 1, onClose, onCropDone }) => {
 
           {/* Save */}
           <button
-          type="button"
+            type="button"
             onClick={handleDone}
-            className="
-              rounded-lg
-              bg-black
-              px-5
-              py-2
-              text-white
-            "
+            className="rounded-lg bg-black px-5 py-2 text-white"
           >
             Save
           </button>

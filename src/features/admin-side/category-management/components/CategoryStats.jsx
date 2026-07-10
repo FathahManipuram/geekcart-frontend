@@ -1,14 +1,18 @@
-import StatsCard from '@/shared/components/StatsCard';
-import React from 'react'
+import StatsCard from "@/shared/components/StatsCard";
+import React from "react";
 
-const CategoryStats = ({activeCategories, totalCategories, totalSubcategories}) => {
+const CategoryStats = ({
+  activeCategories,
+  totalCategories,
+  totalSubcategories,
+}) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       <StatsCard title="Total Categories" value={totalCategories} />
       <StatsCard title="Active Categories" value={activeCategories} />
       <StatsCard title="Total subCategories" value={totalSubcategories} />
     </div>
   );
-}
+};
 
-export default CategoryStats
+export default CategoryStats;

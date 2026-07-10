@@ -1,15 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
-
 import ProductGallery from "./ProductGallery";
-
 import SizeSelector from "./SizeSelector";
-
 import ProductActions from "./ProductActions";
-
 import ProductAccordion from "./ProductAccordion";
-
 import { useParams, useSearchParams } from "react-router-dom";
-//import { useProductStore } from "@/features/admin-side/product-management/store/product.store";
 import VariantImageSelector from "./VariantImageSelector";
 import { useCartStore } from "../../cart/store/cart.store";
 import { toast } from "sonner";
@@ -22,30 +16,28 @@ import { formatCurrency } from "@/shared/utils/formatCurrency";
 const ProductDetails = () => {
   const { slug } = useParams();
   const [searchParams] = useSearchParams();
-  const {isWishlisted, handleWishlist}= useWishlist()
+  const { isWishlisted, handleWishlist } = useWishlist();
 
   const variantId = searchParams.get("variant");
 
-const fetchCart = useCartStore((state) => state.fetchCart);
+  const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchProductDetails = useUserProductStore(
     (state) => state.fetchProductDetails,
   );
 
-
-
-  const fetchSimilarProducts= useUserProductStore((state)=> state.fetchSimilarProducts)
+  const fetchSimilarProducts = useUserProductStore(
+    (state) => state.fetchSimilarProducts,
+  );
   const productLoading = useUserProductStore((state) => state.loading);
   const productDetails = useUserProductStore((state) => state.productDetails);
 
   const addToCart = useCartStore((state) => state.addToCart);
   const loading = useCartStore((state) => state.loading);
-  const isInCart= useCartStore((state)=> state.isInCart)
+  const isInCart = useCartStore((state) => state.isInCart);
 
   const [selectedColor, setSelectedColor] = useState("");
 
   const [selectedSize, setSelectedSize] = useState("");
-
-
 
   useEffect(() => {
     fetchProductDetails(slug);
@@ -53,27 +45,25 @@ const fetchCart = useCartStore((state) => state.fetchCart);
     fetchCart();
   }, [slug]);
 
-
-
   useEffect(() => {
- if (!productDetails?.variants?.length) return;
+    if (!productDetails?.variants?.length) return;
 
- if (variantId) {
-   const selectedVariant = productDetails.variants.find(
-     (variant) => variant._id === variantId,
-   );
+    if (variantId) {
+      const selectedVariant = productDetails.variants.find(
+        (variant) => variant._id === variantId,
+      );
 
-   if (selectedVariant) {
-     setSelectedColor(selectedVariant.color);
-     setSelectedSize(selectedVariant.size);
-     return;
-   }
- }
+      if (selectedVariant) {
+        setSelectedColor(selectedVariant.color);
+        setSelectedSize(selectedVariant.size);
+        return;
+      }
+    }
 
- const firstVariant = productDetails.variants[0];
+    const firstVariant = productDetails.variants[0];
 
- setSelectedColor(firstVariant.color);
- setSelectedSize(firstVariant.size);
+    setSelectedColor(firstVariant.color);
+    setSelectedSize(firstVariant.size);
   }, [productDetails, variantId]);
 
   const selectedColorVariants = useMemo(() => {
@@ -86,15 +76,11 @@ const fetchCart = useCartStore((state) => state.fetchCart);
 
   const selectedImages = selectedColorVariants[0]?.images || [];
 
- const currentVariant =
-   selectedColorVariants.find((variant) => variant.size === selectedSize) ||
-   selectedColorVariants[0];
+  const currentVariant =
+    selectedColorVariants.find((variant) => variant.size === selectedSize) ||
+    selectedColorVariants[0];
 
-  console.log("Current Variant: ", currentVariant);
-  console.log("selectedColorVariants: ", selectedColorVariants)
-
-const existsInCart= currentVariant ? isInCart(currentVariant?._id) : false
-
+  const existsInCart = currentVariant ? isInCart(currentVariant?._id) : false;
 
   const availableSizes = selectedColorVariants.map((variant) => ({
     size: variant.size,
@@ -102,13 +88,12 @@ const existsInCart= currentVariant ? isInCart(currentVariant?._id) : false
     stock: variant.stock,
   }));
 
-const isUnavailable =
-  !productDetails?.isActive ||
-  currentVariant?.isActive === false ||
-  currentVariant?.isDeleted === true;
+  const isUnavailable =
+    !productDetails?.isActive ||
+    currentVariant?.isActive === false ||
+    currentVariant?.isDeleted === true;
 
-const isOutOfStock = currentVariant?.stock === 0;
-
+  const isOutOfStock = currentVariant?.stock === 0;
 
   const handleAddToCart = async () => {
     try {
@@ -143,40 +128,19 @@ const isOutOfStock = currentVariant?.stock === 0;
       )
     : 0;
 
-
-  if(productLoading){
-  	return <Loader/>
+  if (productLoading) {
+    return <Loader />;
   }
   return (
     <>
       {productDetails && (
-        <section
-          className="
-        px-4
-        py-10
-        md:px-8
-        lg:px-16
-      "
-        >
-          <div
-            className="
-          grid
-          grid-cols-1
-          gap-10
-          lg:grid-cols-2
-        "
-          >
+        <section className="px-4 py-10 md:px-8 lg:px-16">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-2">
             {/* LEFT */}
             <ProductGallery images={selectedImages} />
 
             {/* RIGHT */}
-            <div
-              className="
-            flex
-            flex-col
-            justify-between
-          "
-            >
+            <div className="flex flex-col justify-between">
               {/* Breadcrumb */}
               <Breadcrumbs
                 items={[
@@ -199,28 +163,12 @@ const isOutOfStock = currentVariant?.stock === 0;
               />
 
               {/* Title */}
-              <h1
-                className="
-              mt-4
-              text-xl
-              font-bold
-              leading-tight
-              text-neutral-900
-              md:text-3xl
-            "
-              >
+              <h1 className="mt-4 text-xl leading-tight font-bold text-neutral-900 md:text-3xl">
                 {`${productDetails?.name || ""} - ${currentVariant?.color || ""}`}
               </h1>
 
               {/* Price */}
-              <div
-                className="
-              mt-5
-              flex
-              items-center
-              gap-3
-            "
-              >
+              <div className="mt-5 flex items-center gap-3">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl font-semibold">
                     ₹
@@ -241,23 +189,6 @@ const isOutOfStock = currentVariant?.stock === 0;
                     </span>
                   </>
                 )}
-
-                {/* <div
-                  className="
-                h-1
-                w-1
-                rounded-full
-                bg-neutral-400
-              "
-                /> */}
-
-                {/* <span
-                  className="
-                text-sm
-              "
-                >
-                  ★ 4.8 (52 reviews)
-                </span> */}
               </div>
 
               {/* COLOR */}
@@ -291,47 +222,21 @@ const isOutOfStock = currentVariant?.stock === 0;
               {/* STOCK STATUS */}
               <div className="mt-4">
                 {isUnavailable ? (
-                  <p
-                    className="
-        text-sm
-        font-medium
-        text-red-600
-      "
-                  >
+                  <p className="text-sm font-medium text-red-600">
                     Item unavailable
                   </p>
                 ) : isOutOfStock ? (
-                  <p
-                    className="
-        text-sm
-        font-medium
-        text-red-600
-      "
-                  >
+                  <p className="text-sm font-medium text-red-600">
                     Out of stock
                   </p>
                 ) : currentVariant?.stock <= 5 ? (
-                  <p
-                    className="
-        text-sm
-        font-medium
-        text-orange-500
-      "
-                  >
+                  <p className="text-sm font-medium text-orange-500">
                     {currentVariant.stock === 1
                       ? "Last item remaining"
                       : `Only ${currentVariant.stock} left`}
                   </p>
                 ) : (
-                  <p
-                    className="
-        text-sm
-        font-medium
-        text-green-600
-      "
-                  >
-                    In stock
-                  </p>
+                  <p className="text-sm font-medium text-green-600">In stock</p>
                 )}
               </div>
 

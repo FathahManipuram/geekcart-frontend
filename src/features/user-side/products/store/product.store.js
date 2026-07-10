@@ -1,6 +1,8 @@
 import { create } from "zustand";
-import { fetchProductDetailsApi, getSimilarProductApi } from "../api/product.api";
-
+import {
+  fetchProductDetailsApi,
+  getSimilarProductApi,
+} from "../api/product.api";
 
 export const useUserProductStore = create((set) => ({
   productDetails: [],
@@ -14,7 +16,6 @@ export const useUserProductStore = create((set) => ({
     try {
       set({ loading: true, error: null });
       const res = await fetchProductDetailsApi(slug);
-      console.log("Product details: ", res.data);
 
       set({ productDetails: res.data, loading: false });
       return res;
@@ -31,7 +32,6 @@ export const useUserProductStore = create((set) => ({
     try {
       set({ loading: true, error: null });
       const res = await getSimilarProductApi(slug);
-      console.log("SIMILAR: ", res.data);
       set({ similarProducts: res.data, loading: false });
 
       return res;

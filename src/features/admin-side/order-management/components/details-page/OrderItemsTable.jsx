@@ -13,11 +13,11 @@ const OrderItemsTable = ({ items = [], onEdit }) => {
           <img
             src={item.image}
             alt={item.name}
-            className="w-12 h-12 object-cover rounded border"
+            className="h-12 w-12 rounded border object-cover"
           />
           <div>
-            <p className="font-medium text-sm line-clamp-1">{item.name}</p>
-            <p className="text-xs text-muted-foreground">
+            <p className="line-clamp-1 text-sm font-medium">{item.name}</p>
+            <p className="text-muted-foreground text-xs">
               {item.color} / {item.size}
             </p>
           </div>
@@ -28,7 +28,7 @@ const OrderItemsTable = ({ items = [], onEdit }) => {
       header: "Qty",
       accessor: "quantity",
       cell: (item) => (
-        <span className="text-gray-700 font-medium">{item.quantity}</span>
+        <span className="font-medium text-gray-700">{item.quantity}</span>
       ),
     },
     {
@@ -42,11 +42,11 @@ const OrderItemsTable = ({ items = [], onEdit }) => {
         return (
           <div className="flex flex-col text-sm">
             {hasPromoMarkdown && (
-              <span className="text-xs line-through text-muted-foreground">
+              <span className="text-muted-foreground text-xs line-through">
                 ₹{formatCurrency(item.price)}
               </span>
             )}
-            <span className="text-gray-900 font-medium">
+            <span className="font-medium text-gray-900">
               ₹{formatCurrency(item.salePrice ?? item.price)}
             </span>
           </div>
@@ -62,11 +62,11 @@ const OrderItemsTable = ({ items = [], onEdit }) => {
 
         return (
           <div className="flex flex-col text-sm">
-            <span className="text-gray-900 font-medium">
+            <span className="font-medium text-gray-900">
               ₹{formatCurrency(netPaidPrice)}
             </span>
             {couponDeduction > 0 && (
-              <span className="text-[11px] text-emerald-600 font-medium">
+              <span className="text-[11px] font-medium text-emerald-600">
                 (Coupon: -₹{formatCurrency(couponDeduction)})
               </span>
             )}
@@ -89,12 +89,12 @@ const OrderItemsTable = ({ items = [], onEdit }) => {
         return (
           <div className="flex flex-col font-medium">
             <span
-              className={`text-sm ${isSettledAway ? "line-through text-muted-foreground font-normal" : "text-gray-900"}`}
+              className={`text-sm ${isSettledAway ? "text-muted-foreground font-normal line-through" : "text-gray-900"}`}
             >
               ₹{formatCurrency(netPaidPrice)}
             </span>
             {isSettledAway && (
-              <span className="text-xs font-bold text-red-600 mt-0.5 bg-red-50 border border-red-100 px-1.5 py-0.5 rounded w-max">
+              <span className="mt-0.5 w-max rounded border border-red-100 bg-red-50 px-1.5 py-0.5 text-xs font-bold text-red-600">
                 Refunded: ₹{formatCurrency(actualRefund)}
               </span>
             )}

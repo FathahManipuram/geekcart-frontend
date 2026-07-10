@@ -1,15 +1,20 @@
 import { Button } from "@/shared/components/ui/button";
-import { toggleSize } from "../utils/toggleSize"
-import React from 'react'
+import { toggleSize } from "../utils/toggleSize";
+import React from "react";
 import { Boxes, Sparkles } from "lucide-react";
 import { Label } from "@/shared/components/ui/label";
 import { COLOR_OPTIONS, SIZE_OPTIONS } from "../constants/productOption";
 import { Controller } from "react-hook-form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/components/ui/select";
 
 const VariantControls = ({ control, watch, setValue, onGenerate, errors }) => {
-
-	const selectedSizes = watch("selectedSizes") || [];
+  const selectedSizes = watch("selectedSizes") || [];
   const selectedColor = watch("selectedColor") || "";
 
   const handleToggleSize = (size) => {
@@ -36,13 +41,13 @@ const VariantControls = ({ control, watch, setValue, onGenerate, errors }) => {
           variant="outline"
           onClick={onGenerate}
           disabled={!canGenerate}
-          className={`gap-2 cursor-pointer`}
+          className={`cursor-pointer gap-2`}
         >
           <Sparkles size={16} />
           Generate Variants
         </Button>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         <div className="space-y-2">
           <Label>AVAILABLE SIZES</Label>
           <div className="flex flex-wrap gap-2">
@@ -53,10 +58,10 @@ const VariantControls = ({ control, watch, setValue, onGenerate, errors }) => {
                   key={size}
                   type="button"
                   onClick={() => handleToggleSize(size)}
-                  className={`px-4 py-2 rounded-md border text-sm font-semibold transition ${
+                  className={`rounded-md border px-4 py-2 text-sm font-semibold transition ${
                     isSelected
-                      ? "bg-primary text-white border-amber-700"
-                      : "bg-white hover:bg-muted border-muted text-foreground"
+                      ? "bg-primary border-amber-700 text-white"
+                      : "hover:bg-muted border-muted text-foreground bg-white"
                   }`}
                 >
                   {size}
@@ -100,7 +105,6 @@ const VariantControls = ({ control, watch, setValue, onGenerate, errors }) => {
       </div>
     </div>
   );
-  
 };
 
-export default VariantControls
+export default VariantControls;

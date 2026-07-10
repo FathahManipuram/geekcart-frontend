@@ -2,7 +2,7 @@ import { Skeleton } from "@/shared/components/ui/skeleton";
 
 const OfferCardSkeleton = () => {
   return (
-    <div className="rounded-3xl border p-6 space-y-5">
+    <div className="space-y-5 rounded-3xl border p-6">
       <Skeleton className="h-6 w-32" />
 
       <Skeleton className="h-10 w-44" />

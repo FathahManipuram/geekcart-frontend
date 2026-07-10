@@ -16,8 +16,8 @@ const OrderSummary = ({
   children,
 }) => {
   return (
-    <aside className="bg-gray-50 rounded-2xl p-6 h-fit">
-      <h2 className="font-semibold text-xl mb-6">Order Summary</h2>
+    <aside className="h-fit rounded-2xl bg-gray-50 p-6">
+      <h2 className="mb-6 text-xl font-semibold">Order Summary</h2>
 
       {children}
 
@@ -32,7 +32,7 @@ const OrderSummary = ({
             <span>Delivery Charge</span>
             <span
               className={
-                deliveryCharge === 0 ? "text-green-600 font-medium" : ""
+                deliveryCharge === 0 ? "font-medium text-green-600" : ""
               }
             >
               {deliveryCharge === 0
@@ -42,7 +42,7 @@ const OrderSummary = ({
           </div>
 
           {deliveryCharge > 0 && (speedCharge > 0 || shippingCharge > 0) && (
-            <p className="text-xs text-gray-400 mt-0.5 fallback-font">
+            <p className="fallback-font mt-0.5 text-xs text-gray-400">
               (Includes{" "}
               {shippingCharge > 0
                 ? `₹${shippingCharge} standard shipping`
@@ -55,7 +55,12 @@ const OrderSummary = ({
         {couponDiscount > 0 && (
           <div className="flex justify-between">
             <span>
-              Coupon Discount {code? <span className="text-xs text-muted-foreground">({code})</span>  : ""}
+              Coupon Discount{" "}
+              {code ? (
+                <span className="text-muted-foreground text-xs">({code})</span>
+              ) : (
+                ""
+              )}
             </span>
 
             <span className="text-green-600">
@@ -71,7 +76,7 @@ const OrderSummary = ({
 
         <hr />
 
-        <div className="flex justify-between font-bold text-lg">
+        <div className="flex justify-between text-lg font-bold">
           <span>Total</span>
           <span>₹{formatCurrency(total - (couponDiscount || 0))}</span>
         </div>
@@ -80,7 +85,7 @@ const OrderSummary = ({
       <button
         disabled={buttonDisabled || loading}
         onClick={onButtonClick}
-        className="mt-6 w-full bg-primary text-white py-3 rounded-lg hover:opacity-90 cursor-pointer"
+        className="bg-primary mt-6 w-full cursor-pointer rounded-lg py-3 text-white hover:opacity-90"
       >
         {buttonText}
       </button>

@@ -1,16 +1,15 @@
-import React from 'react'
-const CheckoutItemsPreview = ({cart}) => {
-	  
+import React from "react";
+const CheckoutItemsPreview = ({ cart }) => {
   return (
-    <div className="bg-white rounded-xl p-4 mb-5">
-      <h3 className="font-semibold mb-4">Items ({cart?.items?.length})</h3>
+    <div className="mb-5 rounded-xl bg-white p-4">
+      <h3 className="mb-4 font-semibold">Items ({cart?.items?.length})</h3>
 
       <div className="space-y-3">
         {cart?.items.map((item) => (
           <div key={item.variantId._id} className="flex gap-3">
             <img
               src={item.image}
-              className="w-14 h-14 rounded-md object-cover"
+              className="h-14 w-14 rounded-md object-cover"
             />
 
             <div>
@@ -21,10 +20,10 @@ const CheckoutItemsPreview = ({cart}) => {
                   <span>
                     {item.color} / {item.size}
                   </span>
-                  <div className="w-1 h-1 rounded-full bg-accent" />
+                  <div className="bg-accent h-1 w-1 rounded-full" />
                   <span>Qty: {item.quantity}</span>
-                  <div className="w-1 h-1 rounded-full bg-accent" />
-                  <div className="flex gap-2 items-center">
+                  <div className="bg-accent h-1 w-1 rounded-full" />
+                  <div className="flex items-center gap-2">
                     <span>₹{item.salePrice || item.prcice}</span>
                     {item.salePrice != null && item.salePrice < item.price && (
                       <span className="text-neutral-400 line-through">
@@ -42,4 +41,4 @@ const CheckoutItemsPreview = ({cart}) => {
   );
 };
 
-export default CheckoutItemsPreview
+export default CheckoutItemsPreview;

@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
-import AddressCard from './AddressCard';
-import { Button } from '@/shared/components/ui/button';
-import Modal from '@/shared/components/Modal';
-import AddressForm from './AddressForm';
-import { useAccountStore } from '../../store/account.store';
-import EmptyAddress from './EmptyAddress';
-import { Plus } from 'lucide-react';
+import React, { useEffect, useState } from "react";
+import AddressCard from "./AddressCard";
+import { Button } from "@/shared/components/ui/button";
+import Modal from "@/shared/components/Modal";
+import AddressForm from "./AddressForm";
+import { useAccountStore } from "../../store/account.store";
+import EmptyAddress from "./EmptyAddress";
+import { Plus } from "lucide-react";
 
 const AddressDisplay = () => {
-const [addressModalOpen, setAddressModalOpen]= useState(false)
-const addresses= useAccountStore((state)=> state.addresses)
-const {fetchAddresses}= useAccountStore()
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
+  const addresses = useAccountStore((state) => state.addresses);
+  const { fetchAddresses } = useAccountStore();
 
-useEffect(()=>{
-  fetchAddresses()
-},[fetchAddresses])
+  useEffect(() => {
+    fetchAddresses();
+  }, [fetchAddresses]);
 
   return (
     <>
-      <div className="flex flex-row items center justify-between mb-6">
+      <div className="items center mb-6 flex flex-row justify-between">
         <p className="text-xl font-bold">Saved Address</p>
         <Button
           className="cursor-pointer"
@@ -31,7 +31,7 @@ useEffect(()=>{
       {addresses.length === 0 ? (
         <EmptyAddress />
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {addresses.map((address) => (
             <AddressCard key={address._id} address={address} />
           ))}
@@ -50,4 +50,4 @@ useEffect(()=>{
   );
 };
 
-export default AddressDisplay
+export default AddressDisplay;

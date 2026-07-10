@@ -11,7 +11,7 @@ const SearchInput = ({
     <div className={`relative ${className}`}>
       <Search
         size={16}
-        className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+        className="text-muted-foreground absolute top-1/2 left-3 -translate-y-1/2"
       />
 
       <input
@@ -20,12 +20,7 @@ const SearchInput = ({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="
-          h-11 w-full rounded-lg
-          bg-white border
-          pl-10 pr-10
-          text-sm outline-none
-        "
+        className="h-11 w-full rounded-lg border bg-white pr-10 pl-10 text-sm outline-none"
       />
 
       {value && (
@@ -33,7 +28,7 @@ const SearchInput = ({
           aria-label="Clear search"
           type="button"
           onClick={onClear}
-          className="absolute right-3 top-1/2 -translate-y-1/2"
+          className="absolute top-1/2 right-3 -translate-y-1/2"
         >
           <X size={16} />
         </button>

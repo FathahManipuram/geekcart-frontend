@@ -3,7 +3,6 @@ import React from "react";
 import FilterBar from "@/shared/components/filters/FilterBar";
 import FilterSelect from "@/shared/components/filters/FilterSelect";
 
-
 const ProductFilters = ({
   subcategories = [],
 
@@ -23,7 +22,6 @@ const ProductFilters = ({
 
   onSortChange,
 }) => {
-  
   const subcategoryOptions = [
     {
       label: "All Subcategories",
@@ -38,7 +36,6 @@ const ProductFilters = ({
     })),
   ];
 
- 
   const productStatusOptions = [
     {
       label: "All Status",
@@ -58,7 +55,6 @@ const ProductFilters = ({
       value: "inactive",
     },
   ];
-
 
   const stockStatusOptions = [
     {
@@ -86,7 +82,6 @@ const ProductFilters = ({
     },
   ];
 
- 
   const sortOptions = [
     {
       label: "Latest",

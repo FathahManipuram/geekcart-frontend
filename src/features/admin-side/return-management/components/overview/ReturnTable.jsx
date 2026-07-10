@@ -1,15 +1,14 @@
-import DataTable from '@/shared/components/DataTable';
-import React from 'react'
-import ReturnStatusBadge from './ReturnStatusBadge';
-import { Button } from '@/shared/components/ui/button';
-import { CheckCircle2, Clock3, Eye, Pencil } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { formatDateTime } from '@/shared/utils/date';
-import { ITEM_STATUSES } from '@/shared/constants/order/orderStatus';
-import { Badge } from '@/shared/components/ui/badge';
+import DataTable from "@/shared/components/DataTable";
+import React from "react";
+import ReturnStatusBadge from "./ReturnStatusBadge";
+import { Button } from "@/shared/components/ui/button";
+import { CheckCircle2, Clock3, Eye, Pencil } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { formatDateTime } from "@/shared/utils/date";
+import { Badge } from "@/shared/components/ui/badge";
 
-const ReturnTable = ({returns, loading, onSelect}) => {
-  const navigate= useNavigate()
+const ReturnTable = ({ returns, loading, onSelect }) => {
+  const navigate = useNavigate();
 
   const columns = [
     {
@@ -20,15 +19,15 @@ const ReturnTable = ({returns, loading, onSelect}) => {
           <img
             src={row.itemSnapshot?.image}
             alt={row.itemSnapshot?.name}
-            className="w-14 h-14 rounded object-cover"
+            className="h-14 w-14 rounded object-cover"
           />
 
           <div className="text-wrap sm:pr-15">
             <p className="font-medium">#{row.order?.orderNumber}</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               {row.itemSnapshot?.name}
             </p>
-            <div className="flex text-xs gap-2">
+            <div className="flex gap-2 text-xs">
               <span>{row.itemSnapshot?.size}</span>
               <span>{row.itemSnapshot?.color}</span>
             </div>
@@ -44,7 +43,7 @@ const ReturnTable = ({returns, loading, onSelect}) => {
         <>
           <div className="text-wrap">
             <p className="font-medium">{row?.user?.fullName}</p>
-            <p className="text-sm text-muted-foreground">{row.user?.email}</p>
+            <p className="text-muted-foreground text-sm">{row.user?.email}</p>
           </div>
         </>
       ),
@@ -69,26 +68,26 @@ const ReturnTable = ({returns, loading, onSelect}) => {
       cell: (row) => <span>₹{row.refundAmount}</span>,
     },
 
-  {
-  header: "Refund Status",
-  accessor: "refundStatus",
+    {
+      header: "Refund Status",
+      accessor: "refundStatus",
 
-  cell: (row) => {
-    const status = row.refundStatus;
+      cell: (row) => {
+        const status = row.refundStatus;
 
-    return status === "COMPLETED" ? (
-      <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
-        <CheckCircle2 className="w-3 h-3 mr-1" />
-        Refunded
-      </Badge>
-    ) : (
-      <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
-        <Clock3 className="w-3 h-3 mr-1" />
-        Pending
-      </Badge>
-    );
-  },
-},
+        return status === "COMPLETED" ? (
+          <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+            <CheckCircle2 className="mr-1 h-3 w-3" />
+            Refunded
+          </Badge>
+        ) : (
+          <Badge className="bg-yellow-100 text-yellow-700 hover:bg-yellow-100">
+            <Clock3 className="mr-1 h-3 w-3" />
+            Pending
+          </Badge>
+        );
+      },
+    },
 
     {
       header: "Requested Date",
@@ -106,7 +105,7 @@ const ReturnTable = ({returns, loading, onSelect}) => {
             variant="ghost"
             onClick={() => navigate(`/admin/returns/${row._id}`)}
           >
-            <Eye className="w-4 h-4" />
+            <Eye className="h-4 w-4" />
           </Button>
 
           <Button
@@ -120,7 +119,7 @@ const ReturnTable = ({returns, loading, onSelect}) => {
                 : ""
             }
           >
-            <Pencil className="w-4 h-4" />
+            <Pencil className="h-4 w-4" />
           </Button>
         </div>
       ),
@@ -137,6 +136,6 @@ const ReturnTable = ({returns, loading, onSelect}) => {
       />
     </>
   );
-}
+};
 
-export default ReturnTable
+export default ReturnTable;

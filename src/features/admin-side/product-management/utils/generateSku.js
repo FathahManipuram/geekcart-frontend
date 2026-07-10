@@ -16,7 +16,7 @@ export const generateSku = ({
     .slice(0, 3)
     .toUpperCase();
 
-    const uniqueCode= nanoid(4).toUpperCase()
+  const uniqueCode = nanoid(4).toUpperCase();
 
   return `${prefix}-${sequence}-${sizeCode}-${colorCode}-${uniqueCode}`;
 };

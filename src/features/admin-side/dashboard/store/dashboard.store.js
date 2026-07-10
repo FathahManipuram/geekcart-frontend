@@ -1,5 +1,5 @@
-import { create } from "zustand"
-import {fetchDashboardApi } from "../api/dashboard.api";
+import { create } from "zustand";
+import { fetchDashboardApi } from "../api/dashboard.api";
 
 export const useDashboardStore = create((set) => ({
   userDetails: {},
@@ -21,7 +21,6 @@ export const useDashboardStore = create((set) => ({
       });
 
       const res = await fetchDashboardApi(payload);
-      console.log("dashboard data", res.data);
       set({
         userDetails: res.data.userDetails,
         subcategoryBreakdown: res.data.subcategoryBreakdown,
@@ -30,7 +29,6 @@ export const useDashboardStore = create((set) => ({
         topProducts: res.data.topProducts,
         topSubcategories: res.data.topSubcategories,
         loading: false,
-      
       });
 
       return res;

@@ -11,7 +11,6 @@ export const setupInterceptors = (
 ) => {
   axiosInstance.interceptors.request.use(
     (config) => {
-      console.log("axiosReq: ", config);
       const token = storage.get(tokenKey);
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -23,7 +22,6 @@ export const setupInterceptors = (
 
   axiosInstance.interceptors.response.use(
     (response) => {
-      console.log("Axios response:", response.data);
       return response.data;
     },
     (error) => {
@@ -32,16 +30,14 @@ export const setupInterceptors = (
         responseData?.message || error.message || "Something went wrong";
       const status = error.response?.status;
 
-      console.log("Errorconfig: ", error.config);
-      console.log("AxiosError:", message);
-
       const lowerCaseMessage = message.toLowerCase();
-      const hasToken= !!storage.get(tokenKey)
+      const hasToken = !!storage.get(tokenKey);
       const isUserBlocked =
         status === 403 && lowerCaseMessage.includes("blocked");
 
       const isTokenExpired =
-        status === 401 && hasToken &&
+        status === 401 &&
+        hasToken &&
         (lowerCaseMessage.includes("expired") ||
           lowerCaseMessage.includes("login again") ||
           lowerCaseMessage.includes("unauthorized"));
@@ -71,4 +67,4 @@ export const setupInterceptors = (
       return Promise.reject(error);
     },
   );
-}
+};

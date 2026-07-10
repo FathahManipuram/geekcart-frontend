@@ -47,7 +47,6 @@ clearAuth: ()=>{
     try {
       set({ loading: true, error: null });
       const res = await loginApi(data);
-      console.log(res);
       const { user, accessToken } = res.data;
       get().setAuth({
         user,
@@ -70,7 +69,6 @@ clearAuth: ()=>{
 
       const res = await googleLoginApi(token);
       const { user, accessToken } = res.data;
-      console.log("LoginwitGoogle:", user, accessToken);
      get().setAuth({
       user, accessToken,
      })
@@ -93,7 +91,6 @@ clearAuth: ()=>{
       set({ loading: true });
 
       const res = await getProfileApi();
-      console.log("fetchDAtaprofile", res);
       const user = res.data;
       const currentUser= get().user
       if(JSON.stringify(currentUser) !== JSON.stringify(user)){
@@ -119,10 +116,7 @@ clearAuth: ()=>{
       set({ loading: true });
       const res = await updateProfileApi(data);
       const user = res.data;
-      console.log("StoreRes: ", res);
-      console.log("storeUser", user);
       const updatedUser = user;
-      console.log("UpdatedUser:", updatedUser);
       storage.set(STORAGE_KEYS.USER_PROFILE, updatedUser);
       set({ user: updatedUser, loading: false });
       return res;
@@ -159,10 +153,9 @@ clearAuth: ()=>{
   changeEmail: async (email) => {
     try {
       set({ loading: true });
-      console.log("StorechangeEmail:", email);
       const res = await changeEmailApi({ email });
       set({ loading: false });
-      console.log("store res:", res);
+  
       return res;
     } catch (err) {
       set({ loading: false });
@@ -174,9 +167,8 @@ clearAuth: ()=>{
   verifyEmailChange: async (data) => {
     try{
       set({ loading: true, error: null });
-      console.log("Verify emailChange: ", data);
       const res = await verifyEmailChangeApi(data);
-      console.log(res.email);
+  
       const user = res.data;
       storage.set(STORAGE_KEYS.USER_PROFILE, user);
       set({ user, loading: false, error: null,});
@@ -198,7 +190,6 @@ clearAuth: ()=>{
 
        const res= await changePasswordApi(data)
        const updatedUser= res.data
-console.log(res)
        storage.set(STORAGE_KEYS.USER_PROFILE, updatedUser)
        set({user: updatedUser, loading: false})
        return res

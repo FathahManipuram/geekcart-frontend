@@ -17,7 +17,6 @@ const AddMoneyDialog = ({ open, onOpenChange, onSubmit, loading }) => {
     onSubmit?.(value);
   };
 
-
   return (
     <Modal
       open={open}
@@ -38,7 +37,7 @@ const AddMoneyDialog = ({ open, onOpenChange, onSubmit, loading }) => {
         </div>
 
         <div>
-          <p className="text-sm font-medium mb-3">Quick Select</p>
+          <p className="mb-3 text-sm font-medium">Quick Select</p>
 
           <div className="grid grid-cols-2 gap-3">
             {QUICK_AMOUNTS.map((value) => (

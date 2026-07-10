@@ -11,8 +11,8 @@ const ReturnReasonSection = () => {
   const reason = watch("reason");
 
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="font-semibold text-lg mb-6">Return Reason</h2>
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-6 text-lg font-semibold">Return Reason</h2>
 
       <div className="space-y-3">
         {RETURN_REASONS.map((item) => (
@@ -25,7 +25,7 @@ const ReturnReasonSection = () => {
       </div>
 
       {errors.reason && (
-        <p className="text-red-500 text-sm mt-2">{errors.reason.message}</p>
+        <p className="mt-2 text-sm text-red-500">{errors.reason.message}</p>
       )}
 
       {reason === "Other" && (
@@ -33,12 +33,12 @@ const ReturnReasonSection = () => {
           <textarea
             rows={4}
             {...register("customReason")}
-            className="w-full border rounded-lg p-3"
+            className="w-full rounded-lg border p-3"
             placeholder="Enter return reason"
           />
 
           {errors.customReason && (
-            <p className="text-red-500 text-sm mt-1">
+            <p className="mt-1 text-sm text-red-500">
               {errors.customReason.message}
             </p>
           )}

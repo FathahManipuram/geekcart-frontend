@@ -1,38 +1,28 @@
 const OrderHistorySkeleton = () => {
   return (
-    <div className="bg-white border rounded-2xl p-4 sm:p-6 animate-pulse">
-
-      <div className="flex flex-col md:flex-row md:justify-between gap-6">
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 flex-1">
-          {/* Matches responsive image dimensions */}
-          <div className="w-full sm:w-28 h-48 sm:h-28 bg-gray-200 rounded-xl" />
+    <div className="animate-pulse rounded-2xl border bg-white p-4 sm:p-6">
+      <div className="flex flex-col gap-6 md:flex-row md:justify-between">
+        <div className="flex flex-1 flex-col gap-4 sm:flex-row sm:gap-5">
+          <div className="h-48 w-full rounded-xl bg-gray-200 sm:h-28 sm:w-28" />
 
           <div className="flex-1 space-y-3">
-            {/* Status pill placeholder */}
-            <div className="w-20 h-5 bg-gray-200 rounded-full" />
+            <div className="h-5 w-20 rounded-full bg-gray-200" />
 
-            {/* Order number placeholder */}
-            <div className="w-32 h-4 bg-gray-200 rounded" />
+            <div className="h-4 w-32 rounded bg-gray-200" />
 
-            {/* Product name placeholder */}
-            <div className="w-3/4 sm:w-56 h-6 bg-gray-200 rounded" />
+            <div className="h-6 w-3/4 rounded bg-gray-200 sm:w-56" />
 
-            {/* Date placeholder */}
-            <div className="w-40 h-4 bg-gray-200 rounded" />
+            <div className="h-4 w-40 rounded bg-gray-200" />
           </div>
         </div>
 
-        {/* Right Section: Pricing and Actions Skeleton */}
-        <div className="flex flex-row md:flex-col md:justify-between items-center md:items-end gap-4 pt-4 md:pt-0 border-t md:border-none border-gray-100 min-w-[120px]">
-          <div className="space-y-2 text-left md:text-right w-full">
-            {/* "Order Total" label placeholder */}
-            <div className="w-16 h-3 bg-gray-200 rounded md:ml-auto" />
-            {/* Large price placeholder */}
-            <div className="w-24 h-8 bg-gray-200 rounded md:ml-auto" />
-          </div>
+        <div className="flex min-w-[120px] flex-row items-center gap-4 border-t border-gray-100 pt-4 md:flex-col md:items-end md:justify-between md:border-none md:pt-0">
+          <div className="w-full space-y-2 text-left md:text-right">
+            <div className="h-3 w-16 rounded bg-gray-200 md:ml-auto" />
 
-          {/* Action button placeholder */}
-          <div className="w-28 h-9 bg-gray-200 rounded-lg" />
+            <div className="h-8 w-24 rounded bg-gray-200 md:ml-auto" />
+          </div>
+          <div className="h-9 w-28 rounded-lg bg-gray-200" />
         </div>
       </div>
     </div>

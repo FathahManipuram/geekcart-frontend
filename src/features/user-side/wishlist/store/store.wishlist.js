@@ -1,7 +1,9 @@
 import { create } from "zustand";
-import { addToWishlistApi, fetchWishlistApi, removeWishlistApi } from "../api/api.wishlist";
-
-
+import {
+  addToWishlistApi,
+  fetchWishlistApi,
+  removeWishlistApi,
+} from "../api/api.wishlist";
 
 export const useWishlistStore = create((set, get) => ({
   wishlist: [],
@@ -13,7 +15,6 @@ export const useWishlistStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const res = await fetchWishlistApi();
-      console.log("wishlistStore : ", res.data.products);
       set({
         wishlist: res.data.products || [],
         loading: false,
@@ -96,7 +97,7 @@ export const useWishlistStore = create((set, get) => ({
 
     const targetVariantId =
       typeof variantId === "object" ? variantId._id : variantId;
-    const previousWishlist = get().wishlist; 
+    const previousWishlist = get().wishlist;
     const exists = get().isWishlisted(targetVariantId);
 
     if (exists) {
@@ -125,13 +126,12 @@ export const useWishlistStore = create((set, get) => ({
         await addToWishlistApi({ productId, variantId: targetVariantId });
       }
     } catch (err) {
-      
       set({ wishlist: previousWishlist });
 
       const message =
         err.response?.data?.message || "Failed to update wishlist";
       set({ error: message });
-      throw err; 
+      throw err;
     }
   },
 }));

@@ -11,7 +11,6 @@ import moreRoutes from "./routes/more.routes";
 import NotFoundPage from "@/shared/components/NotFoundPage";
 
 export const router = createBrowserRouter([
-  
   publicRoutes,
   ...authRoutes,
   accountRoutes,
@@ -21,10 +20,9 @@ export const router = createBrowserRouter([
   ...moreRoutes,
   ...checkoutRoutes,
   ...orderRoutes,
-  
+
   {
     path: "*",
-    element: <NotFoundPage/>
-  }
-  
+    element: <NotFoundPage />,
+  },
 ]);

@@ -54,7 +54,7 @@ const UpdateReturnStatusModal = ({
 
       {requiresReason && (
         <div className="mt-6">
-          <label className="block text-sm font-medium mb-2">
+          <label className="mb-2 block text-sm font-medium">
             Rejection Reason
           </label>
 
@@ -62,13 +62,13 @@ const UpdateReturnStatusModal = ({
             value={adminNote}
             onChange={(e) => setAdminNote(e.target.value)}
             rows={4}
-            className="w-full border rounded-lg p-3"
+            className="w-full rounded-lg border p-3"
             placeholder="Enter rejection reason..."
           />
         </div>
       )}
 
-      <div className="flex justify-end gap-3 mt-6">
+      <div className="mt-6 flex justify-end gap-3">
         <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>

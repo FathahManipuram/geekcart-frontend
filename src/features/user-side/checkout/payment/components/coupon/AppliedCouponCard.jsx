@@ -3,7 +3,7 @@ import { useCheckoutStore } from "../../../store/checkout.store";
 
 const AppliedCouponCard = ({ onOpenModal }) => {
   const appliedCoupon = useCheckoutStore((state) => state.appliedCoupon);
-  const couponDiscount= useCheckoutStore((state)=> state.couponDiscount)
+  const couponDiscount = useCheckoutStore((state) => state.couponDiscount);
 
   const removeAppliedCoupon = useCheckoutStore(
     (state) => state.removeAppliedCoupon,
@@ -11,12 +11,12 @@ const AppliedCouponCard = ({ onOpenModal }) => {
 
   if (!appliedCoupon) {
     return (
-      <div className="border rounded-xl p-4 mb-5">
-        <div className="flex justify-between items-center">
+      <div className="mb-5 rounded-xl border p-4">
+        <div className="flex items-center justify-between">
           <div>
             <h3 className="font-medium">Offers & Coupons</h3>
 
-            <p className="text-sm text-muted-foreground">
+            <p className="text-muted-foreground text-sm">
               Apply coupon to save more
             </p>
           </div>
@@ -34,8 +34,8 @@ const AppliedCouponCard = ({ onOpenModal }) => {
   }
 
   return (
-    <div className="border rounded-xl p-4 bg-green-50 mb-5">
-      <div className="flex justify-between items-center">
+    <div className="mb-5 rounded-xl border bg-green-50 p-4">
+      <div className="flex items-center justify-between">
         <div>
           <h3 className="font-semibold text-green-700">{appliedCoupon.code}</h3>
 

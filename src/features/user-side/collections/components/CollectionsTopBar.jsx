@@ -12,26 +12,10 @@ const CollectionsTopBar = ({
   onSortChange,
 }) => {
   return (
-    <div
-      className="
-        mb-8
-        flex
-        flex-col
-        gap-4
-
-        sm:flex-row
-        sm:items-center
-        sm:justify-between
-      "
-    >
+    <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       {/* RESULTS */}
       <div>
-        <p
-          className="
-            text-sm
-            text-neutral-500
-          "
-        >
+        <p className="text-sm text-neutral-500">
           Showing{" "}
           <span className="font-semibold text-black">{totalProducts}</span>{" "}
           products

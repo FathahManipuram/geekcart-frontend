@@ -1,17 +1,31 @@
 // src/features/products/components/SizeSelector.jsx
 
+import { useState } from "react";
+import SizeGuideModal from "./SizeGuideModal";
+import Modal from "@/shared/components/Modal";
+
 const ALL_SIZES = ["S", "M", "L", "XL", "XXL"];
 
 const SizeSelector = ({ selectedSize, onSelectSize, variants = [] }) => {
+  const [isSizeGuideOpen, setIsSizeGuideOpen] = useState(false);
   return (
     <div>
       {/* Heading */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <p className="text-xs font-semibold tracking-widest uppercase">
           Select Size
         </p>
 
-        <button className="text-xs font-medium underline">Size Guide</button>
+        <button
+          onClick={() => setIsSizeGuideOpen(true)}
+          className="text-sm font-medium text-neutral-600 underline transition-colors hover:text-black"
+        >
+          Size Guide
+        </button>
+        <SizeGuideModal
+          isOpen={isSizeGuideOpen}
+          onClose={() => setIsSizeGuideOpen(false)}
+        />
       </div>
 
       {/* Sizes */}
@@ -30,27 +44,15 @@ const SizeSelector = ({ selectedSize, onSelectSize, variants = [] }) => {
               key={size}
               onClick={() => isAvailable && onSelectSize(size)}
               disabled={!isAvailable}
-              className={`
-                w-12
-                h-12
-                rounded-md
-                border
-                text-sm
-                font-medium
-                transition-all
-
-                ${
-                  selectedSize === size
-                    ? "bg-[#9c6b3f] text-white border-[#9c6b3f]"
-                    : "border-neutral-300 hover:border-black"
-                }
-
-                ${
-                  !isAvailable
-                    ? "opacity-40 cursor-not-allowed line-through"
-                    : "cursor-pointer"
-                }
-              `}
+              className={`h-12 w-12 rounded-md border text-sm font-medium transition-all ${
+                selectedSize === size
+                  ? "border-[#9c6b3f] bg-[#9c6b3f] text-white"
+                  : "border-neutral-300 hover:border-black"
+              } ${
+                !isAvailable
+                  ? "cursor-not-allowed line-through opacity-40"
+                  : "cursor-pointer"
+              } `}
             >
               {size}
             </button>

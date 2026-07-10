@@ -27,8 +27,7 @@ const AdminDashboardPage = () => {
   }, [salesFilter, fetchDashboard]);
 
   return (
-    // Max width wrapper with explicit horizontal padding adjustments for mobile screens
-    <div className="w-full max-w-7xl mx-auto space-y-6 px-2 sm:px-4 md:px-6 py-4">
+    <div className="mx-auto w-full max-w-7xl space-y-6 px-2 py-4 sm:px-4 md:px-6">
       <DashboardHeader />
 
       <DashboardStats data={userDetails} />
@@ -37,10 +36,8 @@ const AdminDashboardPage = () => {
         <UserGrowthChart data={userGrowth} />
       </div>
 
-      {/* Primary Row: Sales & Products Charts */}
-      {/* Defaults to 1 column on mobile, drops to 3 columns on large desktop viewports */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 w-full overflow-hidden">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className="w-full overflow-hidden lg:col-span-2">
           <SalesChart
             data={salesChart}
             activeFilter={salesFilter}
@@ -53,9 +50,7 @@ const AdminDashboardPage = () => {
         </div>
       </div>
 
-      {/* Secondary Row: Subcategory Aggregations */}
-      {/* Stacks on mobile, splits 50/50 starting at large tablet/laptop dimensions */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div className="w-full">
           <TopSubcategories data={topSubcategories} />
         </div>

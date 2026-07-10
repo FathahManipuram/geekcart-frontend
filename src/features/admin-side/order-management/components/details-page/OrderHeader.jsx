@@ -1,10 +1,9 @@
-import { Button } from "@/shared/components/ui/button";
 import OrderStatusBadge from "../overview-page/OrderStatusBadge";
 import { formatDateTime } from "@/shared/utils/date";
 
 const OrderHeader = ({ order }) => {
   return (
-    <div className="flex items-start justify-between mb-8">
+    <div className="mb-8 flex items-start justify-between">
       <div>
         <div className="flex items-center gap-3">
           <h1 className="text-3xl font-bold">#{order?.orderNumber}</h1>
@@ -16,8 +15,6 @@ const OrderHeader = ({ order }) => {
           {formatDateTime(order?.createdAt)}
         </p>
       </div>
-
-      {/* <Button variant="outline">Print Invoice</Button> */}
     </div>
   );
 };

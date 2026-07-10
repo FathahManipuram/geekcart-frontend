@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-
 import DataTable from "@/shared/components/DataTable";
 import { Badge } from "@/shared/components/ui/badge";
 import SalesReportTableSkeleton from "./skeletons/SalesReportTableSkeleton";
@@ -11,7 +10,7 @@ const columns = [
     cell: (row) => (
       <Link
         to={`/admin/orders/${row._id}`}
-        className="font-medium text-primary hover:underline"
+        className="text-primary font-medium hover:underline"
       >
         {row.orderNumber}
       </Link>
@@ -21,8 +20,8 @@ const columns = [
     header: "Customer",
     cell: (row) => (
       <div>
-        <p className="font-medium text-sm">{row.user?.fullName || "Guest"}</p>
-        <p className="text-xs text-muted-foreground">
+        <p className="text-sm font-medium">{row.user?.fullName || "Guest"}</p>
+        <p className="text-muted-foreground text-xs">
           {row.user?.email || "N/A"}
         </p>
       </div>
@@ -33,16 +32,14 @@ const columns = [
     cell: (row) => formatDateForDisplay(row.createdAt),
   },
   {
-    // ✅ Sum of all original items' quantities
     header: "Ordered Qty",
     cell: (row) => {
       const qty =
         row.items?.reduce((acc, item) => acc + (item.quantity ?? 0), 0) ?? 0;
-      return <span className="text-center block">{qty}</span>;
+      return <span className="block text-center">{qty}</span>;
     },
   },
   {
-    // ✅ Sum of quantities where itemStatus is "CANCELLED"
     header: "Cancelled Qty",
     cell: (row) => {
       const qty =
@@ -53,7 +50,7 @@ const columns = [
         ) ?? 0;
       return (
         <span
-          className={`text-center block ${qty > 0 ? "text-destructive font-medium" : ""}`}
+          className={`block text-center ${qty > 0 ? "text-destructive font-medium" : ""}`}
         >
           {qty}
         </span>
@@ -61,7 +58,6 @@ const columns = [
     },
   },
   {
-    // ✅ Sum of quantities where itemStatus is "RETURN_COMPLETED" (or matching your returned flags)
     header: "Returned Qty",
     cell: (row) => {
       const qty =
@@ -74,7 +70,7 @@ const columns = [
         ) ?? 0;
       return (
         <span
-          className={`text-center block ${qty > 0 ? "text-orange-500 font-medium" : ""}`}
+          className={`block text-center ${qty > 0 ? "font-medium text-orange-500" : ""}`}
         >
           {qty}
         </span>
@@ -94,7 +90,6 @@ const columns = [
     cell: (row) => `₹${(row.coupon?.discountAmount ?? 0).toFixed(2)}`,
   },
   {
-    // ✅ Sums the refundAmount inside each item block if the refund status is COMPLETED
     header: "Refunded Amt",
     cell: (row) => {
       const totalRefunded =
@@ -119,7 +114,6 @@ const columns = [
     },
   },
   {
-    // ✅ Correct Net Total calculation matching standard e-commerce books
     header: "Net Total",
     cell: (row) => {
       const gross = row.subtotal ?? 0;

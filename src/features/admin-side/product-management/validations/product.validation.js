@@ -1,6 +1,20 @@
 import { phoneNumber } from "@/shared/validations/address.base";
-import { color, costPrice, description, fabric, imageField, lowStockThreshold, price, productName, size, sizes, sku, sleeve, stock } from "@/shared/validations/base.validation"
-import * as yup from "yup"
+import {
+  color,
+  costPrice,
+  description,
+  fabric,
+  imageField,
+  lowStockThreshold,
+  price,
+  productName,
+  size,
+  sizes,
+  sku,
+  sleeve,
+  stock,
+} from "@/shared/validations/base.validation";
+import * as yup from "yup";
 
 const basicInformationSchema = yup.object({
   name: productName().required("Product name is required"),
@@ -60,7 +74,6 @@ const variantSchema = yup.object({
   isActive: yup.boolean().default(true),
 });
 
-
 const variantMatrixSchema = yup.object({
   variantGroups: yup
     .array()
@@ -75,11 +88,7 @@ const variantMatrixSchema = yup.object({
     .required("At least one variant is required"),
 });
 
-export const addProductSchema= 
-basicInformationSchema
-.concat(organizationAttributesSchema)
-.concat(productStatusSchema)
-.concat(variantMatrixSchema)
-
-
-
+export const addProductSchema = basicInformationSchema
+  .concat(organizationAttributesSchema)
+  .concat(productStatusSchema)
+  .concat(variantMatrixSchema);

@@ -1,6 +1,9 @@
 import { create } from "zustand";
-import { downloadSalesExcelApi, downloadSalesPdfApi, getSalesReportApi } from "../api/salesReport.api";
-import Pagination from "@/shared/components/Pagination";
+import {
+  downloadSalesExcelApi,
+  downloadSalesPdfApi,
+  getSalesReportApi,
+} from "../api/salesReport.api";
 
 export const useSalesReportStore = create((set) => ({
   loading: false,
@@ -18,7 +21,6 @@ export const useSalesReportStore = create((set) => ({
       });
 
       const res = await getSalesReportApi(params);
-      console.log("dashboard salesdata", res.data);
       set({
         salesReport: res.data.orders,
         pagination: res.data.pagination,

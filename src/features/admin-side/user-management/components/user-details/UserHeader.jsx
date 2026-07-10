@@ -10,70 +10,63 @@ import { updateUserSchema } from "../../validations/updateUser.validation";
 import { monthYearFormat } from "@/shared/utils/date";
 
 const UserHeader = ({ user }) => {
-  const[openUserEditModal, setUserEditModal]= useState(false)
-  const [blockModalOpen, setBlockModalOpen] = useState(false)
-  const blockUser= useUserManagementStore((state)=> state.blockUser)
-  const loading= useUserManagementStore((state)=> state.loading)
-  const {selectedUser, updateUser}= useUserManagementStore()
+  const [openUserEditModal, setUserEditModal] = useState(false);
+  const [blockModalOpen, setBlockModalOpen] = useState(false);
+  const blockUser = useUserManagementStore((state) => state.blockUser);
+  const loading = useUserManagementStore((state) => state.loading);
+  const { selectedUser, updateUser } = useUserManagementStore();
 
-const handleBlock= async()=>{
-  try{
-    await blockUser(selectedUser._id)
+  const handleBlock = async () => {
+    try {
+      await blockUser(selectedUser._id);
 
-    toast.success(selectedUser.isBlocked ? "User unblocked": "User blocked")
-    setBlockModalOpen(false)
-  }catch(err){
-    toast.error(err.response?.data?.message)
-  }
-}
-
-
-const handleSubmit= async(data)=>{
- try{
-   const finalData={}
-  Object.keys(data).forEach((key)=>{
-    const value= data[key]
-
-    if(value !== "" && value !==undefined){
-      finalData[key]= value
+      toast.success(selectedUser.isBlocked ? "User unblocked" : "User blocked");
+      setBlockModalOpen(false);
+    } catch (err) {
+      toast.error(err.response?.data?.message);
     }
-  })
+  };
 
-  const res= await updateUser(selectedUser._id, finalData)
-  toast.success(res.message || "User updated")
-  setUserEditModal(false)
+  const handleSubmit = async (data) => {
+    try {
+      const finalData = {};
+      Object.keys(data).forEach((key) => {
+        const value = data[key];
 
- }catch(err){
-  toast.error(err.response?.data?.message || "User updation failed")
- }
-}
+        if (value !== "" && value !== undefined) {
+          finalData[key] = value;
+        }
+      });
+
+      const res = await updateUser(selectedUser._id, finalData);
+      toast.success(res.message || "User updated");
+      setUserEditModal(false);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "User updation failed");
+    }
+  };
 
   return (
     <>
-      <div className="flex flex-col gap-4 md:flex-row md:justify-between justify-between">
+      <div className="flex flex-col justify-between gap-4 md:flex-row md:justify-between">
         {/* LEFT */}
         <div className="flex items-center gap-5">
           <img
             src={user.avatar}
             alt={user.fullName}
-            className="
-            w-24
-            h-24
-            rounded-2xl
-            object-cover
-          "
+            className="h-24 w-24 rounded-2xl object-cover"
           />
 
           <div>
             <p
-              className={`uppercase tracking-[0.2em] text-xs font-semibold ${
+              className={`text-xs font-semibold tracking-[0.2em] uppercase ${
                 user?.isBlocked ? "text-destructive" : "text-green-600"
               }`}
             >
               {`${user.isBlocked ? "Blocked Member" : "Active Member"}`}
             </p>
 
-            <h1 className="text-4xl font-bold mt-1">{user.fullName}</h1>
+            <h1 className="mt-1 text-4xl font-bold">{user.fullName}</h1>
 
             <p className="text-muted-foreground mt-2">
               Active User since {`${monthYearFormat(user.createdAt)}`}

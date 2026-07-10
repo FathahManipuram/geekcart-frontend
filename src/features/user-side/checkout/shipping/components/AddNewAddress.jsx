@@ -4,15 +4,15 @@ import { useState } from "react";
 import AddressForm from "../../../account/address/components/AddressForm";
 
 const AddNewAddress = () => {
-	const [addressModalOpen, setAddressModalOpen]= useState(false)
+  const [addressModalOpen, setAddressModalOpen] = useState(false);
   return (
     <>
-      <button className="flex items-center gap-4 w-full text-left group">
+      <button className="group flex w-full items-center gap-4 text-left">
         <div
           onClick={() => setAddressModalOpen(true)}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors cursor-pointer"
+          className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-gray-100 transition-colors group-hover:bg-gray-200"
         >
-          <Plus className="w-5 h-5 text-primary" />
+          <Plus className="text-primary h-5 w-5" />
         </div>
 
         <div>

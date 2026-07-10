@@ -15,7 +15,6 @@ const FilterSidebar = ({
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
- 
   useEffect(() => {
     setSelectedSubcategories(filters.subcategory || []);
     setSelectedSizes(filters.sizes || []);
@@ -61,7 +60,6 @@ const FilterSidebar = ({
   };
 
   const handleCancel = () => {
-  
     setSelectedSubcategories(filters.subcategory || []);
     setSelectedSizes(filters.sizes || []);
     setSelectedColors(filters.colors || []);
@@ -74,11 +72,11 @@ const FilterSidebar = ({
   return (
     <div className="rounded-3xl border bg-white p-6">
       <div>
-        <p className="text-xs uppercase tracking-widest text-neutral-400">
+        <p className="text-xs tracking-widest text-neutral-400 uppercase">
           Filters
         </p>
 
-        <h2 className="mt-2 text-sm font-semibold uppercase tracking-wide">
+        <h2 className="mt-2 text-sm font-semibold tracking-wide uppercase">
           Refine Selection
         </h2>
       </div>
@@ -119,10 +117,7 @@ const FilterSidebar = ({
 
           <div className="space-y-3">
             {sizes.map((size) => (
-              <label
-                key={size}
-                className="flex items-center gap-3 text-sm"
-              >
+              <label key={size} className="flex items-center gap-3 text-sm">
                 <input
                   className="cursor-pointer"
                   type="checkbox"
@@ -150,7 +145,7 @@ const FilterSidebar = ({
                 onClick={() =>
                   toggleValue(color, selectedColors, setSelectedColors)
                 }
-                className={`h-8 w-8 rounded-full border-2 cursor-pointer ${
+                className={`h-8 w-8 cursor-pointer rounded-full border-2 ${
                   selectedColors.includes(color)
                     ? "border-black"
                     : "border-transparent"
@@ -190,40 +185,21 @@ const FilterSidebar = ({
         <div className="space-y-3">
           <button
             onClick={handleApplyFilters}
-            className="
-            cursor-pointer
-              w-full
-              rounded-xl
-              bg-black
-              py-3
-              text-white
-            "
+            className="w-full cursor-pointer rounded-xl bg-black py-3 text-white"
           >
             Apply Filters
           </button>
 
           <button
             onClick={handleClearFilters}
-            className="
-              w-full
-              rounded-xl
-              border
-              py-3
-              cursor-pointer
-            "
+            className="w-full cursor-pointer rounded-xl border py-3"
           >
             Clear Filters
           </button>
           {onClose && (
             <button
               onClick={handleCancel}
-              className="
-      w-full
-      rounded-xl
-      border
-      py-3
-      cursor-pointer
-    "
+              className="w-full cursor-pointer rounded-xl border py-3"
             >
               Cancel
             </button>

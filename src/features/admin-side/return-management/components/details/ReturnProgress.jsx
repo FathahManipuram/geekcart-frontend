@@ -2,24 +2,21 @@ import { Check } from "lucide-react";
 import { RETURN_PROGRESS_STEPS } from "../../constants/return.constants";
 
 const ReturnProgress = ({ currentStatus }) => {
-
-  const currentIndex = RETURN_PROGRESS_STEPS.findIndex((step) => step.key === currentStatus);
+  const currentIndex = RETURN_PROGRESS_STEPS.findIndex(
+    (step) => step.key === currentStatus,
+  );
 
   return (
-    <div className="bg-white border rounded-xl p-6">
+    <div className="rounded-xl border bg-white p-6">
       <div className="flex justify-between">
         {RETURN_PROGRESS_STEPS.map((step, index) => {
           const completed = index <= currentIndex;
 
           return (
-            <div key={step.key} className="flex-1 flex items-center">
+            <div key={step.key} className="flex flex-1 items-center">
               <div className="flex flex-col items-center">
                 <div
-                  className={`
-                    w-10 h-10 rounded-full
-                    flex items-center justify-center
-                    ${completed ? "bg-primary text-white" : "bg-muted"}
-                  `}
+                  className={`flex h-10 w-10 items-center justify-center rounded-full ${completed ? "bg-primary text-white" : "bg-muted"} `}
                 >
                   {completed ? <Check size={18} /> : index + 1}
                 </div>
@@ -29,10 +26,7 @@ const ReturnProgress = ({ currentStatus }) => {
 
               {index < RETURN_PROGRESS_STEPS.length - 1 && (
                 <div
-                  className={`
-                    flex-1 h-0.5
-                    ${index < currentIndex ? "bg-primary" : "bg-gray-200"}
-                  `}
+                  className={`h-0.5 flex-1 ${index < currentIndex ? "bg-primary" : "bg-gray-200"} `}
                 />
               )}
             </div>

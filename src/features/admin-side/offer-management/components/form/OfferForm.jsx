@@ -42,16 +42,16 @@ const OfferForm = ({
     },
   });
 
-const {
-  handleSubmit,
-  watch,
-  setValue,
-  reset,
-  formState: { errors, isDirty, dirtyFields },
-} = methods;
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    reset,
+    formState: { errors, isDirty, dirtyFields },
+  } = methods;
 
-const offerType = watch("offerType");
-const discountType = watch("discountType");
+  const offerType = watch("offerType");
+  const discountType = watch("discountType");
 
   const targetOptions =
     offerType === "Product"
@@ -74,7 +74,7 @@ const discountType = watch("discountType");
 
     reset({
       ...defaultValues,
-      
+
       targetId:
         typeof defaultValues.targetId === "object"
           ? defaultValues.targetId._id
@@ -90,17 +90,14 @@ const discountType = watch("discountType");
     });
   }, [defaultValues, reset]);
 
-
-useEffect(() => {
-  if (discountType === "FIXED") {
-    setValue("maxDiscountAmount", null, {
-      //shouldDirty: true,
-      shouldValidate: true,
-    });
-  }
-}, [discountType, setValue]);
-
-
+  useEffect(() => {
+    if (discountType === "FIXED") {
+      setValue("maxDiscountAmount", null, {
+        //shouldDirty: true,
+        shouldValidate: true,
+      });
+    }
+  }, [discountType, setValue]);
 
   const handleOfferTypeChange = (value) => {
     setValue("offerType", value, {
@@ -114,30 +111,29 @@ useEffect(() => {
     });
   };
 
-const handleFormSubmit = (data) => {
-  if (!defaultValues) {
-    return onSubmit(data);
-  }
+  const handleFormSubmit = (data) => {
+    if (!defaultValues) {
+      return onSubmit(data);
+    }
 
-  const payload = {};
+    const payload = {};
 
-  Object.keys(dirtyFields).forEach((key) => {
-    payload[key] = data[key];
-  });
+    Object.keys(dirtyFields).forEach((key) => {
+      payload[key] = data[key];
+    });
 
-  onSubmit(payload);
-};
-
+    onSubmit(payload);
+  };
 
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
         {/* Basic Information */}
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Basic Information</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Basic Information</h2>
 
-          <div className="grid lg:grid-cols-3 gap-4">
+          <div className="grid gap-4 lg:grid-cols-3">
             <div className="lg:col-span-2">
               <AppFormInput
                 name="name"
@@ -146,12 +142,12 @@ const handleFormSubmit = (data) => {
               />
             </div>
 
-            <div className="border rounded-lg p-3">
+            <div className="rounded-lg border p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">Active Offer</p>
 
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Enable or disable this offer
                   </p>
                 </div>
@@ -161,7 +157,6 @@ const handleFormSubmit = (data) => {
                   onCheckedChange={(checked) =>
                     setValue("isActive", checked, {
                       shouldDirty: true,
-                      //shouldValidate: true
                     })
                   }
                 />
@@ -178,12 +173,12 @@ const handleFormSubmit = (data) => {
           </div>
         </div>
 
-        {/* Offer Configuration */}
+        {/* Offer */}
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Offer Configuration</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Offer Configuration</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-1">
               <Label>Offer Type</Label>
 
@@ -225,10 +220,10 @@ const handleFormSubmit = (data) => {
 
         {/* Discount */}
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Discount Settings</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Discount Settings</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <div>
               <Label>Discount Type</Label>
 
@@ -244,7 +239,7 @@ const handleFormSubmit = (data) => {
               />
 
               {errors.discountType && (
-                <p className="text-sm text-red-500 mt-1">
+                <p className="mt-1 text-sm text-red-500">
                   {errors.discountType.message}
                 </p>
               )}
@@ -270,10 +265,10 @@ const handleFormSubmit = (data) => {
 
         {/* Schedule */}
 
-        <div className="bg-white border rounded-xl p-6">
-          <h2 className="text-lg font-semibold mb-4">Schedule</h2>
+        <div className="rounded-xl border bg-white p-6">
+          <h2 className="mb-4 text-lg font-semibold">Schedule</h2>
 
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid gap-4 md:grid-cols-2">
             <AppFormInput name="startDate" label="Start Date" type="date" />
 
             <AppFormInput name="expiryDate" label="Expiry Date" type="date" />

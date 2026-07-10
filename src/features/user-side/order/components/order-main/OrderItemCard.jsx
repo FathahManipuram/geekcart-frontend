@@ -12,27 +12,25 @@ const OrderItemCard = ({ item, order, onCancel }) => {
   const totalItemPrice = (item.salePrice ?? item.price) * item.quantity;
   const couponShareDeducted = item.couponDiscount ?? 0;
 
-
   const finalItemPrice = Math.max(0, totalItemPrice - couponShareDeducted);
-
 
   const hasDiscount =
     (item.salePrice !== null && item.salePrice < item.price) ||
     couponShareDeducted > 0;
 
   return (
-    <div className="bg-white border rounded-xl p-5 shadow-sm">
+    <div className="rounded-xl border bg-white p-5 shadow-sm">
       <div className="flex gap-5">
         <img
           src={item.image}
           alt={item.name}
-          className="w-28 h-28 object-cover rounded-lg border bg-gray-50"
+          className="h-28 w-28 rounded-lg border bg-gray-50 object-cover"
         />
 
         <div className="flex-1">
-          <div className="flex justify-between items-start">
+          <div className="flex items-start justify-between">
             <div>
-              <h3 className="font-semibold text-lg text-gray-900">
+              <h3 className="text-lg font-semibold text-gray-900">
                 {item.name}
               </h3>
               <div className="mt-1.5">
@@ -42,18 +40,18 @@ const OrderItemCard = ({ item, order, onCancel }) => {
 
             <div className="text-right">
               {hasDiscount && (
-                <p className="text-xs line-through text-muted-foreground">
+                <p className="text-muted-foreground text-xs line-through">
                   ₹{formatCurrency(originalTotalPrice)}
                 </p>
               )}
 
-              <p className="font-bold text-lg text-gray-950">
+              <p className="text-lg font-bold text-gray-950">
                 ₹{formatCurrency(finalItemPrice)}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-4 mt-4 text-sm text-muted-foreground border-b pb-4">
+          <div className="text-muted-foreground mt-4 grid grid-cols-3 gap-4 border-b pb-4 text-sm">
             <div>
               <p className="text-xs">Color</p>
               <p className="font-medium text-black">{item.color}</p>
@@ -69,14 +67,14 @@ const OrderItemCard = ({ item, order, onCancel }) => {
           </div>
 
           {isInactive && (
-            <div className="mt-4 p-3 rounded-lg border text-xs space-y-1.5 bg-red-50 border-red-100 text-red-700">
+            <div className="mt-4 space-y-1.5 rounded-lg border border-red-100 bg-red-50 p-3 text-xs text-red-700">
               {item.cancellation?.reason && (
-                <p className="text-sm mb-1 text-red-900">
+                <p className="mb-1 text-sm text-red-900">
                   <span className="font-semibold">Cancellation Reason:</span>{" "}
                   {item.cancellation.reason}
                 </p>
               )}
-              <div className="flex justify-between text-muted-foreground pt-1">
+              <div className="text-muted-foreground flex justify-between pt-1">
                 <span>Original Item Total:</span>
                 <span className="font-medium text-black">
                   ₹{formatCurrency(totalItemPrice)}
@@ -88,7 +86,7 @@ const OrderItemCard = ({ item, order, onCancel }) => {
                   <span>-₹{formatCurrency(couponShareDeducted)}</span>
                 </div>
               )}
-              <div className="flex justify-between text-emerald-700 font-bold text-sm pt-1.5 border-t border-dashed mt-1">
+              <div className="mt-1 flex justify-between border-t border-dashed pt-1.5 text-sm font-bold text-emerald-700">
                 <span>Total Refunded:</span>
                 <span>
                   +₹{formatCurrency(item.refundAmount ?? finalItemPrice)}

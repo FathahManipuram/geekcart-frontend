@@ -1,4 +1,3 @@
-
 import AdminLoginPage from "@/features/auth/pages/AdminLoginPage";
 import ForgotPasswordPage from "@/features/auth/pages/ForgotPasswordPage";
 import LoginPage from "@/features/auth/pages/LoginPage";
@@ -7,7 +6,6 @@ import ResetpasswordPage from "@/features/auth/pages/ResetpasswordPage";
 import VerifyOtpPage from "@/features/auth/pages/VerifyOtpPage";
 import GuestRoute from "./GuestRoute";
 import AdminGuestRoute from "./AdminGuestRoute";
-
 
 const authRoutes = [
   {
@@ -60,5 +58,4 @@ const authRoutes = [
   },
 ];
 
-
-export default authRoutes
+export default authRoutes;

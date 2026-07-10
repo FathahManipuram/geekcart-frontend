@@ -7,21 +7,17 @@ import { useWalletStore } from "../store/wallet.store";
 import useDebounce from "@/shared/hooks/useDebounce";
 import Pagination from "@/shared/components/Pagination";
 
-
-
 const WalletPage = () => {
+  const fetchWallet = useWalletStore((state) => state.fetchWallet);
+  const fetchTransactions = useWalletStore((state) => state.fetchTransactions);
+  const transactions = useWalletStore((state) => state.transactions);
+  const wallet = useWalletStore((state) => state.wallet);
+  const pagination = useWalletStore((state) => state.pagination);
 
-const fetchWallet= useWalletStore((state)=> state.fetchWallet)
-const fetchTransactions= useWalletStore((state)=> state.fetchTransactions)
-const transactions= useWalletStore((state)=> state.transactions)
-const wallet= useWalletStore((state)=> state.wallet)
-const pagination= useWalletStore((state)=> state.pagination)
-
-const [type, setType]= useState("ALL")
-const [search, setSearch]= useState("")
-const [page, setPage]= useState(1)
-const debouncedvalue= useDebounce(search, 500)
-
+  const [type, setType] = useState("ALL");
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const debouncedvalue = useDebounce(search, 500);
 
   useEffect(() => {
     fetchWallet();
@@ -29,13 +25,13 @@ const debouncedvalue= useDebounce(search, 500)
       page,
       limit: 5,
       type,
-      search: debouncedvalue
+      search: debouncedvalue,
     });
-  }, [page, type, debouncedvalue])
+  }, [page, type, debouncedvalue]);
 
   return (
     <div className="space-y-6 p-10">
-      <div className="grid lg:grid-cols-3 gap-6">
+      <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2">
           <WalletBalanceCard
             fetchWallet={fetchWallet}

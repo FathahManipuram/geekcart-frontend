@@ -2,10 +2,10 @@ import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 import ReviewOrderItem from "./ReviewOrderItem";
 
 const ReviewOrderItems = () => {
-    const cart = useCartStore((state) => state.cart);
+  const cart = useCartStore((state) => state.cart);
   return (
-    <div className="bg-card border rounded-xl p-5">
-      <h2 className="font-semibold text-lg mb-4">
+    <div className="bg-card rounded-xl border p-5">
+      <h2 className="mb-4 text-lg font-semibold">
         Order Items ({cart?.items?.length})
       </h2>
 

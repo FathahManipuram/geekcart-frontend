@@ -1,5 +1,5 @@
-import React from 'react'
-import { Card, CardContent } from './ui/card';
+import React from "react";
+import { Card, CardContent } from "./ui/card";
 
 const StatsCard = ({
   title,
@@ -11,14 +11,7 @@ const StatsCard = ({
   titleClassName = "tracking-[0.1em]",
 }) => {
   return (
-    <Card
-      className={`
-        rounded-2xl
-        bg-white
-        shadow-sm
-        ${className}
-      `}
-    >
+    <Card className={`rounded-2xl bg-white shadow-sm ${className} `}>
       <CardContent className="">
         {/* Icon */}
         {Icon && (
@@ -28,20 +21,13 @@ const StatsCard = ({
         )}
 
         {/* Value */}
-        <h3 className={`font-bold leading-none ${valueClassName}`}>
+        <h3 className={`leading-none font-bold ${valueClassName}`}>
           {String(value).padStart(2, "0")}
         </h3>
 
         {/* Title */}
         <p
-          className={`
-		  	mt-2
-            text-xs
-            uppercase
-            text-muted-foreground
-            font-medium
-			${titleClassName}
-			 `}
+          className={`text-muted-foreground mt-2 text-xs font-medium uppercase ${titleClassName} `}
         >
           {title}
         </p>
@@ -50,4 +36,4 @@ const StatsCard = ({
   );
 };
 
-export default StatsCard
+export default StatsCard;

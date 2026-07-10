@@ -1,54 +1,53 @@
 import { formatDateTime } from "@/shared/utils/date";
-import ReturnStatusBadge from "../overview/ReturnStatusBadge";
 
 const ReturnCustomerCard = ({ returnRequest }) => {
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <h2 className="text-lg font-semibold mb-6">
+    <div className="rounded-xl border bg-white p-6">
+      <h2 className="mb-6 text-lg font-semibold">
         Customer & Order Information
       </h2>
 
       <div className="space-y-5">
         {/* Customer */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground">Customer</p>
+          <p className="text-muted-foreground text-xs uppercase">Customer</p>
 
-          <p className="font-medium mt-1">{returnRequest?.user?.fullName}</p>
+          <p className="mt-1 font-medium">{returnRequest?.user?.fullName}</p>
 
-          <p className="text-sm text-muted-foreground">
+          <p className="text-muted-foreground text-sm">
             {returnRequest?.user?.email}
           </p>
         </div>
 
         {/* Order */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground">
+          <p className="text-muted-foreground text-xs uppercase">
             Order Number
           </p>
 
-          <p className="font-medium mt-1">
+          <p className="mt-1 font-medium">
             #{returnRequest?.order?.orderNumber}
           </p>
         </div>
 
         {/* Purchase Date */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground">
+          <p className="text-muted-foreground text-xs uppercase">
             Purchase Date
           </p>
 
-          <p className="font-medium mt-1">
+          <p className="mt-1 font-medium">
             {formatDateTime(returnRequest?.order?.createdAt)}
           </p>
         </div>
 
         {/* Purchase Price */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground">
+          <p className="text-muted-foreground text-xs uppercase">
             Purchase Price
           </p>
 
-          <p className="font-bold mt-1">
+          <p className="mt-1 font-bold">
             ₹
             {returnRequest?.itemSnapshot?.priceAtPurchase -
               returnRequest?.itemSnapshot?.couponDiscount}
@@ -57,30 +56,30 @@ const ReturnCustomerCard = ({ returnRequest }) => {
 
         {/* Refund */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground">
+          <p className="text-muted-foreground text-xs uppercase">
             Refund Amount
           </p>
 
-          <p className="font-medium mt-1">
+          <p className="mt-1 font-medium">
             ₹{returnRequest?.refundAmount || 0}
           </p>
         </div>
 
         {/* Status */}
         <div>
-          <p className="text-xs uppercase text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-2 text-xs uppercase">
             Payment Method
           </p>
-          <p className="font-medium mt-1">
+          <p className="mt-1 font-medium">
             {returnRequest?.order?.paymentMethod}
           </p>
         </div>
 
         <div>
-          <p className="text-xs uppercase text-muted-foreground mb-2">
+          <p className="text-muted-foreground mb-2 text-xs uppercase">
             Payment Status
           </p>
-          <p className="font-medium mt-1">
+          <p className="mt-1 font-medium">
             {returnRequest?.order?.paymentStatus}
           </p>
         </div>

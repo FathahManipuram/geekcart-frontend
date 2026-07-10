@@ -1,5 +1,5 @@
-import * as yup from "yup"
-import { RETURN_REASONS } from "../constants/returnReasons"
+import * as yup from "yup";
+import { RETURN_REASONS } from "../constants/returnReasons";
 
 export const returnOrderSchema = yup.object({
   reason: yup

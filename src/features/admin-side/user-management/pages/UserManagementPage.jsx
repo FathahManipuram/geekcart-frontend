@@ -7,25 +7,36 @@ import Pagination from "@/shared/components/Pagination";
 import UserStatsCard from "../components/UserStatsCard";
 
 const UserManagementPage = () => {
-  const { fetchUsers, users, loading, currentPage, totalPages, totalUsers, search, status, activeUsers, blockedUsers, totalAdmins } =
-    useUserManagementStore()
- useEffect(()=>{
-  fetchUsers({
-    page: 1,
-    limit: 5,
+  const {
+    fetchUsers,
+    users,
+    loading,
+    currentPage,
+    totalPages,
+    totalUsers,
     search,
     status,
-  });
- },[])
+    activeUsers,
+    blockedUsers,
+    totalAdmins,
+  } = useUserManagementStore();
+  useEffect(() => {
+    fetchUsers({
+      page: 1,
+      limit: 5,
+      search,
+      status,
+    });
+  }, []);
 
-  const handlePageChange=(page)=>{
-fetchUsers({
+  const handlePageChange = (page) => {
+    fetchUsers({
       page,
       limit: 5,
       search,
       status,
     });
-  }
+  };
 
   return (
     <div className="space-y-8">

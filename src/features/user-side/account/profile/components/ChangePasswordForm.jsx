@@ -25,9 +25,9 @@ const ChangePasswordForm = ({ user, onClose }) => {
 
   const onSubmit = async (data) => {
     try {
-      console.log("changepass:", data);
+  
       const res= await changePassword(data);
-      console.log("res: ", res)
+    
       toast.success(res.message || "Password updated");
       onClose()
     } catch (err) {

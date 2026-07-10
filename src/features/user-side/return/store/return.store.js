@@ -10,14 +10,13 @@ export const useReturnStore = create((set) => ({
       set({ loading: true, error: null });
 
       const res = await createReturnRequestApi(payload);
-console.log("retrunres:", res)
-	  set({loading: false})
-      return res
-    } catch(err) {
-		const message= err?.response?.data?.message || "Request failed"
-      set({ loading: false, error: message});
+      set({ loading: false });
+      return res;
+    } catch (err) {
+      const message = err?.response?.data?.message || "Request failed";
+      set({ loading: false, error: message });
 
-      throw err
+      throw err;
     }
   },
 }));

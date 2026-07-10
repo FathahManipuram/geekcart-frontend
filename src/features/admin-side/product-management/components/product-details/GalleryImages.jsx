@@ -1,31 +1,13 @@
-import React from 'react'
+import React from "react";
 
-const GalleryImages = ({product}) => {
+const GalleryImages = ({ product }) => {
   return (
-    <div
-      className="
-        rounded-xl
-        border
-        bg-white
-		flex gap-2
-		justify-between
-		mt-8
-		overflow-scroll
-
-      "
-    >
+    <div className="mt-8 flex justify-between gap-2 overflow-scroll rounded-xl border bg-white">
       {(product?.galleryImages || []).map((image) => (
-        <img
-          src={image}
-          alt="galleryImage"
-          className="
-          w-50
-          object-contain
-        "
-        />
+        <img src={image} alt="galleryImage" className="w-50 object-contain" />
       ))}
     </div>
   );
-}
+};
 
-export default GalleryImages
+export default GalleryImages;

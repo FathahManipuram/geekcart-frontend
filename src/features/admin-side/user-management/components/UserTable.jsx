@@ -1,56 +1,46 @@
-import DataTable from '@/shared/components/DataTable';
-import { Eye, Pencil, Trash2 } from 'lucide-react';
-import React, { useState } from 'react'
-import RoleBadge from './RoleBadge';
-import UserIdentityCell from './UserIdentityCell';
-import { useNavigate } from 'react-router-dom';
-import ConfirmModal from '@/shared/components/ConfirmModal';
-import { useUserManagementStore } from '../stores/userManagement.store';
-import { toast } from 'sonner';
+import DataTable from "@/shared/components/DataTable";
+import { Eye, Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import RoleBadge from "./RoleBadge";
+import UserIdentityCell from "./UserIdentityCell";
+import { useNavigate } from "react-router-dom";
+import ConfirmModal from "@/shared/components/ConfirmModal";
+import { useUserManagementStore } from "../stores/userManagement.store";
+import { toast } from "sonner";
 
-const UserTable = ({users, loading}) => {
-const [deleteModalOpen, setDeleteModalOpen]= useState(false)
-const [selectedUser, setSelectedUser]= useState(null)
+const UserTable = ({ users, loading }) => {
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
 
-const navigate= useNavigate()
+  const navigate = useNavigate();
 
-const deleteUser= useUserManagementStore((state)=> state.deleteUser)
+  const deleteUser = useUserManagementStore((state) => state.deleteUser);
 
-  const handleDelete= async()=>{
-  if(!selectedUser) return
-    try{
-      console.log("selectedUser: ", selectedUser)
-      await deleteUser(selectedUser._id)
-    toast.success("User deleted successfully")
-    setDeleteModalOpen(false)
-    setSelectedUser(null)
+  const handleDelete = async () => {
+    if (!selectedUser) return;
+    try {
+      await deleteUser(selectedUser._id);
+      toast.success("User deleted successfully");
+      setDeleteModalOpen(false);
+      setSelectedUser(null);
+    } catch (err) {
+      toast.error(err.response?.data?.message);
+    }
+  };
 
-    }catch(err){
-      toast.error(err.response?.data?.message)
-  }
-
-    
-  }
-
-   const handleView = (user) => {
-     console.log("View:", user);
-     navigate(`users/${user._id}`);
-     
-   };
+  const handleView = (user) => {
+    navigate(`users/${user._id}`);
+  };
 
   const columns = [
     {
       header: "NAME & IDENTITY ",
-      cell: (user) => (
-        <UserIdentityCell user={user}/>
-      ),
+      cell: (user) => <UserIdentityCell user={user} />,
     },
 
     {
       header: "ROLE",
-      cell: (user)=>(
-        <RoleBadge role={user.role}/>
-      )
+      cell: (user) => <RoleBadge role={user.role} />,
     },
 
     {
@@ -73,18 +63,13 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
       header: "ACTIONS",
       cell: (user) => (
         <div className="flex items-center gap-3">
-
           {/* DELETE */}
           <button
-            onClick={() =>{
-              setSelectedUser(user)
-              setDeleteModalOpen(true)
+            onClick={() => {
+              setSelectedUser(user);
+              setDeleteModalOpen(true);
             }}
-            className="
-              text-red-500
-              hover:text-red-700
-              transition cursor-pointer
-            "
+            className="cursor-pointer text-red-500 transition hover:text-red-700"
           >
             <Trash2 size={16} />
           </button>
@@ -92,11 +77,7 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
           {/* VIEW */}
           <button
             onClick={() => handleView(user)}
-            className="
-              text-muted-foreground
-              hover:text-black
-              transition cursor-pointer
-            "
+            className="text-muted-foreground cursor-pointer transition hover:text-black"
           >
             <Eye size={16} />
           </button>
@@ -125,6 +106,6 @@ const deleteUser= useUserManagementStore((state)=> state.deleteUser)
       />
     </>
   );
-}
+};
 
-export default UserTable
+export default UserTable;

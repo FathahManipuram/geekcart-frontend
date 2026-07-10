@@ -16,7 +16,6 @@ import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 import { useWishlistStore } from "@/features/user-side/wishlist/store/store.wishlist";
 import ConfirmModal from "../components/ConfirmModal";
 
-
 const navLinkClass = ({ isActive }) =>
   `text-sm font-medium transition-colors ${
     isActive
@@ -29,37 +28,36 @@ const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
   const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchWishlist = useWishlistStore((state) => state.fetchWishlist);
-  const items= useCartStore((state)=> state.items)
+  const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [showConfirmModal, setShowConfirmModal]= useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
-useEffect(() => {
-  fetchCart();
-  fetchWishlist();
-}, []);
+  useEffect(() => {
+    fetchCart();
+    fetchWishlist();
+  }, []);
 
   const handleLogout = async () => {
     try {
       await logout();
       toast.success("Logout successfully");
-      setShowConfirmModal(false)
+      setShowConfirmModal(false);
       navigate("/");
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 
-//const cartCount = items.reduce((total, item) => total + item.quantity, 0);
-const cartCount= items.length
+  const cartCount = items.length;
   return (
-    <header className="w-full px-4 md:px-8 lg:px-15 py-4 md:py-8">
-      <div className="flex items-center justify-between bg-secondary px-4 md:px-6 py-3 rounded-full shadow-sm">
+    <header className="w-full px-4 py-4 md:px-8 md:py-8 lg:px-15">
+      <div className="bg-secondary flex items-center justify-between rounded-full px-4 py-3 shadow-sm md:px-6">
         {/* Logo */}
         <Logo />
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center gap-6">
+        <div className="hidden items-center gap-6 lg:flex">
           <NavigationMenu>
             <NavigationMenuList className="gap-4">
               <NavigationMenuItem>
@@ -80,24 +78,12 @@ const cartCount= items.length
                 </NavLink>
               </NavigationMenuItem>
 
-              {/* <NavigationMenuItem>
-                <NavLink to="/offers" className={navLinkClass}>
-                  Offers
-                </NavLink>
-              </NavigationMenuItem> */}
-
               {/* More */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger>More</NavigationMenuTrigger>
 
-                <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-                  <ul className="flex flex-col gap-2 w-40">
-                    {/* <li>
-                      <NavLink to="/wishlist" className={navLinkClass}>
-                        Wishlist
-                      </NavLink>
-                    </li> */}
-
+                <NavigationMenuContent className="bg-card rounded-md border p-3 shadow-md">
+                  <ul className="flex w-40 flex-col gap-2">
                     <li>
                       <NavLink to="/more/wallet" className={navLinkClass}>
                         Wallet
@@ -111,12 +97,6 @@ const cartCount= items.length
                         Referral & Rewards
                       </NavLink>
                     </li>
-
-                    {/* <li>
-                      <NavLink to="/more/coins" className={navLinkClass}>
-                        Coins
-                      </NavLink>
-                    </li> */}
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -127,8 +107,8 @@ const cartCount= items.length
                   <>
                     <NavigationMenuTrigger>Account</NavigationMenuTrigger>
 
-                    <NavigationMenuContent className="p-3 bg-card border rounded-md shadow-md">
-                      <ul className="flex flex-col gap-2 w-40">
+                    <NavigationMenuContent className="bg-card rounded-md border p-3 shadow-md">
+                      <ul className="flex w-40 flex-col gap-2">
                         <li>
                           <NavLink
                             to="/account/profile"
@@ -156,15 +136,6 @@ const cartCount= items.length
                           </NavLink>
                         </li>
 
-                        {/* <li>
-                          <NavLink
-                            to="/account/payments"
-                            className="hover:text-primary"
-                          >
-                            Payments
-                          </NavLink>
-                        </li> */}
-
                         <li>
                           <button
                             type="button"
@@ -188,45 +159,15 @@ const cartCount= items.length
         </div>
 
         {/* Desktop Icons */}
-        <div className="hidden lg:flex items-center gap-4">
-          <Search className="w-5 h-5 cursor-pointer" />
+        <div className="hidden items-center gap-4 lg:flex">
+          <Search className="h-5 w-5 cursor-pointer" />
 
-          <button
-            onClick={() => navigate("/cart")}
-            className="
-          relative
-        "
-          >
-            <ShoppingBag
-              className="
-            h-5
-            w-5
-            cursor-pointer
-          "
-            />
+          <button onClick={() => navigate("/cart")} className="relative">
+            <ShoppingBag className="h-5 w-5 cursor-pointer" />
 
             {/* BADGE */}
             {cartCount > 0 && (
-              <span
-                className="
-              absolute
-              -right-2
-              -top-2
-
-              flex
-              h-5
-              w-5
-              items-center
-              justify-center
-
-              rounded-full
-
-              bg-black
-              text-[10px]
-              font-semibold
-              text-white
-            "
-              >
+              <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-[10px] font-semibold text-white">
                 {cartCount}
               </span>
             )}
@@ -237,20 +178,20 @@ const cartCount= items.length
         <Button
           variant="ghost"
           size="icon"
-          className="lg:hidden cursor-pointer"
+          className="cursor-pointer lg:hidden"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
           {mobileMenuOpen ? (
-            <X className="w-5 h-5" />
+            <X className="h-5 w-5" />
           ) : (
-            <Menu className="w-5 h-5" />
+            <Menu className="h-5 w-5" />
           )}
         </Button>
       </div>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden mt-4 bg-secondary rounded-3xl p-6 shadow-md">
+        <div className="bg-secondary mt-4 rounded-3xl p-6 shadow-md lg:hidden">
           <div className="flex flex-col gap-5">
             <NavLink
               to="/"
@@ -268,14 +209,6 @@ const cartCount= items.length
             >
               Collections
             </NavLink>
-            {/* 
-            <NavLink
-              to="/offers"
-              className={navLinkClass}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Offers
-            </NavLink> */}
 
             <NavLink
               to="/more/wallet"
@@ -292,14 +225,6 @@ const cartCount= items.length
               Referral & Rewards
             </NavLink>
 
-            {/* <NavLink
-              to="/coins"
-              className={navLinkClass}
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Coins
-            </NavLink> */}
-
             <NavLink
               to="/wishlist"
               className={navLinkClass}
@@ -310,13 +235,17 @@ const cartCount= items.length
 
             {user ? (
               <>
-                <NavLink to="/account/profile" className={navLinkClass}>
+                <NavLink
+                  to="/account/profile"
+                  className={navLinkClass}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
                   Profile
                 </NavLink>
 
                 <button
                   onClick={() => setShowConfirmModal(true)}
-                  className="text-left text-sm font-medium hover:text-primary"
+                  className="hover:text-primary text-left text-sm font-medium"
                 >
                   Sign Out
                 </button>
@@ -329,44 +258,14 @@ const cartCount= items.length
 
             {/* Mobile Icons */}
             <div className="flex items-center gap-4 pt-2">
-              <Search className="w-5 h-5 cursor-pointer" />
+              <Search className="h-5 w-5 cursor-pointer" />
 
-              <button
-                onClick={() => navigate("/cart")}
-                className="
-          relative
-        "
-              >
-                <ShoppingBag
-                  className="
-            h-5
-            w-5
-            cursor-pointer
-          "
-                />
+              <button onClick={() => navigate("/cart")} className="relative">
+                <ShoppingBag className="h-5 w-5 cursor-pointer" />
 
                 {/* BADGE */}
                 {cartCount > 0 && (
-                  <span
-                    className="
-              absolute
-              -right-2
-              -top-2
-
-              flex
-              h-5
-              w-5
-              items-center
-              justify-center
-
-              rounded-full
-
-              bg-black
-              text-[10px]
-              font-semibold
-              text-white
-            "
-                  >
+                  <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-black text-[10px] font-semibold text-white">
                     {cartCount}
                   </span>
                 )}

@@ -1,26 +1,30 @@
-import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { registerSchema } from '../validations/auth.validation'
-import { Input } from '@/shared/components/ui/input'
-import { Label } from '@/shared/components/ui/label'
-import { Button } from '@/shared/components/ui/button'
-import { Eye, EyeClosed } from 'lucide-react'
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { registerSchema } from "../validations/auth.validation";
+import { Input } from "@/shared/components/ui/input";
+import { Label } from "@/shared/components/ui/label";
+import { Button } from "@/shared/components/ui/button";
+import { Eye, EyeClosed } from "lucide-react";
 
-const RegisterForm = ({onSubmit}) => {
-	const [show, setShow]= useState(false)
-	const [showReferral, setShowReferral] = useState(false);
+const RegisterForm = ({ onSubmit }) => {
+  const [show, setShow] = useState(false);
+  const [showReferral, setShowReferral] = useState(false);
 
-	const {register, handleSubmit, formState: {errors, isSubmitting}}= useForm({
-		resolver: yupResolver(registerSchema),
-	})
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(registerSchema),
+  });
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
       <div className="space-y-1">
         <Label>FULL NAME</Label>
         <Input placeholder="Abdul fathah" {...register("fullName")} />
         {errors?.fullName && (
-          <p className="text-red-500 text-sm">{errors.fullName.message}</p>
+          <p className="text-sm text-red-500">{errors.fullName.message}</p>
         )}
       </div>
 
@@ -28,7 +32,7 @@ const RegisterForm = ({onSubmit}) => {
         <Label>EMAIL ADDRESS</Label>
         <Input placeholder="abdulfathah@gmail.com" {...register("email")} />
         {errors?.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <p className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
@@ -43,13 +47,13 @@ const RegisterForm = ({onSubmit}) => {
           <button
             type="button"
             onClick={() => setShow(!show)}
-            className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground"
+            className="text-muted-foreground absolute top-1 right-2 translate-y-1/2"
           >
             {show ? <EyeClosed size={20} /> : <Eye size={20} />}
           </button>
         </div>
         {errors?.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
+          <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
       </div>
 
@@ -61,7 +65,7 @@ const RegisterForm = ({onSubmit}) => {
           {...register("confirmPassword")}
         />
         {errors?.confirmPassword && (
-          <p className="text-red-500 text-sm">
+          <p className="text-sm text-red-500">
             {errors.confirmPassword.message}
           </p>
         )}
@@ -71,7 +75,7 @@ const RegisterForm = ({onSubmit}) => {
         <button
           type="button"
           onClick={() => setShowReferral(!showReferral)}
-          className="text-sm text-primary font-medium"
+          className="text-primary text-sm font-medium"
         >
           Have a referral code?
         </button>
@@ -84,7 +88,7 @@ const RegisterForm = ({onSubmit}) => {
           <Input placeholder="GCABDUL4832BCA" {...register("referralCode")} />
 
           {errors?.referralCode && (
-            <p className="text-red-500 text-sm">
+            <p className="text-sm text-red-500">
               {errors.referralCode.message}
             </p>
           )}
@@ -96,6 +100,6 @@ const RegisterForm = ({onSubmit}) => {
       </Button>
     </form>
   );
-}
+};
 
-export default RegisterForm
+export default RegisterForm;

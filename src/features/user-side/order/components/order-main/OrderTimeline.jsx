@@ -14,12 +14,12 @@ const OrderTimeline = ({ order }) => {
   // Pending Order
   if (isPending) {
     return (
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6 text-center">
+      <div className="rounded-xl border border-yellow-200 bg-yellow-50 p-6 text-center">
         <h3 className="font-medium text-yellow-700">
           Waiting for Payment Confirmation
         </h3>
 
-        <p className="text-sm text-yellow-600 mt-2">
+        <p className="mt-2 text-sm text-yellow-600">
           Your order will be processed once payment is confirmed.
         </p>
       </div>
@@ -29,29 +29,29 @@ const OrderTimeline = ({ order }) => {
   // Cancelled Order
   if (order?.orderStatus === "CANCELLED") {
     return (
-      <div className="bg-white border rounded-xl p-6">
-        <h2 className="font-semibold text-lg mb-8">Order Status</h2>
+      <div className="rounded-xl border bg-white p-6">
+        <h2 className="mb-8 text-lg font-semibold">Order Status</h2>
 
         <div className="flex items-center">
           <div className="flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center">
+            <div className="bg-primary flex h-10 w-10 items-center justify-center rounded-full text-white">
               <Check size={18} />
             </div>
 
             <p className="mt-2 text-sm font-medium">Placed</p>
           </div>
 
-          <div className="flex-1 h-[2px] bg-red-300 mx-4" />
+          <div className="mx-4 h-[2px] flex-1 bg-red-300" />
 
           <div className="flex flex-col items-center">
-            <div className="w-10 h-10 rounded-full bg-red-500 text-white flex items-center justify-center">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-500 text-white">
               <X size={18} />
             </div>
 
             <p className="mt-2 text-sm font-medium text-red-600">Cancelled</p>
 
             {cancelledAt && (
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-xs">
                 {new Date(cancelledAt).toLocaleDateString()}
               </p>
             )}
@@ -63,17 +63,17 @@ const OrderTimeline = ({ order }) => {
 
   // Normal Order Timeline
   return (
-    <div className="bg-white border rounded-xl p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="font-semibold text-lg">Order Status</h2>
+    <div className="rounded-xl border bg-white p-6">
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-lg font-semibold">Order Status</h2>
 
-        <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-600">
+        <span className="rounded-full bg-green-100 px-3 py-1 text-xs font-medium text-green-600">
           {ORDER_STATUS_LABELS[order.orderStatus]}
         </span>
       </div>
 
       <div className="overflow-x-auto">
-        <div className="flex items-center min-w-[700px]">
+        <div className="flex min-w-[700px] items-center">
           {ORDER_TRACKING_STEPS.map((status, index) => {
             const isDelivered = order?.orderStatus === "DELIVERED";
 
@@ -84,38 +84,30 @@ const OrderTimeline = ({ order }) => {
             const active = !isDelivered && index === currentStepIndex;
 
             return (
-              <div key={status} className="flex-1 flex items-center">
+              <div key={status} className="flex flex-1 items-center">
                 <div className="flex flex-col items-center">
                   <div
-                    className={`
-                        w-10 h-10 rounded-full border flex items-center justify-center
-                        ${
-                          completed
-                            ? "bg-primary text-white border-primary"
-                            : active
-                              ? "border-primary text-primary bg-primary/10"
-                              : "border-gray-300 text-gray-400"
-                        }
-                      `}
+                    className={`flex h-10 w-10 items-center justify-center rounded-full border ${
+                      completed
+                        ? "bg-primary border-primary text-white"
+                        : active
+                          ? "border-primary text-primary bg-primary/10"
+                          : "border-gray-300 text-gray-400"
+                    } `}
                   >
                     {completed ? <Check size={18} /> : index + 1}
                   </div>
 
-                  <p className="mt-2 text-xs font-medium text-center whitespace-nowrap">
+                  <p className="mt-2 text-center text-xs font-medium whitespace-nowrap">
                     {ORDER_STATUS_LABELS[status]}
                   </p>
                 </div>
 
                 {index < ORDER_TRACKING_STEPS.length - 1 && (
                   <div
-                    className={`
-                        flex-1 h-[2px] mx-2
-                        ${
-                          index < currentStepIndex
-                            ? "bg-primary"
-                            : "bg-gray-200"
-                        }
-                      `}
+                    className={`mx-2 h-[2px] flex-1 ${
+                      index < currentStepIndex ? "bg-primary" : "bg-gray-200"
+                    } `}
                   />
                 )}
               </div>

@@ -21,17 +21,17 @@ const UpdateItemStatusModal = ({ item, onSubmit, loading, onClose }) => {
     });
   };
 
-if (!item) return null;
+  if (!item) return null;
   return (
     <div>
       {item && (
         <div className="mb-4">
-          <p className="text-sm text-muted-foreground">Product</p>
+          <p className="text-muted-foreground text-sm">Product</p>
 
           <p className="font-medium">{item.name}</p>
         </div>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {[item?.itemStatus, ...availableStatuses].map((status) => (
           <StatusOptionCard
             key={status}
@@ -44,7 +44,7 @@ if (!item) return null;
         ))}
       </div>
 
-      <div className="flex justify-end gap-3 mt-6">
+      <div className="mt-6 flex justify-end gap-3">
         <Button variant="outline" onClick={onClose}>
           Cancel
         </Button>

@@ -6,26 +6,26 @@ const ORDER_STATUSES = [
   { label: "PLACED", value: "PLACED" },
   { label: "PROCESSING", value: "PROCESSING" },
   { label: "SHIPPED", value: "SHIPPED" },
-  { label: "OUT FOR DELIVERY", value: "OUT_FOR_DELIVERY"},
+  { label: "OUT FOR DELIVERY", value: "OUT_FOR_DELIVERY" },
   { label: "DELIVERED", value: "DELIVERED" },
   { label: "CANCELLED", value: "CANCELLED" },
 ];
 
 const OrderFilters = ({ search, setSearch, status, setStatus }) => {
   return (
-    <div className="flex flex-col md:flex-row gap-3 justify-between md:items-center">
+    <div className="flex flex-col justify-between gap-3 md:flex-row md:items-center">
       <SearchInput
         placeholder="Search order number..."
         value={search}
         onChange={setSearch}
-		onClear={()=> setSearch("")}
+        onClear={() => setSearch("")}
       />
 
       <FilterSelect
         value={status}
         onValueChange={setStatus}
         options={ORDER_STATUSES}
-		className="md:w-52"
+        className="md:w-52"
       />
     </div>
   );

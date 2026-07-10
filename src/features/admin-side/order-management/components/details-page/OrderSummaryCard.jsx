@@ -1,14 +1,12 @@
 import { formatCurrency } from "@/shared/utils/formatCurrency";
 
 const OrderSummaryCard = ({ order }) => {
-
   const subtotal = order?.subtotal ?? 0;
   const deliveryCharge = order?.deliveryCharge ?? 0;
   const productDiscount = order?.discount ?? 0;
   const couponDiscount = order?.coupon?.discountAmount ?? 0;
   const tax = order?.tax ?? 0;
   const originalGrandTotal = order?.totalAmount ?? 0;
-
 
   const totalRefundedOut = (order?.items || []).reduce(
     (sum, item) => sum + (item.refundAmount ?? 0),
@@ -18,8 +16,8 @@ const OrderSummaryCard = ({ order }) => {
   const netSettledTotal = Math.max(0, originalGrandTotal - totalRefundedOut);
 
   return (
-    <div className="border rounded-xl p-5 bg-white shadow-sm">
-      <h3 className="font-semibold text-gray-900 mb-4">Financial Summary</h3>
+    <div className="rounded-xl border bg-white p-5 shadow-sm">
+      <h3 className="mb-4 font-semibold text-gray-900">Financial Summary</h3>
 
       <div className="space-y-2.5 text-sm text-gray-600">
         <div className="flex justify-between">
@@ -43,7 +41,7 @@ const OrderSummaryCard = ({ order }) => {
               <span>-₹{formatCurrency(couponDiscount)}</span>
             </div>
             {order?.coupon?.code && (
-              <span className="text-[10px] text-muted-foreground mt-0.5">
+              <span className="text-muted-foreground mt-0.5 text-[10px]">
                 Applied Code: {order.coupon.code}
               </span>
             )}
@@ -66,19 +64,19 @@ const OrderSummaryCard = ({ order }) => {
           </div>
         )}
 
-        <div className="border-t pt-3 flex justify-between font-semibold text-gray-900">
+        <div className="flex justify-between border-t pt-3 font-semibold text-gray-900">
           <span>Original Total</span>
           <span>₹{formatCurrency(originalGrandTotal)}</span>
         </div>
 
         {totalRefundedOut > 0 && (
-          <div className="border-t border-dashed pt-2.5 mt-2 space-y-1.5 text-xs bg-slate-50 p-2.5 rounded-lg border">
-            <div className="flex justify-between text-red-600 font-medium">
+          <div className="mt-2 space-y-1.5 rounded-lg border border-t border-dashed bg-slate-50 p-2.5 pt-2.5 text-xs">
+            <div className="flex justify-between font-medium text-red-600">
               <span>Processed Wallet Refunds</span>
               <span>-₹{formatCurrency(totalRefundedOut)}</span>
             </div>
 
-            <div className="border-t pt-1.5 flex justify-between font-bold text-base text-green-700">
+            <div className="flex justify-between border-t pt-1.5 text-base font-bold text-green-700">
               <span>Net Amount</span>
               <span>₹{formatCurrency(netSettledTotal)}</span>
             </div>

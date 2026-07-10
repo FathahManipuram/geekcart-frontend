@@ -33,16 +33,14 @@ const EmailEditForm = ({ user }) => {
   }, [user, reset, setFocus]);
 
   const onSubmit = async (data) => {
-    console.log("emialchange: ", data);
+    
     const email = data.email.trim().toLowerCase();
     if (email === user?.email) {
       toast.info("Please enter a different email");
       return;
     }
     try {
-      console.log("emailCHngFORM: ", email);
       const res = await changeEmail(email);
-      console.log("formEdITFInalResult:", res);
       toast.success(res.message || "OTP sent to new email");
       navigate("/verify-otp", {
         state: { email, type: OTP_TYPES.EMAIL_CHANGE },

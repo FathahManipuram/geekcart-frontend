@@ -8,17 +8,17 @@ const EmptyPage = ({
   onButtonClick,
 }) => {
   return (
-    <section className="min-h-[70vh] flex items-center justify-center px-4">
-      <div className="max-w-md w-full text-center bg-white border rounded-2xl p-10">
+    <section className="flex min-h-[70vh] items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl border bg-white p-10 text-center">
         {Icon && (
           <div className="flex justify-center">
-            <Icon className="h-16 w-16 text-muted-foreground" />
+            <Icon className="text-muted-foreground h-16 w-16" />
           </div>
         )}
 
         <h2 className="mt-6 text-2xl font-bold">{title}</h2>
 
-        <p className="mt-3 text-muted-foreground">{description}</p>
+        <p className="text-muted-foreground mt-3">{description}</p>
 
         {buttonText && (
           <Button className="mt-6 w-full" onClick={onButtonClick}>

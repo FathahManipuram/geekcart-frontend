@@ -16,10 +16,10 @@ const moreRoutes = [
     path: "/more/referral&rewards",
     element: (
       <ProtectedRoute>
-        <ReferralPage/>
+        <ReferralPage />
       </ProtectedRoute>
     ),
   },
 ];
 
-export default moreRoutes
+export default moreRoutes;

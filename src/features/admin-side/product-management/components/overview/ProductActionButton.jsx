@@ -1,26 +1,28 @@
-import { Button } from '@/shared/components/ui/button';
-import { Eye, Power, PowerOff, Trash2 } from 'lucide-react';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import { useProductStore } from '../../store/product.store';
-import ConfirmModal from '@/shared/components/ConfirmModal';
+import { Button } from "@/shared/components/ui/button";
+import { Eye, Power, PowerOff, Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useProductStore } from "../../store/product.store";
+import ConfirmModal from "@/shared/components/ConfirmModal";
 
-const ProductActionButton = ({product}) => {
-  const[openDeleteModal, setOpenDeleteModal]= useState(false)
+const ProductActionButton = ({ product }) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openStatusModal, setOpenStatusModal] = useState(false);
-  const deleteProduct= useProductStore((state)=>state.deleteProduct)
-  const loading= useProductStore((state)=> state.loading)
-  const toggleProductStatus= useProductStore((state)=> state.toggleProductStatus)
+  const deleteProduct = useProductStore((state) => state.deleteProduct);
+  const loading = useProductStore((state) => state.loading);
+  const toggleProductStatus = useProductStore(
+    (state) => state.toggleProductStatus,
+  );
 
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="flex items-center gap-2">
       <Button
         variant="outline"
         size="icon"
-        onClick={(e) =>{
-           e.stopPropagation();
-setOpenStatusModal(true);
+        onClick={(e) => {
+          e.stopPropagation();
+          setOpenStatusModal(true);
         }}
         className={`${
           product.isActive
@@ -64,7 +66,7 @@ setOpenStatusModal(true);
             ? "Deactivate this product?"
             : "Activate this product?"
         }
-        description=''
+        description=""
         open={openStatusModal}
         onOpenChange={setOpenStatusModal}
         onConfirm={() => toggleProductStatus(product._id)}
@@ -72,6 +74,6 @@ setOpenStatusModal(true);
       />
     </div>
   );
-}
+};
 
-export default ProductActionButton
+export default ProductActionButton;

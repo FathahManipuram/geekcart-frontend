@@ -1,14 +1,14 @@
 const ShippingInfoCard = ({ address, deliveryMethod }) => {
   return (
-    <div className="bg-white border rounded-2xl p-6">
-      <h3 className="uppercase text-xs tracking-widest mb-6">
+    <div className="rounded-2xl border bg-white p-6">
+      <h3 className="mb-6 text-xs tracking-widest uppercase">
         Shipping Information
       </h3>
 
       <div>
         <p className="font-semibold">{address?.fullName}</p>
 
-        <p className="text-sm mt-2">{address?.addressLine}</p>
+        <p className="mt-2 text-sm">{address?.addressLine}</p>
 
         <p className="text-sm">
           {address?.city}, {address?.state}
@@ -18,9 +18,9 @@ const ShippingInfoCard = ({ address, deliveryMethod }) => {
       </div>
 
       <div className="mt-6">
-        <p className="text-xs text-muted-foreground">Delivery Method</p>
+        <p className="text-muted-foreground text-xs">Delivery Method</p>
 
-        <p className="font-medium mt-1">{deliveryMethod}</p>
+        <p className="mt-1 font-medium">{deliveryMethod}</p>
       </div>
     </div>
   );

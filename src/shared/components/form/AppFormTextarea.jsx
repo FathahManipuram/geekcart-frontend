@@ -16,7 +16,7 @@ const AppFormTextarea = ({ name, label, required = false, ...props }) => {
         <Label className="uppercase">
           {label}
 
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="ml-1 text-red-500">*</span>}
         </Label>
       )}
 

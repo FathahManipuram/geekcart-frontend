@@ -85,27 +85,26 @@ const links = [
   },
 ];
 
-const AdminSidebar = ({collapsed, setCollapsed}) => {
-  const [showConfirmModal, setShowConfirmModal]= useState(false)
-const navigate= useNavigate()
-const logout= useAdminAuthStore((state)=> state.logout)
+const AdminSidebar = ({ collapsed, setCollapsed }) => {
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const navigate = useNavigate();
+  const logout = useAdminAuthStore((state) => state.logout);
 
-const handleSignOut = async() => {
-  try{
-await logout()
-  toast.success("Signed Out successfully")
-  navigate("/admin/login")
-  }catch(err){
-    toast.error(err.response?.data?.message || "Logout failed")
-  }
-};
-
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      toast.success("Signed Out successfully");
+      navigate("/admin/login");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Logout failed");
+    }
+  };
 
   return (
     <aside
-      className={`bg-white border-r flex flex-col h-screen transition-all duration-300 ${collapsed ? "w-20" : "w-72"}`}
+      className={`flex h-screen flex-col border-r bg-white transition-all duration-300 ${collapsed ? "w-20" : "w-72"}`}
     >
-      <div className="h-20 flex items-center justify-between px-4">
+      <div className="flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-3">
           <div
             onClick={() => setCollapsed(!collapsed)}
@@ -114,16 +113,16 @@ await logout()
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") setCollapsed(!collapsed);
             }}
-            className="h-10 w-10 rounded-lg flex items-center justify-center font-bold contain-content border cursor-pointer"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-lg border font-bold contain-content"
           >
             <img src="/GeekCart-favicon.png" alt="geekCart-icon" />
           </div>
 
           {!collapsed && (
             <div>
-              <h2 className="font-bold text-xl">GeekCart</h2>
+              <h2 className="text-xl font-bold">GeekCart</h2>
 
-              <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+              <p className="text-muted-foreground text-[11px] tracking-wider uppercase">
                 Admin Dashboard
               </p>
             </div>
@@ -147,7 +146,7 @@ await logout()
       </div>
 
       {/* Links */}
-      <div className="flex-1 py-6 px-4 space-y-2 overflow-y-auto">
+      <div className="flex-1 space-y-2 overflow-y-auto px-4 py-6">
         {links.map((link) => {
           const Icon = link.icon;
 
@@ -157,18 +156,11 @@ await logout()
               key={link.path}
               to={link.path}
               className={({ isActive }) =>
-                `
-  flex items-center
-  ${collapsed ? "justify-center" : "gap-3"}
-  px-4 py-3 rounded-lg
-  text-sm font-medium
-  transition-all
-  ${
-    isActive
-      ? "bg-[#F3ECE5] text-[#8B5E3C]"
-      : "text-muted-foreground hover:bg-[#F8F4EF]"
-  }
-`
+                `flex items-center ${collapsed ? "justify-center" : "gap-3"} rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                  isActive
+                    ? "bg-[#F3ECE5] text-[#8B5E3C]"
+                    : "text-muted-foreground hover:bg-[#F8F4EF]"
+                } `
               }
             >
               <Icon size={18} />
@@ -188,14 +180,7 @@ await logout()
         <button
           title={collapsed ? "Sign Out" : ""}
           onClick={() => setShowConfirmModal(true)}
-          className="
-            flex items-center gap-3
-            px-4 py-3 rounded-lg
-            text-sm font-medium
-            text-muted-foreground
-            hover:bg-red-50 hover:text-red-500
-            w-full transition-all
-          "
+          className="text-muted-foreground flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all hover:bg-red-50 hover:text-red-500"
         >
           <LogOut size={18} />
 

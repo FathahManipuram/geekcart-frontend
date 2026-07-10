@@ -1,19 +1,11 @@
-import React from 'react'
-import VariantRow from './VariantRow';
+import React from "react";
+import VariantRow from "./VariantRow";
 
-
-const VariantTable = ({
-	fields= [],
-	control,
-	register,
-	errors,
-	onRemove,
-}) => {
-  
-const variantsError = errors?.variants?.message
-	if(fields.length === 0){
-		return (
-      <div className="rounded-xl border border-dashed p-8 text-center text-sm text-muted-foreground">
+const VariantTable = ({ fields = [], control, register, errors, onRemove }) => {
+  const variantsError = errors?.variants?.message;
+  if (fields.length === 0) {
+    return (
+      <div className="text-muted-foreground rounded-xl border border-dashed p-8 text-center text-sm">
         Select a color, one or more sizes, and at least one image. then click{" "}
         <span className="font-semibold">Generate Variants</span>.
         {variantsError && (
@@ -21,7 +13,7 @@ const variantsError = errors?.variants?.message
         )}
       </div>
     );
-	}
+  }
 
   return (
     <div className="space-y-4">
@@ -38,6 +30,6 @@ const variantsError = errors?.variants?.message
       ))}
     </div>
   );
-}
+};
 
-export default VariantTable
+export default VariantTable;

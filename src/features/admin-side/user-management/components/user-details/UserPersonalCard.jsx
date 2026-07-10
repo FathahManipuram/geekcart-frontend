@@ -2,37 +2,30 @@ import React from "react";
 
 const UserPersonalCard = ({ user }) => {
   return (
-    <div
-      className="
-        bg-white
-        rounded-2xl
-        p-6
-        border
-      "
-    >
-      <h2 className="font-bold text-lg mb-6">Personal Details</h2>
+    <div className="rounded-2xl border bg-white p-6">
+      <h2 className="mb-6 text-lg font-bold">Personal Details</h2>
 
       <div className="space-y-6">
         <div>
-          <p className="text-xs text-muted-foreground uppercase">Full Name</p>
+          <p className="text-muted-foreground text-xs uppercase">Full Name</p>
 
-          <p className="font-medium mt-1">{user.fullName}</p>
+          <p className="mt-1 font-medium">{user.fullName}</p>
         </div>
 
         <div>
-          <p className="text-xs text-muted-foreground uppercase">
+          <p className="text-muted-foreground text-xs uppercase">
             Email Address
           </p>
 
-          <p className="font-medium mt-1">{user.email}</p>
+          <p className="mt-1 font-medium">{user.email}</p>
         </div>
 
         <div>
-          <p className="text-xs text-muted-foreground uppercase">
+          <p className="text-muted-foreground text-xs uppercase">
             Phone Number
           </p>
 
-          <p className="font-medium mt-1">{user.phoneNumber}</p>
+          <p className="mt-1 font-medium">{user.phoneNumber}</p>
         </div>
       </div>
     </div>

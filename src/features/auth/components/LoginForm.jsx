@@ -1,19 +1,21 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { loginSchema } from '../validations/auth.validation'
-import {yupResolver} from '@hookform/resolvers/yup'
-import { Label } from '@/shared/components/ui/label'
-import { Input } from '@/shared/components/ui/input'
-import { Button } from '@/shared/components/ui/button'
-import { Link } from 'react-router-dom'
-import { Eye, EyeClosed } from 'lucide-react'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { loginSchema } from "../validations/auth.validation";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Label } from "@/shared/components/ui/label";
+import { Input } from "@/shared/components/ui/input";
+import { Button } from "@/shared/components/ui/button";
+import { Link } from "react-router-dom";
+import { Eye, EyeClosed } from "lucide-react";
 
-const LoginForm = ({onSubmit, isAdmin}) => {
-const [show, setShow]=useState(true)
+const LoginForm = ({ onSubmit, isAdmin }) => {
+  const [show, setShow] = useState(true);
 
-	const {
-		register, handleSubmit, formState:{errors, isSubmitting,}
-	}= useForm({resolver: yupResolver(loginSchema)})
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({ resolver: yupResolver(loginSchema) });
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
@@ -25,7 +27,7 @@ const [show, setShow]=useState(true)
           {...register("email")}
         />
         {errors.email && (
-          <p className="text-red-500 text-sm">{errors.email.message}</p>
+          <p className="text-sm text-red-500">{errors.email.message}</p>
         )}
       </div>
 
@@ -34,7 +36,7 @@ const [show, setShow]=useState(true)
           <Label>{isAdmin ? "SECURITY KEY" : "PASSWORD"}</Label>
           <Link
             to="/forgot-password"
-            className="text-[10px] font-bold text-primary cursor-pointer"
+            className="text-primary cursor-pointer text-[10px] font-bold"
           >
             {isAdmin ? "" : "FORGOT PASSWORD?"}
           </Link>
@@ -48,13 +50,13 @@ const [show, setShow]=useState(true)
           <button
             type="button"
             onClick={() => setShow(!show)}
-            className="absolute translate-y-1/2 right-2 top-1 text-muted-foreground"
+            className="text-muted-foreground absolute top-1 right-2 translate-y-1/2"
           >
             {show ? <EyeClosed size={20} /> : <Eye size={20} />}
           </button>
         </div>
         {errors.password && (
-          <p className="text-red-500 text-sm">{errors.password.message}</p>
+          <p className="text-sm text-red-500">{errors.password.message}</p>
         )}
       </div>
       <Button type="submit" className="w-full" disabled={isSubmitting}>
@@ -66,6 +68,6 @@ const [show, setShow]=useState(true)
       </Button>
     </form>
   );
-}
+};
 
-export default LoginForm
+export default LoginForm;

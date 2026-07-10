@@ -1,23 +1,21 @@
+import { Button } from "@/shared/components/ui/button";
+import { Pencil, Power, PowerOff, Trash2 } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ConfirmModal from "@/shared/components/ConfirmModal";
+import { useCouponStore } from "../../store/coupon.store";
 
-import { Button } from '@/shared/components/ui/button';
-import { Pencil, Power, PowerOff, Trash2 } from 'lucide-react';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-import ConfirmModal from '@/shared/components/ConfirmModal';
-import { useCouponStore } from '../../store/coupon.store';
-
-
-const CouponActionButton = ({coupon}) => {
-
-	const[openDeleteModal, setOpenDeleteModal]= useState(false)
+const CouponActionButton = ({ coupon }) => {
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openStatusModal, setOpenStatusModal] = useState(false);
 
-  const loading= useCouponStore((state)=> state.loading)
-const toggleStatusUpdate = useCouponStore((state) => state.toggleStatusUpdate);
-const deleteCoupon= useCouponStore((state)=> state.deleteCoupon)
+  const loading = useCouponStore((state) => state.loading);
+  const toggleStatusUpdate = useCouponStore(
+    (state) => state.toggleStatusUpdate,
+  );
+  const deleteCoupon = useCouponStore((state) => state.deleteCoupon);
 
-
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   return (
     <div className="flex items-center gap-2">
       <Button
@@ -75,7 +73,6 @@ const deleteCoupon= useCouponStore((state)=> state.deleteCoupon)
       />
     </div>
   );
-}
+};
 
-export default CouponActionButton
-
+export default CouponActionButton;

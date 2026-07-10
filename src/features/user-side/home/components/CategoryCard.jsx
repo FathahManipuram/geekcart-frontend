@@ -2,15 +2,15 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const CategoryCard = ({ image, subcategoryId, name, items }) => {
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
-  const handleClick= ()=>{
-    navigate(`/collections?subcategory=${subcategoryId}`)
-  }
+  const handleClick = () => {
+    navigate(`/collections?subcategory=${subcategoryId}`);
+  };
   return (
     <div
       onClick={handleClick}
-      className="relative overflow-hidden rounded-xl group cursor-pointer"
+      className="group relative cursor-pointer overflow-hidden rounded-xl"
     >
       {/* Image */}
       <img
@@ -24,7 +24,7 @@ const CategoryCard = ({ image, subcategoryId, name, items }) => {
 
       {/* Content */}
       <div className="absolute bottom-4 left-4 text-white">
-        <h3 className="text-lg md:text-xl font-semibold">{name}</h3>
+        <h3 className="text-lg font-semibold md:text-xl">{name}</h3>
 
         <p className="text-xs tracking-widest opacity-80">{items}</p>
       </div>

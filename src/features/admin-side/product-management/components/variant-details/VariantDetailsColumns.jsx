@@ -20,100 +20,45 @@ export const variantDetailsColumns = [
     header: "VARIANT",
 
     cell: (variant) => (
-      <div
-        className="
-            flex
-            items-center
-            gap-3
-          "
-      >
+      <div className="flex items-center gap-3">
         <img
           src={variant.images?.[0] || "https://placehold.co/80x80"}
           alt={variant.color}
-          className="
-              h-12
-              w-12
-              rounded-lg
-              border
-              object-cover
-            "
+          className="h-12 w-12 rounded-lg border object-cover"
         />
 
         {/* Details */}
-        <div
-          className="
-              space-y-1
-            "
-        >
+        <div className="space-y-1">
           {/* Color */}
-          <div
-            className="
-                inline-flex
-                rounded-full
-                border
-                px-2
-                py-0.5
-                text-[10px]
-                font-medium
-              "
-          >
+          <div className="inline-flex rounded-full border px-2 py-0.5 text-[10px] font-medium">
             {variant.color}
           </div>
 
           {/* Size */}
-          <p
-            className="
-                text-xs
-                font-semibold
-              "
-          >
-            Size: {variant.size}
-          </p>
+          <p className="text-xs font-semibold">Size: {variant.size}</p>
         </div>
       </div>
     ),
   },
 
-  /**
-   * SKU
-   */
   {
     header: "SKU",
 
     cell: (variant) => (
-      <span
-        className="
-            text-xs
-            text-muted-foreground
-            font-mono
-          "
-      >
+      <span className="text-muted-foreground font-mono text-xs">
         {variant.sku}
       </span>
     ),
   },
 
-  /**
-   * Stock
-   */
   {
     header: "STOCK",
 
     cell: (variant) => (
-      <div
-        className="
-            text-sm
-            font-medium
-          "
-      >
-        {variant.stock} Units
-      </div>
+      <div className="text-sm font-medium">{variant.stock} Units</div>
     ),
   },
 
-  /**
-   * Status
-   */
   {
     header: "STOCK STATUS",
 
@@ -127,50 +72,13 @@ export const variantDetailsColumns = [
     ),
   },
 
-  /**
-   * Price
-   */
   {
     header: "PRICE",
 
     cell: (variant) => (
-      <div
-        className="
-            text-sm
-            font-bold
-          "
-      >
+      <div className="text-sm font-bold">
         ₹{variant.price?.toLocaleString()}
       </div>
     ),
   },
-
-  /**
-   * Sale Price
-   */
-  // {
-  //   header: "SALE PRICE",
-
-  //   cell: (variant) =>
-  //     variant.salePrice ? (
-  //       <div
-  //         className="
-  //             text-sm
-  //             font-semibold
-  //             text-green-600
-  //           "
-  //       >
-  //         ₹{variant.salePrice?.toLocaleString()}
-  //       </div>
-  //     ) : (
-  //       <span
-  //         className="
-  //             text-xs
-  //             text-muted-foreground
-  //           "
-  //       >
-  //         —
-  //       </span>
-  //     ),
-  // },
 ];

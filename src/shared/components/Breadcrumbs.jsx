@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 
 const Breadcrumbs = ({ items = [] }) => {
   return (
-    <nav
-      className="flex items-center text-[9px] font-medium leading-tight text-neutral-500 sm:text-xs"
-    >
+    <nav className="flex items-center text-[9px] leading-tight font-medium text-neutral-500 sm:text-xs">
       {items.map((item, index) => (
         <div key={index} className="flex items-center md:gap-2">
           {index !== 0 && <ChevronRight size={14} />}
@@ -15,7 +13,9 @@ const Breadcrumbs = ({ items = [] }) => {
               {item.label?.toUpperCase()}
             </Link>
           ) : (
-            <span className="font-medium text-primary">{item.label?.toUpperCase()}</span>
+            <span className="text-primary font-medium">
+              {item.label?.toUpperCase()}
+            </span>
           )}
         </div>
       ))}

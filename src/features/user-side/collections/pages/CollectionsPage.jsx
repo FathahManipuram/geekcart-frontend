@@ -58,20 +58,9 @@ const CollectionsPage = () => {
 
   return (
     <section className="px-4 py-8 md:px-8 lg:px-12">
-      <div
-        className="flex
-          gap-8
-        "
-      >
+      <div className="flex gap-8">
         {/* Desktop sidebar */}
-        <aside
-          className="
-            hidden
-            w-72
-            shrink-0
-            lg:block
-          "
-        >
+        <aside className="hidden w-72 shrink-0 lg:block">
           <FilterSidebar
             subcategories={subcategories}
             filters={filters}
@@ -92,47 +81,16 @@ const CollectionsPage = () => {
             ]}
           />
 
-          <div
-            className="
-              mb-8
-              mt-4
-              flex
-              flex-col
-              gap-4
-              md:flex-row
-              md:items-center
-              md:justify-between
-            "
-          >
+          <div className="mt-4 mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <div>
-              <h1
-                className="
-                  text-3xl
-                  font-bold
-                  md:text-5xl
-                "
-              >
-                Collections
-              </h1>
+              <h1 className="text-3xl font-bold md:text-5xl">Collections</h1>
 
-              <p
-                className="
-                  mt-2
-                  text-sm
-                  text-neutral-500
-                "
-              >
+              <p className="mt-2 text-sm text-neutral-500">
                 Discover premium fashion curated for modern style.
               </p>
             </div>
 
-            <div
-              className="
-                flex
-                items-center
-                gap-3
-              "
-            >
+            <div className="flex items-center gap-3">
               <SearchInput
                 value={search}
                 onChange={setSearch}
@@ -143,7 +101,7 @@ const CollectionsPage = () => {
 
               <Button
                 variant="outline"
-                className="lg:hidden cursor-pointer"
+                className="cursor-pointer lg:hidden"
                 onClick={() => setOpenFilters(true)}
               >
                 Filters
@@ -158,22 +116,8 @@ const CollectionsPage = () => {
           />
 
           {loading ? (
-            <div
-              className="
-                flex
-                min-h-[500px]
-                items-center
-                justify-center
-              "
-            >
-              <p
-                className="
-                  text-sm
-                  text-neutral-500
-                "
-              >
-                Loading products...
-              </p>
+            <div className="flex min-h-[500px] items-center justify-center">
+              <p className="text-sm text-neutral-500">Loading products...</p>
             </div>
           ) : (
             <>
@@ -195,13 +139,7 @@ const CollectionsPage = () => {
 
       {/* Mobile Filters */}
       <Sheet open={openFilters} onOpenChange={setOpenFilters}>
-        <SheetContent
-          side="left"
-          className="
-            w-80
-            overflow-y-auto
-          "
-        >
+        <SheetContent side="left" className="w-80 overflow-y-auto">
           <FilterSidebar
             subcategories={subcategories}
             filters={filters}

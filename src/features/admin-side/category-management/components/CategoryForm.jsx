@@ -1,53 +1,64 @@
-import { AppInput } from '@/shared/components/AppInput'
-import { Button } from '@/shared/components/ui/button'
-import { Label } from '@/shared/components/ui/label'
-import { Switch } from '@/shared/components/ui/switch'
-import { yupResolver } from '@hookform/resolvers/yup'
-import React, { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
+import { AppInput } from "@/shared/components/AppInput";
+import { Button } from "@/shared/components/ui/button";
+import { Label } from "@/shared/components/ui/label";
+import { Switch } from "@/shared/components/ui/switch";
+import { yupResolver } from "@hookform/resolvers/yup";
+import React, { useEffect } from "react";
+import { Controller, useForm } from "react-hook-form";
 
-
-const CategoryForm = ({initialData=null, onSubmit, onClose, schema, fallback="Category"}) => {
-	const {register, handleSubmit, watch, control, reset, formState:{errors, isDirty, isSubmitting}}=useForm({
-		resolver: yupResolver(schema),
+const CategoryForm = ({
+  initialData = null,
+  onSubmit,
+  onClose,
+  schema,
+  fallback = "Category",
+}) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    reset,
+    formState: { errors, isDirty, isSubmitting },
+  } = useForm({
+    resolver: yupResolver(schema),
     defaultValues: {
       name: "",
       isActive: true,
+    },
+  });
+
+  useEffect(() => {
+    if (initialData) {
+      reset({
+        name: initialData.name || "",
+        isActive: initialData.isActive ?? true,
+      });
     }
-	})
+  }, [reset, initialData]);
 
-  useEffect(()=>{
-   if(initialData){
+  const isActive = watch("isActive");
+  const name = watch("name");
+
+  const handleCancel = () => {
     reset({
-      name: initialData.name || "",
-      isActive: initialData.isActive ?? true,
-    })
-   }
-  
-  },[reset, initialData])
-
-  const  isActive= watch("isActive")
-  const name= watch("name")
-
-  const handleCancel=()=>{
-    reset({
-        name: "",
-        isActive:true,
-    })
-    onClose?.()
-  }
+      name: "",
+      isActive: true,
+    });
+    onClose?.();
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Category Preview */}
       <div className="flex items-start justify-between rounded-xl">
         <div>
-          <div className="flex gap-2 items-center">
-            <h3 className="text-2xl font-semibold text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <h3 className="text-muted-foreground text-2xl font-semibold">
               {name || fallback}
             </h3>
             {initialData && (
               <span
-                className={`text-xs px-2 py-1 rounded-full font-semibold ${
+                className={`rounded-full px-2 py-1 text-xs font-semibold ${
                   isActive
                     ? "bg-green-100 text-green-700"
                     : "bg-red-100 text-red-700"
@@ -58,7 +69,7 @@ const CategoryForm = ({initialData=null, onSubmit, onClose, schema, fallback="Ca
             )}
           </div>
 
-          <p className="mt-2 text-sm text-muted-foreground">0 Subcategory</p>
+          <p className="text-muted-foreground mt-2 text-sm">0 Subcategory</p>
         </div>
         {initialData && (
           <Controller
@@ -102,6 +113,6 @@ const CategoryForm = ({initialData=null, onSubmit, onClose, schema, fallback="Ca
       </div>
     </form>
   );
-}
+};
 
-export default CategoryForm
+export default CategoryForm;

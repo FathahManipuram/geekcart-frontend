@@ -7,7 +7,7 @@ const OrderHistoryActions = ({ order }) => {
   const delivered = order.orderStatus === "DELIVERED";
 
   return (
-    <div className="flex gap-2 flex-wrap justify-end">
+    <div className="flex flex-wrap justify-end gap-2">
       <Button
         className="cursor-pointer"
         variant="outline"

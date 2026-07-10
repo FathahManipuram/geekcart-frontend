@@ -1,10 +1,9 @@
-import React from 'react'
+import React from "react";
 
-const TopProducts = ({data=[]}) => {
-  
-	return (
+const TopProducts = ({ data = [] }) => {
+  return (
     <div className="rounded-3xl border bg-white p-6 shadow-sm">
-      <h3 className="text-lg font-semibold mb-4">Best Selling Products</h3>
+      <h3 className="mb-4 text-lg font-semibold">Best Selling Products</h3>
 
       <div className="space-y-3">
         {data.map((item, index) => (
@@ -26,8 +25,7 @@ const TopProducts = ({data=[]}) => {
         ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TopProducts
-
+export default TopProducts;

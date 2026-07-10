@@ -19,7 +19,7 @@ export const orderRoutes = [
     path: "/orders/payment-failed",
     element: (
       <ProtectedRoute>
-        <OrderFailedPage/>
+        <OrderFailedPage />
       </ProtectedRoute>
     ),
   },

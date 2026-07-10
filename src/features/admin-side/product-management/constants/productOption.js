@@ -1,7 +1,4 @@
-export const SLEEVE_OPTIONS = [
-  "Full Sleeve",
-  "Half Sleeve",
-];
+export const SLEEVE_OPTIONS = ["Full Sleeve", "Half Sleeve"];
 
 export const FABRIC_OPTIONS = [
   "100% Cotton",
@@ -12,7 +9,7 @@ export const FABRIC_OPTIONS = [
   "Cotton Blend",
 ];
 
-export const SIZE_OPTIONS = ["S", "M", "L", "XL", "XXL",];
+export const SIZE_OPTIONS = ["S", "M", "L", "XL", "XXL"];
 
 export const COLOR_OPTIONS = [
   "White",

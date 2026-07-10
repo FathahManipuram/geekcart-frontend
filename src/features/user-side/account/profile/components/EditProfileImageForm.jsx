@@ -11,7 +11,7 @@ const EditProfileImageForm = () => {
 
   const handleChange = async (e) => {
     const file = e.target.files[0];
-    console.log("File: ", file);
+  
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {

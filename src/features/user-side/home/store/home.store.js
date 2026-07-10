@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 import { fetchHomeDataApi } from "../api/home.api";
 
-export const useHomeStore = create((set, get) => ({
+export const useHomeStore = create((set) => ({
   categories: [],
   newDrops: [],
   offers: [],
@@ -10,51 +10,37 @@ export const useHomeStore = create((set, get) => ({
   loading: false,
   error: null,
 
+  fetchHomeData: async () => {
+    try {
+      set({
+        loading: true,
 
-    fetchHomeData:
-      async () => {
-        try {
-          set({
-            loading: true,
+        error: null,
+      });
 
-            error: null,
-          });
+      const res = await fetchHomeDataApi();
 
-          const res =
-            await fetchHomeDataApi();
+      set({
+        categories: res.data.categories,
 
-console.log("HomeStore: ", res.data)
-          set({
-            categories:
-              res.data.categories,
+        newDrops: res.data.newDrops,
+        offers: res.data.offers,
 
-            newDrops:
-              res.data
-                .newDrops,
-                offers: res.data.offers,
+        loading: false,
+      });
 
-            loading: false,
-          });
-		  console.log("fetchedHomestore; ", get().categories)
+      return res;
+    } catch (err) {
+      const message =
+        err.response?.data?.message || "Failed to fetch home data";
 
-          return res;
-        } catch (err) {
-          const message =
-            err.response?.data
-              ?.message ||
-            "Failed to fetch home data";
+      set({
+        loading: false,
 
-          set({
-            loading: false,
+        error: message,
+      });
 
-            error: message,
-          });
-
-          throw err;
-        }
-      },
-
-
-
-  
+      throw err;
+    }
+  },
 }));

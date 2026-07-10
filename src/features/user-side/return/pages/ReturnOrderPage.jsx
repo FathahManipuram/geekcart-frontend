@@ -18,7 +18,7 @@ import { ITEM_STATUSES } from "@/shared/constants/order/orderStatus";
 
 const ReturnOrderPage = () => {
   const { orderId } = useParams();
-  const navigate= useNavigate()
+  const navigate = useNavigate();
 
   const [selectedItems, setSelectedItems] = useState([]);
   const order = useOrderStore((state) => state.order);
@@ -26,18 +26,18 @@ const ReturnOrderPage = () => {
 
   const fetchOrderById = useOrderStore((state) => state.fetchOrderById);
 
-  const createReturnRequest= useReturnStore((state)=>state.createReturnRequest)
-  const returnLoading= useReturnStore((state)=> state.loading)
+  const createReturnRequest = useReturnStore(
+    (state) => state.createReturnRequest,
+  );
+  const returnLoading = useReturnStore((state) => state.loading);
 
   const methods = useForm({
-	resolver: yupResolver(returnOrderSchema),
+    resolver: yupResolver(returnOrderSchema),
     defaultValues: {
       reason: "",
       customReason: "",
     },
   });
-
-
 
   useEffect(() => {
     if (orderId) {
@@ -64,29 +64,25 @@ const ReturnOrderPage = () => {
     setSelectedItems((prev) => (prev.length === allIds.length ? [] : allIds));
   };
 
-  const handleSubmit = async(data) => {
-	try{
-		 const payload = {
-      orderId,
+  const handleSubmit = async (data) => {
+    try {
+      const payload = {
+        orderId,
 
-      items: selectedItems,
+        items: selectedItems,
 
-      reason: data.reason === "Other" ? data.customReason : data.reason,
-    };
+        reason: data.reason === "Other" ? data.customReason : data.reason,
+      };
 
-	const res= await createReturnRequest(payload)
+      const res = await createReturnRequest(payload);
 
-	toast.success(res.message || "Return request submitted successfully")
-  setSelectedItems([]);
-  methods.reset();
-  navigate("/account/order-history");
-
-    console.log("Return Payload:", payload);
-	}catch(error){
-    console.log(error.response?.data);
-		toast.error(error?.response?.data?.message || "Request failed")
-	}
-   
+      toast.success(res.message || "Return request submitted successfully");
+      setSelectedItems([]);
+      methods.reset();
+      navigate("/account/order-history");
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Request failed");
+    }
   };
 
   if (loading) {
@@ -95,7 +91,7 @@ const ReturnOrderPage = () => {
 
   if (returnableItems.length === 0) {
     return (
-      <section className="max-w-4xl mx-auto py-20 text-center">
+      <section className="mx-auto max-w-4xl py-20 text-center">
         <h2 className="text-2xl font-semibold">No Returnable Items</h2>
 
         <p className="text-muted-foreground mt-2">
@@ -107,13 +103,13 @@ const ReturnOrderPage = () => {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-4 py-10">
+    <section className="mx-auto max-w-7xl px-4 py-10">
       <FormProvider {...methods}>
         <form
           onSubmit={methods.handleSubmit(handleSubmit)}
-          className="grid lg:grid-cols-3 gap-8"
+          className="grid gap-8 lg:grid-cols-3"
         >
-          <div className="lg:col-span-2 space-y-10">
+          <div className="space-y-10 lg:col-span-2">
             <ReturnItemsSection
               items={returnableItems}
               selectedItems={selectedItems}
@@ -135,20 +131,14 @@ const ReturnOrderPage = () => {
             <button
               type="submit"
               disabled={selectedItems.length === 0 || returnLoading}
-              className="
-                w-full h-12
-                bg-primary
-                text-white
-                rounded-lg
-                disabled:opacity-50
-              "
+              className="bg-primary h-12 w-full rounded-lg text-white disabled:opacity-50"
             >
               {returnLoading ? "Submitting" : "Submit Return Request"}
             </button>
             <button
               type="button"
               onClick={() => navigate(-1)}
-              className="w-full h-12 border rounded-lg font-medium disabled:opacity-50"
+              className="h-12 w-full rounded-lg border font-medium disabled:opacity-50"
             >
               Cancel
             </button>

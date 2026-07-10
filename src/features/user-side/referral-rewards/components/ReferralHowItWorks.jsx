@@ -1,9 +1,9 @@
 const ReferralHowItWorks = () => {
   return (
-    <div className="bg-white border rounded-2xl p-6">
-      <h3 className="font-semibold text-lg mb-4">How it works</h3>
+    <div className="rounded-2xl border bg-white p-6">
+      <h3 className="mb-4 text-lg font-semibold">How it works</h3>
 
-      <ol className="space-y-3 text-sm text-muted-foreground">
+      <ol className="text-muted-foreground space-y-3 text-sm">
         <li>1. Share your referral code.</li>
         <li>2. Friend signs up using your code.</li>
         <li>3. Friend places first successful order.</li>

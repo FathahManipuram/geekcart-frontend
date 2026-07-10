@@ -14,30 +14,12 @@ const CollectionsPagination = ({
   }
 
   return (
-    <div
-      className="
-        mt-12
-        flex
-        items-center
-        justify-center
-        gap-3
-      "
-    >
+    <div className="mt-12 flex items-center justify-center gap-3">
       {/* PREV */}
       <button
         disabled={currentPage === 1}
-        onClick={() =>
-          onPageChange(
-            currentPage - 1,
-          )
-        }
-        className="
-          rounded-xl
-          border
-          px-4
-          py-2
-          disabled:opacity-40
-        "
+        onClick={() => onPageChange(currentPage - 1)}
+        className="rounded-xl border px-4 py-2 disabled:opacity-40"
       >
         Prev
       </button>
@@ -46,30 +28,15 @@ const CollectionsPagination = ({
       {Array.from({
         length: totalPages,
       }).map((_, index) => {
-        const page =
-          index + 1;
+        const page = index + 1;
 
         return (
           <button
             key={page}
-            onClick={() =>
-              onPageChange(
-                page,
-              )
-            }
-            className={`
-              h-10
-              w-10
-              rounded-xl
-              border
-              
-              ${
-                currentPage ===
-                page
-                  ? "bg-black text-white"
-                  : ""
-              }
-            `}
+            onClick={() => onPageChange(page)}
+            className={`h-10 w-10 rounded-xl border ${
+              currentPage === page ? "bg-black text-white" : ""
+            } `}
           >
             {page}
           </button>
@@ -78,22 +45,9 @@ const CollectionsPagination = ({
 
       {/* NEXT */}
       <button
-        disabled={
-          currentPage ===
-          totalPages
-        }
-        onClick={() =>
-          onPageChange(
-            currentPage + 1,
-          )
-        }
-        className="
-          rounded-xl
-          border
-          px-4
-          py-2
-          disabled:opacity-40
-        "
+        disabled={currentPage === totalPages}
+        onClick={() => onPageChange(currentPage + 1)}
+        className="rounded-xl border px-4 py-2 disabled:opacity-40"
       >
         Next
       </button>

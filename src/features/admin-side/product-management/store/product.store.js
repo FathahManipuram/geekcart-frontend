@@ -1,5 +1,12 @@
 import { create } from "zustand";
-import { createProductApi, deleteproductApi, fetchProductDetailsApi, fetchProductsApi, toggleProductStatusApi, updateProductApi } from "../api/product.api";
+import {
+  createProductApi,
+  deleteproductApi,
+  fetchProductDetailsApi,
+  fetchProductsApi,
+  toggleProductStatusApi,
+  updateProductApi,
+} from "../api/product.api";
 
 export const useProductStore = create((set, get) => ({
   products: [],
@@ -21,8 +28,7 @@ export const useProductStore = create((set, get) => ({
     subcategory: "",
   },
 
-
-// fetch All products
+  // fetch All products
   fetchProducts: async (params = {}) => {
     try {
       const currentParams = {
@@ -46,9 +52,6 @@ export const useProductStore = create((set, get) => ({
       });
 
       const res = await fetchProductsApi(sanitizedParams);
-
-      console.log("fetchedProductData:", res.data);
-
       set({
         products: res.data.products,
 
@@ -75,9 +78,9 @@ export const useProductStore = create((set, get) => ({
 
   //Change page
   changePage: async (page) => {
-    const {queryparams}= get()
+    const { queryparams } = get();
 
-    await get().fetchProducts({...queryparams, page})
+    await get().fetchProducts({ ...queryparams, page });
   },
 
   //Create product
@@ -166,7 +169,6 @@ export const useProductStore = create((set, get) => ({
     try {
       set({ loading: true, error: null });
       const res = await fetchProductDetailsApi(slug);
-      console.log("Product details: ", res.data);
 
       set({ productDetails: res.data, loading: false });
       return res;
@@ -183,23 +185,25 @@ export const useProductStore = create((set, get) => ({
     set({ error: null });
   },
 
-toggleProductStatus: async (productId) => {
+  toggleProductStatus: async (productId) => {
     try {
       set({ loading: true, error: null });
 
-const res = await toggleProductStatusApi(productId);
+      const res = await toggleProductStatusApi(productId);
 
-set((state)=> ({
-  products: state.products.map((product)=> product._id === productId ? {...product, isActive: !product.isActive}: product),
-  loading: false,
-}))
-return res.data
-    }catch(err){
-const message = err.response?.data?.message || "Failed to delete product";
-set({ loading: false, error: message });
-throw err;
+      set((state) => ({
+        products: state.products.map((product) =>
+          product._id === productId
+            ? { ...product, isActive: !product.isActive }
+            : product,
+        ),
+        loading: false,
+      }));
+      return res.data;
+    } catch (err) {
+      const message = err.response?.data?.message || "Failed to delete product";
+      set({ loading: false, error: message });
+      throw err;
     }
   },
 }));
-
-

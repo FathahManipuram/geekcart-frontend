@@ -11,7 +11,6 @@ import ProductDetailsPage from "@/features/admin-side/product-management/pages/P
 import EditProductPage from "@/features/admin-side/product-management/pages/EditProductPage";
 import AdminDashboardPage from "@/features/admin-side/dashboard/pages/AdminDashboardPage";
 import OrderManagementPage from "@/features/admin-side/order-management/pages/OrderManagementPage";
-import OrderDetailsPage from "@/features/user-side/order/pages/OrderDetailsPage";
 import AdminOrderDetailsPage from "@/features/admin-side/order-management/pages/AdminOrderDetailsPage";
 import ReturnManagementPage from "@/features/admin-side/return-management/pages/ReturnManagementPage";
 import ReturnDetailsPage from "@/features/admin-side/return-management/pages/ReturnDetailsPage";

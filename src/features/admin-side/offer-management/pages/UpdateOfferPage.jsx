@@ -15,37 +15,35 @@ const UpdateOfferPage = () => {
   const navigate = useNavigate();
   const { offerId } = useParams();
 
-  const offer= useOfferStore((state)=> state.offer)
-  const getOfferDetails= useOfferStore((state)=> state.getOfferDetails)
-  const updateOffer= useOfferStore((state)=> state.updateOffer)
-  const loading= useOfferStore((state)=> state.loading)
+  const offer = useOfferStore((state) => state.offer);
+  const getOfferDetails = useOfferStore((state) => state.getOfferDetails);
+  const updateOffer = useOfferStore((state) => state.updateOffer);
+  const loading = useOfferStore((state) => state.loading);
 
-const fetchProducts = useProductStore((state) => state.fetchProducts);
-const products = useProductStore((state) => state.products);
-const fetchCategories = useCategoryStore((state) => state.fetchCategories)
-const categories = useCategoryStore((state) => state.categories);
-const fetchSubcategories = useSubcategoryStore(
-	(state) => state.fetchSubcategories,
+  const fetchProducts = useProductStore((state) => state.fetchProducts);
+  const products = useProductStore((state) => state.products);
+  const fetchCategories = useCategoryStore((state) => state.fetchCategories);
+  const categories = useCategoryStore((state) => state.categories);
+  const fetchSubcategories = useSubcategoryStore(
+    (state) => state.fetchSubcategories,
   );
-const subcategories = useSubcategoryStore((state) => state.subcategories);
-
+  const subcategories = useSubcategoryStore((state) => state.subcategories);
 
   useEffect(() => {
-	fetchProducts({
-	  limit: 100,
-	});
+    fetchProducts({
+      limit: 100,
+    });
 
-	fetchCategories();
+    fetchCategories();
 
-	fetchSubcategories();
-  }, [])
+    fetchSubcategories();
+  }, []);
 
-useEffect(()=>{
-	getOfferDetails(offerId)
-}, [])
+  useEffect(() => {
+    getOfferDetails(offerId);
+  }, []);
 
   const handleUpdateOffer = async (payload) => {
-    console.log("offerupdationdata; ", offerId, payload);
     try {
       const res = await updateOffer(offerId, payload);
 
@@ -58,7 +56,7 @@ useEffect(()=>{
   if (!offer) return <Loader />;
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 items-start md:flex-row md:justify-between">
+      <div className="flex flex-col items-start gap-4 md:flex-row md:justify-between">
         <div>
           <h1 className="text-3xl font-bold">Update Offer</h1>
 
@@ -75,10 +73,10 @@ useEffect(()=>{
         onSubmit={handleUpdateOffer}
         defaultValues={offer}
         loading={loading}
-		products={products}
-		categories={categories}
-		subcategories={subcategories}
-    validation={updateOfferSchema}
+        products={products}
+        categories={categories}
+        subcategories={subcategories}
+        validation={updateOfferSchema}
       />
     </div>
   );

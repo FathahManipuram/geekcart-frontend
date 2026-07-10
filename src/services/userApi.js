@@ -1,8 +1,8 @@
 import { createAxiosInstance } from "./createAxiosInstance";
 import { setupInterceptors } from "./interceptors";
 
-const userApi= createAxiosInstance()
+const userApi = createAxiosInstance();
 
-setupInterceptors(userApi, "accessToken")
+setupInterceptors(userApi, "accessToken");
 
-export default userApi
+export default userApi;
