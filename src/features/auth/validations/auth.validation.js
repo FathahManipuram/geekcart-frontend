@@ -19,7 +19,7 @@ export const registerSchema = yup.object({
     .string()
     .trim()
     .uppercase()
-    .min(5, "Code is too short")
+    .min(0, "Code is too short")
     .max(22, "Code is too long")
     .optional(),
 });
