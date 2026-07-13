@@ -65,7 +65,9 @@ const RegisterPage = () => {
                   toast.success("Google login successful");
                   navigate("/");
                 } catch (err) {
-                  toast.error("Google login failed");
+                  toast.error(
+                    err?.response?.data?.message || "Google login failed",
+                  );
                 }
               }}
               onError={() => {

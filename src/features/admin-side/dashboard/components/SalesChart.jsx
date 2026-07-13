@@ -32,7 +32,6 @@ const SalesChart = ({
   onFilterChange,
 }) => {
   const chartData = {
-    // Maps seamlessly with standard layout label keys
     labels: data?.map((item) => item?.label || item?.month || ""),
     datasets: [
       {
@@ -55,7 +54,7 @@ const SalesChart = ({
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: "rgba(17, 24, 39, 0.9)", // Dark slate layout for clean readability
+        backgroundColor: "rgba(17, 24, 39, 0.9)",
         titleFont: { size: 12 },
         bodyFont: { size: 13, weight: "bold" },
         padding: 12,
@@ -67,11 +66,11 @@ const SalesChart = ({
     },
     scales: {
       x: {
-        grid: { display: false }, // Removes vertical grid line clutter
+        grid: { display: false },
         ticks: { color: "#737373", font: { size: 11 } },
       },
       y: {
-        border: { dash: [4, 4] }, // Clean dashed horizontal tracking guides
+        border: { dash: [4, 4] },
         grid: { color: "#f5f5f5" },
         ticks: {
           color: "#737373",
@@ -84,7 +83,6 @@ const SalesChart = ({
 
   return (
     <div className="rounded-3xl border bg-white p-6 shadow-sm">
-      {/* Header with Integrated Filter controls */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h3 className="text-lg font-semibold tracking-tight text-neutral-900">
@@ -115,8 +113,7 @@ const SalesChart = ({
         </div>
       </div>
 
-      {/* FIX: Passing activeFilter as a key explicitly forces canvas re-instantiation */}
-      <div className="mt-6 h-[350px] w-full">
+      <div className="mt-6 h-87.5 w-full">
         <Line key={activeFilter} data={chartData} options={options} />
       </div>
     </div>

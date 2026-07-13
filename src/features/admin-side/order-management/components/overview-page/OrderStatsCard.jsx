@@ -1,4 +1,5 @@
 import StatsCard from "@/shared/components/StatsCard";
+import { formatCurrency } from "@/shared/utils/formatCurrency";
 import React from "react";
 
 const OrderStatsCard = ({ orderStats }) => {
@@ -15,7 +16,7 @@ const OrderStatsCard = ({ orderStats }) => {
 
     {
       title: "Total Revenue",
-      value: `₹${orderStats?.totalRevenue || 0}`,
+      value: `₹${formatCurrency(orderStats?.totalRevenue) || 0}`,
     },
   ];
   return (

@@ -55,7 +55,7 @@ const LoginPage = () => {
             <div className="bg-border/60 h-px flex-1" />
           </div>
 
-          <div>
+          <div className="mb-8 flex w-full justify-center">
             <GoogleLogin
               shape="circle"
               onSuccess={async (credentialResponse) => {

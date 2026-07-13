@@ -78,8 +78,19 @@ const columns = [
     },
   },
   {
-    header: "Gross Subtotal",
+    header: "Subtotal",
     cell: (row) => `₹${(row.subtotal ?? 0).toFixed(2)}`,
+  },
+  {
+    header: "Delivery Charge",
+    cell: (row) => {
+      const delivery = row.deliveryCharge ?? 0;
+      return (
+        <span className={delivery > 0 ? "text-muted-foreground" : ""}>
+          ₹{delivery.toFixed(2)}
+        </span>
+      );
+    },
   },
   {
     header: "Offer Discount",
@@ -117,6 +128,7 @@ const columns = [
     header: "Net Total",
     cell: (row) => {
       const gross = row.subtotal ?? 0;
+      const delivery = row.deliveryCharge ?? 0; // 2. CAPTURE DELIVERY CHARGE
       const offer = row.discount ?? 0;
       const coupon = row.coupon?.discountAmount ?? 0;
 
@@ -128,7 +140,7 @@ const columns = [
           return acc;
         }, 0) ?? 0;
 
-      const netTotal = gross - offer - coupon - totalRefunded;
+      const netTotal = gross + delivery - offer - coupon - totalRefunded;
 
       return (
         <span className="font-semibold text-emerald-600 dark:text-emerald-400">
