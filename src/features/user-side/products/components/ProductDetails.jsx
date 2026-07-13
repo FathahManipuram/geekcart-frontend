@@ -12,6 +12,7 @@ import { useUserProductStore } from "../store/product.store";
 import Breadcrumbs from "@/shared/components/Breadcrumbs";
 import { useWishlist } from "../../wishlist/hooks/useWishlist";
 import { formatCurrency } from "@/shared/utils/formatCurrency";
+import ProductNotFound from "./ProductNotFound";
 
 const ProductDetails = () => {
   const { slug } = useParams();
@@ -30,6 +31,7 @@ const ProductDetails = () => {
   );
   const productLoading = useUserProductStore((state) => state.loading);
   const productDetails = useUserProductStore((state) => state.productDetails);
+  const error= useUserProductStore((state)=> state.error)
 
   const addToCart = useCartStore((state) => state.addToCart);
   const loading = useCartStore((state) => state.loading);
@@ -44,6 +46,7 @@ const ProductDetails = () => {
     fetchSimilarProducts(slug);
     fetchCart();
   }, [slug]);
+
 
   useEffect(() => {
     if (!productDetails?.variants?.length) return;
@@ -131,6 +134,10 @@ const ProductDetails = () => {
   if (productLoading) {
     return <Loader />;
   }
+
+ if (error === "Product not found") {
+   return <ProductNotFound />;
+ }
   return (
     <>
       {productDetails && (

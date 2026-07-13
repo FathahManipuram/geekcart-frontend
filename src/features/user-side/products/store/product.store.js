@@ -17,12 +17,18 @@ export const useUserProductStore = create((set) => ({
       set({ loading: true, error: null });
       const res = await fetchProductDetailsApi(slug);
 
-      set({ productDetails: res.data, loading: false });
+      set({ productDetails: res.data, loading: false, error: null });
       return res;
     } catch (err) {
-      const message = err.response?.data?.message || "Failed to delete product";
+      const message =
+        err.response?.status === 404
+          ? "Product not found"
+          : err?.response?.data?.message || "Failed to fetch product";
 
-      set({ loading: false, error: message });
+      set({ 
+        productDetails: null,
+        loading: false, 
+        error: message });
       throw err;
     }
   },
