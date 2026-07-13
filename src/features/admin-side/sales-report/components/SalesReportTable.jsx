@@ -149,10 +149,10 @@ const columns = [
       );
     },
   },
-  {
-    header: "Payment",
-    cell: (row) => <Badge variant="outline">{row.paymentStatus}</Badge>,
-  },
+  // {
+  //   header: "Payment",
+  //   cell: (row) => <Badge variant="outline">{row.paymentStatus}</Badge>,
+  // },
 ];
 
 const SalesReportTable = ({ orders, loading }) => {
