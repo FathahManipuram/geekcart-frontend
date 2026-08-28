@@ -431,6 +431,10 @@ Responsive user experience
 
 Abdul Fathah M T
 
-GitHub: [Fathah Manipuram](https://github.com/FathahManipuram)
+GitHub: https://github.com/FathahManipuram
 
-LinkedIn: [Fathah Manipuram](https://www.linkedin.com/in/fathah-manipuram-b7313b207/)
+LinkedIn: https://www.linkedin.com/in/fathah-manipuram-b7313b207/
+
+📄 License
+
+This project is developed for educational and portfolio purposes.
