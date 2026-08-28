@@ -431,6 +431,6 @@ Responsive user experience
 
 Abdul Fathah M T
 
-GitHub: [YOUR_GITHUB_PROFILE](https://github.com/FathahManipuram)
+GitHub: [Fathah Manipuram](https://github.com/FathahManipuram)
 
-LinkedIn: [YOUR_LINKEDIN_PROFILE](https://www.linkedin.com/in/fathah-manipuram-b7313b207/)
+LinkedIn: [Fathah Manipuram](https://www.linkedin.com/in/fathah-manipuram-b7313b207/)
