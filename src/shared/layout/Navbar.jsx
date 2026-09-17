@@ -15,6 +15,8 @@ import { Button } from "../components/ui/button";
 import { useCartStore } from "@/features/user-side/cart/store/cart.store";
 import { useWishlistStore } from "@/features/user-side/wishlist/store/store.wishlist";
 import ConfirmModal from "../components/ConfirmModal";
+import NotificationDropdown from "@/features/user-side/notification/components/NotificationDropdown";
+import { useNotificationStore } from "@/features/user-side/notification/stores/notification.store";
 
 const navLinkClass = ({ isActive }) =>
   `text-sm font-medium transition-colors ${
@@ -28,6 +30,9 @@ const Navbar = () => {
   const logout = useAuthStore((state) => state.logout);
   const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchWishlist = useWishlistStore((state) => state.fetchWishlist);
+  const fetchUnreadCount = useNotificationStore(
+      (state) => state.fetchUnreadCount,
+    );
   const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -36,6 +41,7 @@ const Navbar = () => {
   useEffect(() => {
     fetchCart();
     fetchWishlist();
+      fetchUnreadCount();
   }, []);
 
   const handleLogout = async () => {
@@ -161,7 +167,7 @@ const Navbar = () => {
         {/* Desktop Icons */}
         <div className="hidden items-center gap-4 lg:flex">
           <Search className="h-5 w-5 cursor-pointer" />
-
+          <NotificationDropdown />
           <button onClick={() => navigate("/cart")} className="relative">
             <ShoppingBag className="h-5 w-5 cursor-pointer" />
 
@@ -259,7 +265,7 @@ const Navbar = () => {
             {/* Mobile Icons */}
             <div className="flex items-center gap-4 pt-2">
               <Search className="h-5 w-5 cursor-pointer" />
-
+              <NotificationDropdown />
               <button onClick={() => navigate("/cart")} className="relative">
                 <ShoppingBag className="h-5 w-5 cursor-pointer" />
 
