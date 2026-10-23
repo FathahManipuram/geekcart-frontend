@@ -1,16 +1,18 @@
-import React from 'react'
-import AccountSidebar from '../components/AccountSidebar'
-import { Outlet } from 'react-router-dom'
+import React from "react";
+import AccountSidebar from "../components/AccountSidebar";
+import { Outlet } from "react-router-dom";
 
 const AccountLayout = () => {
   return (
-    <div className="max-w-7xl mx-auto py-6 md:py-10 px-4">
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-3">
+    <div className="mx-auto max-w-7xl px-4 py-6 md:py-10">
+      <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-12">
+        {/* STICKY SIDEBAR */}
+        <div className="lg:sticky lg:top-20 lg:col-span-3">
           <AccountSidebar />
         </div>
 
-        <div className="lg:col-span-9">
+        {/* SCROLLABLE MAIN CONTENT */}
+        <div className="md:pb-0 lg:col-span-9 pb-24">
           <Outlet />
         </div>
       </div>

@@ -32,21 +32,25 @@ const EditProfileImageForm = () => {
   };
 
   return (
-    <div className="w-full h-45 flex flex-col items-center justify-center gap-2">
+    <div className="flex h-45 w-full flex-col items-center justify-center gap-2">
       <div className="relative">
         <img
           src={user?.avatar}
           alt="profile"
-          className="w-20 h-20 rounded-full bg-amber-100 border object-cover"
+          className="h-20 w-20 rounded-full border bg-amber-100 object-cover"
         />
         <button
           type="button"
           disabled={loading}
           onClick={() => fileRef.current.click()}
-          className="bg-amber-300 p-1 absolute bottom-0 right-0 shadow disabled:opacity-50 rounded-full text-center cursor-pointer"
+          className="absolute right-0 bottom-0 cursor-pointer rounded-full bg-amber-300 p-1 text-center shadow disabled:opacity-50"
         >
           {loading ? "..." : <ImageUp size={14} />}
         </button>
+      </div>
+      <div className="pt-4 flex flex-col items-center justify-center sm:hidden">
+        <p className="text-sm font-medium">{user.fullName}</p>
+        <p className="text-xs">{user.email}</p>
       </div>
 
       <input

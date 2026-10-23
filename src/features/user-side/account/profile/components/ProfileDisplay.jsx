@@ -3,26 +3,25 @@ import { Button } from "@/shared/components/ui/button";
 import { Input } from "@/shared/components/ui/input";
 import { Label } from "@/shared/components/ui/label";
 import { formatDateForDisplay } from "@/shared/utils/date";
-import { Edit } from "lucide-react";
+import { Edit, Edit3 } from "lucide-react";
 import ProfileForm from "./ProfileForm";
 
 const ProfileDisplay = ({ user, editProfileOpen, setEditProfileOpen }) => {
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="font-bold text-xl">Personal Information</h2>
-        <Button
-          onClick={() => setEditProfileOpen(true)}
-          className="cursor-pointer"
-        >
-          <span>
-            <Edit />
+      <div className="mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-bold">Personal Information</h2>
+
+          <span
+            onClick={() => setEditProfileOpen(true)}
+            className="cursor-pointer rounded-sm bg-amber-200 p-1"
+          >
+            <Edit3 size={12} />
           </span>
-          Edit
-        </Button>
+       
       </div>
 
-      <div className="grid grid-cols-2 gap-4 text-sm mb-3">
+      <div className="mb-3 grid grid-cols-2 gap-4 text-sm">
         <div>
           <Label>FULL NAME</Label>
           <Input
