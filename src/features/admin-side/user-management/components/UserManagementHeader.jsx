@@ -39,15 +39,18 @@ const UserManagementHeader = () => {
       toast.error(err.response?.data?.message || "User creation failed");
     }
   };
+
   return (
     <>
-      <div className="space-y-6">
-        <div className="flex justify-between gap-3 sm:flex-col lg:flex-row">
+      <div className="space-y-4 sm:space-y-6">
+        {/* Responsive Container: Stacks vertically on mobile, aligns horizontally on sm+ */}
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <Header title="User Management" />
 
-          <div className="flex items-center gap-4">
+          {/* Action Toolbar: Full-width stacked on mobile, inline flex on tablet/desktop */}
+          <div className="flex w-full gap-3 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
             <Select value={status} onValueChange={handleStatusChange}>
-              <SelectTrigger className="w-45">
+              <SelectTrigger className="w-full sm:w-44">
                 <SelectValue placeholder="All status" />
               </SelectTrigger>
               <SelectContent>
@@ -56,12 +59,13 @@ const UserManagementHeader = () => {
                 <SelectItem value="blocked">Blocked</SelectItem>
               </SelectContent>
             </Select>
+
             <Button
               onClick={() => setOpenCreateUserModal(true)}
-              className="cursor-pointer"
+              className="flex cursor-pointer items-center justify-center gap-2 sm:w-auto"
             >
               <UserPlus size={16} />
-              Add New User
+              <span>Add New User</span>
             </Button>
           </div>
         </div>
