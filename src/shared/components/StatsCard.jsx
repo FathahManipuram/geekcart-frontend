@@ -11,7 +11,9 @@ const StatsCard = ({
   titleClassName = "tracking-[0.1em]",
 }) => {
   return (
-    <Card className={`rounded-2xl bg-white shadow-sm ${className} `}>
+    <Card
+      className={`rounded-2xl bg-white shadow-sm ${className}`}
+    >
       <CardContent className="">
         {/* Icon */}
         {Icon && (
