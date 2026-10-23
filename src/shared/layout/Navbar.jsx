@@ -31,8 +31,8 @@ const Navbar = () => {
   const fetchCart = useCartStore((state) => state.fetchCart);
   const fetchWishlist = useWishlistStore((state) => state.fetchWishlist);
   const fetchUnreadCount = useNotificationStore(
-      (state) => state.fetchUnreadCount,
-    );
+    (state) => state.fetchUnreadCount,
+  );
   const items = useCartStore((state) => state.items);
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -41,7 +41,7 @@ const Navbar = () => {
   useEffect(() => {
     fetchCart();
     fetchWishlist();
-      fetchUnreadCount();
+    fetchUnreadCount();
   }, []);
 
   const handleLogout = async () => {
