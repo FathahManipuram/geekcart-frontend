@@ -18,7 +18,7 @@ export const useNotificationStore = create((set, get) => ({
       // Direct API call: unwrap `res.data.data`
       const res = await getNotificationsApi(page);
       const data = res.data;
-      console.log(data)
+
 
       const notificationList = Array.isArray(data)
         ? data
@@ -38,7 +38,6 @@ export const useNotificationStore = create((set, get) => ({
     try {
       const res = await getUnreadCountApi();
       const data = res.data;
-      console.log(data?.unreadCount ?? 0);
       set({
         unreadCount: data?.unreadCount ?? 0,
       });

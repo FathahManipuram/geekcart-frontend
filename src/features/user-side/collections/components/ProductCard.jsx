@@ -58,11 +58,11 @@ const ProductCard = ({
           {product.name}
         </h3>
 
-        <p className="mt-1 text-xs text-neutral-500 md:text-sm">
+        <p className="text-xs text-neutral-500 md:text-sm">
           {product?.subcategory?.name}
         </p>
 
-        <div className="mt-2 flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1 md:gap-2">
           <span className="font-semibold text-[#9B6C43]">
             ₹{formatCurrency(price)}
           </span>

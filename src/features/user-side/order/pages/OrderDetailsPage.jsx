@@ -67,7 +67,7 @@ const OrderDetailsPage = () => {
   }
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-6 md:py-8">
       <Breadcrumbs
         items={[
           {
@@ -83,16 +83,23 @@ const OrderDetailsPage = () => {
           },
         ]}
       />
-      <div className="flex items-end justify-between">
-        <div>
-          <h1 className="text-4xl font-bold">Order Details</h1>
 
-          <p className="mt-2 text-gray-500">Order #{order?.orderNumber}</p>
+      {/* HEADER SECTION */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-bold sm:text-3xl md:text-4xl">
+            Order Details
+          </h1>
+          <p className="mt-1 text-sm text-gray-500 sm:mt-2 sm:text-base">
+            Order #{order?.orderNumber}
+          </p>
         </div>
-        <div className="flex gap-2">
+
+        {/* ACTION BUTTONS */}
+        <div className="flex flex-wrap items-center gap-2">
           {canCancelOrder && (
             <Button
-              className="cursor-pointer"
+              className="w-full cursor-pointer sm:w-auto"
               variant="destructive"
               onClick={() => setShowCancelModal(true)}
             >
@@ -101,7 +108,7 @@ const OrderDetailsPage = () => {
           )}
           {order.orderStatus !== ORDER_STATUSES.CANCELLED && (
             <Button
-              className="cursor-pointer"
+              className="w-full cursor-pointer sm:w-auto"
               onClick={() => navigate(`/orders/${orderId}/tracking`)}
             >
               Track Package
@@ -109,19 +116,18 @@ const OrderDetailsPage = () => {
           )}
 
           {delivered && (
-            <>
-              <Button
-                className="cursor-pointer"
-                variant="outline"
-                onClick={() => navigate(`/orders/${order._id}/return`)}
-              >
-                Return Item
-              </Button>
-            </>
+            <Button
+              className="w-full cursor-pointer sm:w-auto"
+              variant="outline"
+              onClick={() => navigate(`/orders/${order._id}/return`)}
+            >
+              Return Item
+            </Button>
           )}
+
           {order.orderStatus === "DELIVERED" && (
             <Button
-              className="cursor-pointer"
+              className="w-full cursor-pointer sm:w-auto"
               variant="outline"
               onClick={() => downloadInvoicePdf(orderId)}
             >
@@ -130,7 +136,9 @@ const OrderDetailsPage = () => {
           )}
         </div>
       </div>
-      <div className="mt-8 grid gap-8 lg:grid-cols-3">
+
+      {/* MAIN CONTENT GRID */}
+      <div className="mt-6 grid gap-6 lg:mt-8 lg:grid-cols-3 lg:gap-8">
         <div className="space-y-6 lg:col-span-2">
           <OrderTimeline order={order} />
 
@@ -157,6 +165,7 @@ const OrderDetailsPage = () => {
           <PaymentInfoCard order={order} />
         </div>
       </div>
+
       <CancelOrderModal
         open={showCancelModal}
         onOpenChange={(open) => {

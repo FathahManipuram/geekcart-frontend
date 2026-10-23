@@ -93,7 +93,7 @@ const FilterSidebar = ({
                 className="flex items-center gap-3 text-sm"
               >
                 <input
-                  className="cursor-pointer"
+                  className="accent-primary cursor-pointer"
                   type="checkbox"
                   checked={selectedSubcategories.includes(subcategory._id)}
                   onChange={() =>
@@ -119,7 +119,7 @@ const FilterSidebar = ({
             {sizes.map((size) => (
               <label key={size} className="flex items-center gap-3 text-sm">
                 <input
-                  className="cursor-pointer"
+                  className="accent-primary cursor-pointer"
                   type="checkbox"
                   checked={selectedSizes.includes(size)}
                   onChange={() =>
@@ -138,23 +138,27 @@ const FilterSidebar = ({
           <h3 className="mb-4 text-sm font-semibold uppercase">Color</h3>
 
           <div className="flex flex-wrap gap-3">
-            {colors.map((color) => (
-              <button
-                key={color}
-                type="button"
-                onClick={() =>
-                  toggleValue(color, selectedColors, setSelectedColors)
-                }
-                className={`h-8 w-8 cursor-pointer rounded-full border-2 ${
-                  selectedColors.includes(color)
-                    ? "border-black"
-                    : "border-transparent"
-                }`}
-                style={{
-                  backgroundColor: color.toLowerCase(),
-                }}
-              />
-            ))}
+            {colors.map((color) => {
+              const isSelected = selectedColors.includes(color);
+
+              return (
+                <button
+                  key={color}
+                  type="button"
+                  onClick={() =>
+                    toggleValue(color, selectedColors, setSelectedColors)
+                  }
+                  className={`h-8 w-8 cursor-pointer rounded-full border-2 transition-all ${
+                    isSelected
+                      ? "border-accent ring-accent/70 ring-2"
+                      : "border-neutral-200"
+                  }`}
+                  style={{
+                    backgroundColor: color.toLowerCase(),
+                  }}
+                />
+              );
+            })}
           </div>
         </div>
 
@@ -185,7 +189,7 @@ const FilterSidebar = ({
         <div className="space-y-3">
           <button
             onClick={handleApplyFilters}
-            className="w-full cursor-pointer rounded-xl bg-black py-3 text-white"
+            className="w-full cursor-pointer rounded-xl bg-primary py-3 text-white"
           >
             Apply Filters
           </button>

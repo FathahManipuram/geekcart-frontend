@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { SlidersHorizontal } from "lucide-react";
 
 import { Sheet, SheetContent } from "@/shared/components/ui/sheet";
 import { Button } from "@/shared/components/ui/button";
@@ -101,10 +102,13 @@ const CollectionsPage = () => {
 
               <Button
                 variant="outline"
-                className="cursor-pointer lg:hidden"
+                size="icon"
+                className="shrink-0 cursor-pointer lg:hidden"
                 onClick={() => setOpenFilters(true)}
+                title="Filters"
+                aria-label="Filters"
               >
-                Filters
+                <SlidersHorizontal className="h-4 w-4" />
               </Button>
             </div>
           </div>
