@@ -5,27 +5,32 @@ import { useNotificationStore } from "@/features/user-side/notification/stores/n
 import { useAuthStore } from "@/features/auth/store/auth.store";
 
 const SocketProvider = ({ children }) => {
-  const user = useAuthStore((state) => state.user);
+  const userId = useAuthStore((state) => state.user?._id);
 
-  // Use individual Zustand selectors to prevent unnecessary re-renders
   const fetchNotifications = useNotificationStore(
     (state) => state.fetchNotifications,
   );
+
   const fetchUnreadCount = useNotificationStore(
     (state) => state.fetchUnreadCount,
   );
+
   const addNotification = useNotificationStore(
     (state) => state.addNotification,
   );
 
-  // 1. Register global socket event listeners ONCE on mount
+  // --------------------------------
+  // Global socket listeners
+  // --------------------------------
+
   useEffect(() => {
     const handleWelcome = (data) => {
       console.log("Server:", data?.message);
     };
 
     const handleNotification = (notification) => {
-      console.log("New notification received:", notification);
+      console.log("New notification:", notification);
+
       addNotification(notification);
     };
 
@@ -33,42 +38,60 @@ const SocketProvider = ({ children }) => {
       console.log("Socket disconnected:", reason);
     };
 
+    const handleConnectError = (error) => {
+      console.error("Socket connection error:", error.message);
+    };
+
     socket.on("welcome", handleWelcome);
     socket.on("notification", handleNotification);
     socket.on("disconnect", handleDisconnect);
+    socket.on("connect_error", handleConnectError);
 
     return () => {
       socket.off("welcome", handleWelcome);
       socket.off("notification", handleNotification);
       socket.off("disconnect", handleDisconnect);
+      socket.off("connect_error", handleConnectError);
     };
   }, [addNotification]);
 
-  // 2. Handle room joining & initial fetching when `user._id` or connection status changes
+  // --------------------------------
+  // User-specific socket handling
+  // --------------------------------
+
   useEffect(() => {
-    if (!user?._id) return;
+    if (!userId) return;
 
-    // Fetch initial notification state from DB
-    fetchNotifications();
-    fetchUnreadCount();
-
-    const joinUserRoom = () => {
-      console.log("Joining room for user:", user._id);
-      socket.emit("join-room", user._id);
+    const syncNotifications = async () => {
+      try {
+        await Promise.all([fetchNotifications(), fetchUnreadCount()]);
+      } catch (error) {
+        console.error("Failed to sync notifications:", error);
+      }
     };
 
-    // If socket is already connected, join room immediately
+    const handleConnect = async () => {
+      console.log("Socket connected:", socket.id);
+
+      // Ideally the server should derive the user
+      // from the authenticated socket rather than
+      // trusting a client-provided userId.
+      socket.emit("join-room", userId);
+
+      // Sync missed notifications
+      await syncNotifications();
+    };
+
     if (socket.connected) {
-      joinUserRoom();
+      handleConnect();
     }
 
-    // Also listen for re-connections (e.g. server restart or network drop)
-    socket.on("connect", joinUserRoom);
+    socket.on("connect", handleConnect);
 
     return () => {
-      socket.off("connect", joinUserRoom);
+      socket.off("connect", handleConnect);
     };
-  }, [user?._id, fetchNotifications, fetchUnreadCount]);
+  }, [userId, fetchNotifications, fetchUnreadCount]);
 
   return children;
 };
