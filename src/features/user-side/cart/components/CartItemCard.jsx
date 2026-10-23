@@ -4,38 +4,35 @@ import { useCartStore } from "../store/cart.store";
 import { useNavigate } from "react-router-dom";
 
 const CartItemCard = ({ items }) => {
-
   const updateQuantity = useCartStore((state) => state.updateQuantity);
 
   const removeFromCart = useCartStore((state) => state.removeFromCart);
 
-const navigate= useNavigate()
+  const navigate = useNavigate();
 
-  const handleToProductDetails=(slug, variantId)=>{
+  const handleToProductDetails = (slug, variantId) => {
     navigate(`/products/${slug}?variant=${variantId}`);
-  }
+  };
 
   return (
     <div className="space-y-8">
       {items.map((item) => {
-      
-       const finalPrice = item.salePrice || item.price;
+        const finalPrice = item.salePrice || item.price;
 
-       const totalPrice = finalPrice * item.quantity;
+        const totalPrice = finalPrice * item.quantity;
 
-       const totalOriginalPrice = item.price * item.quantity;
+        const totalOriginalPrice = item.price * item.quantity;
 
-       const savedAmount = totalOriginalPrice - totalPrice;
-       
-const isProductAvailable =
-  item.productId?.isActive && !item.productId?.isDeleted;
+        const savedAmount = totalOriginalPrice - totalPrice;
 
-const isVariantAvailable =
-  item.variantId?.isActive && !item.variantId?.isDeleted;
-       const currentStock = item?.variantId?.stock || 0;
+        const isProductAvailable =
+          item.productId?.isActive && !item.productId?.isDeleted;
 
+        const isVariantAvailable =
+          item.variantId?.isActive && !item.variantId?.isDeleted;
+        const currentStock = item?.variantId?.stock || 0;
 
-      const isOutOfStock = currentStock === 0;
+        const isOutOfStock = currentStock === 0;
 
         return (
           <div
@@ -44,11 +41,11 @@ const isVariantAvailable =
           >
             <div className="flex flex-col gap-5 sm:flex-row">
               {/* IMAGE */}
-              <div className="overflow-hidden rounded-2xl bg-neutral-100">
+              <div className="relative aspect-square w-28 shrink-0 overflow-hidden rounded-2xl bg-neutral-100 sm:aspect-auto sm:h-36 sm:w-44">
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="h-36 w-full object-cover transition duration-300 hover:scale-105 sm:w-44"
+                  className="h-full w-full object-cover transition duration-300 hover:scale-105"
                 />
               </div>
 
@@ -69,7 +66,7 @@ const isVariantAvailable =
                       }}
                       className={`text-base font-semibold ${
                         item.productId?.slug
-                          ? "cursor-pointer hover:text-primary"
+                          ? "hover:text-primary cursor-pointer"
                           : "cursor-not-allowed opacity-60"
                       }`}
                     >
@@ -82,19 +79,19 @@ const isVariantAvailable =
 
                     {/* STOCK STATUS */}
                     {!isProductAvailable ? (
-                      <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-red-500">
+                      <p className="mt-3 text-xs font-medium tracking-[0.15em] text-red-500 uppercase">
                         Product unavailable
                       </p>
                     ) : !isVariantAvailable ? (
-                      <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-red-500">
+                      <p className="mt-3 text-xs font-medium tracking-[0.15em] text-red-500 uppercase">
                         Variant unavailable
                       </p>
                     ) : isOutOfStock ? (
-                      <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-red-500">
+                      <p className="mt-3 text-xs font-medium tracking-[0.15em] text-red-500 uppercase">
                         Out of stock
                       </p>
                     ) : currentStock <= 5 ? (
-                      <p className="mt-3 text-xs font-medium uppercase tracking-[0.15em] text-orange-500">
+                      <p className="mt-3 text-xs font-medium tracking-[0.15em] text-orange-500 uppercase">
                         {currentStock === 1
                           ? "Last item remaining"
                           : `Only ${item?.variantId?.stock} left`}
@@ -132,7 +129,7 @@ const isVariantAvailable =
                         onClick={() =>
                           updateQuantity(item.variantId._id, item.quantity - 1)
                         }
-                        className="flex h-11 w-11 items-center justify-center rounded-l-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-l-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         <Minus size={16} />
                       </button>
@@ -148,7 +145,7 @@ const isVariantAvailable =
                         onClick={() =>
                           updateQuantity(item.variantId._id, item.quantity + 1)
                         }
-                        className="flex h-11 w-11 items-center justify-center rounded-r-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40 cursor-pointer"
+                        className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-r-full transition hover:bg-neutral-100 disabled:cursor-not-allowed disabled:opacity-40"
                       >
                         <Plus size={16} />
                       </button>
@@ -159,7 +156,7 @@ const isVariantAvailable =
                   {/* REMOVE */}
                   <button
                     onClick={() => removeFromCart(item.variantId._id)}
-                    className="flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-400 transition hover:text-red-500 cursor-pointer"
+                    className="flex cursor-pointer items-center gap-2 text-xs font-medium tracking-[0.2em] text-neutral-400 uppercase transition hover:text-red-500"
                   >
                     <X size={15} />
                     Remove
