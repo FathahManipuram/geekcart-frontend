@@ -1,12 +1,9 @@
-import React from 'react'
-import { RouterProvider } from 'react-router-dom'
-import { router } from './app/router'
-import { Toaster } from 'sonner'
-import SocketProvider from './socket/socketProvider'
+import { RouterProvider } from "react-router-dom";
+import { router } from "./app/router";
+import { Toaster } from "sonner";
+import SocketProvider from "./socket/SocketProvider.jsx";
 
 const App = () => {
-
-
   return (
     <>
       <Toaster position="top-center" richColors expand />
@@ -15,6 +12,6 @@ const App = () => {
       </SocketProvider>
     </>
   );
-}
+};
 
-export default App
+export default App;
